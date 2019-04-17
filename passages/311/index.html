@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Shang Wenjie">
+  
+  
+  <title>java压缩文件夹并发送给前端 | Hexo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Java,">
+  
+
+  
+  <meta name="description" content="尚文杰的小站">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz","appkey":"WaR7nrzhliHj9aVwdQzkdlGd","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2018-02-10",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Shang Wenjie",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">SuuuperSwj</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静写些东西</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/1056438464/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-02-18
+    </span>
+    
+      <span>
+        | <a href="/categories/Java/"><i class="fa fa-bookmark"></i>Java</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    java压缩文件夹并发送给前端
+  </h1>
+  
+  <article class="passage-article">
+    <h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p><code>ServletOutputStream.getOutputStream()</code><br>获得字节流，通过该字节流的write(byte[] bytes)可以向response缓冲区中写入字节，再由Tomcat服务器将字节内容组成Http响应返回给浏览器。</p>
+<pre><code>@Controller
+@RequestMapping(&quot;/FileComponent&quot;)
+public class FileComponentController extends BaseController {
+
+    @Autowired  
+    private  HttpServletResponse  response;
+
+    @Autowired
+    private zipUtil ziputil;
+
+    @RequestMapping(value =&quot;/getZipFile&quot;)
+    @ResponseBody
+    public  void getZipFile() throws Exception{
+
+
+        try {
+
+            List fileinfo = new ArrayList();
+            fileinfo = fileBuild.creatTxtFile(&quot;111&quot;, &quot;ziptest.txt&quot;, &quot;192310&quot;);
+                System.out.println(fileinfo.get(1));
+                response.setContentType(&quot;application/zip&quot;);
+                response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=excel.zip&quot;);  
+             ziputil.toZip(fileinfo.get(1), response.getOutputStream(),false);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.toString());
+        }
+
+
+
+    }
+
+
+
+}
+</code></pre><h3 id="zipUtil"><a href="#zipUtil" class="headerlink" title="zipUtil"></a>zipUtil</h3><pre><code>@Component
+public class zipUtil {
+     private static final int  BUFFER_SIZE = 2 * 1024;
+
+         /**
+          * 压缩成ZIP 方法
+          * @param srcDir 压缩文件夹路径 
+          * @param out    压缩文件输出流
+          * @param KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; 
+          *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)
+          * @throws RuntimeException 压缩失败会抛出运行时异常
+          */
+         public static void toZip(String srcDir, OutputStream out, boolean KeepDirStructure)throws RuntimeException{
+
+             long start = System.currentTimeMillis();
+
+             ZipOutputStream zos = null ;
+
+             try {
+
+                 zos = new ZipOutputStream(out);
+                 File sourceFile = new File(srcDir);
+                 compress(sourceFile,zos,sourceFile.getName(),KeepDirStructure);
+
+             } catch (Exception e) {
+                 throw new RuntimeException(&quot;zip error from ZipUtils&quot;,e);
+             }finally{
+                 if(zos != null){
+                     try {
+                         zos.close();
+                     } catch (IOException e) {
+                         e.printStackTrace();
+                     }
+
+                 }
+
+             }
+
+         }
+
+
+         /**
+              * 递归压缩方法
+              * @param sourceFile 源文件
+              * @param zos        zip输出流
+              * @param name       压缩后的名称
+              * @param KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; 
+              *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)
+              * @throws Exception
+              */
+
+             private static void compress(File sourceFile, ZipOutputStream zos, String name,boolean KeepDirStructure) throws Exception{
+
+                 byte[] buf = new byte[BUFFER_SIZE];
+
+                 if(sourceFile.isFile()){
+
+                     // 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字     
+                     zos.putNextEntry(new ZipEntry(name));         
+                     // copy文件到zip输出流中         
+                     int len;         
+                     FileInputStream in = new FileInputStream(sourceFile);
+
+                     while ((len = in.read(buf)) != -1){
+
+                         zos.write(buf, 0, len);
+
+                     }
+
+                    // Complete the entry
+                     zos.closeEntry();
+                     in.close();
+
+                 } else {
+
+                     File[] listFiles = sourceFile.listFiles();
+
+                     if(listFiles == null || listFiles.length == 0){
+
+                         // 需要保留原来的文件结构时,需要对空文件夹进行处理
+                         if(KeepDirStructure){
+
+                             // 空文件夹的处理
+                             zos.putNextEntry(new ZipEntry(name + &quot;/&quot;));
+
+                             // 没有文件，不需要文件的copy
+                            zos.closeEntry();
+
+                         }
+
+                     }else {
+
+                         for (File file : listFiles) {
+
+                             // 判断是否需要保留原来的文件结构         
+                             if (KeepDirStructure) {
+
+                                 // 注意：file.getName()前面需要带上父文件夹的名字加一斜杠,         
+                                 // 不然最后压缩包中就不能保留原来的文件结构,即：所有文件都跑到压缩包根目录下了         
+                                 compress(file, zos, name + &quot;/&quot; + file.getName(),KeepDirStructure);
+
+                             } else {
+
+                                 compress(file, zos, file.getName(),KeepDirStructure);
+
+                             }
+
+                         }
+
+                     }
+
+                 }
+
+             }
+}
+</code></pre><p>fileUtil</p>
+<pre><code>public class fileBuild {
+
+    public static List creatTxtFile(String info,String filename , String storecd) throws IOException {
+
+        List fileinfo = new ArrayList();
+        DateFormat df = new SimpleDateFormat(&quot;yyyyMMddHHmm&quot;);
+        Calendar calendar = Calendar.getInstance();
+        String dateName = df.format(calendar.getTime());
+        String name = storecd+dateName+&quot;/&quot;;
+        //String path = &quot;/src/main/webapp/WEB-INF/&quot;+name;
+
+        String textpath = fileBuild.class.getResource(&quot;/&quot;).getPath()+name;
+        File filepath = new File(textpath);
+        filepath.mkdir();
+        String nowfilepath = (fileBuild.class.getResource(&quot;/&quot;).getPath()+name+filename);
+        nowfilepath = nowfilepath.substring(1,nowfilepath.length());
+        fileinfo.add(filename);
+        fileinfo.add(textpath);   
+        File file1 = new File(nowfilepath);
+
+        if (!file1.exists()) {
+            file1.createNewFile();
+
+            BufferedWriter fileWriter =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1),&quot;UTF-8&quot;));
+
+            //FileWriter fileWriter = new FileWriter(filename);  
+            fileWriter.write(info);  
+            fileWriter.flush();
+            fileWriter.close(); 
+
+            return fileinfo;
+
+        }
+
+
+        return null;
+
+    }
+
+
+}
+</code></pre><p>参考博客<br><a href="https://blog.csdn.net/csdn_kenneth/article/details/78725607" target="_blank" rel="noopener">https://blog.csdn.net/csdn_kenneth/article/details/78725607</a><br><a href="https://www.cnblogs.com/zeng1994/p/7862288.html" target="_blank" rel="noopener">https://www.cnblogs.com/zeng1994/p/7862288.html</a></p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller"><span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zipUtil"><span class="toc-text">zipUtil</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://yoursite.com/passages/311/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title"></h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self"></a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 1056438464@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/1056438464/" target="_blank">Swj</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/passages/313/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/310/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+
+
+
+
+
+    
+  </body>
+</html>

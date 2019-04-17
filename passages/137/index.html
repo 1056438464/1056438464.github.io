@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Shang Wenjie">
+  
+  
+  <title>Orcale存储过程demo和走的坑 | Hexo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="DataBase,">
+  
+
+  
+  <meta name="description" content="尚文杰的小站">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz","appkey":"WaR7nrzhliHj9aVwdQzkdlGd","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2018-02-10",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Shang Wenjie",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">SuuuperSwj</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静写些东西</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/1056438464/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2018-07-11
+    </span>
+    
+      <span>
+        | <a href="/categories/DataBase/"><i class="fa fa-bookmark"></i>DataBase</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Orcale存储过程demo和走的坑
+  </h1>
+  
+  <article class="passage-article">
+    <p>orcale的坑<br><strong>1、定义的存储过程的名一定要和最后END的时候的名字一样</strong></p>
+<pre><code>create or replace procedure &quot;Pro_Sprk_Cancel&quot;(
+)
+as
+...
+begin
+end &quot;Pro_Sprk_Cancel&quot;;
+</code></pre><p><strong>2、存储过程中用的一切参数一定要定义</strong></p>
+<pre><code>create or replace procedure &quot;Pro_Sprk_Cancel&quot;(
+)
+as
+ --定义变量
+ num number;
+drug_num number;
+begin
+  begin
+     select count(1) into drug_num from &quot;his_system_drug_info&quot; ;     
+     select count(1) into num from &quot;his_pharmacy_storage&quot; ;
+     end;    
+end &quot;Pro_Sprk_Cancel&quot;;
+</code></pre><p><strong>3、定义的游标，需要 .出来的，必须在定义游标的时候写出来。</strong></p>
+<pre><code>并且游标变量点出来的，必须和必须在定义游标的时候的一样。
+
+create or replace procedure &quot;Pro_Sprk_Cancel&quot;(
+)
+as
+ --定义变量
+ num number;
+drug_num number;
+ --定义游标
+cursor emp_cursor is select &quot;DrugCode&quot;,&quot;Total&quot;,&quot;Count&quot; as &quot;Count1&quot;,&quot;SellPrice&quot; ,&quot;Batch&quot;  from &quot;HPD_INSTOCK_TEMP&quot; where &quot;InStockCode&quot;=InStockCode;
+ --定义游标变量
+emp_c emp_cursor%rowtype;
+
+//必须一样 。如果写成emp_c.DrugCode是会报错
+begin
+  begin
+     select count(1) into drug_num from &quot;his_system_drug_info&quot;  where &quot;drug_no&quot;=emp_c.&quot;DrugCode&quot;;    
+     select count(1) into num from &quot;his_pharmacy_storage&quot; where &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot; and&quot;batch_group_no&quot;=emp_c.&quot;Batch&quot; and &quot;stock_qty&quot;&gt;=emp_c.&quot;Count1&quot;;
+     end;    
+end &quot;Pro_Sprk_Cancel&quot;;
+</code></pre><p><strong>4、这个没有试，但是我觉得每个sql都要用begin end框起来</strong><br><strong>5、orcale的存储过程中用到的循环可在一下看到，写的 很详细。其中注意的是for循环不需要打开游标和关闭游标，但是fetch循环则需要，这一点在下面的链接中写的很清楚</strong><br><a href="https://blog.csdn.net/qq_26222859/article/details/52261787" target="_blank" rel="noopener">https://blog.csdn.net/qq_26222859/article/details/52261787</a></p>
+<p><strong>完成demo</strong><br>demo1</p>
+<pre><code>CREATE OR REPLACE 
+procedure Pro_Sprk_Cancel(
+StoreHouseID varchar2,  
+   InStockCode varchar2,  
+    Registrar varchar2,    
+Operator1 varchar2  
+)
+as 
+num number;
+drug_num number;
+cursor emp_cursor is select &quot;DrugCode&quot;,&quot;Total&quot;,&quot;Count&quot; as &quot;Count1&quot;,&quot;SellPrice&quot; ,&quot;Batch&quot;  from &quot;HPD_INSTOCK_TEMP&quot; where &quot;InStockCode&quot;=InStockCode;
+begin
+   for emp_c in emp_cursor LOOP
+
+     begin
+     select count(1) into drug_num from &quot;his_system_drug_info&quot;  where &quot;drug_no&quot;=emp_c.&quot;DrugCode&quot;;     
+     select count(1) into num from &quot;his_pharmacy_storage&quot; where &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot; and&quot;batch_group_no&quot;=emp_c.&quot;Batch&quot; and &quot;stock_qty&quot;&gt;=emp_c.&quot;Count1&quot;;
+     end;    
+
+     if drug_num=0 or num =0 then
+      BEGIN
+       dbms_output.put_line(&apos;药品表中没有这个药品、库存明细表没有这个药品或数量大于库存数量&apos;);
+       rollback;  
+      END;
+     else
+        begin
+        update &quot;his_pharmacy_storage&quot;
+        set &quot;stock_qty&quot; = &quot;stock_qty&quot; - emp_c.&quot;Count1&quot;,
+            &quot;stock_total_price&quot; = &quot;stock_total_price&quot; - emp_c.&quot;Total&quot;
+         where
+         &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot;
+         and
+         &quot;batch_group_no&quot;=emp_c.&quot;Batch&quot;; 
+
+         update  &quot;his_pharmacy_stockinfo&quot;
+         set &quot;stock_qty&quot; = &quot;stock_qty&quot; - emp_c.&quot;Count1&quot;,
+         &quot;stock_total_price&quot; = &quot;stock_total_price&quot; - emp_c.&quot;Total&quot;
+           where
+           &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot;;
+         end;
+     end if;
+
+   END LOOP; 
+commit; //没有错误就commit提交
+EXCEPTION  //捕捉错误，rollback ，返回提示信息
+ when others THEN 
+ rollback;
+ dbms_output.put_line(&apos;退库失败&apos;);
+end Pro_Sprk_Cancel;
+</code></pre><p>demo2</p>
+<pre><code>CREATE OR REPLACE 
+PROCEDURE Pro_Sprk(
+
+     InStockCode  in varchar2 ,
+     Operator1    in varchar2   
+) as
+drug_num number;
+num number;
+storage_num number;
+cursor emp_cursor is select &quot;DrugCode&quot;,&quot;Total&quot;,&quot;Count&quot; as &quot;Count1&quot;,&quot;SellPrice&quot;,&quot;Manufacture&quot; ,&quot;Batch&quot; from &quot;HPD_PHARMACY_DETAIL&quot; where &quot;InStockCode&quot;= InStockCode;
+ emp_c emp_cursor%rowtype;
+BEGIN
+ dbms_output.put_line(&apos;遍历游标，将游标中的数据放入变量&apos;);
+ --遍历游标，将游标中的数据放入变量
+ for  emp_c in emp_cursor LOOP
+--判断药品表中是否有这个药品
+begin
+select count(1) into drug_num from &quot;his_system_drug_info&quot; where &quot;drug_no&quot;=emp_c.&quot;DrugCode&quot;;
+end;
+if drug_num=0 then
+   --药品表中没有这一条数据,回滚
+  begin
+   dbms_output.put_line(&apos;药品表中没有这个药品&apos;);
+   rollback;
+  end;
+end if;
+--判断库存表中是否有这个编号的药品
+begin
+select count(1) into num from &quot;his_pharmacy_stockinfo&quot; where &quot;drug_no&quot;= emp_c.&quot;DrugCode&quot;;
+end;
+--有的话更新库存表的金额和数量
+if num&gt;0 then
+  --更新库存表金额和数量
+dbms_output.put_line(&apos;更新库存表金额和数量&apos;);
+  begin
+update  &quot;his_pharmacy_stockinfo&quot;
+set &quot;stock_qty&quot; = &quot;stock_qty&quot; + emp_c.&quot;Count1&quot;,
+      &quot;stock_total_price&quot; = &quot;stock_total_price&quot; + emp_c.&quot;Total&quot;
+    where
+      &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot;;
+end;  
+else
+  --没有就新增一条库存记录
+begin
+dbms_output.put_line(&apos;1&apos;);
+insert into &quot;his_pharmacy_stockinfo&quot;
+(
+&quot;id&quot; ,
+&quot;drug_no&quot;,
+&quot;drug_name&quot;,
+&quot;drug_type&quot;,
+&quot;system_type&quot;,
+&quot;retail_price&quot;,
+&quot;stock_qty&quot;,
+&quot;stock_total_price&quot;,
+&quot;preout_sum&quot;,
+&quot;preout_total_price&quot;,
+&quot;lack_flag&quot;,
+&quot;unit_flag&quot;,
+&quot;min_sum&quot;,
+&quot;operator_name&quot;,
+&quot;operator_time&quot;
+)select
+HIS_PHARMACY_STOCKINFO_SEQ.NEXTVAL,
+&quot;drug_no&quot;,
+&quot;drug_name&quot;,
+&quot;drug_type&quot;,
+&quot;system_type&quot;,
+emp_c.&quot;SellPrice&quot;,
+ emp_c.&quot;Count1&quot;,
+ emp_c.&quot;Total&quot;,
+ 0,
+ 0,
+ 0,
+ 0,
+ 1,
+ Operator1,
+ SYSDATE
+ from
+ &quot;his_system_drug_info&quot;
+ where &quot;drug_no&quot;= emp_c.&quot;DrugCode&quot;;
+end;
+end if;
+begin
+  select count(1) into storage_num from &quot;his_pharmacy_storage&quot; where &quot;drug_no&quot;= emp_c.&quot;DrugCode&quot; and &quot;batch_group_no&quot;=emp_c.&quot;Batch&quot;;
+end;
+if storage_num&gt;0 then
+  begin
+  update &quot;his_pharmacy_storage&quot;
+  set &quot;stock_qty&quot; = &quot;stock_qty&quot; + emp_c.&quot;Count1&quot;,
+      &quot;stock_total_price&quot; = &quot;stock_total_price&quot; + emp_c.&quot;Total&quot;
+    where
+      &quot;drug_no&quot; = emp_c.&quot;DrugCode&quot;
+      and
+      &quot;batch_group_no&quot;=emp_c.&quot;Batch&quot;;
+   end;
+else
+begin
+dbms_output.put_line(&apos;2&apos;);
+insert into &quot;his_pharmacy_storage&quot; (
+&quot;id&quot;,--  ID
+&quot;drug_no&quot;,-- 药品编码
+&quot;drug_name&quot;,-- 药品名称
+&quot;drug_spell_no&quot;,-- 商品名拼音码
+&quot;drug_wb_no&quot;,--  商品名五笔码
+&quot;drug_define_no&quot;,  --商品名自定义码
+&quot;drug_regular_name&quot;, --通用名
+&quot;drug_regular_spell_no&quot;, --通用名拼音码
+&quot;drug_regular_wb_no&quot;,--  通用名五笔码
+&quot;drug_regular_define_no&quot;,--  通用名自定义码
+&quot;drug_formal_name&quot;,--  学名
+&quot;drug_formal_spell_no&quot;,--  学名拼音码
+&quot;drug_formal_wb_no&quot;,-- 学名五笔码
+&quot;drug_formal_define_no&quot;,-- 学名自定义码
+&quot;drug_alias_name&quot;,-- 别名
+&quot;drug_alias_spell_no&quot;,-- 别名拼音码
+&quot;drug_alias_wb_no&quot;,--  别名五笔码
+&quot;drug_alias_define_no&quot;,--  别名自定义码
+&quot;drug_regular_english_name&quot;,-- 英文通用名
+&quot;drug_english_alias_name&quot;,-- 英文别名
+&quot;drug_english_name&quot;,-- 英文名
+&quot;international_no&quot;,--  国际编码
+&quot;country_no&quot;,--  国家编码
+&quot;specs&quot;,
+&quot;producer&quot;,
+&quot;drug_type&quot;,
+&quot;system_type&quot;,
+&quot;batch_group_no&quot;,
+&quot;retail_price&quot;,--  零售价
+&quot;base_dose&quot;,-- 基本剂量
+&quot;drug_split_type&quot;,-- 拆分类型
+&quot;valid_state&quot;,-- 有效性标志
+&quot;madeself_flag&quot;,-- 自制标志
+&quot;test_flag&quot;,-- 是否需要试敏
+&quot;gmp_flag&quot;,--  GMP标志
+&quot;otc_flag&quot;,--  OTC标志
+&quot;show_flag&quot;,-- 大屏幕显示标记
+&quot;special_restriction_flag&quot;,--  特限药品标记
+&quot;lastest_flag&quot;,--  新药标记
+&quot;lack_flag&quot;,-- 缺药标志
+&quot;phy_effect_level_one&quot;,--  一级药理作用
+&quot;phy_effect_level_two&quot;,--  二级药理作用
+&quot;phy_effect_level_three&quot;,--  三级药理作用
+&quot;stock_qty&quot;,--  库存数量
+&quot;stock_total_price&quot;,--  库存金额
+&quot;preout_sum&quot;,-- 预扣库存数量
+&quot;preout_total_price&quot;,-- 预扣库存金额
+&quot;stock_state&quot;,--  药品库存状态
+&quot;operator_id&quot;,--  盘点人ID
+&quot;operator_name&quot;,--  盘点人姓名
+&quot;operate_date&quot;,-- 盘点时间
+&quot;expiration_warn_flag&quot;  --有效期预警标志
+ )select 
+ HIS_PHARMACY_STORAGE_SEQ.NEXTVAL,
+ &quot;drug_no&quot;,-- 药品编码
+&quot;drug_name&quot;,-- 药品名称
+&quot;drug_spell_no&quot;,-- 商品名拼音码
+&quot;drug_wb_no&quot;,--  商品名五笔码
+&quot;drug_define_no&quot;,  --商品名自定义码
+&quot;drug_regular_name&quot;, --通用名
+&quot;drug_regular_spell_no&quot;, --通用名拼音码
+&quot;drug_regular_wb_no&quot;,--  通用名五笔码
+&quot;drug_regular_define_no&quot;,--  通用名自定义码
+&quot;drug_formal_name&quot;,--  学名
+&quot;drug_formal_spell_no&quot;,--  学名拼音码
+&quot;drug_formal_wb_no&quot;,-- 学名五笔码
+&quot;drug_formal_define_no&quot;,-- 学名自定义码
+&quot;drug_alias_name&quot;,-- 别名
+&quot;drug_alias_spell_no&quot;,-- 别名拼音码
+&quot;drug_alias_wb_no&quot;,--  别名五笔码
+&quot;drug_alias_define_no&quot;,--  别名自定义码
+&quot;drug_regular_english_name&quot;,-- 英文通用名
+&quot;drug_english_alias_name&quot;,-- 英文别名
+&quot;drug_english_name&quot;,-- 英文名
+&quot;international_no&quot;,--  国际编码
+&quot;country_no&quot;,--  国家编码
+&quot;specs&quot;,
+emp_c.&quot;Manufacture&quot;,
+&quot;drug_type&quot;,
+&quot;system_type&quot;,
+emp_c.&quot;Batch&quot;,
+emp_c.&quot;SellPrice&quot;,
+&quot;base_dose&quot;,-- 基本剂量
+&quot;drug_split_type&quot;,-- 拆分类型
+&quot;valid_state&quot;,-- 有效性标志
+&quot;madeself_flag&quot;,-- 自制标志
+&quot;hypotest&quot;,-- 是否需要试敏
+&quot;gmp_flag&quot;,--  GMP标志
+&quot;otc_flag&quot;,--  OTC标志
+&quot;show_flag&quot;,-- 大屏幕显示标记
+&quot;special_restriction_flag&quot;,--  特限药品标记
+&quot;lastest_flag&quot;,--  新药标记
+0,-- 缺药标志
+&quot;phy_effect_level_one&quot;,--  一级药理作用
+&quot;phy_effect_level_two&quot;,--  二级药理作用
+&quot;phy_effect_level_three&quot;,--  三级药理作用
+emp_c.&quot;Count1&quot;,
+emp_c.&quot;Total&quot;,
+0,
+0,
+1,
+&apos;&apos;,
+Operator1,
+SYSDATE,
+0
+from
+ &quot;his_system_drug_info&quot;
+ where &quot;drug_no&quot;= emp_c.&quot;DrugCode&quot;;
+end;
+end if;
+END LOOP;
+commit;
+EXCEPTION 
+ WHEN others THEN
+    rollback;
+    dbms_output.put_line(&apos;入库失败&apos;);
+END Pro_Sprk;
+</code></pre>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://yoursite.com/passages/137/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title"></h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self"></a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 1056438464@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/1056438464/" target="_blank">Swj</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/passages/145/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/136/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+
+
+
+
+
+    
+  </body>
+</html>

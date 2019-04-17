@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Shang Wenjie">
+  
+  
+  <title>Spring框架——IOC | Hexo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Spring,">
+  
+
+  
+  <meta name="description" content="尚文杰的小站">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz","appkey":"WaR7nrzhliHj9aVwdQzkdlGd","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2018-02-10",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Shang Wenjie",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">SuuuperSwj</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静写些东西</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/1056438464/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2018-08-25
+    </span>
+    
+      <span>
+        | <a href="/categories/Spring/"><i class="fa fa-bookmark"></i>Spring</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Spring框架——IOC
+  </h1>
+  
+  <article class="passage-article">
+    <h3 id="1-IOC是什么？"><a href="#1-IOC是什么？" class="headerlink" title="1.IOC是什么？"></a>1.IOC是什么？</h3><p>ioc(inverse of controll ) 控制反转。<br>所谓控制反转就是把<strong>创建对象(bean)和维护对象(bean)</strong>的关系的权利从程序中转移到spring的容器(applicationContext.xml),而程序本身不再维护。<br>DI是什么?<br>di(dependency injection) 依赖注入: 实际上di和ioc是同一个概念，spring设计者认为di更准确表示spring核心技术</p>
+<h3 id="2-IOC如何获取bean"><a href="#2-IOC如何获取bean" class="headerlink" title="2.IOC如何获取bean"></a>2.IOC如何获取bean</h3><h4 id="-从ApplicationContex-应用上下文容器中获取bean和从bean工厂容器中获取bean"><a href="#-从ApplicationContex-应用上下文容器中获取bean和从bean工厂容器中获取bean" class="headerlink" title=" 从ApplicationContex 应用上下文容器中获取bean和从bean工厂容器中获取bean"></a> 从ApplicationContex 应用上下文容器中获取bean和从bean工厂容器中获取bean</h4><pre><code>//从ApplicationContext中取bean
+ApplicationContext ac=new ClassPathXmlApplicationContext(&quot;com/hsp/ioc/beans.xml&quot;);
+//当我们去实例化beans.xml,该文件中配置的bean被实例(该bean scope是 singleton)从bean中取出student
+
+
+        //如果我们使用beanfactory去获取bean，当你只是实例化该容器， 那么
+        //容器的bean不被实例化,只有当你去使用getBean某个bean时，才会实时的创建.
+
+        BeanFactory factory = new XmlBeanFactory(
+                new ClassPathResource(&quot;com/hsp/ioc/beans.xml&quot;));
+        factory.getBean(&quot;student&quot;);
+</code></pre><p><strong>两者的区别：</strong><br>1.如果使用<strong>ApplicationContext</strong> ，则配置的bean如果是 singlton不管你用不用，都被实例化.(好处就是可以预先加载,缺点就是耗内存)<br>2.如果是 <strong>BeanFactory</strong> ,则当你获取beanfacotry时候，配置的bean不会被马上实例化，当你使用的时候，才被实例(好处节约内存,缺点就是速度)</p>
+<h3 id="3-IOC处理对象的依赖关系"><a href="#3-IOC处理对象的依赖关系" class="headerlink" title="3.IOC处理对象的依赖关系"></a>3.IOC处理对象的依赖关系</h3><p><strong>set注入的缺点是无法清晰表达哪些属性是必须的，哪些是可选的，构造注入的优势是通过构造强制依赖关系，不可能实例化不完全的或无法使用的bean。</strong></p>
+<h4 id="3-1-set方法注入值"><a href="#3-1-set方法注入值" class="headerlink" title="3.1 set方法注入值"></a>3.1 set方法注入值</h4><ul>
+<li>普通字段赋值</li>
+<li><p>集合属性 (list/map/property)</p>
+<p>//Department类:<br>public class Department {</p>
+<pre><code>private String name;
+private String [] empName;
+private List empList;
+private Set empsets;
+private Map empMaps;
+
+public Set getEmpsets() {
+    return empsets;
+}
+public void setEmpsets(Set empsets) {
+    this.empsets = empsets;
+}
+public String[] getEmpName() {
+    return empName;
+}
+public void setEmpName(String[] empName) {
+    this.empName = empName;
+}
+public String getName() {
+    return name;
+}
+public void setName(String name) {
+    this.name = name;
+}
+public List getEmpList() {
+    return empList;
+}
+public void setEmpList(List empList) {
+    this.empList = empList;
+}
+public Map getEmpMaps() {
+    return empMaps;
+}
+public void setEmpMaps(Map empMaps) {
+    this.empMaps = empMaps;
+}
+</code></pre><p>}</p>
+</li>
+</ul>
+<pre><code>//Employeel类 
+package com.hsp.collection;
+public class Employee {
+    private String name;
+    private int id;
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+
+
+
+
+
+
+            小明
+            小明小明
+            小明小明小明小明
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    【点http协议 referer 】
+
+
+            abcd
+            hello
+
+
+
+
+
+
+
+
+
+
+
+
+//继承配置
+public class Student {
+    private String name;
+    private String age;
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getAge() {
+        return name;
+    }
+    public void setAge(String age) {
+        this.name = name;
+    }
+}
+public class Gradate extends Student{
+    ....
+}
+
+在beans.xml文件中体现配置 
+</code></pre><h4 id="3-2-构造函数赋值"><a href="#3-2-构造函数赋值" class="headerlink" title="3.2 构造函数赋值"></a>3.2 构造函数赋值</h4><pre><code>public class Employee {
+
+    private String name;
+    //默认构造函数
+    public Employee(){
+
+    }
+
+    public Employee(String name, int age) {
+
+        System.out.println(&quot;Employee(String name, int age) 函数被调用..&quot;);
+        this.name = name;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+}
+</code></pre><p>index:第几个参数<br>type：参数类型<br>value:参数<br><strong>spring会根据传入的参数，自动调用相应的狗崽函数</strong></p>
+<h4 id="3-3自动装配bean的属性值-autowire-”…-”"><a href="#3-3自动装配bean的属性值-autowire-”…-”" class="headerlink" title="3.3自动装配bean的属性值(autowire=”….”)"></a>3.3自动装配bean的属性值(autowire=”….”)</h4><p><strong>Spring官方文档说明</strong><br><img src="https://www.swj233.top/usr/uploads/2018/08/1642963009.png" alt><br><strong>原理</strong><br><img src="https://www.swj233.top/usr/uploads/2018/08/2360614417.png" alt></p>
+<p><strong>(1) byName: byName:寻找和属性名相同的bean,找不到,装不上</strong></p>
+<pre><code>*（如下面的例子:当master和dog对象加载到内存中时，master中的dog其实是个null。当在获取bean的时候master.getDog().getName        ()，ioc会根据你设置autowire=“byName” ，来从内存中查找对象名=dog的，然后把dog对象的内存地址给master的dog属性）*
+</code></pre><p><strong>(2) byType: byType:寻找和属性类型相同的bean,找不到,装不上,找到多个抛异常。</strong></p>
+<pre><code>*（同byName原理一样，只是要查找类型是dog类型的对象，名字可以不相同，但是类型相同就行）*
+</code></pre><p><strong>(3) constructor: autowire=”constructor”</strong><br>说明 ： 查找和bean的构造参数一致的一个或多个bean，<strong>若找不到或找到多个抛异常</strong>。按照参数的类型装配</p>
+<pre><code>（查找master中有没有狗杂函数，用于接受dog对象）
+
+  public Master(Dog dog){
+        this.dog = dog;
+  }
+</code></pre><p><strong>(4) autodetect</strong><br>说明 ： autowire=”autodetect”(3)和(2)之间选一个方式。不确定性的处理与(3)和(2)一致。<br><strong>(5) defualt</strong><br>autowire默认是defualt，而defualt-autorwire默认是no<br>这个需要在<br>当你在指定了 default-atuowrite后， 所有的bean的 默认的autowire就是 指定的装配方法;<br>如果没有在 没有 defualt-autorwire=“指定” ，则默认是<br>defualt-autorwire=”no”</p>
+<p><strong>调用xml配置文件</strong></p>
+<pre><code>    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        ApplicationContext ac=new ClassPathXmlApplicationContext(&quot;com/hsp/autowire/beans.xml&quot;);
+        //获取
+        Master master=(Master) ac.getBean(&quot;master&quot;);
+        System.out.println(master.getName()+&quot; 养 &quot;+master.getDog().getName());
+    }
+
+}
+</code></pre><p><strong>Master和Dog对象</strong></p>
+<pre><code>//Master
+public class Master {
+
+    private String name;
+    private Dog dog;
+
+
+
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Dog getDog() {
+        return dog;
+    }
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
+}
+
+//Dog
+public class Dog {
+    private String name;
+    private int age;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+</code></pre><p><strong>xml配置文件</strong></p>
+<pre><code>顺平
+</code></pre><h4 id="3-4-通过注解配置ioc"><a href="#3-4-通过注解配置ioc" class="headerlink" title="3.4 通过注解配置ioc"></a>3.4 通过注解配置ioc</h4><p><strong>配置方式与注解方式区别:</strong></p>
+<pre><code>1. 配置， 便于维护(配置过多，比较繁琐)
+2. 注解， 开发方便(简化配置，不利于后期维护，如果修改对象创建、关系处理，需要改代码！)
+</code></pre><p><strong>3.4.1 将bean注入到ioc中</strong><br><code>@Component</code><br>表示一个组件(类)，把当前组件加入ioc容器加入容器的组件的名称默认是类名第一个字母小写，<br><code>@Component(&quot;classname&quot;)</code>指定加入ioc容器的组件类的类名<br>相当于如下所示</p>
+<p><strong>以下注解</strong>作用和<code>@Component</code>一样，只是更容易区分组件类型<br><code>@Repository</code> 标识是一个持久层的组件<br><code>@Service</code> 标识是一个业务逻辑层的组件<br><code>@Controller</code> 标识是一个控制层的组件<br><strong>3.4.1 处理bean中的依赖关系</strong><br><code>@Resource</code></p>
+<ol>
+<li>默认根据修饰的字段名称会取ioc容器找对象自动注入找到后注入</li>
+<li>如果名称没有找到，再根据类型查找 找到后就立刻注入。如果改类型在ioc容器中有多个对象，报错！</li>
+<li>根据类型也没有找到对象，报错！<br><code>@Resource(name =&quot;&quot;)</code> 会根据指定的名称去容器找对象自动注入</li>
+</ol>
+<p>相当于如下所示</p>
+<p><strong>代码示例</strong></p>
+<pre><code>//@Component(&quot;userService&quot;)  // 把当前类加入IOC容器
+//@Service(&quot;userService&quot;)  // 把当前类加入IOC容器
+
+@Service
+public class UserService implements IUserService {
+
+    //@Resource(name = &quot;userDao&quot;)   // 根据”userDao“去ioc容器找对象，找到后注入到当前方法参数
+
+    @Resource        // 默认会根据private IUserDao userDao 这里的名称去容器找； 如果没有找到，再根据类型找，再没有找到就报错！
+    private IUserDao userDao;
+
+    public void save() {
+        userDao.save();
+    }
+}
+</code></pre>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-IOC是什么？"><span class="toc-text">1.IOC是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-IOC如何获取bean"><span class="toc-text">2.IOC如何获取bean</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-从ApplicationContex-应用上下文容器中获取bean和从bean工厂容器中获取bean"><span class="toc-text"> 从ApplicationContex 应用上下文容器中获取bean和从bean工厂容器中获取bean</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IOC处理对象的依赖关系"><span class="toc-text">3.IOC处理对象的依赖关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-set方法注入值"><span class="toc-text">3.1 set方法注入值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-构造函数赋值"><span class="toc-text">3.2 构造函数赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3自动装配bean的属性值-autowire-”…-”"><span class="toc-text">3.3自动装配bean的属性值(autowire=”….”)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-通过注解配置ioc"><span class="toc-text">3.4 通过注解配置ioc</span></a></li></ol></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://yoursite.com/passages/220/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title"></h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self"></a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 1056438464@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/1056438464/" target="_blank">Swj</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/passages/223/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/215/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+
+
+
+
+
+    
+  </body>
+</html>

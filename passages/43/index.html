@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Shang Wenjie">
+  
+  
+  <title>CentSO 7.4 下安装jdk1.8、mysql、php服务 | Hexo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Liunx,php-fpm,php,命令,grep,mysql,文件,open-jdk,安装,系统,gcj,javarpm,jdkrpm,java,yum,1.8.0,service,">
+  
+
+  
+  <meta name="description" content="尚文杰的小站">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz","appkey":"WaR7nrzhliHj9aVwdQzkdlGd","comment":true,"count":true},
+    welcome: {"enable":false,"interval":30},
+    start_time: "2018-02-10",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Shang Wenjie",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">SuuuperSwj</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静写些东西</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/1056438464/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2018-04-23
+    </span>
+    
+      <span>
+        | <a href="/categories/Liunx/"><i class="fa fa-bookmark"></i>Liunx</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    CentSO 7.4 下安装jdk1.8、mysql、php服务
+  </h1>
+  
+  <article class="passage-article">
+    <h1 id="1-安装jdk1-8"><a href="#1-安装jdk1-8" class="headerlink" title="1.安装jdk1.8"></a>1.安装jdk1.8</h1><h2 id="1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><a href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk" class="headerlink" title="1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk"></a>1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</h2><p>命令：</p>
+<pre><code>rpm -qa |grep java
+rpm -qa |grep jdk
+rpm -qa |grep gcj
+</code></pre><p>如果没有输入信息表示没有安装。<br>如果安装可以使用如果安装可以使用</p>
+<pre><code>rpm -qa | grep java | xargs rpm -e --nodeps 
+</code></pre><p>批量卸载所有带有Java的文件 这句命令的关键字是java</p>
+<h2 id="1-2-检索包含java的列表"><a href="#1-2-检索包含java的列表" class="headerlink" title="1.2 检索包含java的列表"></a>1.2 检索包含java的列表</h2><pre><code>yum list java*
+</code></pre><h2 id="1-3-检索1-8的列表"><a href="#1-3-检索1-8的列表" class="headerlink" title="1.3 检索1.8的列表"></a>1.3 检索1.8的列表</h2><pre><code>yum list java-1.8*   
+</code></pre><h2 id="1-4-安装1-8-0的所有文件"><a href="#1-4-安装1-8-0的所有文件" class="headerlink" title="1.4 安装1.8.0的所有文件"></a>1.4 安装1.8.0的所有文件</h2><pre><code>yum install java-1.8.0-openjdk* -y
+</code></pre><h2 id="1-5-使用命令检查是否安装成功"><a href="#1-5-使用命令检查是否安装成功" class="headerlink" title="1.5 使用命令检查是否安装成功"></a>1.5 使用命令检查是否安装成功</h2><pre><code>java -version
+</code></pre><h1 id="2-安装mysql、php、httpd服务"><a href="#2-安装mysql、php、httpd服务" class="headerlink" title="2.安装mysql、php、httpd服务"></a>2.安装mysql、php、httpd服务</h1><pre><code>yum install -y httpd php php-fpm mysql mysql-server php-mysql
+</code></pre><h2 id="2-1-服务启动"><a href="#2-1-服务启动" class="headerlink" title="2.1 服务启动"></a>2.1 服务启动</h2><pre><code>service httpd start  
+service mysqld start  
+service php-fpm start
+</code></pre><h2 id="2-2-查看状态"><a href="#2-2-查看状态" class="headerlink" title="2.2 查看状态"></a>2.2 查看状态</h2><pre><code>netstat -tunlp
+</code></pre>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-安装jdk1-8"><span class="toc-text">1.安装jdk1.8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><span class="toc-text">1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-检索包含java的列表"><span class="toc-text">1.2 检索包含java的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-检索1-8的列表"><span class="toc-text">1.3 检索1.8的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-安装1-8-0的所有文件"><span class="toc-text">1.4 安装1.8.0的所有文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-使用命令检查是否安装成功"><span class="toc-text">1.5 使用命令检查是否安装成功</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-安装mysql、php、httpd服务"><span class="toc-text">2.安装mysql、php、httpd服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-服务启动"><span class="toc-text">2.1 服务启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-查看状态"><span class="toc-text">2.2 查看状态</span></a></li></ol></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://yoursite.com/passages/43/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/php-fpm/"><i class="fa fa-tags"></i>php-fpm</a>
+     
+      <a href="/tags/php/"><i class="fa fa-tags"></i>php</a>
+     
+      <a href="/tags/命令/"><i class="fa fa-tags"></i>命令</a>
+     
+      <a href="/tags/grep/"><i class="fa fa-tags"></i>grep</a>
+     
+      <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
+     
+      <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
+     
+      <a href="/tags/open-jdk/"><i class="fa fa-tags"></i>open-jdk</a>
+     
+      <a href="/tags/安装/"><i class="fa fa-tags"></i>安装</a>
+     
+      <a href="/tags/系统/"><i class="fa fa-tags"></i>系统</a>
+     
+      <a href="/tags/gcj/"><i class="fa fa-tags"></i>gcj</a>
+     
+      <a href="/tags/javarpm/"><i class="fa fa-tags"></i>javarpm</a>
+     
+      <a href="/tags/jdkrpm/"><i class="fa fa-tags"></i>jdkrpm</a>
+     
+      <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
+     
+      <a href="/tags/yum/"><i class="fa fa-tags"></i>yum</a>
+     
+      <a href="/tags/1-8-0/"><i class="fa fa-tags"></i>1.8.0</a>
+     
+      <a href="/tags/service/"><i class="fa fa-tags"></i>service</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title"></h5>
+        
+          <span class="site-footer-item">
+            <a href target="_self"></a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 1056438464@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/1056438464/" target="_blank">Swj</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/passages/44/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/40/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+
+
+
+
+
+    
+  </body>
+</html>
