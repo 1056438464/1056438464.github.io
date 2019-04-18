@@ -29,9 +29,9 @@
   // print github and demo info
   console.log(
     '\n%c Theme-AD v2.4.0 %c' + 
-    ' 🎉 https://github.com/dongyuanxin/theme-ad 🎉\n' + 
+    ' 🎉 https://github.com/1056438464 🎉\n' + 
     '\n%c Preview Online %c' + 
-    ' 🔍 https://godbmw.com/ 🔍  \n' , 
+    ' 🔍🔍 \n' , 
     'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', ''
   );
 
