@@ -174,16 +174,8 @@
   </h1>
   
   <article class="passage-article">
-    <h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><pre><code>myString.chars().mapToObj(c -&gt; (char) c).collect(Collectors.toList());
-</code></pre><h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><pre><code>String s = &quot;asdasdasda&quot;;
-char[] chars = s.toCharArray();
-List asList = Arrays.asList(chars);
-
-    List listC = new ArrayList();
-    for (char c : chars) {
-        listC.add(c);
-    }
-</code></pre>
+    <h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myString.chars().mapToObj(c -&gt; (<span class="keyword">char</span>) c).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"asdasdasda"</span>;</span><br><span class="line"><span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">List&lt;<span class="keyword">char</span>[]&gt; asList = Arrays.asList(chars);</span><br><span class="line"></span><br><span class="line">    List&lt;Character&gt; listC = <span class="keyword">new</span> ArrayList&lt;Character&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">char</span> c : chars) &#123;</span><br><span class="line">        listC.add(c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

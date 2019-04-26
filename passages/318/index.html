@@ -174,33 +174,7 @@
   </h1>
   
   <article class="passage-article">
-    <pre><code>Calendar cale = Calendar.getInstance();
-    SimpleDateFormat format = new SimpleDateFormat(&quot;yyyyMMdd&quot;);
-    String firstday, lastday;
-    // 获取前月的第一天
-    cale = Calendar.getInstance();
-    cale.add(Calendar.MONTH, 0);
-    cale.set(Calendar.DAY_OF_MONTH, 1);
-    firstday = format.format(cale.getTime());
-    // 获取前月的最后一天
-    cale = Calendar.getInstance();
-    cale.add(Calendar.MONTH, 1);
-    cale.set(Calendar.DAY_OF_MONTH, 0);
-    lastday = format.format(cale.getTime());
-
-
-    //下个月的第一天和最后一天
-    String nextFirstday, nextLastday;
-    Calendar nextCale = Calendar.getInstance();
-
-    nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + 1);
-    nextCale.set(Calendar.DAY_OF_MONTH, 1);
-    nextFirstday = format.format(nextCale.getTime());
-
-    nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + 1);
-    nextCale.set(Calendar.DAY_OF_MONTH, 0);
-    nextLastday = format.format(nextCale.getTime());
-</code></pre>
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Calendar cale = Calendar.getInstance();</span><br><span class="line">SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyyMMdd"</span>);</span><br><span class="line">String firstday, lastday;</span><br><span class="line"><span class="comment">// 获取前月的第一天</span></span><br><span class="line">cale = Calendar.getInstance();</span><br><span class="line">cale.add(Calendar.MONTH, <span class="number">0</span>);</span><br><span class="line">cale.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">firstday = format.format(cale.getTime());</span><br><span class="line"><span class="comment">// 获取前月的最后一天</span></span><br><span class="line">cale = Calendar.getInstance();</span><br><span class="line">cale.add(Calendar.MONTH, <span class="number">1</span>);</span><br><span class="line">cale.set(Calendar.DAY_OF_MONTH, <span class="number">0</span>);</span><br><span class="line">lastday = format.format(cale.getTime());</span><br><span class="line"></span><br><span class="line"><span class="comment">//下个月的第一天和最后一天</span></span><br><span class="line">String nextFirstday, nextLastday;</span><br><span class="line">Calendar nextCale = Calendar.getInstance();</span><br><span class="line"></span><br><span class="line">nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">nextCale.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">nextFirstday = format.format(nextCale.getTime());</span><br><span class="line"></span><br><span class="line">nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">nextCale.set(Calendar.DAY_OF_MONTH, <span class="number">0</span>);</span><br><span class="line">nextLastday = format.format(nextCale.getTime());</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
