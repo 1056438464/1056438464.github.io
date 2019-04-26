@@ -174,63 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>例1</p>
-<pre><code>INSERT INTO PointPlan.dbo.T_D_PlanProdsInfo
-(
-GroupCD,
-StoreMode,
-PromotionCD,
-ProductCD,
-point
-)
+    <p>例1<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertPlanProdsInfo"</span> <span class="attr">parameterType</span>=<span class="string">"java.util.ArrayList"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        INSERT INTO PointPlan.dbo.T_D_PlanProdsInfo</span><br><span class="line">        (</span><br><span class="line">        GroupCD,</span><br><span class="line">        StoreMode,</span><br><span class="line">        PromotionCD,</span><br><span class="line">        ProductCD,</span><br><span class="line">        point</span><br><span class="line">        )</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">item</span>=<span class="string">"info"</span> <span class="attr">separator</span>=<span class="string">"union all"</span>&gt;</span></span><br><span class="line">            (</span><br><span class="line">            SELECT GroupCD</span><br><span class="line">            ,0</span><br><span class="line">            ,1</span><br><span class="line">            ,#&#123;info.ProductCD&#125;</span><br><span class="line">            ,#&#123;info.Point&#125;</span><br><span class="line">            FROM PointPlan.dbo.T_D_PlanInfo</span><br><span class="line">            WHERE ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">            AND SubID=#&#123;info.SubID&#125;</span><br><span class="line"></span><br><span class="line">            )</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>例2<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertRewardMaster"</span> <span class="attr">parameterType</span>=<span class="string">"java.util.List"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span>  <span class="attr">item</span>=<span class="string">"info"</span>   <span class="attr">separator</span>=<span class="string">";"</span>&gt;</span></span><br><span class="line">       INSERT INTO PMCreator.dbo.R_RewardMaster</span><br><span class="line">       (</span><br><span class="line">         MasterStoreCode,</span><br><span class="line">         MaintenanceStoreMode,</span><br><span class="line">         PromotionCode,</span><br><span class="line">         Code,</span><br><span class="line">         OfferLevel,</span><br><span class="line">         RewardType,</span><br><span class="line">         RewardValue,</span><br><span class="line">         RewardLevelType,</span><br><span class="line">         ItemCode,</span><br><span class="line">         Department,</span><br><span class="line">         Tender_ID</span><br><span class="line">       )</span><br><span class="line"></span><br><span class="line">           (</span><br><span class="line">           SELECT m.MasterStoreCode,</span><br><span class="line">           0,</span><br><span class="line">           1,</span><br><span class="line">           MAX(Code)+1,</span><br><span class="line">           0,</span><br><span class="line">           6,</span><br><span class="line">           #&#123;info.Point&#125;,</span><br><span class="line">           1,</span><br><span class="line">           #&#123;info.ProductCD&#125;,</span><br><span class="line">           0,</span><br><span class="line">           0</span><br><span class="line">           FROM PMCreator.dbo.R_RewardMaster m</span><br><span class="line">           INNER JOIN PointPlan.dbo.T_D_PlanInfo p</span><br><span class="line">           ON m.MasterStoreCode=p.GroupCD</span><br><span class="line">           WHERE p.ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">           AND p.SubID=#&#123;info.subID&#125;</span><br><span class="line">           GROUP BY m.MasterStoreCode</span><br><span class="line">           )</span><br><span class="line"></span><br><span class="line">       <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 
-    (
-    SELECT GroupCD
-    ,0
-    ,1
-    ,#{info.ProductCD}
-    ,#{info.Point}
-    FROM PointPlan.dbo.T_D_PlanInfo
-    WHERE ApplyCD=#{info.ApplyCD}
-    AND SubID=#{info.SubID}
-
-    )
-</code></pre><p>例2</p>
-<pre><code>INSERT INTO PMCreator.dbo.R_RewardMaster
-(
-  MasterStoreCode,
-  MaintenanceStoreMode,
-  PromotionCode,
-  Code,
-  OfferLevel,
-  RewardType,
-  RewardValue,
-  RewardLevelType,
-  ItemCode,
-  Department,
-  Tender_ID
-)
-
-    (
-    SELECT m.MasterStoreCode,
-    0,
-    1,
-    MAX(Code)+1,
-    0,
-    6,
-    #{info.Point},
-    1,
-    #{info.ProductCD},
-    0,
-    0
-    FROM PMCreator.dbo.R_RewardMaster m
-    INNER JOIN PointPlan.dbo.T_D_PlanInfo p
-    ON m.MasterStoreCode=p.GroupCD
-    WHERE p.ApplyCD=#{info.ApplyCD}
-    AND p.SubID=#{info.subID}
-    GROUP BY m.MasterStoreCode
-    )
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
