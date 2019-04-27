@@ -175,65 +175,21 @@
   
   <article class="passage-article">
     <p>转载：<a href="https://blog.csdn.net/signjing/article/details/69357769" target="_blank" rel="noopener">https://blog.csdn.net/signjing/article/details/69357769</a></p>
-<p>举例<br>创建一个文件，文件共10行，每行的内容依次为1-10数字，如下：</p>
-<pre><code>$ cat testfile
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-
-$ cat testfile | wc -l 
-10
-</code></pre><p>当k=3时，分别执行上述命令：</p>
-<pre><code>$ head -n 3 testfile 
-1
-2
-3
-
-$ head -n +3 testfile
-1
-2
-3
-</code></pre><p>由此可见，head -n k和head -n +k意义相同；</p>
-<pre><code>$ head -n -3 testfile 
-1
-2
-3
-4
-5
-6
-7
-</code></pre><p>-k的意义是除了最后k行的所有行。</p>
-<pre><code>$ tail -n 3 testfile 
-8
-9
-10
-
-$ tail -n -3 testfile 
-8
-9
-10
-</code></pre><p>由此可见，tail -n k和tail -n -k意义相同；</p>
-<pre><code>$ tail -n +3 testfile 
-3
-4
-5
-6
-7
-8
-9
-10
-</code></pre><p>+k的意义是从第k行开始，输出所有行；<br>总结</p>
+<p>举例<br>创建一个文件，文件共10行，每行的内容依次为1-10数字，如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cat testfile</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">$ cat testfile | wc -l </span><br><span class="line">10</span><br></pre></td></tr></table></figure></p>
+<p>当k=3时，分别执行上述命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ head -n 3 testfile </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line"></span><br><span class="line">$ head -n +3 testfile</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure></p>
+<p>由此可见，head -n k和head -n +k意义相同；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ head -n -3 testfile </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td></tr></table></figure></p>
+<p>-k的意义是除了最后k行的所有行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ tail -n 3 testfile </span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">$ tail -n -3 testfile </span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<p>由此可见，tail -n k和tail -n -k意义相同；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ tail -n +3 testfile </span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<p>+k的意义是从第k行开始，输出所有行；<br>总结</p>
 <ol>
-<li><code>head -n k=head -n +k，tail -n k=tail -n -k</code>，可以简单记忆为<code>头正尾负</code>；</li>
-<li>无论k前面的符号怎样，tail都是输出尾部内容，head都是输出头部内容的；</li>
-<li>特别注意tail -n +k，这里的k表示从第K行开始；（因此上例中，head -n -3输出7行，而tail -n +3输出8行。）</li>
+<li><p><code>head -n k=head -n +k，tail -n k=tail -n -k</code>，可以简单记忆为<code>头正尾负</code>；</p>
+</li>
+<li><p>无论k前面的符号怎样，tail都是输出尾部内容，head都是输出头部内容的；</p>
+</li>
+<li><p>特别注意tail -n +k，这里的k表示从第K行开始；（因此上例中，head -n -3输出7行，而tail -n +3输出8行。）</p>
+</li>
 </ol>
 
   </article>

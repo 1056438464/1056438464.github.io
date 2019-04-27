@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="1234567891011mysql -uroot -p //进入数据库show databases; //查看musql中数据库列表use dataname; //选择数据库名show tables; // 查看数据库中的所有表describe tablename; //查看表结构最后对表进行sql语句操作">
 
   
 
@@ -174,67 +174,7 @@
   </h1>
   
   <article class="passage-article">
-    <pre><code>mysql -uroot -p //进入数据库
-
-show databases; //查看musql中数据库列表
-
-use dataname; //选择数据库名
-
-show tables; // 查看数据库中的所有表
-
-describe tablename; //查看表结构
-
-最后对表进行sql语句操作
-</code></pre><p>过程：</p>
-<pre><code>MariaDB [(none)]&gt; show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| test               |
-| typecho            |
-+--------------------+
-5 rows in set (0.00 sec)
-
-MariaDB [(none)]&gt; use typecho;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-MariaDB [typecho]&gt; show tables;
-+-----------------------+
-| Tables_in_typecho     |
-+-----------------------+
-| typecho_comments      |
-| typecho_contents      |
-| typecho_fields        |
-| typecho_metas         |
-| typecho_options       |
-| typecho_relationships |
-| typecho_users         |
-+-----------------------+
-7 rows in set (0.00 sec)
-
-MariaDB [typecho]&gt; describe typecho_users;
-+------------+------------------+------+-----+---------+----------------+
-| Field      | Type             | Null | Key | Default | Extra          |
-+------------+------------------+------+-----+---------+----------------+
-| uid        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-| name       | varchar(32)      | YES  | UNI | NULL    |                |
-| password   | varchar(64)      | YES  |     | NULL    |                |
-| mail       | varchar(200)     | YES  | UNI | NULL    |                |
-| url        | varchar(200)     | YES  |     | NULL    |                |
-| screenName | varchar(32)      | YES  |     | NULL    |                |
-| created    | int(10) unsigned | YES  |     | 0       |                |
-| activated  | int(10) unsigned | YES  |     | 0       |                |
-| logged     | int(10) unsigned | YES  |     | 0       |                |
-| group      | varchar(16)      | YES  |     | visitor |                |
-| authCode   | varchar(64)      | YES  |     | NULL    |                |
-+------------+------------------+------+-----+---------+----------------+
-11 rows in set (0.00 sec)
-</code></pre>
+    <p>过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">| typecho            |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; use typecho;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">MariaDB [typecho]&gt; show tables;</span><br><span class="line">+-----------------------+</span><br><span class="line">| Tables_in_typecho     |</span><br><span class="line">+-----------------------+</span><br><span class="line">| typecho_comments      |</span><br><span class="line">| typecho_contents      |</span><br><span class="line">| typecho_fields        |</span><br><span class="line">| typecho_metas         |</span><br><span class="line">| typecho_options       |</span><br><span class="line">| typecho_relationships |</span><br><span class="line">| typecho_users         |</span><br><span class="line">+-----------------------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [typecho]&gt; describe typecho_users;</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">| Field      | Type             | Null | Key | Default | Extra          |</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">| uid        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name       | varchar(32)      | YES  | UNI | NULL    |                |</span><br><span class="line">| password   | varchar(64)      | YES  |     | NULL    |                |</span><br><span class="line">| mail       | varchar(200)     | YES  | UNI | NULL    |                |</span><br><span class="line">| url        | varchar(200)     | YES  |     | NULL    |                |</span><br><span class="line">| screenName | varchar(32)      | YES  |     | NULL    |                |</span><br><span class="line">| created    | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| activated  | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| logged     | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| group      | varchar(16)      | YES  |     | visitor |                |</span><br><span class="line">| authCode   | varchar(64)      | YES  |     | NULL    |                |</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">11 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

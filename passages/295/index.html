@@ -175,17 +175,7 @@
   
   <article class="passage-article">
     <p><code>注：GROUP BY 子句使用时必须放在 WHERE 子句中的条件之后，必须放在 ORDER BY 子句之前。</code></p>
-<h3 id="附：SQL执行顺序进行解读："><a href="#附：SQL执行顺序进行解读：" class="headerlink" title="附：SQL执行顺序进行解读："></a>附：SQL执行顺序进行解读：</h3><pre><code>　　(1)from 
-　　(2) join
-　　(3) on 
-　　(4) where 
-　　(5)group by
-　　(6) avg,sum.... （组函数）
-　　(7)having 
-　　(8) select 
-　　(9) distinct 
-　　(10) order by
-</code></pre>
+<h3 id="附：SQL执行顺序进行解读："><a href="#附：SQL执行顺序进行解读：" class="headerlink" title="附：SQL执行顺序进行解读："></a>附：SQL执行顺序进行解读：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">　　(1)from </span><br><span class="line">　　(2) join</span><br><span class="line">　　(3) on </span><br><span class="line">　　(4) where </span><br><span class="line">　　(5)group by</span><br><span class="line">　　(6) avg,sum.... （组函数）</span><br><span class="line">　　(7)having </span><br><span class="line">　　(8) select </span><br><span class="line">　　(9) distinct </span><br><span class="line">　　(10) order by</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

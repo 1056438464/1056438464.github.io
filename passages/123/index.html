@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="日志级别ALL 最低等级的，用于打开所有日志记录。TRACE designates finer-grained informational events than the DEBUG.Since:1.2.12，很低的日志级别，一般不会使用。DEBUG 指出细粒度信息事件对调试应用程序是非常有帮助的，主要用于开发过程中打印一些运行信息。INFO 消息在粗粒度级别上突出强调应用程序的运行过程。打印一些你感兴趣的或者重要的信息，这个可以用于生产环境中输出程序运行的一些重要信息，但是不能滥用，避免打印过多的日志。WARN 表明会出现潜在错误的情形，有些信息不是错误信息，但是也要给程序员的一些提示。ERROR 指出虽然发生错误事件，但仍然不影响系统的继续运行。打印错误和异常信息，如果不想输出太多的日志，可以使用这个级别。FATAL 指出每个严重的错误事件将会导致应用程序的退出。这个级别比较高了。重大错误，这种级别你可以直接停止程序了。OFF 最高等级的，用于关闭所有日志记录。">
 
   
 
@@ -174,33 +174,8 @@
   </h1>
   
   <article class="passage-article">
-    <p><img src="https://www.swj233.top/usr/uploads/2018/06/1973467574.png" alt="log4j配置文件位置" title="log4j配置文件位置"></p>
-<h4 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h4><p><strong>ALL</strong> 最低等级的，用于打开所有日志记录。</p>
-<p><strong>TRACE</strong> designates finer-grained informational events than the DEBUG.Since:1.2.12，很低的日志级别，一般不会使用。</p>
-<p><strong>DEBUG</strong> 指出细粒度信息事件对调试应用程序是非常有帮助的，主要用于开发过程中打印一些运行信息。</p>
-<p><strong>INFO</strong> 消息在粗粒度级别上突出强调应用程序的运行过程。打印一些你感兴趣的或者重要的信息，这个可以用于生产环境中输出程序运行的一些重要信息，但是不能滥用，避免打印过多的日志。</p>
-<p><strong>WARN</strong> 表明会出现潜在错误的情形，有些信息不是错误信息，但是也要给程序员的一些提示。</p>
-<p><strong>ERROR</strong> 指出虽然发生错误事件，但仍然不影响系统的继续运行。打印错误和异常信息，如果不想输出太多的日志，可以使用这个级别。</p>
-<p><strong>FATAL</strong> 指出每个严重的错误事件将会导致应用程序的退出。这个级别比较高了。重大错误，这种级别你可以直接停止程序了。</p>
-<p><strong>OFF</strong> 最高等级的，用于关闭所有日志记录。</p>
-<h4 id="log4j-properties配置文件详情"><a href="#log4j-properties配置文件详情" class="headerlink" title="log4j.properties配置文件详情"></a>log4j.properties配置文件详情</h4><pre><code>log4j.rootLogger=DEBUG,CONSOLE,A
-log4j.addivity.org.apache=false
-
-//设置日志打印控制台
-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
-log4j.appender.CONSOLE.Threshold=DEBUG //打印log级别是DEBUG以上的
-log4j.appender.CONSOLE.layout.ConversionPattern=%d{yyyy-MM-dd HH\:mm\:ss} -%-4r [%t] %-5p  %x - %m%n //定义打印日志格式
-log4j.appender.CONSOLE.Target=System.out //代替System.out
-log4j.appender.CONSOLE.Encoding=gbk
-log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
-
-//设置日志写入日志文件
-log4j.appender.A=org.apache.log4j.DailyRollingFileAppender  
-log4j.appender.A.File=${catalina.home}/logs/FH_log/PurePro_ //日志文件地址
-log4j.appender.A.DatePattern=yyyy-MM-dd&apos;.log&apos;
-log4j.appender.A.layout=org.apache.log4j.PatternLayout  
-log4j.appender.A.layout.ConversionPattern=[FH_sys]  %d{yyyy-MM-dd HH\:mm\:ss} %5p %c{1}\:%L \: %m%n
-</code></pre>
+    <p></p>
+<h4 id="log4j-properties配置文件详情"><a href="#log4j-properties配置文件详情" class="headerlink" title="log4j.properties配置文件详情"></a>log4j.properties配置文件详情</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">log4j.rootLogger=DEBUG,CONSOLE,A</span><br><span class="line">log4j.addivity.org.apache=false</span><br><span class="line"></span><br><span class="line">//设置日志打印控制台</span><br><span class="line">log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.CONSOLE.Threshold=DEBUG //打印log级别是DEBUG以上的</span><br><span class="line">log4j.appender.CONSOLE.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH\:mm\:ss&#125; -%-4r [%t] %-5p  %x - %m%n //定义打印日志格式</span><br><span class="line">log4j.appender.CONSOLE.Target=System.out //代替System.out</span><br><span class="line">log4j.appender.CONSOLE.Encoding=gbk</span><br><span class="line">log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout</span><br><span class="line"></span><br><span class="line">//设置日志写入日志文件</span><br><span class="line">log4j.appender.A=org.apache.log4j.DailyRollingFileAppender  </span><br><span class="line">log4j.appender.A.File=$&#123;catalina.home&#125;/logs/FH_log/PurePro_ //日志文件地址</span><br><span class="line">log4j.appender.A.DatePattern=yyyy-MM-dd&apos;.log&apos;</span><br><span class="line">log4j.appender.A.layout=org.apache.log4j.PatternLayout  </span><br><span class="line">log4j.appender.A.layout.ConversionPattern=[FH_sys]  %d&#123;yyyy-MM-dd HH\:mm\:ss&#125; %5p %c&#123;1&#125;\:%L \: %m%n</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -208,7 +183,7 @@ log4j.appender.A.layout.ConversionPattern=[FH_sys]  %d{yyyy-MM-dd HH\:mm\:ss} %5
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#日志级别"><span class="toc-text">日志级别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#log4j-properties配置文件详情"><span class="toc-text">log4j.properties配置文件详情</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#log4j-properties配置文件详情"><span class="toc-text">log4j.properties配置文件详情</span></a></li></ol>
   </div>
 </aside>
   

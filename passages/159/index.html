@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="transactionManager提供了两个实现类，但是这两个实现类必须实现Transaction这个接口Transaction中包含了三个重要的方法：commit（提交）、rollback（回滚），close（关闭）1234567891011public interfance Transaction&amp;#123;   Connection getConnection() throws SQLException;  void commit() throws SQLException;  void rollback() throws SQLException;  void close() throws SQLException;  Integer getTimeout() throws SQLException;&amp;#125;">
 
   
 
@@ -174,22 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>transactionManager提供了两个实现类，但是这两个实现类必须实现Transaction这个接口<br>Transaction中包含了三个重要的方法：commit（提交）、rollback（回滚），close（关闭）</p>
-<pre><code>public interfance Transaction{
-   Connection getConnection() throws SQLException;
-
-  void commit() throws SQLException;
-
-  void rollback() throws SQLException;
-
-  void close() throws SQLException;
-
-  Integer getTimeout() throws SQLException;
-}
-</code></pre><p>Mybatis 为Transaction 提供了两个实现类<strong>：jdbcTransaction</strong> 和 <strong>ManagedTransaction</strong></p>
-<p>配置分别是如下：</p>
+    <p>Mybatis 为Transaction 提供了两个实现类<strong>：jdbcTransaction</strong> 和<strong> ManagedTransaction</strong></p>
+<p>配置分别是如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;transactionManager type=&quot;JDBC&quot;&gt;</span><br><span class="line">&lt;transactionManager type=&quot;MANAGED&quot;&gt;</span><br></pre></td></tr></table></figure></p>
 <p>JdbcTransaction：顾名思义使用JdbcTransaction生成的JdbcTransaction对象完成对事务的提交（commit()）、回滚（rollback()）、关闭（close()）等；<br>ManagedTransaction：MyBatis自身不会去实现事务管理，而是让程序的容器来实现对事务的管理。把事务交给容器处理。默认情况下他会关闭链接，但有些情况下有一些容器不想关闭，这是就需要将closeConnection属性设置成false来阻止他默认关闭；</p>
-
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

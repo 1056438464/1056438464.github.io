@@ -174,13 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <h3 id="using只是on的一种特殊情况（同名列相等）"><a href="#using只是on的一种特殊情况（同名列相等）" class="headerlink" title="using只是on的一种特殊情况（同名列相等）"></a>using只是on的一种特殊情况（同名列相等）</h3><p>例：<br>1.常用的表关联</p>
-<pre><code>select * from students s
-inner join teacher t on t.linkUUID = s.linkUUID;
-</code></pre><p>2.使用using()前提是（students和teacher）两个表关联字段必须是一样的</p>
-<pre><code>select * from students
-inner join teacher using(linkUUID)
-</code></pre>
+    <h3 id="using只是on的一种特殊情况（同名列相等）"><a href="#using只是on的一种特殊情况（同名列相等）" class="headerlink" title="using只是on的一种特殊情况（同名列相等）"></a>using只是on的一种特殊情况（同名列相等）</h3><p>例：<br>1.常用的表关联<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> students s</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> teacher t <span class="keyword">on</span> t.linkUUID = s.linkUUID;</span><br></pre></td></tr></table></figure></p>
+<p>2.使用using()前提是（students和teacher）两个表关联字段必须是一样的<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> students</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> teacher <span class="keyword">using</span>(linkUUID)</span><br></pre></td></tr></table></figure></p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

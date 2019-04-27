@@ -175,13 +175,9 @@
   
   <article class="passage-article">
     <h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p>根据结果，先对商品名分组（商品id），再根据开始时间分组</p>
-<h4 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h4><p><img src="https://www.swj233.top/usr/uploads/2018/09/3853658721.png" alt></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><code>groupingBy</code>先将第一个对象（对象中有get和set方法）作为<code>map</code>的<strong>Key</strong>，第二个作为<strong>value</strong></p>
-<pre><code>    List list = new ArrayList();
-    list = orderNInfoService.getPlanInfo(pd);  //这里我在mybatis用resultmap将结果集用PlanInfo实体类来接受返回，但这个查询是查询List，所以就是List来接受
-    Map map = list.stream()
-.collect(Collectors.groupingBy(PlanInfo::getProduct_name,Collectors.groupingBy(PlanInfo::getOrder_start_time)));
-</code></pre><h4 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h4><p><img src="https://www.swj233.top/usr/uploads/2018/09/2805876346.png" alt></p>
+<h4 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h4><p><img src="http://pqiuhq1tw.bkt.clouddn.com/3853658721.png" alt></p>
+<p>###解决方法<br><code>groupingBy</code>先将第一个对象（对象中有get和set方法）作为<code>map</code>的<strong>Key</strong>，第二个作为<strong>value</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	List&lt;PlanInfo&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list = orderNInfoService.getPlanInfo(pd);  <span class="comment">//这里我在mybatis用resultmap将结果集用PlanInfo实体类来接受返回，但这个查询是查询List，所以就是List&lt;PlanInfo&gt;来接受</span></span><br><span class="line">    Map&lt;String, Map&lt;String, List&lt;PlanInfo&gt;&gt;&gt; map = list.stream()</span><br><span class="line">.collect(Collectors.groupingBy(PlanInfo::getProduct_name,Collectors.groupingBy(PlanInfo::getOrder_start_time)));</span><br></pre></td></tr></table></figure></p>
+<h4 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h4><p><img src="http://pqiuhq1tw.bkt.clouddn.com/2805876346.png" alt></p>
 <p>具体的例子：<a href="https://blog.csdn.net/zxc514257857/article/details/72809312" target="_blank" rel="noopener">https://blog.csdn.net/zxc514257857/article/details/72809312</a></p>
 
   </article>
@@ -191,7 +187,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#需求："><span class="toc-text">需求：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原始数据"><span class="toc-text">原始数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#结果："><span class="toc-text">结果：</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#需求："><span class="toc-text">需求：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原始数据"><span class="toc-text">原始数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结果："><span class="toc-text">结果：</span></a></li></ol></li></ol>
   </div>
 </aside>
   

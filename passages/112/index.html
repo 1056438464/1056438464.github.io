@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="1.可能是写sql语句的时候，可能是tablename写的多写个空格。">
 
   
 
@@ -174,14 +174,10 @@
   </h1>
   
   <article class="passage-article">
-    <p>1.可能是写sql语句的时候，可能是tablename写的多写个空格。</p>
-<p>例：</p>
-<pre><code>&apos;select a.id, a.storeid,b.storename,a.device_name,a.cover_image,a.model_number,a.service_info,a.cure_info,a.notice_info,a.free_seconds,a.free_cycle,a.price,a.price_cycle,a.service_deposit,a.commission_type,a.commission_rate,a.commission_money,a.commission_min_payed,a.use_status,a.web_site,a.contacts,a.phone,a.create_time,a.cover_image_url from&apos;
-                        . tablename(&apos;weikang_device_type&apos;) . &apos;a left join &apos; . tablename(&apos;ewei_shop_store&apos;) . &apos;b on a.storeid = b.id  where a.uniacid =:uniacid  ORDER BY a.id DESC LIMIT &apos; . (($pindex - 1) * $psize) . &apos;,&apos; . $psize, array(&apos;uniacid&apos; =&gt; $_W[&apos;uniacid&apos;]));       
-</code></pre><p>在tablename(‘’)的括号内的表名多了一个空格。</p>
+    <br>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;select a.id, a.storeid,b.storename,a.device_name,a.cover_image,a.model_number,a.service_info,a.cure_info,a.notice_info,a.free_seconds,a.free_cycle,a.price,a.price_cycle,a.service_deposit,a.commission_type,a.commission_rate,a.commission_money,a.commission_min_payed,a.use_status,a.web_site,a.contacts,a.phone,a.create_time,a.cover_image_url from&apos;</span><br><span class="line">                        . tablename(&apos;weikang_device_type&apos;) . &apos;a left join &apos; . tablename(&apos;ewei_shop_store&apos;) . &apos;b on a.storeid = b.id  where a.uniacid =:uniacid  ORDER BY a.id DESC LIMIT &apos; . (($pindex - 1) * $psize) . &apos;,&apos; . $psize, array(&apos;uniacid&apos; =&gt; $_W[&apos;uniacid&apos;]));</span><br></pre></td></tr></table></figure><p></p>
+<p>在tablename(‘’)的括号内的表名多了一个空格。</p>
 <p>2.还有可能是写sql语句得时候写错了，<strong>例如字段名错误</strong></p>
 <h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><p><strong>千万别复制黏贴!!!</strong></p>
-
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

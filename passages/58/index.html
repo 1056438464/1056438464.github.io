@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="1、下载xampp安装">
 
   
 
@@ -174,35 +174,13 @@
   </h1>
   
   <article class="passage-article">
-    <h2 id="1、下载xampp安装"><a href="#1、下载xampp安装" class="headerlink" title="1、下载xampp安装"></a>1、下载xampp安装</h2><p><img src="https://www.swj233.top/usr/uploads/2018/05/2397354493.png" alt="xampp" title="xampp"></p>
+    <p></p>
 <h2 id="2、设置apache的conf文件"><a href="#2、设置apache的conf文件" class="headerlink" title="2、设置apache的conf文件"></a>2、设置apache的conf文件</h2><p><code>D:\xampp\apache\conf</code></p>
-<h3 id="修改："><a href="#修改：" class="headerlink" title="修改："></a>修改：</h3><pre><code>DocumentRoot &quot;D:/weikang/weikang_system/src&quot; //你项目地址目录
-
-   .....
-</code></pre><h3 id="添加："><a href="#添加：" class="headerlink" title="添加："></a>添加：</h3><p>在<code></code>最后中添加</p>
-<pre><code>AddHandler application/x-httpd-php .php
-    AddType   application/x-httpd-php  .php  .html  .htm
-    LoadModule php7_module D:/xampp/php/php7apache2_4.dll //确定你的php版本
-
-
-
-
-   ......
-
-    AddHandler application/x-httpd-php .php
-    AddType   application/x-httpd-php  .php  .html  .htm
-    LoadModule php7_module D:/xampp/php/php7apache2_4.dll
-</code></pre><p>参考文章：<a href="https://www.cnblogs.com/convincee/p/6636760.html" target="_blank" rel="noopener">https://www.cnblogs.com/convincee/p/6636760.html</a></p>
-<h3 id="3、修改项目目录中conf文件（config-php）修改数据库地址"><a href="#3、修改项目目录中conf文件（config-php）修改数据库地址" class="headerlink" title="3、修改项目目录中conf文件（config.php）修改数据库地址"></a>3、修改项目目录中conf文件（config.php）修改数据库地址</h3><p><code>D:\weikang\weikang_system\src\data\config.php</code></p>
-<pre><code>$config[&apos;db&apos;][&apos;master&apos;][&apos;host&apos;] = &apos;数据库ip&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;username&apos;] = &apos;用户&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;password&apos;] = &apos;密码&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;port&apos;] = &apos;3306&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;database&apos;] = &apos;weikang&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;charset&apos;] = &apos;utf8&apos;;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;pconnect&apos;] = 0;
-$config[&apos;db&apos;][&apos;master&apos;][&apos;tablepre&apos;] = &apos;ims_&apos;;
-</code></pre>
+<h3 id="修改："><a href="#修改：" class="headerlink" title="修改："></a>修改：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DocumentRoot &quot;D:/weikang/weikang_system/src&quot; //你项目地址目录</span><br><span class="line">&lt;Directory &quot;D:/weikang/weikang_system/src&quot;&gt;</span><br><span class="line">   .....</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="添加："><a href="#添加：" class="headerlink" title="添加："></a>添加：</h3><p>在<code>&lt;IfModule mime_module&gt;</code>最后中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AddHandler application/x-httpd-php .php</span><br><span class="line">    AddType   application/x-httpd-php  .php  .html  .htm</span><br><span class="line">    LoadModule php7_module D:/xampp/php/php7apache2_4.dll //确定你的php版本</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mime_module&gt;</span><br><span class="line">   </span><br><span class="line">   ......</span><br><span class="line">   </span><br><span class="line">    AddHandler application/x-httpd-php .php</span><br><span class="line">    AddType   application/x-httpd-php  .php  .html  .htm</span><br><span class="line">    LoadModule php7_module D:/xampp/php/php7apache2_4.dll</span><br><span class="line"></span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
+<p>参考文章：<a href="https://www.cnblogs.com/convincee/p/6636760.html" target="_blank" rel="noopener">https://www.cnblogs.com/convincee/p/6636760.html</a></p>
+<h3 id="3、修改项目目录中conf文件（config-php）修改数据库地址"><a href="#3、修改项目目录中conf文件（config-php）修改数据库地址" class="headerlink" title="3、修改项目目录中conf文件（config.php）修改数据库地址"></a>3、修改项目目录中conf文件（config.php）修改数据库地址</h3><p><code>D:\weikang\weikang_system\src\data\config.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;host&apos;] = &apos;数据库ip&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;username&apos;] = &apos;用户&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;password&apos;] = &apos;密码&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;port&apos;] = &apos;3306&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;database&apos;] = &apos;weikang&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;charset&apos;] = &apos;utf8&apos;;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;pconnect&apos;] = 0;</span><br><span class="line">$config[&apos;db&apos;][&apos;master&apos;][&apos;tablepre&apos;] = &apos;ims_&apos;;</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -210,7 +188,7 @@ $config[&apos;db&apos;][&apos;master&apos;][&apos;tablepre&apos;] = &apos;ims_&a
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、下载xampp安装"><span class="toc-text">1、下载xampp安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、设置apache的conf文件"><span class="toc-text">2、设置apache的conf文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改："><span class="toc-text">修改：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加："><span class="toc-text">添加：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、修改项目目录中conf文件（config-php）修改数据库地址"><span class="toc-text">3、修改项目目录中conf文件（config.php）修改数据库地址</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2、设置apache的conf文件"><span class="toc-text">2、设置apache的conf文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改："><span class="toc-text">修改：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加："><span class="toc-text">添加：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、修改项目目录中conf文件（config-php）修改数据库地址"><span class="toc-text">3、修改项目目录中conf文件（config.php）修改数据库地址</span></a></li></ol></li></ol>
   </div>
 </aside>
   

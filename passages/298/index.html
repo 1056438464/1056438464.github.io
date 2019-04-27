@@ -174,18 +174,11 @@
   </integer></h1>
   
   <article class="passage-article">
-    <h3 id="int数组转化成List-lt-Integer-gt-简便的方法"><a href="#int数组转化成List-lt-Integer-gt-简便的方法" class="headerlink" title="int数组转化成List&lt; Integer&gt;简便的方法"></a>int数组转化成List&lt; Integer&gt;简便的方法</h3><pre><code>int[] src = {1,2,3,4,5,6,7,8,9,10};
-List list = Arrays.stream( src ).boxed().collect(Collectors.toList());
-</code></pre><h3 id="String数组和list相互转换"><a href="#String数组和list相互转换" class="headerlink" title="String数组和list相互转换"></a>String数组和list相互转换</h3><p>List转换为Array可以这样处理：</p>
-<pre><code>ArrayList list=new ArrayList();
+    <h3 id="int数组转化成List-lt-Integer-gt-简便的方法"><a href="#int数组转化成List-lt-Integer-gt-简便的方法" class="headerlink" title="int数组转化成List&lt; Integer&gt;简便的方法"></a>int数组转化成List&lt; Integer&gt;简便的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] src = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">List&lt;Integer&gt; list = Arrays.stream( src ).boxed().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h3 id="String数组和list相互转换"><a href="#String数组和list相互转换" class="headerlink" title="String数组和list相互转换"></a>String数组和list相互转换</h3><p>List转换为Array可以这样处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">String[] strings = <span class="keyword">new</span> String[list.size()];</span><br><span class="line"></span><br><span class="line">list.toArray(strings);</span><br></pre></td></tr></table></figure>
+<p>反过来，如果要将数组转成List怎么办呢？如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] s = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;;</span><br><span class="line">List list = java.util.Arrays.asList(s);</span><br></pre></td></tr></table></figure></p>
 
-String[] strings = new String[list.size()];
-
-list.toArray(strings);
-</code></pre><p>反过来，如果要将数组转成List怎么办呢？如下：</p>
-<pre><code>String[] s = {&quot;a&quot;,&quot;b&quot;,&quot;c&quot;};
-List list = java.util.Arrays.asList(s);
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Liunx,命令,p,参数,文件,目录,服务器,域名,别名,www,servername,">
+    <meta name="keywords" content="Liunx,命令,p,参数,文件,服务器,目录,域名,别名,www,servername,">
   
 
   
@@ -175,24 +175,15 @@
   
   <article class="passage-article">
     <h1 id="1、注册二级域名"><a href="#1、注册二级域名" class="headerlink" title="1、注册二级域名"></a>1、注册二级域名</h1><p><a href="https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ</a></p>
-<p>域名——解析——添加解析<br><img src="https://www.swj233.top/usr/uploads/2018/05/1762603534.png" alt><br>其实你申请的域名就是一个一级域名了。这样填写就是一个二级域名</p>
-<h1 id="2、apache设置虚拟主机VirtualHost配置文件"><a href="#2、apache设置虚拟主机VirtualHost配置文件" class="headerlink" title="2、apache设置虚拟主机VirtualHost配置文件"></a>2、apache设置虚拟主机VirtualHost配置文件</h1><p>只需在http.conf文件最后添加</p>
-<pre><code>ServerName map.swj233.top //你的域名
-DocumentRoot /var/www/maps //项目地址
-</code></pre><p><strong>注意：</strong> 项目地址一定要写全！不能只写<br><code>/www/maps</code> 。这样会访问不到的。<br>方法：进入项目目录。<strong>pwd命令</strong>获得目录即可</p>
-<h2 id="虚拟主机配置参数："><a href="#虚拟主机配置参数：" class="headerlink" title="虚拟主机配置参数："></a>虚拟主机配置参数：</h2><p>ServerAdmin 管理员邮箱</p>
-<p>DocumentRoot 指向服务器子目录路径</p>
-<p>ServerName 域名别名，可以设置多个别名同时指向当前目录，也可不填别名</p>
-<p>ErrorLog 错误日志保存位置</p>
-<p>CustomLog 访问日志保存位置</p>
-<p>ServerAlias 域名别名</p>
-<pre><code>例 :
-别名，访问www.baidu.com www.baidu.com.cn都会解析到这个目录
-
-DocumentRoot /var/www/html/sale
-ServerName baidu.cn
-ServerAlias www.baidu.cn www.baidu.com
-</code></pre>
+<p>域名——解析——添加解析<br><img src="http://pqiuhq1tw.bkt.clouddn.com/1762603534.png" alt><br>其实你申请的域名就是一个一级域名了。这样填写就是一个二级域名</p>
+<h1 id="2、apache设置虚拟主机VirtualHost配置文件"><a href="#2、apache设置虚拟主机VirtualHost配置文件" class="headerlink" title="2、apache设置虚拟主机VirtualHost配置文件"></a>2、apache设置虚拟主机VirtualHost配置文件</h1><p>只需在http.conf文件最后添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerName map.swj233.top //你的域名</span><br><span class="line">DocumentRoot /var/www/maps //项目地址</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong> 项目地址一定要写全！不能只写<br><code>/www/maps</code> 。这样会访问不到的。<br>方法：进入项目目录。<strong>pwd命令</strong>获得目录即可</p>
+<h2 id="虚拟主机配置参数："><a href="#虚拟主机配置参数：" class="headerlink" title="虚拟主机配置参数："></a>虚拟主机配置参数：</h2><p>ServerAdmin  管理员邮箱</p>
+<p>DocumentRoot  指向服务器子目录路径</p>
+<p>ServerName  域名别名，可以设置多个别名同时指向当前目录，也可不填别名</p>
+<p>ErrorLog   错误日志保存位置</p>
+<p>CustomLog  访问日志保存位置</p>
+<p>ServerAlias 域名别名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">例 :</span><br><span class="line">别名，访问www.baidu.com www.baidu.com.cn都会解析到这个目录</span><br><span class="line">&lt;VirtualHost www.baidu.com:80&gt;</span><br><span class="line">DocumentRoot /var/www/html/sale</span><br><span class="line">ServerName baidu.cn</span><br><span class="line">ServerAlias www.baidu.cn www.baidu.com</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -228,9 +219,9 @@ ServerAlias www.baidu.cn www.baidu.com
      
       <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
      
-      <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
-     
       <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
+     
+      <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
      
       <a href="/tags/域名/"><i class="fa fa-tags"></i>域名</a>
      

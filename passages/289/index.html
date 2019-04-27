@@ -174,25 +174,18 @@
   </h1>
   
   <article class="passage-article">
-    <h3 id="1准备工作"><a href="#1准备工作" class="headerlink" title="1准备工作"></a>1准备工作</h3><h4 id="三台虚拟机"><a href="#三台虚拟机" class="headerlink" title="三台虚拟机"></a>三台虚拟机</h4><p><img src="https://www.swj233.top/usr/uploads/2018/12/258874238.png" alt></p>
-<h4 id="修改从服务器ip地址"><a href="#修改从服务器ip地址" class="headerlink" title="修改从服务器ip地址"></a>修改从服务器ip地址</h4><pre><code>vi /etc/sysconfig/network-scripts/ifcfg-enp33
-</code></pre><h4 id="重启网卡"><a href="#重启网卡" class="headerlink" title="重启网卡"></a>重启网卡</h4><pre><code>service network restart
-</code></pre><h4 id="三台主机ip："><a href="#三台主机ip：" class="headerlink" title="三台主机ip："></a>三台主机ip：</h4><ul>
+    <h3 id="1准备工作"><a href="#1准备工作" class="headerlink" title="1准备工作"></a>1准备工作</h3><h4 id="三台虚拟机"><a href="#三台虚拟机" class="headerlink" title="三台虚拟机"></a>三台虚拟机</h4><p><img src="http://pqiuhq1tw.bkt.clouddn.com/258874238.png" alt></p>
+<h4 id="修改从服务器ip地址"><a href="#修改从服务器ip地址" class="headerlink" title="修改从服务器ip地址"></a>修改从服务器ip地址</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-enp33</span><br></pre></td></tr></table></figure>
+<h4 id="重启网卡"><a href="#重启网卡" class="headerlink" title="重启网卡"></a>重启网卡</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+<h4 id="三台主机ip："><a href="#三台主机ip：" class="headerlink" title="三台主机ip："></a>三台主机ip：</h4><ul>
 <li>192.168.1.8 主</li>
 <li>192.168.1.9 从1</li>
 <li>192.168.1.10 从2</li>
 </ul>
-<h3 id="复制redis文件"><a href="#复制redis文件" class="headerlink" title="复制redis文件"></a>复制redis文件</h3><pre><code>scp -r redis-3.0.0-rc2/ 192.168.1.9:/usr/local/
-scp -r redis-3.0.0-rc2/ 192.168.1.10:/usr/local/
-scp -r redis 192.168.1.9:/usr/local/
-scp -r redis 192.168.1.10:/usr/local/
-</code></pre><h3 id="配置从redis主服务器地址配置"><a href="#配置从redis主服务器地址配置" class="headerlink" title="配置从redis主服务器地址配置"></a>配置从redis主服务器地址配置</h3><p><code>redis配置文件 /usr/local/redis/etc/redis/redis.conf</code></p>
-<pre><code>slaveof 主服务器ip redis端口号(6379)
-masterauth 主服务器密码(没有可不写)
-</code></pre><h3 id="启动主从服务器redis"><a href="#启动主从服务器redis" class="headerlink" title="启动主从服务器redis"></a>启动主从服务器redis</h3><pre><code>/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
-进入redis服务器
-/usr/local/redis/bin/redis-cli
-</code></pre><h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><p><code>master_link_status:down</code><br>需要关闭linux防火请 systemctl stop firewalld</p>
+<h3 id="复制redis文件"><a href="#复制redis文件" class="headerlink" title="复制redis文件"></a>复制redis文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.10:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.10:/usr/local/</span><br></pre></td></tr></table></figure>
+<h3 id="配置从redis主服务器地址配置"><a href="#配置从redis主服务器地址配置" class="headerlink" title="配置从redis主服务器地址配置"></a>配置从redis主服务器地址配置</h3><p><code>redis配置文件 /usr/local/redis/etc/redis/redis.conf</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slaveof 主服务器ip redis端口号(6379)</span><br><span class="line">masterauth 主服务器密码(没有可不写)</span><br></pre></td></tr></table></figure></p>
+<h3 id="启动主从服务器redis"><a href="#启动主从服务器redis" class="headerlink" title="启动主从服务器redis"></a>启动主从服务器redis</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf</span><br><span class="line">进入redis服务器</span><br><span class="line">/usr/local/redis/bin/redis-cli</span><br></pre></td></tr></table></figure>
+<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><p><code>master_link_status:down</code><br>需要关闭linux防火请 systemctl stop firewalld</p>
 
   </article>
   <aside class="table-content" id="site-toc">

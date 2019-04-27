@@ -174,58 +174,19 @@
   </h1>
   
   <article class="passage-article">
-    <h3 id="length不是方法，是属性，数组的属性；"><a href="#length不是方法，是属性，数组的属性；" class="headerlink" title="length不是方法，是属性，数组的属性；"></a>length不是方法，是属性，数组的属性；</h3><pre><code>public static void main(String[] args) {
+    <h3 id="length不是方法，是属性，数组的属性；"><a href="#length不是方法，是属性，数组的属性；" class="headerlink" title="length不是方法，是属性，数组的属性；"></a>length不是方法，是属性，数组的属性；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"这个数组的长度为："</span> + intArray.length);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="length-是字符串String的一个方法；"><a href="#length-是字符串String的一个方法；" class="headerlink" title="length()是字符串String的一个方法；"></a>length()是字符串String的一个方法；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	String str = <span class="string">"HelloWorld"</span>;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"这个字符串的长度为："</span> + str.length());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="size-方法，是List集合的一个方法；"><a href="#size-方法，是List集合的一个方法；" class="headerlink" title="size()方法，是List集合的一个方法；"></a>size()方法，是List集合的一个方法；</h3><p><code>`</code>java<br>public static void main(String[] args) {</p>
+<pre><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;();
 
-    int[] intArray = {1,2,3};
+list.add(&quot;a&quot;);
 
-    System.out.println(&quot;这个数组的长度为：&quot; + intArray.length);
+list.add(&quot;b&quot;);
 
-}
-</code></pre><h3 id="length-是字符串String的一个方法；"><a href="#length-是字符串String的一个方法；" class="headerlink" title="length()是字符串String的一个方法；"></a>length()是字符串String的一个方法；</h3><pre><code>public static void main(String[] args) {
+list.add(&quot;c&quot;);
 
-    String str = &quot;HelloWorld&quot;;
-
-    System.out.println(&quot;这个字符串的长度为：&quot; + str.length());
-
-}
-</code></pre><h3 id="size-方法，是List集合的一个方法；"><a href="#size-方法，是List集合的一个方法；" class="headerlink" title="size()方法，是List集合的一个方法；"></a>size()方法，是List集合的一个方法；</h3><pre><code>public static void main(String[] args) {
-
-    List list = new ArrayList();
-
-    list.add(&quot;a&quot;);
-
-    list.add(&quot;b&quot;);
-
-    list.add(&quot;c&quot;);
-
-    System.out.println(&quot;这个list的长度为：&quot; + list.size());
-
-}
-</code></pre><p><strong>在List的方法中，是没有length()方法的；</strong><br>也看一段ArrayList的源码</p>
-<pre><code>private final E[] a;
-
-
-
-ArrayList(E[] array) {
-
-       if (array==null)
-
-             throw new NullPointerException();
-
-       a = array;
-
-}
-
-
-
-public int size() {
-
-       return a.length;
-
-}
-</code></pre><p>由这段就可以看出list的底层实现其实就是数组，size()方法最后要找的其实还是数组的length属性；<br>另外，除了<code>List，Set和Map</code>也有size()方法，所以准确说<strong>size()方法是针对集合而言</strong>。</p>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>length——数组的属性；<br>length()——String的方法；<br>size()——集合的方法；</p>
-
+System.out.println(&quot;这个list的长度为：&quot; + list.size());
+</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -233,7 +194,7 @@ public int size() {
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#length不是方法，是属性，数组的属性；"><span class="toc-text">length不是方法，是属性，数组的属性；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#length-是字符串String的一个方法；"><span class="toc-text">length()是字符串String的一个方法；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#size-方法，是List集合的一个方法；"><span class="toc-text">size()方法，是List集合的一个方法；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结："><span class="toc-text">总结：</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#length不是方法，是属性，数组的属性；"><span class="toc-text">length不是方法，是属性，数组的属性；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#length-是字符串String的一个方法；"><span class="toc-text">length()是字符串String的一个方法；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#size-方法，是List集合的一个方法；"><span class="toc-text">size()方法，是List集合的一个方法；</span></a></li></ol>
   </div>
 </aside>
   

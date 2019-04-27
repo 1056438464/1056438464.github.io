@@ -177,18 +177,18 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p>package com.fh.controller.tts;<br>
             
-          </div>
+          </p></div>
           <a class="home-article-read" href="/passages/64/">
             README MORE >>>
           </a>
           
             <div class="passage-tags">
              
-              <a href="/tags/error-info/"><i class="fa fa-tags"></i>error_info</a>
-             
               <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
+             
+              <a href="/tags/error-info/"><i class="fa fa-tags"></i>error_info</a>
              
               <a href="/tags/import/"><i class="fa fa-tags"></i>import</a>
              
@@ -247,9 +247,9 @@
              
               <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
              
-              <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
-             
               <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
+             
+              <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
              
               <a href="/tags/域名/"><i class="fa fa-tags"></i>域名</a>
              
@@ -289,9 +289,9 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <h2 id="1、下载xampp安装"><a href="#1、下载xampp安装" class="headerlink" title="1、下载xampp安装"></a>1、下载xampp安装</h2><p><img src="http://pqiuhq1tw.bkt.clouddn.com/2397354493.png" alt="xampp"><br>
             
-          </div>
+          </p></div>
           <a class="home-article-read" href="/passages/58/">
             README MORE >>>
           </a>
@@ -479,7 +479,11 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <h1 id="问题原因：mysql权限问题"><a href="#问题原因：mysql权限问题" class="headerlink" title="问题原因：mysql权限问题"></a>问题原因：mysql权限问题</h1><h1 id="解决方法-1："><a href="#解决方法-1：" class="headerlink" title="解决方法 1："></a>解决方法 1：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//设置root用户通过123456密码可以从任何主机连接到mysql服务器</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &apos;username&apos;@&apos;%&apos; IDENTIFIED BY &apos;password&apos; WITH GRANT OPTION;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)  </span><br><span class="line">  </span><br><span class="line">//刷新mysql权限表</span><br><span class="line">mysql&gt;FLUSH PRIVILEGES;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec) </span><br><span class="line"></span><br><span class="line">//查询用户表</span><br><span class="line">mysql&gt; select host,user from user;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ALL PRIVILEGES –所有的权限，当然这里也可以写增删查改update delete insert select</li>
+<li><em>.</em>  – 指的是所有数据库的权限，‘<em>数据库.表’</em></li>
+</ul>
             
           </div>
           <a class="home-article-read" href="/passages/44/">
@@ -536,7 +540,10 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <h1 id="1-安装jdk1-8"><a href="#1-安装jdk1-8" class="headerlink" title="1.安装jdk1.8"></a>1.安装jdk1.8</h1><h2 id="1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><a href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk" class="headerlink" title="1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk"></a>1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</h2><p>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa |grep java</span><br><span class="line">rpm -qa |grep jdk</span><br><span class="line">rpm -qa |grep gcj</span><br></pre></td></tr></table></figure></p>
+<p>如果没有输入信息表示没有安装。<br>如果安装可以使用如果安装可以使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java | xargs rpm -e --nodeps</span><br></pre></td></tr></table></figure></p>
+<p>批量卸载所有带有Java的文件  这句命令的关键字是java</p>
+<h2 id="1-2-检索包含java的列表"><a href="#1-2-检索包含java的列表" class="headerlink" title="1.2 检索包含java的列表"></a>1.2 检索包含java的列表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list java*</span><br></pre></td></tr></table></figure>
             
           </div>
           <a class="home-article-read" href="/passages/43/">
@@ -555,8 +562,6 @@
              
               <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
              
-              <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
-             
               <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
              
               <a href="/tags/open-jdk/"><i class="fa fa-tags"></i>open-jdk</a>
@@ -570,6 +575,8 @@
               <a href="/tags/javarpm/"><i class="fa fa-tags"></i>javarpm</a>
              
               <a href="/tags/jdkrpm/"><i class="fa fa-tags"></i>jdkrpm</a>
+             
+              <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
              
               <a href="/tags/yum/"><i class="fa fa-tags"></i>yum</a>
              
@@ -607,7 +614,8 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <h1 id="1-安装常用工具和依赖库"><a href="#1-安装常用工具和依赖库" class="headerlink" title="1.安装常用工具和依赖库"></a>1.安装常用工具和依赖库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install wget axel unzip gcc bison git autoconf nfs-utils pcre-devel zlib-devel bzip2-devel cmake gcc-c++ ncurses-devel perl-Data-Dumper libicu-devel libquadmath-devel python-devel libxml2-devel openssl-devel libcurl-devel libpng-devel freetype-devel freetype-devel gd-devel libmcrypt-devel libxslt-devel libevent-devel systemd-devel make gtk+-devel openssl keyutils patch perl</span><br></pre></td></tr></table></figure>
+<h1 id="2-获取PHP"><a href="#2-获取PHP" class="headerlink" title="2.获取PHP"></a>2.获取PHP</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://cn2.php.net/distributions/php-7.1.9.tar.gz</span><br></pre></td></tr></table></figure>
             
           </div>
           <a class="home-article-read" href="/passages/40/">
@@ -628,11 +636,11 @@
              
               <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
              
-              <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
-             
               <a href="/tags/yes/"><i class="fa fa-tags"></i>yes</a>
              
               <a href="/tags/ftpservice/"><i class="fa fa-tags"></i>ftpservice</a>
+             
+              <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
              
               <a href="/tags/ftp/"><i class="fa fa-tags"></i>ftp</a>
              
@@ -670,7 +678,9 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep xxxx</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-a：查询所有套件；</span><br><span class="line">-q：使用询问模式，当遇到任何问题时，rpm指令会先询问用户；</span><br></pre></td></tr></table></figure>
+<h1 id="所有参数："><a href="#所有参数：" class="headerlink" title="所有参数："></a>所有参数：</h1>
             
           </div>
           <a class="home-article-read" href="/passages/38/">

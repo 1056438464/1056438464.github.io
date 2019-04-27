@@ -212,7 +212,8 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p><strong>详细的php序列化和反序列化知识</strong><br><a href="http://www.php.net/manual/zh/function.serialize.php" target="_blank" rel="noopener">http://www.php.net/manual/zh/function.serialize.php</a></p>
+<h3 id="错误："><a href="#错误：" class="headerlink" title="错误："></a>错误：</h3><p><img src="http://pqiuhq1tw.bkt.clouddn.com/4240588291.png" alt></p>
             
           </div>
           <a class="home-article-read" href="/passages/171/">
@@ -247,7 +248,9 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p>项目代码,需要点击图片后，弹出dailog窗口，显示完整图片</p>
+<p>html部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot; user_upload_images&quot;&gt;</span><br><span class="line">	&lt;img src=&quot;&#123;php echo tomedia($item[&apos;content_image&apos;])&#125;&quot; class=&quot;imgg&quot; style=&quot;width:40px;height:40px;padding:1px;border:1px solid #ccc;&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//dialog提示框</span><br><span class="line">&lt;div id=&quot;dialog&quot; style=&quot;text-align: center;&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;&quot; id=&quot;show_big_image&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">//使用jqueryUi</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css&quot;&gt;</span><br><span class="line">  &lt;script src=&quot;//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script src=&quot;//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>js部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">       $(&quot;#dialog&quot;).dialog(&#123;</span><br><span class="line">           autoOpen: false,</span><br><span class="line">           show: &#123;</span><br><span class="line">         </span><br><span class="line">           &#125;,</span><br><span class="line">           hide: &#123;</span><br><span class="line">           </span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">	</span><br><span class="line">       $(&quot;.imgg&quot;).click(function () &#123;</span><br><span class="line">           $(&quot;#dialog&quot;).dialog(&quot;open&quot;);</span><br><span class="line"></span><br><span class="line">		//当点击 class=imgg 的标签时，将id=show_big_image标签中的src属性赋值成 class=imgg 的标签中的src属性的值</span><br><span class="line">		$(&quot;#show_big_image&quot;).attr(&quot;src&quot;,$(this).attr(&quot;src&quot;));</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure></p>
             
           </div>
           <a class="home-article-read" href="/passages/164/">
@@ -282,7 +285,7 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p>transactionManager提供了两个实现类，但是这两个实现类必须实现Transaction这个接口<br>Transaction中包含了三个重要的方法：commit（提交）、rollback（回滚），close（关闭）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interfance Transaction&#123;</span><br><span class="line">   Connection getConnection() throws SQLException;</span><br><span class="line"></span><br><span class="line">  void commit() throws SQLException;</span><br><span class="line"></span><br><span class="line">  void rollback() throws SQLException;</span><br><span class="line"></span><br><span class="line">  void close() throws SQLException;</span><br><span class="line"></span><br><span class="line">  Integer getTimeout() throws SQLException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
             
           </div>
           <a class="home-article-read" href="/passages/159/">
@@ -387,9 +390,13 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p>####进入系统软件目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/</span><br></pre></td></tr></table></figure></p>
+<h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0-rc2.tar.gz -C /usr/local/</span><br><span class="line">cd ./redis-3.0.0-rc2</span><br></pre></td></tr></table></figure>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p><strong>进行编译 ，前提是需要有gcc库</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make   </span><br><span class="line">//出现Hint: It&apos;s a good idea to run &apos;make test&apos; ;)</span><br><span class="line">说明编译成功</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> cd ./src/</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装完成<br><img src="http://pqiuhq1tw.bkt.clouddn.com/3304785728.png" alt><br>
             
-          </div>
+          </p></div>
           <a class="home-article-read" href="/passages/153/">
             README MORE >>>
           </a>
@@ -457,7 +464,8 @@
           </h1>
           <div class="home-article-content passage-article">
             
-              
+              <p>orcale的坑<br><strong>1、定义的存储过程的名一定要和最后END的时候的名字一样</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create or replace procedure &quot;Pro_Sprk_Cancel&quot;(</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line">...</span><br><span class="line">begin</span><br><span class="line">end &quot;Pro_Sprk_Cancel&quot;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>2、存储过程中用的一切参数一定要定义</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">create or replace procedure &quot;Pro_Sprk_Cancel&quot;(</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line"> --定义变量</span><br><span class="line"> num number;</span><br><span class="line">drug_num number;</span><br><span class="line">begin</span><br><span class="line">  begin</span><br><span class="line">     select count(1) into drug_num from &quot;his_system_drug_info&quot; ;     </span><br><span class="line">     select count(1) into num from &quot;his_pharmacy_storage&quot; ;</span><br><span class="line">     end;    </span><br><span class="line">end &quot;Pro_Sprk_Cancel&quot;;</span><br></pre></td></tr></table></figure></p>
             
           </div>
           <a class="home-article-read" href="/passages/137/">

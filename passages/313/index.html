@@ -174,51 +174,10 @@
   </h1>
   
   <article class="passage-article">
-    <p>log4j配置文件</p>
-<pre><code>#########################################################################  
-#Root Logger  
-#log4j.rootLogger = [ level ] , appenderName, appenderName,  
-#ConversionPattern:%d{yyyy-MM-dd-HH\:mm\:ss,SSS} [%t]  [%c] [%p] - %m%n    
-#FilePath =  /opt/uploads/maven_logs/maven_web.log  
-#########################################################################  
-#将Mybatis log4j运行级别调到DEBUG可以在控制台打印出Mybatis运行的sql语句  
-log4j.rootLogger=DEBUG,Console,File  
-### 把日志信息输出到控制台 ###  
-log4j.appender.Console=org.apache.log4j.ConsoleAppender  
-log4j.appender.Console.Target=System.out  
-log4j.appender.Console.layout = org.apache.log4j.PatternLayout  
-log4j.appender.Console.layout.ConversionPattern=%d{yyyy-MM-dd-HH\:mm\:ss,SSS} [%t]  [%c] [%p] - %m%n   
-### 把日志信息输出到文件：/opt/uploads/maven_logs/maven_web.log ###  
-log4j.appender.File = org.apache.log4j.DailyRollingFileAppender  
-log4j.appender.File.File = /opt/uploads/maven_logs/maven_web.log  
-log4j.appender.File.Threshold = DEBUG  
-log4j.appender.File.layout = org.apache.log4j.PatternLayout  
-log4j.appender.File.layout.ConversionPattern =%d{yyyy-MM-dd-HH\:mm\:ss,SSS} [%t]  [%c] [%p] - %m%n   
+    <p>log4j配置文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">strong</span>&gt;</span>#########################################################################  </span><br><span class="line">#Root Logger  </span><br><span class="line">#log4j.rootLogger = [ level ] , appenderName, appenderName,  </span><br><span class="line">#ConversionPattern:%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n    </span><br><span class="line">#FilePath =  /opt/uploads/maven_logs/maven_web.log  </span><br><span class="line">#########################################################################  </span><br><span class="line">#将Mybatis log4j运行级别调到DEBUG可以在控制台打印出Mybatis运行的sql语句  </span><br><span class="line">log4j.rootLogger=DEBUG,Console,File  </span><br><span class="line">### 把日志信息输出到控制台 ###  </span><br><span class="line">log4j.appender.Console=org.apache.log4j.ConsoleAppender  </span><br><span class="line">log4j.appender.Console.Target=System.out  </span><br><span class="line">log4j.appender.Console.layout = org.apache.log4j.PatternLayout  </span><br><span class="line">log4j.appender.Console.layout.ConversionPattern=%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n   </span><br><span class="line">### 把日志信息输出到文件：/opt/uploads/maven_logs/maven_web.log ###  </span><br><span class="line">log4j.appender.File = org.apache.log4j.DailyRollingFileAppender  </span><br><span class="line">log4j.appender.File.File = /opt/uploads/maven_logs/maven_web.log  </span><br><span class="line">log4j.appender.File.Threshold = DEBUG  </span><br><span class="line">log4j.appender.File.layout = org.apache.log4j.PatternLayout  </span><br><span class="line">log4j.appender.File.layout.ConversionPattern =%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n   </span><br><span class="line">  </span><br><span class="line">###显示SQL语句部分  </span><br><span class="line">log4j.logger.com.mybatis=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.common.jdbc.SimpleDataSource=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.common.jdbc.ScriptRunner=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG  </span><br><span class="line">log4j.logger.java.sql.Connection=DEBUG  </span><br><span class="line">log4j.logger.java.sql.Statement=DEBUG  </span><br><span class="line">log4j.logger.java.sql.PreparedStatement=DEBUG<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>mybatis配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>    </span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  </span></span><br><span class="line"><span class="meta">"http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span> <span class="attr">value</span>=<span class="string">"mysql"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">settings</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"logImpl"</span> <span class="attr">value</span>=<span class="string">"LOG4J"</span> /&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>maven配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.bgee.log4jdbc-log4j2<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4jdbc-log4j2-jdbc4.1<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 
-###显示SQL语句部分  
-log4j.logger.com.mybatis=DEBUG  
-log4j.logger.com.mybatis.common.jdbc.SimpleDataSource=DEBUG  
-log4j.logger.com.mybatis.common.jdbc.ScriptRunner=DEBUG  
-log4j.logger.com.mybatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG  
-log4j.logger.java.sql.Connection=DEBUG  
-log4j.logger.java.sql.Statement=DEBUG  
-log4j.logger.java.sql.PreparedStatement=DEBUG  
-</code></pre><p>mybatis配置</p>
-<p>maven配置</p>
-<pre><code>org.bgee.log4jdbc-log4j2
-log4jdbc-log4j2-jdbc4.1
-1.16
-
-
-org.slf4j
-slf4j-api
-1.7.13
-
-
-org.slf4j
-slf4j-log4j12
-1.7.13
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

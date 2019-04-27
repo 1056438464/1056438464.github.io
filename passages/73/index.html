@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="LIMIT是MySQL内置函数，其作用是用于限制查询结果的条数。">
 
   
 
@@ -174,26 +174,12 @@
   </h1>
   
   <article class="passage-article">
-    <p>LIMIT是MySQL内置函数，其作用是用于限制查询结果的条数。</p>
-<p>1)其语法格式如下:</p>
+    <br>1)其语法格式如下:<p></p>
 <p>LIMIT[位置偏移量,]行数</p>
 <p>其中，中括号里面的参数是可选参数，位置偏移量是指MySQL查询分析器要从哪一行开始显示，索引值从0开始，即第一条记录位置偏移量是0，第二条记录的位置偏移量是1,依此类推…，第二个参数为“行数”即指示返回的记录条数。</p>
 <p>位置偏移量可以理解为跳过前xx条记录(元组).</p>
-<p>2)基本用法</p>
-<pre><code>/*当没有指定位置偏移量时，只取4条时，可以这样写*/
-SELECT * FROM YourTableName LIMIT 4;
-
-/*当指定了位置偏移量时，从第3条起取4条时，可以这样写*/
-/*因为索引是从0开始计数的，所以第3条对应的索引就是2*/
-SELECT * FROM YourTableName LIMIT 2,4;
-</code></pre><p>3)应用场合:分页</p>
-<pre><code> // 后台计算出页码、页数(页大小)
- int curPage = 2;
- int pageSize = 10;
- int startRow = (curPage - 1) * pageSize;
-
-SELECT * FROM YourTableName LIMIT startRow,pageSize;
-</code></pre>
+<p>2)基本用法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*当没有指定位置偏移量时，只取4条时，可以这样写*/</span><br><span class="line">SELECT * FROM YourTableName LIMIT 4;</span><br><span class="line"> </span><br><span class="line">/*当指定了位置偏移量时，从第3条起取4条时，可以这样写*/</span><br><span class="line">/*因为索引是从0开始计数的，所以第3条对应的索引就是2*/</span><br><span class="line">SELECT * FROM YourTableName LIMIT 2,4;</span><br></pre></td></tr></table></figure></p>
+<p>3)应用场合:分页<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> // 后台计算出页码、页数(页大小)</span><br><span class="line"> int curPage = 2;</span><br><span class="line"> int pageSize = 10;</span><br><span class="line"> int startRow = (curPage - 1) * pageSize;</span><br><span class="line"></span><br><span class="line">SELECT * FROM YourTableName LIMIT startRow,pageSize;</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

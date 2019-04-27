@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="####进入系统软件目录1cd /usr/local/解压12tar -zxvf redis-3.0.0-rc2.tar.gz -C /usr/local/cd ./redis-3.0.0-rc2编译进行编译 ，前提是需要有gcc库123make   //出现Hint: It&amp;apos;s a good idea to run &amp;apos;make test&amp;apos; ;)说明编译成功安装redis12 cd ./src/make install安装完成">
 
   
 
@@ -174,32 +174,16 @@
   </h1>
   
   <article class="passage-article">
-    <h4 id="进入系统软件目录"><a href="#进入系统软件目录" class="headerlink" title="进入系统软件目录"></a>进入系统软件目录</h4><pre><code>cd /usr/local/
-</code></pre><h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><pre><code>tar -zxvf redis-3.0.0-rc2.tar.gz -C /usr/local/
-cd ./redis-3.0.0-rc2
-</code></pre><h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p><strong>进行编译 ，前提是需要有gcc库</strong></p>
-<pre><code>make   
-//出现Hint: It&apos;s a good idea to run &apos;make test&apos; ;)
-说明编译成功
-</code></pre><h4 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h4><pre><code> cd ./src/
-make install
-</code></pre><p>安装完成<br><img src="https://www.swj233.top/usr/uploads/2018/07/3304785728.png" alt></p>
-<h4 id="创建redis的配置文件夹和脚本文件夹"><a href="#创建redis的配置文件夹和脚本文件夹" class="headerlink" title="创建redis的配置文件夹和脚本文件夹"></a>创建redis的配置文件夹和脚本文件夹</h4><pre><code>mkdir -p /usr/local/redis/etc
-mkdir -p /usr/local/redis/bin
-</code></pre><h4 id="移动配置文件"><a href="#移动配置文件" class="headerlink" title="移动配置文件"></a>移动配置文件</h4><pre><code>cd /usr/local/redis-3.0.0-rc2/
-cp redis.conf  /usr/local/redis/etc/
-cd ./src/
-mv mkreleasehdr.sh  redis-benchmark redis-check-aof redis-check-dump redis-cli redis-server  /usr/local/redis/bin/
-</code></pre><h4 id="修改配置文件，实现后台启动"><a href="#修改配置文件，实现后台启动" class="headerlink" title="修改配置文件，实现后台启动"></a>修改配置文件，实现后台启动</h4><p><strong>需要打开配置文件设置daemonized 改成yes</strong></p>
-<pre><code>vim  ./redis/etc/redis.conf
-</code></pre><p><img src="https://www.swj233.top/usr/uploads/2018/07/4241125356.png" alt><br><strong>还需修改数据文件存放修改设置</strong><br><img src="https://www.swj233.top/usr/uploads/2018/07/1986964787.png" alt></p>
-<h4 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h4><p>启动时并指定配置文件**<br><img src="https://www.swj233.top/usr/uploads/2018/07/4122044545.png" alt></p>
-<pre><code>/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf 
-</code></pre><p><img src="https://www.swj233.top/usr/uploads/2018/07/2029339704.png" alt></p>
-<h4 id="启动成功-查看进程"><a href="#启动成功-查看进程" class="headerlink" title="启动成功 查看进程"></a>启动成功 查看进程</h4><p><img src="https://www.swj233.top/usr/uploads/2018/07/1132722273.png" alt></p>
-<h4 id="进入redis中"><a href="#进入redis中" class="headerlink" title="进入redis中"></a>进入redis中</h4><pre><code>/usr/local/redis/bin/redis-cli
-</code></pre><p><img src="https://www.swj233.top/usr/uploads/2018/07/1811239977.png" alt><br>关闭redis客户单进程<br>quit 或者ctrl+c<br>关闭redis服务端进程<br>/usr/local/redis/bin/redis-cli shutdown</p>
-
+    <p></p>
+<h4 id="创建redis的配置文件夹和脚本文件夹"><a href="#创建redis的配置文件夹和脚本文件夹" class="headerlink" title="创建redis的配置文件夹和脚本文件夹"></a>创建redis的配置文件夹和脚本文件夹</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/redis/etc</span><br><span class="line">mkdir -p /usr/local/redis/bin</span><br></pre></td></tr></table></figure>
+<h4 id="移动配置文件"><a href="#移动配置文件" class="headerlink" title="移动配置文件"></a>移动配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis-3.0.0-rc2/</span><br><span class="line">cp redis.conf  /usr/local/redis/etc/</span><br><span class="line">cd ./src/</span><br><span class="line">mv mkreleasehdr.sh  redis-benchmark redis-check-aof redis-check-dump redis-cli redis-server  /usr/local/redis/bin/</span><br></pre></td></tr></table></figure>
+<h4 id="修改配置文件，实现后台启动"><a href="#修改配置文件，实现后台启动" class="headerlink" title="修改配置文件，实现后台启动"></a>修改配置文件，实现后台启动</h4><p><strong>需要打开配置文件设置daemonized  改成yes</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  ./redis/etc/redis.conf</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://pqiuhq1tw.bkt.clouddn.com/4241125356.png" alt><br><strong>还需修改数据文件存放修改设置</strong><br><img src="http://pqiuhq1tw.bkt.clouddn.com/1986964787.png" alt></p>
+<h4 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h4><p>启动时并指定配置文件**<br><img src="http://pqiuhq1tw.bkt.clouddn.com/4122044545.png" alt><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://pqiuhq1tw.bkt.clouddn.com/2029339704.png" alt></p>
+<h4 id="启动成功-查看进程"><a href="#启动成功-查看进程" class="headerlink" title="启动成功 查看进程"></a>启动成功 查看进程</h4><p><img src="http://pqiuhq1tw.bkt.clouddn.com/1132722273.png" alt></p>
+<h4 id="进入redis中"><a href="#进入redis中" class="headerlink" title="进入redis中"></a>进入redis中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-cli</span><br></pre></td></tr></table></figure>
+<p><img src="http://pqiuhq1tw.bkt.clouddn.com/1811239977.png" alt><br>关闭redis客户单进程<br>quit 或者ctrl+c<br>关闭redis服务端进程<br>/usr/local/redis/bin/redis-cli shutdown</p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -207,7 +191,7 @@ mv mkreleasehdr.sh  redis-benchmark redis-check-aof redis-check-dump redis-cli r
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#进入系统软件目录"><span class="toc-text">进入系统软件目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解压"><span class="toc-text">解压</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装redis"><span class="toc-text">安装redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建redis的配置文件夹和脚本文件夹"><span class="toc-text">创建redis的配置文件夹和脚本文件夹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移动配置文件"><span class="toc-text">移动配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件，实现后台启动"><span class="toc-text">修改配置文件，实现后台启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动redis"><span class="toc-text">启动redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动成功-查看进程"><span class="toc-text">启动成功 查看进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进入redis中"><span class="toc-text">进入redis中</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建redis的配置文件夹和脚本文件夹"><span class="toc-text">创建redis的配置文件夹和脚本文件夹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移动配置文件"><span class="toc-text">移动配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件，实现后台启动"><span class="toc-text">修改配置文件，实现后台启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动redis"><span class="toc-text">启动redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动成功-查看进程"><span class="toc-text">启动成功 查看进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进入redis中"><span class="toc-text">进入redis中</span></a></li></ol>
   </div>
 </aside>
   

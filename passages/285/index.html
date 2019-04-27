@@ -175,33 +175,11 @@
   
   <article class="passage-article">
     <p>今天遇到了编码问题。搞了一下午。终于找到了问题的关键。</p>
-<h1 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h1><p><strong>post</strong>请求是默认<code>contentType</code>是发送数据到服务器时所使用的内容类型。默认是：<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>而我程序中设置的是<code>&quot;application/json&quot;</code>。而在<code>@webservlet</code>中并<strong>不能通过方法参数直接取到参数</strong>。<br>必须设置为<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>如果设置为<code>&quot;application/json&quot;</code>，会报<strong>方法空指针错误</strong><br><img src="https://www.swj233.top/usr/uploads/2018/12/3382601718.png" alt></p>
+<h1 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h1><p><strong>post</strong>请求是默认<code>contentType</code>是发送数据到服务器时所使用的内容类型。默认是：<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>而我程序中设置的是<code>&quot;application/json&quot;</code>。而在<code>@webservlet</code>中并<strong>不能通过方法参数直接取到参数</strong>。<br>必须设置为<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>如果设置为<code>&quot;application/json&quot;</code>，会报<strong>方法空指针错误</strong><br><img src="http://pqiuhq1tw.bkt.clouddn.com/3382601718.png" alt></p>
 <h1 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h1><p>在<code>&quot;application/x-www-form-urlencoded&quot;</code>。下。post的参数<strong>必须</strong>进行<code>UTF-8</code>编码。不然后台servlet会得不到参数数据。</p>
-<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p><strong>js</strong></p>
-<pre><code>$.ajax({
-        url: &quot;../mainService/setCategoryInfo&quot;,
-        type: &quot;POST&quot;,
-        dataType: &apos;json&apos;,
-        data: {
-            divid: encodeURI(_vHome.selectedDiv, &quot;UTF-8&quot;),
-            divname: encodeURI(divname ? divname : &apos;&apos;,&quot;UTF-8&quot;),
-            categorycd: iHome.selectCategorycd,
-            categoryname: encodeURI(_vHome.classifyHomeInfo,&quot;UTF-8&quot;),
-            delData: encodeURI(delData,&quot;UTF-8&quot;),
-            usercd: initVar.usercd,
-        },
-        success: function (data) {
-        }
-    });
-</code></pre><p><strong>java</strong></p>
-<pre><code>public DataSet setCategoryInfo(String divid, String divname,String categorycd, String categoryname,String delData, Integer usercd ) throws Exception {
+<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p><strong>js</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">        url: <span class="string">"../mainService/setCategoryInfo"</span>,</span><br><span class="line">        type: <span class="string">"POST"</span>,</span><br><span class="line">        dataType: <span class="string">'json'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">            divid: <span class="built_in">encodeURI</span>(_vHome.selectedDiv, <span class="string">"UTF-8"</span>),</span><br><span class="line">            divname: <span class="built_in">encodeURI</span>(divname ? divname : <span class="string">''</span>,<span class="string">"UTF-8"</span>),</span><br><span class="line">            categorycd: iHome.selectCategorycd,</span><br><span class="line">            categoryname: <span class="built_in">encodeURI</span>(_vHome.classifyHomeInfo,<span class="string">"UTF-8"</span>),</span><br><span class="line">            delData: <span class="built_in">encodeURI</span>(delData,<span class="string">"UTF-8"</span>),</span><br><span class="line">            usercd: initVar.usercd,</span><br><span class="line">        &#125;,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> DataSet <span class="title">setCategoryInfo</span><span class="params">(String divid, String divname,String categorycd, String categoryname,String delData, Integer usercd )</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	</span><br><span class="line">		divname = URLDecoder.decode(divname, <span class="string">"UTF-8"</span>);</span><br><span class="line">		categoryname = URLDecoder.decode(categoryname, <span class="string">"UTF-8"</span>);</span><br><span class="line">		delData = URLDecoder.decode(delData, <span class="string">"UTF-8"</span>);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
 
-        divname = URLDecoder.decode(divname, &quot;UTF-8&quot;);
-        categoryname = URLDecoder.decode(categoryname, &quot;UTF-8&quot;);
-        delData = URLDecoder.decode(delData, &quot;UTF-8&quot;);
-
-    }
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

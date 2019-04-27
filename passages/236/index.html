@@ -175,113 +175,17 @@
   
   <article class="passage-article">
     <h3 id="JSONArray和JSONObject的区别"><a href="#JSONArray和JSONObject的区别" class="headerlink" title="JSONArray和JSONObject的区别"></a>JSONArray和JSONObject的区别</h3><p>是否有<code>&quot;[]&quot;</code>,有的话是JSONArray，没有的话是JSONObject</p>
-<h3 id="1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型"><a href="#1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型" class="headerlink" title="1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型"></a>1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型</h3><pre><code>/**
-        * 将 Array 解析成 Json 串
-        */
-       String[] str = { &quot;Jack&quot;, &quot;Tom&quot;, &quot;90&quot;, &quot;true&quot; };
-       JSONArray json = JSONArray.fromObject(str);
-       System.err.println(json);
-
-       /**
-        * 对像数组，注意数字和布而值
-        */
-       Object[] o = { &quot;北京&quot;, &quot;上海&quot;, 89, true, 90.87 };
-       json = JSONArray.fromObject(o);
-       System.err.println(json);
-
-       /**
-        * 使用集合类
-        */
-       List list = new ArrayList();
-       list.add(&quot;Jack&quot;);
-       list.add(&quot;Rose&quot;);
-       json = JSONArray.fromObject(list);
-       System.err.println(json);
-
-       /**
-        * 使用 set 集
-        */
-       Set set = new HashSet();
-       set.add(&quot;Hello&quot;);
-       set.add(true);
-       set.add(99);
-       json = JSONArray.fromObject(set);
-       System.err.println(json);
-</code></pre><p><strong>运行结果如下：</strong></p>
-<pre><code>[&quot;Jack&quot;,&quot;Tom&quot;,&quot;90&quot;,&quot;true&quot;]
-[&quot;北京&quot;,&quot;上海&quot;,89,true,90.87]
-[&quot;Jack&quot;,&quot;Rose&quot;]
-[99,true,&quot;Hello&quot;]
-</code></pre><h3 id="2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析："><a href="#2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析：" class="headerlink" title="2. 将 JavaBean/Map 解析成 JSON 串。 使用JSONObject 解析："></a>2. 将 JavaBean/Map 解析成 JSON 串。 使用JSONObject 解析：</h3><pre><code>/**
-        * 解析 HashMap
-        */
-       Map map = new HashMap();
-       map.put(&quot;name&quot;, &quot;Tom&quot;);
-       map.put(&quot;age&quot;, 33);
-       JSONObject jsonObject = JSONObject.fromObject(map);
-       System.out.println(jsonObject);
-
-       /**
-        * 解析 JavaBean
-        */
-       Person person = new Person(&quot;A001&quot;, &quot;Jack&quot;);
-       jsonObject = jsonObject.fromObject(person);
-       System.out.println(jsonObject);
-
-       /**
-        * 解析嵌套的对象
-        */
-       map.put(&quot;person&quot;, person);
-       jsonObject = jsonObject.fromObject(map);
-       System.out.println(jsonObject);
-</code></pre><p><strong>运行结果如下：</strong></p>
-<pre><code>{&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;}
-{&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;}
-{&quot;person&quot;:{&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;},&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;}
-</code></pre><h3 id="3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map"><a href="#3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map" class="headerlink" title="3. 使用 JsonConfig 过虑属性：适用于 JavaBean/Map"></a>3. 使用 JsonConfig 过虑属性：适用于 JavaBean/Map</h3><pre><code>JsonConfig config = new JsonConfig();
-       config.setExcludes(new String[] { &quot;name&quot; });                      // 指定在转换时不包含哪些属性
-       Person person = new Person(&quot;A001&quot;, &quot;Jack&quot;);
-       JSONObject jsonObject = JSONObject.fromObject(person, config);    // 在转换时传入之前的配置对象
-       System.out.println(jsonObject);
-</code></pre><p><strong>运行结果如下，在运行结果中我们可以看到 name 属性被过滤掉了：</strong></p>
-<pre><code>{&quot;id&quot;:&quot;A001&quot;}
-</code></pre><h3 id="4-将-Json-串转换成-Array："><a href="#4-将-Json-串转换成-Array：" class="headerlink" title="4. 将 Json 串转换成 Array："></a>4. 将 Json 串转换成 Array：</h3><pre><code>JSONArray jsonArray = JSONArray.fromObject(&quot;[89,90,99]&quot;);
-      Object array = JSONArray.toArray(jsonArray);
-      System.out.println(array);
-      System.out.println(Arrays.asList((Object[]) array));
-</code></pre><p><strong>运行结果如下：</strong></p>
-<pre><code>[Ljava.lang.Object;@1e5003f6
-[89, 90, 99]
-</code></pre><h3 id="5-将-Json-串转成-JavaBean-Map："><a href="#5-将-Json-串转成-JavaBean-Map：" class="headerlink" title="5. 将 Json 串转成 JavaBean/Map："></a>5. 将 Json 串转成 JavaBean/Map：</h3><pre><code>/**
-        * 将 Json 形式的字符串转换为 Map
-        */
-       String str = &quot;{\&quot;name\&quot;:\&quot;Tom\&quot;,\&quot;age\&quot;:90}&quot;;
-       JSONObject jsonObject = JSONObject.fromObject(str);
-       Map map = (Map) JSONObject.toBean(jsonObject, Map.class);
-       System.out.println(map);
-
-       /**
-        * 将 Json 形式的字符串转换为 JavaBean
-        */
-       str = &quot;{\&quot;id\&quot;:\&quot;A001\&quot;,\&quot;name\&quot;:\&quot;Jack\&quot;}&quot;;
-       jsonObject = JSONObject.fromObject(str);
-       System.out.println(jsonObject);
-       Person person = (Person) JSONObject.toBean(jsonObject, Person.class);
-       System.out.println(person);
-</code></pre><p><strong>运行结果如下：</strong></p>
-<pre><code>{age=90, name=Tom}
-Person [id=A001, name=Jack]
-</code></pre><h4 id="在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误："><a href="#在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误：" class="headerlink" title="在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误："></a>在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误：</h4><pre><code>Exception in thread &quot;main&quot; net.sf.json.JSONException: java.lang.NoSuchMethodException: cn.sunzn.json.Person.()
-   at net.sf.json.JSONObject.toBean(JSONObject.java:288)
-   at net.sf.json.JSONObject.toBean(JSONObject.java:233)
-   at cn.sunzn.json.JsonLib.main(JsonLib.java:23)
-Caused by: java.lang.NoSuchMethodException: cn.sunzn.json.Person.()
-   at java.lang.Class.getConstructor0(Unknown Source)
-   at java.lang.Class.getDeclaredConstructor(Unknown Source)
-   at net.sf.json.util.NewBeanInstanceStrategy$DefaultNewBeanInstanceStrategy.newInstance(NewBeanInstanceStrategy.java:55)
-   at net.sf.json.JSONObject.toBean(JSONObject.java:282)
-   ... 2 more
-</code></pre>
+<h3 id="1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型"><a href="#1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型" class="headerlink" title="1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型"></a>1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Array 解析成 Json 串</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       String[] str = &#123; <span class="string">"Jack"</span>, <span class="string">"Tom"</span>, <span class="string">"90"</span>, <span class="string">"true"</span> &#125;;</span><br><span class="line">       JSONArray json = JSONArray.fromObject(str);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 对像数组，注意数字和布而值</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Object[] o = &#123; <span class="string">"北京"</span>, <span class="string">"上海"</span>, <span class="number">89</span>, <span class="keyword">true</span>, <span class="number">90.87</span> &#125;;</span><br><span class="line">       json = JSONArray.fromObject(o);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 使用集合类</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">       list.add(<span class="string">"Jack"</span>);</span><br><span class="line">       list.add(<span class="string">"Rose"</span>);</span><br><span class="line">       json = JSONArray.fromObject(list);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 使用 set 集</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Set&lt;Object&gt; set = <span class="keyword">new</span> HashSet&lt;Object&gt;();</span><br><span class="line">       set.add(<span class="string">"Hello"</span>);</span><br><span class="line">       set.add(<span class="keyword">true</span>);</span><br><span class="line">       set.add(<span class="number">99</span>);</span><br><span class="line">       json = JSONArray.fromObject(set);</span><br><span class="line">       System.err.println(json);</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[&quot;Jack&quot;,&quot;Tom&quot;,&quot;90&quot;,&quot;true&quot;]</span><br><span class="line">[&quot;北京&quot;,&quot;上海&quot;,89,true,90.87]</span><br><span class="line">[&quot;Jack&quot;,&quot;Rose&quot;]</span><br><span class="line">[99,true,&quot;Hello&quot;]</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析："><a href="#2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析：" class="headerlink" title="2. 将 JavaBean/Map 解析成 JSON 串。 使用JSONObject 解析："></a>2. 将 JavaBean/Map 解析成 JSON 串。 使用JSONObject 解析：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析 HashMap</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">       map.put(<span class="string">"name"</span>, <span class="string">"Tom"</span>);</span><br><span class="line">       map.put(<span class="string">"age"</span>, <span class="number">33</span>);</span><br><span class="line">       JSONObject jsonObject = JSONObject.fromObject(map);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析 JavaBean</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Person person = <span class="keyword">new</span> Person(<span class="string">"A001"</span>, <span class="string">"Jack"</span>);</span><br><span class="line">       jsonObject = jsonObject.fromObject(person);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析嵌套的对象</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       map.put(<span class="string">"person"</span>, person);</span><br><span class="line">       jsonObject = jsonObject.fromObject(map);</span><br><span class="line">       System.out.println(jsonObject);</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;&#125;</span><br><span class="line">&#123;&quot;person&quot;:&#123;&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;&#125;,&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map"><a href="#3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map" class="headerlink" title="3. 使用 JsonConfig 过虑属性：适用于 JavaBean/Map"></a>3. 使用 JsonConfig 过虑属性：适用于 JavaBean/Map</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JsonConfig config = <span class="keyword">new</span> JsonConfig();</span><br><span class="line">       config.setExcludes(<span class="keyword">new</span> String[] &#123; <span class="string">"name"</span> &#125;);                      <span class="comment">// 指定在转换时不包含哪些属性</span></span><br><span class="line">       Person person = <span class="keyword">new</span> Person(<span class="string">"A001"</span>, <span class="string">"Jack"</span>);</span><br><span class="line">       JSONObject jsonObject = JSONObject.fromObject(person, config);    <span class="comment">// 在转换时传入之前的配置对象</span></span><br><span class="line">       System.out.println(jsonObject);</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果如下，在运行结果中我们可以看到 name 属性被过滤掉了：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;A001&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-将-Json-串转换成-Array："><a href="#4-将-Json-串转换成-Array：" class="headerlink" title="4. 将 Json 串转换成 Array："></a>4. 将 Json 串转换成 Array：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JSONArray jsonArray = JSONArray.fromObject(<span class="string">"[89,90,99]"</span>);</span><br><span class="line">      Object array = JSONArray.toArray(jsonArray);</span><br><span class="line">      System.out.println(array);</span><br><span class="line">      System.out.println(Arrays.asList((Object[]) array));</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Ljava.lang.Object;@1e5003f6</span><br><span class="line">[89, 90, 99]</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-将-Json-串转成-JavaBean-Map："><a href="#5-将-Json-串转成-JavaBean-Map：" class="headerlink" title="5. 将 Json 串转成 JavaBean/Map："></a>5. 将 Json 串转成 JavaBean/Map：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Json 形式的字符串转换为 Map</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       String str = <span class="string">"&#123;\"name\":\"Tom\",\"age\":90&#125;"</span>;</span><br><span class="line">       JSONObject jsonObject = JSONObject.fromObject(str);</span><br><span class="line">       Map&lt;String, Object&gt; map = (Map&lt;String, Object&gt;) JSONObject.toBean(jsonObject, Map.class);</span><br><span class="line">       System.out.println(map);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Json 形式的字符串转换为 JavaBean</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       str = <span class="string">"&#123;\"id\":\"A001\",\"name\":\"Jack\"&#125;"</span>;</span><br><span class="line">       jsonObject = JSONObject.fromObject(str);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line">       Person person = (Person) JSONObject.toBean(jsonObject, Person.class);</span><br><span class="line">       System.out.println(person);</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;age=90, name=Tom&#125;</span><br><span class="line">Person [id=A001, name=Jack]</span><br></pre></td></tr></table></figure></p>
+<h4 id="在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误："><a href="#在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误：" class="headerlink" title="在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误："></a>在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> net.sf.json.JSONException: java.lang.NoSuchMethodException: cn.sunzn.json.Person.&lt;init&gt;()</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">288</span>)</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">233</span>)</span><br><span class="line">   at cn.sunzn.json.JsonLib.main(JsonLib.java:<span class="number">23</span>)</span><br><span class="line">Caused by: java.lang.NoSuchMethodException: cn.sunzn.json.Person.&lt;init&gt;()</span><br><span class="line">   at java.lang.Class.getConstructor0(Unknown Source)</span><br><span class="line">   at java.lang.Class.getDeclaredConstructor(Unknown Source)</span><br><span class="line">   at net.sf.json.util.NewBeanInstanceStrategy$DefaultNewBeanInstanceStrategy.newInstance(NewBeanInstanceStrategy.java:<span class="number">55</span>)</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">282</span>)</span><br><span class="line">   ... <span class="number">2</span> more</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

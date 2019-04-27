@@ -174,51 +174,15 @@
   </h1>
   
   <article class="passage-article">
-    <p><strong>一、事务和存储过程</strong><br>在存储过程中如何使用事务。当需要在存储过程中同时执行多条添加、修改、删除SQL语句时，为了保证数据完整性，我们需要使用事务。使用方式和在PL-SQL中非常相似，但也有一些区别。</p>
-<pre><code>--带事务的存储过程
-CREATE OR REPLACE PROCEDURE Account_zhuanzhang(fromuser NUMBER,touser NUMBER,money NUMBER) IS
-BEGIN
-    UPDATE account SET balance = balance - money WHERE id = fromuser;
-    UPDATE account SET balance = balance + money WHERE id = touser;
-    COMMIT;
-EXCEPTION
-  WHEN OTHERS THEN
-    dbms_output.put_line(&apos;转账失败&apos;);
-    ROLLBACK;
-END Account_zhuanzhang;
-</code></pre><p>调用事务</p>
-<pre><code>SELECT * FROM ACCOUNT;
-DECLARE 
-  fromuser NUMBER := 1;
-  touser NUMBER := 2;
-  money NUMBER := &amp;m;
-BEGIN
-  account_zhuanzhang(fromuser,touser,money);
-END;
-</code></pre><p><strong>二、自主事务处理：</strong></p>
+    <p><strong>一、事务和存储过程</strong><br>在存储过程中如何使用事务。当需要在存储过程中同时执行多条添加、修改、删除SQL语句时，为了保证数据完整性，我们需要使用事务。使用方式和在PL-SQL中非常相似，但也有一些区别。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--带事务的存储过程</span><br><span class="line">CREATE OR REPLACE PROCEDURE Account_zhuanzhang(fromuser NUMBER,touser NUMBER,money NUMBER) IS</span><br><span class="line">BEGIN</span><br><span class="line">    UPDATE account SET balance = balance - money WHERE id = fromuser;</span><br><span class="line">    UPDATE account SET balance = balance + money WHERE id = touser;</span><br><span class="line">    COMMIT;</span><br><span class="line">EXCEPTION</span><br><span class="line">  WHEN OTHERS THEN</span><br><span class="line">    dbms_output.put_line(&apos;转账失败&apos;);</span><br><span class="line">    ROLLBACK;</span><br><span class="line">END Account_zhuanzhang;</span><br></pre></td></tr></table></figure></p>
+<p>调用事务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM ACCOUNT;</span><br><span class="line">DECLARE </span><br><span class="line">  fromuser NUMBER := 1;</span><br><span class="line">  touser NUMBER := 2;</span><br><span class="line">  money NUMBER := &amp;m;</span><br><span class="line">BEGIN</span><br><span class="line">  account_zhuanzhang(fromuser,touser,money);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></p>
+<p><strong>二、自主事务处理：</strong></p>
 <p>　　自主事务：是由零一个事务启动的独立事务处理。自主事务处理可以暂停主事务处理，也就是处理自己存储过程内部的事务，当自主事务处理完之后会恢复主事务处理。</p>
-<p>　　<strong>PRAGMA AUTONOMOUS_TRANSACTION; –定义为自主事务，不受其他事务提交，回滚的影响</strong></p>
-<p>　　例：</p>
-<pre><code>--自主事务：带参数添加部门信息，最后使用了回滚
-CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD(DEPTNO NUMBER,DNAME VARCHAR2,LOC VARCHAR2) AS
-PRAGMA AUTONOMOUS_TRANSACTION;  --定义为自主事务，不受其他事务提交，回滚影响
-BEGIN
-  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (DEPTNO, DNAME, LOC);
-    ROLLBACK;  --自主事务回滚操作，不影响主事务。
-END;
+<p>　　<strong>PRAGMA AUTONOMOUS_TRANSACTION;  –定义为自主事务，不受其他事务提交，回滚的影响</strong></p>
+<p>　　例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--自主事务：带参数添加部门信息，最后使用了回滚</span><br><span class="line">CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD(DEPTNO NUMBER,DNAME VARCHAR2,LOC VARCHAR2) AS</span><br><span class="line">PRAGMA AUTONOMOUS_TRANSACTION;  --定义为自主事务，不受其他事务提交，回滚影响</span><br><span class="line">BEGIN</span><br><span class="line">  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (DEPTNO, DNAME, LOC);</span><br><span class="line">    ROLLBACK;  --自主事务回滚操作，不影响主事务。</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--主事务，添加部门信息，并调用带参数的自主事务，自己本身提交</span><br><span class="line">CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD2 AS</span><br><span class="line">BEGIN</span><br><span class="line">  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (60, &apos;test1&apos;, &apos;test2&apos;);</span><br><span class="line">  PRO_DEPT_ADD(70, &apos;test&apos;, &apos;test&apos;);     --如果调用的事务回滚，如果不是自主事务当前存储过程中插入数据也要一起回滚。但是添加了自主事务后，自主事务提交内容不会影响到当前存储过程</span><br><span class="line">  COMMIT;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>调用主事务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BEGIN</span><br><span class="line">      pro_dept_add2();  --调用完毕后，为60的部门插入成功，但是为70的部门信息回滚了。只有一条插入成功！</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></p>
 
---主事务，添加部门信息，并调用带参数的自主事务，自己本身提交
-CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD2 AS
-BEGIN
-  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (60, &apos;test1&apos;, &apos;test2&apos;);
-  PRO_DEPT_ADD(70, &apos;test&apos;, &apos;test&apos;);     --如果调用的事务回滚，如果不是自主事务当前存储过程中插入数据也要一起回滚。但是添加了自主事务后，自主事务提交内容不会影响到当前存储过程
-  COMMIT;
-END;
-</code></pre><p>调用主事务：</p>
-<pre><code>BEGIN
-      pro_dept_add2();  --调用完毕后，为60的部门插入成功，但是为70的部门信息回滚了。只有一条插入成功！
-END;
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

@@ -202,168 +202,19 @@
 <li>对每一个目标对象，都要分别写一个代理类，麻烦！(代理工厂)</li>
 </ol>
 <p><strong>代码示例:</strong></p>
-<pre><code>// IUserDao接口
-public interface IUserDao {
-    void save();
-    void find();
-}
-
-// 目标对象UserDao
-public class UserDao implements IUserDao{
-    @Override
-    public void save() {
-        System.out.println(&quot;模拟： 保存用户！&quot;);
-    }
-
-    @Override
-    public void find() {
-        System.out.println(&quot;查询&quot;);
-    }
-
-}
-
-/**
- *代理对象UserDaoProxy
- * 静态代理
-          特点：
-    1. 目标对象必须要实现接口
-    2. 代理对象，要实现与目标对象一样的接口
- */
-public class UserDaoProxy implements IUserDao{
-
-    // 代理对象，需要维护一个目标对象
-    private IUserDao target = new UserDao();
-
-    @Override
-    public void save() {
-
-        System.out.println(&quot;代理操作： 开启事务...&quot;);
-
-        target.save();   // 执行目标对象的方法
-
-        System.out.println(&quot;代理操作：提交事务...&quot;);
-    }
-
-    @Override
-    public void find() {
-        target.find();
-    }
-}
-
-//调用方法
-public class App {
-
-    public static void main(String[] args) {
-        // 代理对象
-        IUserDao proxy = new UserDaoProxy();
-        // 执行代理方法
-        proxy.save();
-
-    }
-}
-</code></pre><h4 id="2-2-动态代理"><a href="#2-2-动态代理" class="headerlink" title="2.2 动态代理"></a>2.2 动态代理</h4><p><strong>动态代理：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IUserDao接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 目标对象UserDao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span> <span class="keyword">implements</span> <span class="title">IUserDao</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"模拟： 保存用户！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"查询"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *代理对象UserDaoProxy</span></span><br><span class="line"><span class="comment"> * 静态代理</span></span><br><span class="line"><span class="comment">          特点：</span></span><br><span class="line"><span class="comment">	1. 目标对象必须要实现接口</span></span><br><span class="line"><span class="comment">	2. 代理对象，要实现与目标对象一样的接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoProxy</span> <span class="keyword">implements</span> <span class="title">IUserDao</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 代理对象，需要维护一个目标对象</span></span><br><span class="line">	<span class="keyword">private</span> IUserDao target = <span class="keyword">new</span> UserDao();</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"代理操作： 开启事务..."</span>);</span><br><span class="line">		</span><br><span class="line">		target.save();   <span class="comment">// 执行目标对象的方法</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"代理操作：提交事务..."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		target.find();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 代理对象</span></span><br><span class="line">		IUserDao proxy = <span class="keyword">new</span> UserDaoProxy();</span><br><span class="line">		<span class="comment">// 执行代理方法</span></span><br><span class="line">		proxy.save();</span><br><span class="line">		 </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-动态代理"><a href="#2-2-动态代理" class="headerlink" title="2.2 动态代理"></a>2.2 动态代理</h4><p><strong>动态代理：</strong></p>
 <ol>
 <li>通常说的动态代理，就是指jdk代理!因为是通过jdk的api在运行时期，动态的生成代理对象的！</li>
 <li><strong>目标对象一定要实现接口, 代理对象不用实现接口!</strong></li>
 </ol>
-<p><strong>JDK 生成代理对象的Api</strong><br><img src="https://www.swj233.top/usr/uploads/2018/08/2106354247.png" alt><br><strong>参数loader :</strong><br>当前目标对象使用的类加载器！<br><strong>参数interfaces :</strong><br>当前目标对象实现的接口<br><strong>参数 h:</strong></p>
-<pre><code>接口类型，事件处理器.
-当执行目标对象方法的时候，会触发事件； 把当前执行的方法(method对象)，传入事件处理器方法参数中,  这样就可以根据业务逻辑，判断是否执行目标对象方法或扩展功能！
-</code></pre><p>InvocationHandler对象会直接调用自己的invoke方法，invoke方法将<strong>目标对象传入</strong>调用目标对象方法<code>（method.invoke(target, args)）</code>，而在本例中UserDao就是<strong>目标对象</strong>，而UserDao.save是目标方法method<br><img src="https://www.swj233.top/usr/uploads/2018/08/1414442860.png" alt></p>
+<p><strong>JDK 生成代理对象的Api</strong><br><img src="https://www.swj233.top/usr/uploads/2018/08/2106354247.png" alt><br><strong>参数loader :</strong><br>当前目标对象使用的类加载器！<br><strong>参数interfaces :  </strong><br>当前目标对象实现的接口<br><strong>参数 h: </strong><br>    接口类型，事件处理器.<br>    当执行目标对象方法的时候，会触发事件； 把当前执行的方法(method对象)，传入事件处理器方法参数中,  这样就可以根据业务逻辑，判断是否执行目标对象方法或扩展功能！<br>InvocationHandler对象会直接调用自己的invoke方法，invoke方法将<strong>目标对象传入</strong>调用目标对象方法<code>（method.invoke(target, args)）</code>，而在本例中UserDao就是<strong>目标对象</strong>，而UserDao.save是目标方法method<br><img src="https://www.swj233.top/usr/uploads/2018/08/1414442860.png" alt></p>
 <p><strong>代码示例：</strong></p>
-<pre><code>// IUserDao接口
-public interface IUserDao {
-    void save();
-
-    void find(); 
-}
-
-// 目标对象UserDao
-public class UserDao implements IUserDao{
-//method
-    @Override
-    public void save() {
-        System.out.println(&quot;模拟： 保存用户！&quot;);
-    }
-
-    @Override
-    public void find() {
-        System.out.println(&quot;查询&quot;);
-    }
-}
-
-/**
- * 代理对象
- * 动态代理：
- *    代理工厂，给多个目标对象生成代理对象！
- * @author AdminTH
- *
- */
-public class ProxyFactory {
-
-    // 接收一个目标对象
-    private Object target;
-    public ProxyFactory(Object target) {
-        this.target = target;
-    }
-
-    // 返回对目标对象(target)代理后的对象(proxy)
-    public Object getProxyInstance() {
-        Object proxy = Proxy.newProxyInstance(
-                target.getClass().getClassLoader(),  // 目标对象使用的类加载器
-                target.getClass().getInterfaces(),   // 目标对象实现的所有接口
-                new InvocationHandler() {            // 执行代理对象方法时候触发
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args)
-                            throws Throwable {
-
-                        // 获取当前执行的方法的方法名
-                        String methodName = method.getName();
-                        // 方法返回值
-                        Object result = null;
-
-                        // 判断
-                        if (&quot;find&quot;.equals(methodName)) {
-                            // 直接调用目标对象方法
-                            result = method.invoke(target, args);
-                        } else {
-                            System.out.println(&quot;开启事务...&quot;);
-                            // 执行目标对象方法
-                            result = method.invoke(target, args);
-                            System.out.println(&quot;提交事务...&quot;);
-
-                        }
-
-
-                        return result;
-                    }
-                }
-        );
-        return proxy;
-    }
-}
-
-//调用代理对象
-public class App {
-
-    public static void main(String[] args) {
-
-        // 创建目标对象
-        IUserDao target = new UserDao();
-        System.out.println(&quot;目标对象：&quot; + target.getClass());  // class cn.itcast.b_dynamic.UserDao
-
-        // 代理对象
-        IUserDao proxy = (IUserDao) new ProxyFactory(target).getProxyInstance();
-        System.out.println(&quot;代理对象： &quot; + proxy.getClass());  //  class $Proxy0
-
-        // 执行代理对象的方法
-        proxy.save();
-    }
-}
-</code></pre><h4 id="2-3-CGLIB-代理"><a href="#2-3-CGLIB-代理" class="headerlink" title="2.3 CGLIB 代理"></a>2.3 CGLIB 代理</h4><p><strong>概念：</strong><br>也叫”子类代理”<br>当目标对象没有实现接口，就不能使用jdk提供的代理，可以以子类的方式实现！<br>在运行时期动态在内存中构建一个子类对象的方法，从而对目标对象扩展，这种就是cglib代理！<br>Spring也支持cglib代理，核心包中已经包含此功能！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// IUserDao接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">()</span></span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 目标对象UserDao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span> <span class="keyword">implements</span> <span class="title">IUserDao</span></span>&#123;</span><br><span class="line"><span class="comment">//method</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"模拟： 保存用户！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"查询"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 代理对象</span></span><br><span class="line"><span class="comment"> * 动态代理：</span></span><br><span class="line"><span class="comment"> *    代理工厂，给多个目标对象生成代理对象！</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> AdminTH</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 接收一个目标对象</span></span><br><span class="line">	<span class="keyword">private</span> Object target;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProxyFactory</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.target = target;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 返回对目标对象(target)代理后的对象(proxy)</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getProxyInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Object proxy = Proxy.newProxyInstance(</span><br><span class="line">				target.getClass().getClassLoader(),  <span class="comment">// 目标对象使用的类加载器</span></span><br><span class="line">				target.getClass().getInterfaces(),   <span class="comment">// 目标对象实现的所有接口</span></span><br><span class="line">				<span class="keyword">new</span> InvocationHandler() &#123;			<span class="comment">// 执行代理对象方法时候触发</span></span><br><span class="line">					<span class="meta">@Override</span></span><br><span class="line">					<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span></span><br><span class="line"><span class="function">							<span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">						</span><br><span class="line">						<span class="comment">// 获取当前执行的方法的方法名</span></span><br><span class="line">						String methodName = method.getName();</span><br><span class="line">						<span class="comment">// 方法返回值</span></span><br><span class="line">						Object result = <span class="keyword">null</span>;</span><br><span class="line">						</span><br><span class="line">						<span class="comment">// 判断</span></span><br><span class="line">						<span class="keyword">if</span> (<span class="string">"find"</span>.equals(methodName)) &#123;</span><br><span class="line">							<span class="comment">// 直接调用目标对象方法</span></span><br><span class="line">							result = method.invoke(target, args);</span><br><span class="line">						&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">							System.out.println(<span class="string">"开启事务..."</span>);</span><br><span class="line">							<span class="comment">// 执行目标对象方法</span></span><br><span class="line">							result = method.invoke(target, args);</span><br><span class="line">							System.out.println(<span class="string">"提交事务..."</span>);</span><br><span class="line">							</span><br><span class="line">						&#125;</span><br><span class="line">						</span><br><span class="line">						</span><br><span class="line">						<span class="keyword">return</span> result;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">		);</span><br><span class="line">		<span class="keyword">return</span> proxy;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用代理对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 创建目标对象</span></span><br><span class="line">		IUserDao target = <span class="keyword">new</span> UserDao();</span><br><span class="line">		System.out.println(<span class="string">"目标对象："</span> + target.getClass());  <span class="comment">// class cn.itcast.b_dynamic.UserDao</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 代理对象</span></span><br><span class="line">		IUserDao proxy = (IUserDao) <span class="keyword">new</span> ProxyFactory(target).getProxyInstance();</span><br><span class="line">		System.out.println(<span class="string">"代理对象： "</span> + proxy.getClass());  <span class="comment">//  class $Proxy0</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 执行代理对象的方法</span></span><br><span class="line">		proxy.save();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-CGLIB-代理"><a href="#2-3-CGLIB-代理" class="headerlink" title="2.3 CGLIB 代理"></a>2.3 CGLIB 代理</h4><p><strong>概念：</strong><br>也叫”子类代理”<br>当目标对象没有实现接口，就不能使用jdk提供的代理，可以以子类的方式实现！<br>在运行时期动态在内存中构建一个子类对象的方法，从而对目标对象扩展，这种就是cglib代理！<br>Spring也支持cglib代理，核心包中已经包含此功能！</p>
 <ul>
 <li>JDK的动态代理有一个限制，就是使用动态代理的对象必须实现一个或多个接口。如果想代理没有实现接口的类，就可以使用CGLIB实现。</li>
-<li>CGLIB是一个强大的高性能的代码生成包，它可以在运行期扩展Java类与实现Java接口。它广泛的被许多AOP的框架使用，例如Spring AOP和dynaop，为他们提供方法的interception（拦截）。</li>
+<li>CGLIB是一个强大的高性能的代码生成包，它可以在运行期扩展Java类与实现Java接口。它广泛的被许多AOP的框架使用，例如Spring AOP和dynaop，为他们提供方法的interception（拦截）。 </li>
 <li>CGLIB包的底层是通过使用一个小而快的字节码处理框架ASM，来转换字节码并生成新的类。不鼓励直接使用ASM，因为它要求你必须对JVM内部结构包括class文件的格式和指令集都很熟悉</li>
 </ul>
 <p><strong>特点：</strong></p>
@@ -372,67 +223,8 @@ public class App {
 <li>目标类不能为final， 如果为final报错</li>
 <li>方法如果为final/static, 不会被代理拦截！ 会直接执行目标对象方法 ！</li>
 </ol>
-<p><strong>核心代码：</strong></p>
-<pre><code>/**
- * cglib代理：
- *    代理工厂，给多个目标对象生成代理对象！
- * @author AdminTH
- *
- */
-public class ProxyFactory implements MethodInterceptor{
+<p><strong>核心代码：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * cglib代理：</span></span><br><span class="line"><span class="comment"> *    代理工厂，给多个目标对象生成代理对象！</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> AdminTH</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyFactory</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 接收一个目标对象</span></span><br><span class="line">	<span class="keyword">private</span> Object target;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProxyFactory</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.target = target;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 返回目标对象代理后的子类对象</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getProxyInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 对target生成子类对象</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 字节码生成工具类</span></span><br><span class="line">		Enhancer en = <span class="keyword">new</span> Enhancer();</span><br><span class="line">		<span class="comment">// 设置父类</span></span><br><span class="line">		en.setSuperclass(target.getClass());</span><br><span class="line">		<span class="comment">// 设置回调函数</span></span><br><span class="line">		en.setCallback(<span class="keyword">this</span>);</span><br><span class="line">		<span class="comment">// 创建子类对象</span></span><br><span class="line">		<span class="keyword">return</span> en.create();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 事件处理器，执行目标方法时候触发</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj, Method method, Object[] args,</span></span></span><br><span class="line"><span class="function"><span class="params">			MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"开启事务..."</span>);</span><br><span class="line">		Object result = method.invoke(target, args);</span><br><span class="line">		System.out.println(<span class="string">"提交事务..."</span>);</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用对象类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 创建目标对象</span></span><br><span class="line">		UserDao target = <span class="keyword">new</span> UserDao();</span><br><span class="line">		System.out.println(<span class="string">"目标对象："</span> + target.getClass());  <span class="comment">// class cn.itcast.c_cglib.UserDao</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 代理对象</span></span><br><span class="line">		UserDao proxy = (UserDao) <span class="keyword">new</span> ProxyFactory(target).getProxyInstance();</span><br><span class="line">		System.out.println(<span class="string">"代理对象： "</span> + proxy.getClass());  <span class="comment">//  class cn.itcast.c_cglib.UserDao$$EnhancerByCGLIB$$6ecf51fe</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 执行代理对象的方法</span></span><br><span class="line">		proxy.save();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-    // 接收一个目标对象
-    private Object target;
-    public ProxyFactory(Object target) {
-        this.target = target;
-    }
-
-    // 返回目标对象代理后的子类对象
-    public Object getProxyInstance() {
-        // 对target生成子类对象
-
-        // 字节码生成工具类
-        Enhancer en = new Enhancer();
-        // 设置父类
-        en.setSuperclass(target.getClass());
-        // 设置回调函数
-        en.setCallback(this);
-        // 创建子类对象
-        return en.create();
-
-    }
-
-    // 事件处理器，执行目标方法时候触发
-    @Override
-    public Object intercept(Object obj, Method method, Object[] args,
-            MethodProxy methodProxy) throws Throwable {
-        System.out.println(&quot;开启事务...&quot;);
-        Object result = method.invoke(target, args);
-        System.out.println(&quot;提交事务...&quot;);
-        return result;
-    }
-
-
-}
-
-//调用对象类
-public class App {
-
-    public static void main(String[] args) {
-
-        // 创建目标对象
-        UserDao target = new UserDao();
-        System.out.println(&quot;目标对象：&quot; + target.getClass());  // class cn.itcast.c_cglib.UserDao
-
-        // 代理对象
-        UserDao proxy = (UserDao) new ProxyFactory(target).getProxyInstance();
-        System.out.println(&quot;代理对象： &quot; + proxy.getClass());  //  class cn.itcast.c_cglib.UserDao$$EnhancerByCGLIB$$6ecf51fe
-
-        // 执行代理对象的方法
-        proxy.save();
-    }
-}
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="项目代码,需要点击图片后，弹出dailog窗口，显示完整图片html部分123456789101112&amp;lt;div class=&amp;quot; user_upload_images&amp;quot;&amp;gt;	&amp;lt;img src=&amp;quot;&amp;#123;php echo tomedia($item[&amp;apos;content_image&amp;apos;])&amp;#125;&amp;quot; class=&amp;quot;imgg&amp;quot; style=&amp;quot;width:40px;height:40px;padding:1px;border:1px solid #ccc;&amp;quot; /&amp;gt;&amp;lt;/div&amp;gt;//dialog提示框&amp;lt;div id=&amp;quot;dialog&amp;quot; style=&amp;quot;text-align: center;&amp;quot;&amp;gt;  &amp;lt;img src=&amp;quot;&amp;quot; id=&amp;quot;show_big_image&amp;quot; /&amp;gt;&amp;lt;/div&amp;gt;//使用jqueryUi&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css&amp;quot;&amp;gt;  &amp;lt;script src=&amp;quot;//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;  &amp;lt;script src=&amp;quot;//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;js部分123456789101112131415161718$(function () &amp;#123;       $(&amp;quot;#dialog&amp;quot;).dialog(&amp;#123;           autoOpen: false,           show: &amp;#123;                    &amp;#125;,           hide: &amp;#123;                      &amp;#125;       &amp;#125;);	       $(&amp;quot;.imgg&amp;quot;).click(function () &amp;#123;           $(&amp;quot;#dialog&amp;quot;).dialog(&amp;quot;open&amp;quot;);		//当点击 class=imgg 的标签时，将id=show_big_image标签中的src属性赋值成 class=imgg 的标签中的src属性的值		$(&amp;quot;#show_big_image&amp;quot;).attr(&amp;quot;src&amp;quot;,$(this).attr(&amp;quot;src&amp;quot;));       &amp;#125;);   &amp;#125;);">
 
   
 
@@ -174,35 +174,7 @@
   </h1>
   
   <article class="passage-article">
-    <p>项目代码,需要点击图片后，弹出dailog窗口，显示完整图片</p>
-<p>html部分</p>
-<pre><code>//dialog提示框
-
-
-
-
-//使用jqueryUi
-</code></pre><p>js部分</p>
-<pre><code>$(function () {
-       $(&quot;#dialog&quot;).dialog({
-           autoOpen: false,
-           show: {
-
-           },
-           hide: {
-
-           }
-       });
-
-       $(&quot;.imgg&quot;).click(function () {
-           $(&quot;#dialog&quot;).dialog(&quot;open&quot;);
-
-           //当点击 class=imgg 的标签时，将id=show_big_image标签中的src属性赋值成 class=imgg 的标签中的src属性的值
-           $(&quot;#show_big_image&quot;).attr(&quot;src&quot;,$(this).attr(&quot;src&quot;));
-       });
-   });
-</code></pre><p>偷懒贴张手册里的图:laughing:<br><img src="https://www.swj233.top/usr/uploads/2018/07/3565076444.png" alt></p>
-
+    <p>偷懒贴张手册里的图:laughing:<br><img src="http://pqiuhq1tw.bkt.clouddn.com/3565076444.png" alt></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

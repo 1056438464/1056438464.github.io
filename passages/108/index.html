@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="php中的if语句是弱类型，即if（）中的判断语句不必是boolean类型的。">
 
   
 
@@ -174,10 +174,8 @@
   </h1>
   
   <article class="passage-article">
-    <p>php中的<code>if</code>语句是<strong>弱类型</strong>，即<code>if（）</code>中的判断语句不必是<strong>boolean类型</strong>的。</p>
-<p>例：</p>
-<p>而java中的<code>if()</code>的条件必须是<strong>boolean类型</strong>的。<br>即<code>if(0)</code>这样写是不可以的，会报错。要写成如下的格式：</p>
-
+    <br>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(0)</span><br><span class="line">&#123;</span><br><span class="line">	echo &apos;true&apos;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line"></span><br><span class="line">	echo &apos;false&apos;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出： false; //0代表着false</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p></p>
+<p>而java中的<code>if()</code>的条件必须是<strong>boolean类型</strong>的。<br>即<code>if(0)</code>这样写是不可以的，会报错。要写成如下的格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if(1&lt;2)&#123;</span><br><span class="line"></span><br><span class="line">	system.out.printf(&quot;true&quot;);</span><br><span class="line"></span><br><span class="line">&#125;else&#123;</span><br><span class="line">	system.out.printf(&quot;flase&quot;);</span><br><span class="line">&#125;</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

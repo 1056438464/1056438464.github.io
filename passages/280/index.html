@@ -175,11 +175,7 @@
   
   <article class="passage-article">
     <p><strong>对象的长度不能用.length获取，用js原生的Object.keys可以获取到</strong></p>
-<pre><code>var obj = {&apos;name&apos; : &apos;Tom&apos; , &apos;sex&apos; : &apos;male&apos; , &apos;age&apos; : &apos;14&apos;};
-var arr = Object.keys(obj);
-console.log(arr);  // [&apos;name&apos;,&apos;sex&apos;,&apos;age&apos;]
-console.log(arr.length);  //3
-</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="string">'name'</span> : <span class="string">'Tom'</span> , <span class="string">'sex'</span> : <span class="string">'male'</span> , <span class="string">'age'</span> : <span class="string">'14'</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> arr = <span class="built_in">Object</span>.keys(obj);</span><br><span class="line"><span class="built_in">console</span>.log(arr);  <span class="comment">// ['name','sex','age']</span></span><br><span class="line"><span class="built_in">console</span>.log(arr.length);  <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

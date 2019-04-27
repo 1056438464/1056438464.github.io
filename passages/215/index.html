@@ -174,13 +174,12 @@
   </h1>
   
   <article class="passage-article">
-    <h3 id="1-查找当前目录中所有含某一字段的文件（包含文件夹）"><a href="#1-查找当前目录中所有含某一字段的文件（包含文件夹）" class="headerlink" title="1.查找当前目录中所有含某一字段的文件（包含文件夹）"></a>1.查找当前目录中所有含某一字段的文件（包含文件夹）</h3><pre><code>find . | xargs grep &quot;custom&quot;
-</code></pre><h3 id="2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"><a href="#2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件" class="headerlink" title="2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"></a>2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</h3><pre><code>find . -type f | xargs grep &quot;custom&apos;
-</code></pre><h3 id="3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称"><a href="#3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称" class="headerlink" title="3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称"></a>3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</h3><pre><code>find . -type f | xargs grep &quot;custom&apos; -l
-</code></pre><h3 id="4-滤掉某些文件夹，不去这些文件夹下查看呢-使用-purn。例如不看-git文件下的文件"><a href="#4-滤掉某些文件夹，不去这些文件夹下查看呢-使用-purn。例如不看-git文件下的文件" class="headerlink" title="4.滤掉某些文件夹，不去这些文件夹下查看呢, 使用-purn。例如不看.git文件下的文件"></a>4.滤掉某些文件夹，不去这些文件夹下查看呢, 使用-purn。例如不看.git文件下的文件</h3><p>（具体使用方法查看：<a href="https://blog.csdn.net/u011517841/article/details/53204524" target="_blank" rel="noopener">https://blog.csdn.net/u011517841/article/details/53204524</a> ）</p>
-<pre><code>find . -path ./.git -prune -o -type f | xargs grep &quot;custom&quot; -l
-</code></pre><h3 id="5-当然查看某个目录下含有某个字段也可以直接使用grep"><a href="#5-当然查看某个目录下含有某个字段也可以直接使用grep" class="headerlink" title="5. 当然查看某个目录下含有某个字段也可以直接使用grep"></a>5. 当然查看某个目录下含有某个字段也可以直接使用grep</h3><pre><code>grep -r &quot;custom&quot; -l
-</code></pre>
+    <h3 id="1-查找当前目录中所有含某一字段的文件（包含文件夹）"><a href="#1-查找当前目录中所有含某一字段的文件（包含文件夹）" class="headerlink" title="1.查找当前目录中所有含某一字段的文件（包含文件夹）"></a>1.查找当前目录中所有含某一字段的文件（包含文件夹）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | xargs grep "custom"</span><br></pre></td></tr></table></figure>
+<h3 id="2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"><a href="#2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件" class="headerlink" title="2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"></a>2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f | xargs grep "custom'</span><br></pre></td></tr></table></figure>
+<h3 id="3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称"><a href="#3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称" class="headerlink" title="3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称"></a>3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f | xargs grep "custom' -l</span><br></pre></td></tr></table></figure>
+<p>###4.滤掉某些文件夹，不去这些文件夹下查看呢, 使用-purn。例如不看.git文件下的文件<br>（具体使用方法查看：<a href="https://blog.csdn.net/u011517841/article/details/53204524" target="_blank" rel="noopener">https://blog.csdn.net/u011517841/article/details/53204524</a> ）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -path ./.git -prune -o -type f | xargs grep "custom" -l</span><br></pre></td></tr></table></figure></p>
+<p>###5. 当然查看某个目录下含有某个字段也可以直接使用grep<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r "custom" -l</span><br></pre></td></tr></table></figure></p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -188,7 +187,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查找当前目录中所有含某一字段的文件（包含文件夹）"><span class="toc-text">1.查找当前目录中所有含某一字段的文件（包含文件夹）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"><span class="toc-text">2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称"><span class="toc-text">3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-滤掉某些文件夹，不去这些文件夹下查看呢-使用-purn。例如不看-git文件下的文件"><span class="toc-text">4.滤掉某些文件夹，不去这些文件夹下查看呢, 使用-purn。例如不看.git文件下的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-当然查看某个目录下含有某个字段也可以直接使用grep"><span class="toc-text">5. 当然查看某个目录下含有某个字段也可以直接使用grep</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查找当前目录中所有含某一字段的文件（包含文件夹）"><span class="toc-text">1.查找当前目录中所有含某一字段的文件（包含文件夹）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"><span class="toc-text">2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称"><span class="toc-text">3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</span></a></li></ol>
   </div>
 </aside>
   

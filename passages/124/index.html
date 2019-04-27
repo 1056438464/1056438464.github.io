@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content=" js的方法执行顺序不是顺序执行，而是异步执行，尤其是进行网络请求时，即a.get(url)。这样js的异步执行更加明显。如以上代码，打印输出不一定是ABC，而有可能是ACB。">
 
   
 
@@ -174,67 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>js的方法执行顺序不是顺序执行，而是异步执行，尤其是进行网络请求时，<strong>即a.get(url)</strong>。这样js的异步执行更加明显。如以上代码，打印输出不一定是ABC，而有可能是ACB。</p>
-<pre><code>A: function () {
-   var t = this;
-     success: function () { 
-        console.log(A)
-     },
-    t.B();
-    t.C();
-
-   })
- },
- B: function () {
-   var t = this;
-     success: function () { 
-     console.log(B)
-     }
-
-   })
- },
-C: function () {
-   var t = this;
-     success: function () { 
-        console.log(c)
-     }
-
-   })
- },
-</code></pre><p>要避免js的异步执行可以用<strong>success</strong>方法</p>
-<pre><code>success: function () { 
-       ....
-     }
-</code></pre><p>如果B，C方法的执行并没有什么顺序要求可以这样写，但是有顺序要求的话就必须</p>
-<pre><code>A: function () {
-   var t = this;
-     success: function () { 
-        console.log(A)
-        t.B();
-     },
-
-
-
-   })
- },
- B: function () {
-   var t = this;
-     success: function () { 
-     console.log(B)
-       t.C();
-     }
-
-   })
- },
-C: function () {
-   var t = this;
-     success: function () { 
-        console.log(c)
-     }
-
-   })
- },
-</code></pre>
+    <br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">A: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">         console.log(A)</span><br><span class="line">      &#125;,</span><br><span class="line">     t.B();</span><br><span class="line">     t.C();</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  B: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">      console.log(B)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">C: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">         console.log(c)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure><p></p>
+<p>要避免js的异步执行可以用<strong>success</strong>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">success: function () &#123; </span><br><span class="line">       ....</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果B，C方法的执行并没有什么顺序要求可以这样写，但是有顺序要求的话就必须<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">A: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">         console.log(A)</span><br><span class="line">		 t.B();</span><br><span class="line">      &#125;,</span><br><span class="line">     </span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  B: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">      console.log(B)</span><br><span class="line">	    t.C();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">C: function () &#123;</span><br><span class="line">    var t = this;</span><br><span class="line">      success: function () &#123; </span><br><span class="line">         console.log(c)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

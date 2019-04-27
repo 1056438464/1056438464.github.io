@@ -11,11 +11,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Liunx,php-fpm,php,命令,grep,文件,java,mysql,open-jdk,安装,系统,gcj,javarpm,jdkrpm,yum,1.8.0,service,">
+    <meta name="keywords" content="Liunx,php-fpm,php,命令,grep,文件,mysql,open-jdk,安装,系统,gcj,javarpm,jdkrpm,java,yum,1.8.0,service,">
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="1.安装jdk1.81.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk命令：123rpm -qa |grep javarpm -qa |grep jdkrpm -qa |grep gcj如果没有输入信息表示没有安装。如果安装可以使用如果安装可以使用1rpm -qa | grep java | xargs rpm -e --nodeps批量卸载所有带有Java的文件  这句命令的关键字是java1.2 检索包含java的列表1yum list java*">
 
   
 
@@ -174,23 +174,12 @@
   </h1>
   
   <article class="passage-article">
-    <h1 id="1-安装jdk1-8"><a href="#1-安装jdk1-8" class="headerlink" title="1.安装jdk1.8"></a>1.安装jdk1.8</h1><h2 id="1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><a href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk" class="headerlink" title="1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk"></a>1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</h2><p>命令：</p>
-<pre><code>rpm -qa |grep java
-rpm -qa |grep jdk
-rpm -qa |grep gcj
-</code></pre><p>如果没有输入信息表示没有安装。<br>如果安装可以使用如果安装可以使用</p>
-<pre><code>rpm -qa | grep java | xargs rpm -e --nodeps 
-</code></pre><p>批量卸载所有带有Java的文件 这句命令的关键字是java</p>
-<h2 id="1-2-检索包含java的列表"><a href="#1-2-检索包含java的列表" class="headerlink" title="1.2 检索包含java的列表"></a>1.2 检索包含java的列表</h2><pre><code>yum list java*
-</code></pre><h2 id="1-3-检索1-8的列表"><a href="#1-3-检索1-8的列表" class="headerlink" title="1.3 检索1.8的列表"></a>1.3 检索1.8的列表</h2><pre><code>yum list java-1.8*   
-</code></pre><h2 id="1-4-安装1-8-0的所有文件"><a href="#1-4-安装1-8-0的所有文件" class="headerlink" title="1.4 安装1.8.0的所有文件"></a>1.4 安装1.8.0的所有文件</h2><pre><code>yum install java-1.8.0-openjdk* -y
-</code></pre><h2 id="1-5-使用命令检查是否安装成功"><a href="#1-5-使用命令检查是否安装成功" class="headerlink" title="1.5 使用命令检查是否安装成功"></a>1.5 使用命令检查是否安装成功</h2><pre><code>java -version
-</code></pre><h1 id="2-安装mysql、php、httpd服务"><a href="#2-安装mysql、php、httpd服务" class="headerlink" title="2.安装mysql、php、httpd服务"></a>2.安装mysql、php、httpd服务</h1><pre><code>yum install -y httpd php php-fpm mysql mysql-server php-mysql
-</code></pre><h2 id="2-1-服务启动"><a href="#2-1-服务启动" class="headerlink" title="2.1 服务启动"></a>2.1 服务启动</h2><pre><code>service httpd start  
-service mysqld start  
-service php-fpm start
-</code></pre><h2 id="2-2-查看状态"><a href="#2-2-查看状态" class="headerlink" title="2.2 查看状态"></a>2.2 查看状态</h2><pre><code>netstat -tunlp
-</code></pre>
+    <h2 id="1-3-检索1-8的列表"><a href="#1-3-检索1-8的列表" class="headerlink" title="1.3 检索1.8的列表"></a>1.3 检索1.8的列表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list java-1.8*</span><br></pre></td></tr></table></figure>
+<h2 id="1-4-安装1-8-0的所有文件"><a href="#1-4-安装1-8-0的所有文件" class="headerlink" title="1.4 安装1.8.0的所有文件"></a>1.4 安装1.8.0的所有文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install java-1.8.0-openjdk* -y</span><br></pre></td></tr></table></figure>
+<h2 id="1-5-使用命令检查是否安装成功"><a href="#1-5-使用命令检查是否安装成功" class="headerlink" title="1.5 使用命令检查是否安装成功"></a>1.5 使用命令检查是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<h1 id="2-安装mysql、php、httpd服务"><a href="#2-安装mysql、php、httpd服务" class="headerlink" title="2.安装mysql、php、httpd服务"></a>2.安装mysql、php、httpd服务</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y httpd php php-fpm mysql mysql-server php-mysql</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-服务启动"><a href="#2-1-服务启动" class="headerlink" title="2.1 服务启动"></a>2.1 服务启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service httpd start  </span><br><span class="line">service mysqld start  </span><br><span class="line">service php-fpm start</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-查看状态"><a href="#2-2-查看状态" class="headerlink" title="2.2 查看状态"></a>2.2 查看状态</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp</span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,8 +187,8 @@ service php-fpm start
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-安装jdk1-8"><span class="toc-text">1.安装jdk1.8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><span class="toc-text">1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-检索包含java的列表"><span class="toc-text">1.2 检索包含java的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-检索1-8的列表"><span class="toc-text">1.3 检索1.8的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-安装1-8-0的所有文件"><span class="toc-text">1.4 安装1.8.0的所有文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-使用命令检查是否安装成功"><span class="toc-text">1.5 使用命令检查是否安装成功</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-安装mysql、php、httpd服务"><span class="toc-text">2.安装mysql、php、httpd服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-服务启动"><span class="toc-text">2.1 服务启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-查看状态"><span class="toc-text">2.2 查看状态</span></a></li></ol></li></ol>
-  </div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-检索1-8的列表"><span class="toc-text">1.3 检索1.8的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-安装1-8-0的所有文件"><span class="toc-text">1.4 安装1.8.0的所有文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-使用命令检查是否安装成功"><span class="toc-text">1.5 使用命令检查是否安装成功</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#2-安装mysql、php、httpd服务"><span class="toc-text">2.安装mysql、php、httpd服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-服务启动"><span class="toc-text">2.1 服务启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-查看状态"><span class="toc-text">2.2 查看状态</span></a></li></ol>
+  </li></div>
 </aside>
   
     <aside class="passage-copyright">
@@ -228,8 +217,6 @@ service php-fpm start
      
       <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
      
-      <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
-     
       <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
      
       <a href="/tags/open-jdk/"><i class="fa fa-tags"></i>open-jdk</a>
@@ -243,6 +230,8 @@ service php-fpm start
       <a href="/tags/javarpm/"><i class="fa fa-tags"></i>javarpm</a>
      
       <a href="/tags/jdkrpm/"><i class="fa fa-tags"></i>jdkrpm</a>
+     
+      <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
      
       <a href="/tags/yum/"><i class="fa fa-tags"></i>yum</a>
      

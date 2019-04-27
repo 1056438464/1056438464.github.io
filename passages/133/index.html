@@ -174,46 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>格式：</p>
-<pre><code>comment on column 表名.字段名 is &apos;注释&apos;；
-</code></pre><p>demo</p>
-<pre><code>create TABLE HPD_INSTOCK_TEMP
-(
-    StoreHouseID    varchar(20) ,
-    DeptCode    varchar(20),
-    InStockCode    varchar(20),
-    InStockCodeLine    numeric(4,0),
-    DrugCode    varchar(20),
-    Unit    varchar(20),
-    Count    Numeric(10,2),
-    Price    Numeric (10,4),
-    SellPrice    Numeric (10,4),
-    Total    Numeric (16,4),
-    Manufacture    varchar(100),
-    Validity    varchar(10),
-    FactDate    date,
-    Remark    varchar(100),
-    Operator    varchar(20),
-    CZJC    char(1)
-);
+    <p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">comment on column 表名.字段名 is &apos;注释&apos;；</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">create TABLE HPD_INSTOCK_TEMP</span><br><span class="line">(</span><br><span class="line">	StoreHouseID	varchar(20) ,</span><br><span class="line">	DeptCode	varchar(20),</span><br><span class="line">	InStockCode	varchar(20),</span><br><span class="line">	InStockCodeLine	numeric(4,0),</span><br><span class="line">	DrugCode	varchar(20),</span><br><span class="line">	Unit	varchar(20),</span><br><span class="line">	Count	Numeric(10,2),</span><br><span class="line">	Price	Numeric (10,4),</span><br><span class="line">	SellPrice	Numeric (10,4),</span><br><span class="line">	Total	Numeric (16,4),</span><br><span class="line">	Manufacture	varchar(100),</span><br><span class="line">	Validity	varchar(10),</span><br><span class="line">	FactDate	date,</span><br><span class="line">	Remark	varchar(100),</span><br><span class="line">	Operator	varchar(20),</span><br><span class="line">	CZJC	char(1)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">comment on column HPD_INSTOCK_TEMP.StoreHouseID  is &apos;药库编码&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.DeptCode  is &apos;药房编码&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.InStockCode  is &apos;退库单号&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.InStockCodeLine  is &apos;序号&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.DrugCode  is &apos;药品编码&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Unit  is &apos;计量单位&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Count  is &apos;数量&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Price  is &apos;进货价&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.SellPrice  is &apos;零售价&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Total  is &apos;金额&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Manufacture  is &apos;生产厂家&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Validity  is &apos;失效日期&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.FactDate  is &apos;退货日期&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Remark  is &apos;备注&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.Operator  is &apos;操作员工号&apos;;</span><br><span class="line">comment on column HPD_INSTOCK_TEMP.CZJC  is &apos;操作进程&apos;;</span><br></pre></td></tr></table></figure></p>
 
-comment on column HPD_INSTOCK_TEMP.StoreHouseID  is &apos;药库编码&apos;;
-comment on column HPD_INSTOCK_TEMP.DeptCode  is &apos;药房编码&apos;;
-comment on column HPD_INSTOCK_TEMP.InStockCode  is &apos;退库单号&apos;;
-comment on column HPD_INSTOCK_TEMP.InStockCodeLine  is &apos;序号&apos;;
-comment on column HPD_INSTOCK_TEMP.DrugCode  is &apos;药品编码&apos;;
-comment on column HPD_INSTOCK_TEMP.Unit  is &apos;计量单位&apos;;
-comment on column HPD_INSTOCK_TEMP.Count  is &apos;数量&apos;;
-comment on column HPD_INSTOCK_TEMP.Price  is &apos;进货价&apos;;
-comment on column HPD_INSTOCK_TEMP.SellPrice  is &apos;零售价&apos;;
-comment on column HPD_INSTOCK_TEMP.Total  is &apos;金额&apos;;
-comment on column HPD_INSTOCK_TEMP.Manufacture  is &apos;生产厂家&apos;;
-comment on column HPD_INSTOCK_TEMP.Validity  is &apos;失效日期&apos;;
-comment on column HPD_INSTOCK_TEMP.FactDate  is &apos;退货日期&apos;;
-comment on column HPD_INSTOCK_TEMP.Remark  is &apos;备注&apos;;
-comment on column HPD_INSTOCK_TEMP.Operator  is &apos;操作员工号&apos;;
-comment on column HPD_INSTOCK_TEMP.CZJC  is &apos;操作进程&apos;;
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

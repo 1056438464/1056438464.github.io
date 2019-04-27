@@ -15,7 +15,7 @@
   
 
   
-  <meta name="description" content="尚文杰的小站">
+  <meta name="description" content="错误：    有时候在小程序前端能取到图片的地址，但是不显示解决方法：    可能是数据库中只存了图片的服务器地址，但是地址不全    例：    1/pages/member/info/index但如果要显示到页面上需要加ip。即：1192.168.100.103/pages/member/info/index">
 
   
 
@@ -174,36 +174,9 @@
   </h1>
   
   <article class="passage-article">
-    <p>错误：</p>
-<pre><code>有时候在小程序前端能取到图片的地址，但是不显示
-</code></pre><p>解决方法：</p>
-<pre><code>可能是数据库中只存了图片的服务器地址，但是地址不全
-例：
-
-/pages/member/info/index
-</code></pre><p>但如果要显示到页面上需要加ip。即：</p>
-<pre><code>192.168.100.103/pages/member/info/index
-</code></pre><p>即在前端：</p>
-<p>后台js：</p>
-<pre><code>var t = getApp(),
-  a = t.requirejs(&quot;core&quot;),
-  e = (t.requirejs(&quot;icons&quot;), t.requirejs(&quot;wxParse/wxParse&quot;));
-Page({
-  data: {
-    attachment: t.globalData.attachment
-  }
-  })
-</code></pre><p>在微信小程序中定义全局变量：</p>
-<pre><code>globalData: {
-   rencent_order_time_before: 30,//最近订单中往前显示订单的时间
-   custom_service_phonenumber: &quot;023-5519827&quot;,//客服电话
-   appid: &quot;wx68c04a444055058c&quot;,
-   api: &quot;http://192.168.100.12:8080/app/ewei_shopv2_api.php?i=1&quot;,
-   approot: &quot;http://192.168.100.12:8080/addons/ewei_shopv2/&quot;,
-   attachment: &quot;http://192.168.100.12:8080/attachment/&quot;,
-   userInfo: null
- }
-</code></pre>
+    <p>即在前端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;image src=&apos;&#123;&#123;attachment&#125;&#125;&#123;&#123;item.static_image&#125;&#125;&apos;&gt;&lt;/image&gt;</span><br></pre></td></tr></table></figure></p>
+<p>后台js：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var t = getApp(),</span><br><span class="line">  a = t.requirejs(&quot;core&quot;),</span><br><span class="line">  e = (t.requirejs(&quot;icons&quot;), t.requirejs(&quot;wxParse/wxParse&quot;));</span><br><span class="line">Page(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    attachment: t.globalData.attachment</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>在微信小程序中定义全局变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">globalData: &#123;</span><br><span class="line">   rencent_order_time_before: 30,//最近订单中往前显示订单的时间</span><br><span class="line">   custom_service_phonenumber: &quot;023-5519827&quot;,//客服电话</span><br><span class="line">   appid: &quot;wx68c04a444055058c&quot;,</span><br><span class="line">   api: &quot;http://192.168.100.12:8080/app/ewei_shopv2_api.php?i=1&quot;,</span><br><span class="line">   approot: &quot;http://192.168.100.12:8080/addons/ewei_shopv2/&quot;,</span><br><span class="line">   attachment: &quot;http://192.168.100.12:8080/attachment/&quot;,</span><br><span class="line">   userInfo: null</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

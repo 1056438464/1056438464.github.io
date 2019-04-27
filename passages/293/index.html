@@ -175,43 +175,11 @@
   
   <article class="passage-article">
     <p>以下实例演示了如何使用 Collections 类的 max() 和 min() 方法来获取List中最大最小值：</p>
-<h3 id="例1："><a href="#例1：" class="headerlink" title="例1："></a>例1：</h3><pre><code>/*
- author by w3cschool.cc
- Main.java
- */
+<h3 id="例1："><a href="#例1：" class="headerlink" title="例1："></a>例1：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> author by w3cschool.cc</span></span><br><span class="line"><span class="comment"> Main.java</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      List list = Arrays.asList(<span class="string">"one Two three Four five six one three Four"</span>.split(<span class="string">" "</span>));</span><br><span class="line">      System.out.println(list);</span><br><span class="line">      System.out.println(<span class="string">"最大值: "</span> + Collections.max(list));</span><br><span class="line">      System.out.println(<span class="string">"最小值: "</span> + Collections.min(list));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码运行输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[one, Two, three, Four, five, six, one, three, Four]</span><br><span class="line">最大值: three</span><br><span class="line">最小值: Four</span><br></pre></td></tr></table></figure></p>
+<h3 id="例2："><a href="#例2：" class="headerlink" title="例2："></a>例2：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Double&gt; input = new ArrayList&lt;Double&gt;();</span><br><span class="line">input.add(2.3);</span><br><span class="line">input.add(3.3);</span><br><span class="line">input.add(4.3);</span><br><span class="line">input.add(5.3);</span><br><span class="line">input.add(6.3);</span><br><span class="line">input.add(7.3);</span><br><span class="line">input.add(8.3);</span><br><span class="line">input.add(9.3);</span><br><span class="line">input.add(1.3);		</span><br><span class="line">System.out.println(input);</span><br><span class="line">System.out.println(&quot;最大值: &quot; + Collections.max(input));</span><br><span class="line">System.out.println(&quot;最小值: &quot; + Collections.min(input));</span><br></pre></td></tr></table></figure>
+<p>以上代码运行输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[2.3, 3.3, 4.3, 5.3, 6.3, 7.3, 8.3, 9.3, 1.3]</span><br><span class="line">最大值: 9.3</span><br><span class="line">最小值: 1.3</span><br></pre></td></tr></table></figure></p>
 
-import java.util.*;
-
-public class Main {
-   public static void main(String[] args) {
-      List list = Arrays.asList(&quot;one Two three Four five six one three Four&quot;.split(&quot; &quot;));
-      System.out.println(list);
-      System.out.println(&quot;最大值: &quot; + Collections.max(list));
-      System.out.println(&quot;最小值: &quot; + Collections.min(list));
-   }
-}
-</code></pre><p>以上代码运行输出结果为：</p>
-<pre><code>[one, Two, three, Four, five, six, one, three, Four]
-最大值: three
-最小值: Four
-</code></pre><h3 id="例2："><a href="#例2：" class="headerlink" title="例2："></a>例2：</h3><pre><code>List input = new ArrayList();
-input.add(2.3);
-input.add(3.3);
-input.add(4.3);
-input.add(5.3);
-input.add(6.3);
-input.add(7.3);
-input.add(8.3);
-input.add(9.3);
-input.add(1.3);        
-System.out.println(input);
-System.out.println(&quot;最大值: &quot; + Collections.max(input));
-System.out.println(&quot;最小值: &quot; + Collections.min(input));
-</code></pre><p>以上代码运行输出结果为：</p>
-<pre><code>[2.3, 3.3, 4.3, 5.3, 6.3, 7.3, 8.3, 9.3, 1.3]
-最大值: 9.3
-最小值: 1.3
-</code></pre>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">

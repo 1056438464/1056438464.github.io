@@ -174,11 +174,7 @@
   </h1>
   
   <article class="passage-article">
-    <pre><code>select * from dept where dept_id in
-
-
-    #{deptId}
-</code></pre>
+    <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义根据多个部门ID查询部门相关部门信息的SQL语句 ,resultMap的值是指集合里元素的类型,parameterType不用指定 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectListUseForeach"</span> <span class="attr">parameterType</span>=<span class="string">"Integer[]"</span> <span class="attr">resultMap</span>=<span class="string">"deptResultMap"</span>&gt;</span></span><br><span class="line">		select * from dept where dept_id in</span><br><span class="line">		<span class="comment">&lt;!-- collection＝"array或list",array用来对应参数为数组，list对应参数为 集合 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"array"</span> <span class="attr">item</span>=<span class="string">"deptId"</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">separator</span>=<span class="string">","</span> <span class="attr">close</span>=<span class="string">")"</span>&gt;</span></span><br><span class="line">			#&#123;deptId&#125;</span><br><span class="line">		<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
