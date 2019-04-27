@@ -92,8 +92,9 @@
     //随机取出颜色
     var colorIndex = Math.floor((Math.random()*colorArr.length));
 	var color = colorArr[colorIndex];
-	document.body.addEventListener('click', function(e) {
-        if (e.target.tagName == 'A') {
+	var bodytemp=document.getElementsByTagName("body");
+	bodytemp.onclick = function(e){
+		if (e.target.tagName == 'A') {
             return;
         }
         var x = e.pageX
@@ -104,7 +105,7 @@
         span.style.cssText = ['z-index: 9999999; position: absolute; font-weight: bold; color: ',color,' top: ', y - 20, 'px; left: ', x, 'px;'].join('');
         document.body.appendChild(span);
         animate(span);
-    });
+	};
     function animate(el) {//动画
         var i = 0
           , top = parseInt(el.style.top)
