@@ -161,6 +161,42 @@
         <div class="home-article-inner" data-cover="false">
           <div class="passage-meta">
             <span>
+              <i class="fa fa-calendar"></i>2018-07-11
+            </span>
+            
+              <span>
+                | <a href="/categories/DataBase/"><i class="fa fa-bookmark"></i>DataBase</a>
+              </span>
+            
+            
+              <span>
+                | <i class="fa fa-unlock-alt"></i>UNLOCK
+              </span>
+            
+          </div>
+          <h1 class="home-article-title">
+            <a href="/passages/137/">Orcale存储过程demo和走的坑</a>
+          </h1>
+          <div class="home-article-content passage-article">
+            
+              <p>orcale的坑<br><strong>1、定义的存储过程的名一定要和最后END的时候的名字一样</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create or replace procedure &quot;Pro_Sprk_Cancel&quot;(</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line">...</span><br><span class="line">begin</span><br><span class="line">end &quot;Pro_Sprk_Cancel&quot;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>2、存储过程中用的一切参数一定要定义</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">create or replace procedure &quot;Pro_Sprk_Cancel&quot;(</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line"> --定义变量</span><br><span class="line"> num number;</span><br><span class="line">drug_num number;</span><br><span class="line">begin</span><br><span class="line">  begin</span><br><span class="line">     select count(1) into drug_num from &quot;his_system_drug_info&quot; ;     </span><br><span class="line">     select count(1) into num from &quot;his_pharmacy_storage&quot; ;</span><br><span class="line">     end;    </span><br><span class="line">end &quot;Pro_Sprk_Cancel&quot;;</span><br></pre></td></tr></table></figure></p>
+            
+          </div>
+          <a class="home-article-read" href="/passages/137/">
+            README MORE >>>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="home-article-wrapper clearfix">
+      <div class="home-article" data-cover="false">
+        <div class="home-article-inner" data-cover="false">
+          <div class="passage-meta">
+            <span>
               <i class="fa fa-calendar"></i>2018-07-10
             </span>
             
@@ -464,41 +500,6 @@
             
           </div>
           <a class="home-article-read" href="/passages/125/">
-            README MORE >>>
-          </a>
-          
-        </div>
-        
-      </div>
-    </div>
-  
-    <div class="home-article-wrapper clearfix">
-      <div class="home-article" data-cover="false">
-        <div class="home-article-inner" data-cover="false">
-          <div class="passage-meta">
-            <span>
-              <i class="fa fa-calendar"></i>2018-06-22
-            </span>
-            
-              <span>
-                | <a href="/categories/Other/"><i class="fa fa-bookmark"></i>Other</a>
-              </span>
-            
-            
-              <span>
-                | <i class="fa fa-unlock-alt"></i>UNLOCK
-              </span>
-            
-          </div>
-          <h1 class="home-article-title">
-            <a href="/passages/124/">微信小程序js端生命周期问题</a>
-          </h1>
-          <div class="home-article-content passage-article">
-            
-              <p> js的方法执行顺序不是顺序执行，而是异步执行，尤其是进行网络请求时，<strong>即a.get(url)</strong>。这样js的异步执行更加明显。如以上代码，打印输出不一定是ABC，而有可能是ACB。<br>
-            
-          </p></div>
-          <a class="home-article-read" href="/passages/124/">
             README MORE >>>
           </a>
           

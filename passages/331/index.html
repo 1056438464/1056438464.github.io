@@ -6,12 +6,12 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>归档: 2018 | 第4页 | jwssssss</title>
+  <title>Docker镜像加速 | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Swj">
+    <meta name="keywords" content="Docker,">
   
 
   
@@ -42,7 +42,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2018-02-10",
     passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Shang Wenjie",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -154,73 +154,69 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 118篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-05-01
+    </span>
+    
+      <span>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Docker镜像加速
+  </h1>
   
+  <article class="passage-article">
+    <p>在 /etc/docker/daemon.json 中写入如下内容（如果文件不存在请新建该文件）<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"registry-mirrors"</span>: [</span><br><span class="line">    <span class="string">"https://registry.docker-cn.com"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意，一定要保证该文件符合 json 规范，否则 Docker 将不能启动。<br>之后重新启动服务。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl daemon-reload</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl restart docker</span></span><br></pre></td></tr></table></figure></p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
     
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-08-26</time>
-      <a target="_self" href="/passages/223/">Spring框架——AOP</a>
-    </div>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-25</time>
-      <a target="_self" href="/passages/220/">Spring框架——IOC</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">https://1056438464.github.io/passages/331/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-21</time>
-      <a target="_self" href="/passages/215/">Linux查找某个目录下包含某个字段的文件</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-19</time>
-      <a target="_self" href="/passages/206/">使用Mybatis时，在插入一条数据记录返回主键id值</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-11</time>
-      <a target="_self" href="/passages/192/">order by 多字段排序</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-10</time>
-      <a target="_self" href="/passages/188/">Git Branch(分支)</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-08</time>
-      <a target="_self" href="/passages/179/">PLSQL添加新的链接数据库（DBLINK方式）</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-06</time>
-      <a target="_self" href="/passages/178/">Centos7上卸载MariaDB数据库和本地Navicat连接不上虚拟机数据库</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-05</time>
-      <a target="_self" href="/passages/176/">linux_CentOS7_yum时出错，Could not retrieve mirrorlist</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-07-31</time>
-      <a target="_self" href="/passages/172/"> JQuery点击事件回到页面顶部效果</a>
-    </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -290,19 +286,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/archives/2018/page/3/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/archives/2018/page/5/" data-enable="true">
+    <a href="/passages/330/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
