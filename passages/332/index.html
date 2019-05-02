@@ -6,16 +6,16 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>Linux查找含有某字符串的所有文件 | jwssssss</title>
+  <title>Docker镜像 | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="DataBase,命令,grep,参数,文件,目录,files,pattern,匹配,pattern2,">
+    <meta name="keywords" content="Docker,">
   
 
   
-  <meta name="description" content="如果你想在当前目录下 查找”hello,world!”字符串,可以这样:1grep -rn &amp;quot;hello,world!&amp;quot; *">
+  <meta name="description" content="尚文杰的小站">
 
   
 
@@ -158,11 +158,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-05-16
+      <i class="fa fa-calendar"></i>2019-05-02
     </span>
     
       <span>
-        | <a href="/categories/DataBase/"><i class="fa fa-bookmark"></i>DataBase</a>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
       </span>
     
     
@@ -172,16 +172,30 @@
     
   </div>
   <h1 class="passage-title">
-    Linux查找含有某字符串的所有文件
+    Docker镜像
   </h1>
   
   <article class="passage-article">
-    <p><code>*</code> : 表示当前目录所有文件，也可以是某个文件名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-r 是递归查找</span><br><span class="line">-n 是显示行号</span><br><span class="line">-R 查找所有文件包含子目录</span><br><span class="line">-i 忽略大小写</span><br></pre></td></tr></table></figure></p>
-<p>下面是一些有意思的命令行参数：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写， </span><br><span class="line">grep -l pattern files ：只列出匹配的文件名， </span><br><span class="line">grep -L pattern files ：列出不匹配的文件名， </span><br><span class="line">grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’）， </span><br><span class="line">grep -C number pattern files ：匹配的上下文分别显示[number]行， </span><br><span class="line">grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行， </span><br><span class="line">grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。</span><br></pre></td></tr></table></figure></p>
-<p><strong>这里还有些用于搜索的特殊符号：</strong></p>
-<p><code>\&lt; 和 \&gt; 分别标注单词的开始与结尾。</code></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">grep man * 会匹配 ‘Batman’、‘manic’、‘man’等， </span><br><span class="line"></span><br><span class="line">grep &apos;\&lt;man&apos; * 匹配‘manic’和‘man’，但不是‘Batman’， </span><br><span class="line"></span><br><span class="line">grep &apos;\&lt;man\&gt;&apos; 只匹配‘man’，而不是‘Batman’或‘manic’等其他的字符串。 </span><br><span class="line"></span><br><span class="line">&apos;^&apos;：指匹配的字符串在行首， </span><br><span class="line"></span><br><span class="line">&apos;$&apos;：指匹配的字符串在行尾，</span><br></pre></td></tr></table></figure></p>
-<p><strong>2，xargs配合grep查找</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -type f -name &apos;*.php&apos;|xargs grep &apos;GroupRecord&apos;</span><br></pre></td></tr></table></figure></p>
+    <p> <a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a>上有大量的高质量的镜像可以用。<br>从 Docker 镜像仓库获取镜像的命令是<code>docker pull</code>。其命令格式为：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Docker 镜像仓库地址：地址的格式一般是<code>&lt;域名/IP&gt;[:端口号]</code>。默认地址是 Docker Hub。</li>
+<li>仓库名：如之前所说，这里的仓库名是两段式名称，即 <code>&lt;用户名&gt;/&lt;软件名&gt;</code>。对于 Docker Hub，如果不给出用户名，则默认为 library，也就是官方镜像。</li>
+</ul>
+<p>###例1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull tomcat:7</span><br><span class="line">7: Pulling from library/tomcat</span><br><span class="line">bf295113f40d: Pull complete </span><br><span class="line">62fe5b9a5ae4: Pull complete </span><br><span class="line">92748c09714e: Pull complete </span><br><span class="line">062f1282bf9c: Pull complete </span><br><span class="line">f94f42f0e754: Pull complete </span><br><span class="line">a9b21701c8fc: Pull complete </span><br><span class="line">6cddbbe29e3b: Pull complete </span><br><span class="line">f46707e83dca: Pull complete </span><br><span class="line">209068622688: Pull complete </span><br><span class="line">1a8d5d06dfdb: Pull complete </span><br><span class="line">26492e091bed: Pull complete </span><br><span class="line">Digest: sha256:00c3657a2be73a4fa56702c8bab2ece820dac640180b4755052a36e908683134</span><br><span class="line">Status: Downloaded newer image for tomcat:7</span><br></pre></td></tr></table></figure>
+<p>###例2<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull ubuntu:16.04</span><br><span class="line">16.04: Pulling from library/ubuntu</span><br><span class="line">bf5d46315322: Pull complete</span><br><span class="line">9f13e0ac480c: Pull complete</span><br><span class="line">e8988b5b3097: Pull complete</span><br><span class="line">40af181810e7: Pull complete</span><br><span class="line">e6f7c7e5c03e: Pull complete</span><br><span class="line">Digest: sha256:147913621d9cdea08853f6ba9116c2e27a3ceffecf3b492983ae97c3d643fbbe</span><br><span class="line">Status: Downloaded newer image for ubuntu:16.04</span><br></pre></td></tr></table></figure></p>
+<p>##运行镜像</p>
+<p>有了镜像后，我们就能够以这个镜像为基础启动并运行一个容器。以上面的 <code>ubuntu:16.04</code> 为例，如果我们打算启动里面的<code>bash</code>并且进行交互式操作的话，可以执行下面的命令。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run -it --rm \</span><br><span class="line">    ubuntu:16.04 \</span><br><span class="line">    bash</span><br><span class="line"></span><br><span class="line">[root@e7009c6ce357]:/# cat /etc/os-release</span><br><span class="line">NAME="Ubuntu"</span><br><span class="line">VERSION="16.04.4 LTS, Trusty Tahr"</span><br><span class="line">ID=ubuntu</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">PRETTY_NAME="Ubuntu 16.04.4 LTS"</span><br><span class="line">VERSION_ID="16.04"</span><br><span class="line">HOME_URL="http://www.ubuntu.com/"</span><br><span class="line">SUPPORT_URL="http://help.ubuntu.com/"</span><br><span class="line">BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"</span><br></pre></td></tr></table></figure></p>
+<p><code>docker run</code>是运行容器的命令.</p>
+<ul>
+<li>-it：这是两个参数，一个是 -i：交互式操作，一个是 -t 终端。我们这里打算进入 bash 执行一些命令并查看返回结果，因此我们需要交互式终端。</li>
+<li>–rm：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 docker rm。我们这里只是随便执行个命令，看看结果，不需要排障和保留结果，因此使用 –rm 可以避免浪费空间。</li>
+<li>ubuntu:16.04：这是指用 ubuntu:16.04 镜像为基础来启动容器。<br>bash：放在镜像名后的是<code>命令</code>，这里我们希望有个交互式 Shell，因此用的是 bash。<br>进入容器后，我们可以在 Shell 下操作，执行任何所需的命令。这里，我们执行了 cat /etc/os-release，这是 Linux 常用的查看当前系统版本的命令，从返回的结果可以看到容器内是 Ubuntu 16.04.4 LTS 系统。</li>
+</ul>
+<p>最后我们通过<code>exit(ctrl+d)</code>退出了这个容器。</p>
+<p>##镜像列表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">或</span><br><span class="line">docker image ls</span><br></pre></td></tr></table></figure>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,7 +212,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">https://1056438464.github.io/passages/72/</a>
+          <a href target="_blank">https://1056438464.github.io/passages/332/</a>
         </div>
       
       <div>
@@ -206,28 +220,6 @@
       </div>
     </aside>
   
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/命令/"><i class="fa fa-tags"></i>命令</a>
-     
-      <a href="/tags/grep/"><i class="fa fa-tags"></i>grep</a>
-     
-      <a href="/tags/参数/"><i class="fa fa-tags"></i>参数</a>
-     
-      <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
-     
-      <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
-     
-      <a href="/tags/files/"><i class="fa fa-tags"></i>files</a>
-     
-      <a href="/tags/pattern/"><i class="fa fa-tags"></i>pattern</a>
-     
-      <a href="/tags/匹配/"><i class="fa fa-tags"></i>匹配</a>
-     
-      <a href="/tags/pattern2/"><i class="fa fa-tags"></i>pattern2</a>
-    
-    </div>
   
 </div>
 
@@ -311,10 +303,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/73/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/64/" data-enable="true">
+    <a href="/passages/333/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>

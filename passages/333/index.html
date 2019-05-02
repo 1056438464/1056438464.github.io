@@ -6,16 +6,16 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>Linux查找含有某字符串的所有文件 | jwssssss</title>
+  <title>Docker容器 | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="DataBase,命令,grep,参数,文件,目录,files,pattern,匹配,pattern2,">
+    <meta name="keywords" content="Docker,">
   
 
   
-  <meta name="description" content="如果你想在当前目录下 查找”hello,world!”字符串,可以这样:1grep -rn &amp;quot;hello,world!&amp;quot; *">
+  <meta name="description" content="尚文杰的小站">
 
   
 
@@ -158,11 +158,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-05-16
+      <i class="fa fa-calendar"></i>2019-05-01
     </span>
     
       <span>
-        | <a href="/categories/DataBase/"><i class="fa fa-bookmark"></i>DataBase</a>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
       </span>
     
     
@@ -172,16 +172,14 @@
     
   </div>
   <h1 class="passage-title">
-    Linux查找含有某字符串的所有文件
+    Docker容器
   </h1>
   
   <article class="passage-article">
-    <p><code>*</code> : 表示当前目录所有文件，也可以是某个文件名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-r 是递归查找</span><br><span class="line">-n 是显示行号</span><br><span class="line">-R 查找所有文件包含子目录</span><br><span class="line">-i 忽略大小写</span><br></pre></td></tr></table></figure></p>
-<p>下面是一些有意思的命令行参数：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写， </span><br><span class="line">grep -l pattern files ：只列出匹配的文件名， </span><br><span class="line">grep -L pattern files ：列出不匹配的文件名， </span><br><span class="line">grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’）， </span><br><span class="line">grep -C number pattern files ：匹配的上下文分别显示[number]行， </span><br><span class="line">grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行， </span><br><span class="line">grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。</span><br></pre></td></tr></table></figure></p>
-<p><strong>这里还有些用于搜索的特殊符号：</strong></p>
-<p><code>\&lt; 和 \&gt; 分别标注单词的开始与结尾。</code></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">grep man * 会匹配 ‘Batman’、‘manic’、‘man’等， </span><br><span class="line"></span><br><span class="line">grep &apos;\&lt;man&apos; * 匹配‘manic’和‘man’，但不是‘Batman’， </span><br><span class="line"></span><br><span class="line">grep &apos;\&lt;man\&gt;&apos; 只匹配‘man’，而不是‘Batman’或‘manic’等其他的字符串。 </span><br><span class="line"></span><br><span class="line">&apos;^&apos;：指匹配的字符串在行首， </span><br><span class="line"></span><br><span class="line">&apos;$&apos;：指匹配的字符串在行尾，</span><br></pre></td></tr></table></figure></p>
-<p><strong>2，xargs配合grep查找</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -type f -name &apos;*.php&apos;|xargs grep &apos;GroupRecord&apos;</span><br></pre></td></tr></table></figure></p>
+    <p>##查看容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//查看当前运行的容器</span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line">//查看所有容器</span><br><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+<p>##删除容器<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm 容器ID</span><br></pre></td></tr></table></figure></p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,7 +196,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">https://1056438464.github.io/passages/72/</a>
+          <a href target="_blank">https://1056438464.github.io/passages/333/</a>
         </div>
       
       <div>
@@ -206,28 +204,6 @@
       </div>
     </aside>
   
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/命令/"><i class="fa fa-tags"></i>命令</a>
-     
-      <a href="/tags/grep/"><i class="fa fa-tags"></i>grep</a>
-     
-      <a href="/tags/参数/"><i class="fa fa-tags"></i>参数</a>
-     
-      <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
-     
-      <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
-     
-      <a href="/tags/files/"><i class="fa fa-tags"></i>files</a>
-     
-      <a href="/tags/pattern/"><i class="fa fa-tags"></i>pattern</a>
-     
-      <a href="/tags/匹配/"><i class="fa fa-tags"></i>匹配</a>
-     
-      <a href="/tags/pattern2/"><i class="fa fa-tags"></i>pattern2</a>
-    
-    </div>
   
 </div>
 
@@ -311,10 +287,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/73/" data-enable="true">
+    <a href="/passages/332/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/64/" data-enable="true">
+    <a href="/passages/331/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
