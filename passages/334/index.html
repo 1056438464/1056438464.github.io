@@ -6,12 +6,12 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>归档: 2018/6 | jwssssss</title>
+  <title>Docker File | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Swj">
+    <meta name="keywords" content="Docker,">
   
 
   
@@ -42,7 +42,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2018-02-10",
     passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Shang Wenjie",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -154,73 +154,84 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 121篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-05-01
+    </span>
+    
+      <span>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Docker File
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-06-29</time>
-      <a target="_self" href="/passages/129/">问题在哪就去哪找！切记！切记！</a>
-    </div>
+  <article class="passage-article">
+    <p><code>Dockerfile</code> 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
+<p>还以之前定制 <code>tomcat</code> 镜像为例，这次我们使用 Dockerfile 来定制。</p>
+<p>在<code>/usr/local/docker</code>目录中，建立一个文本文件，并命名为 <code>Dockerfile</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir tomcat`</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> tomcat</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch Dockerfile</span></span><br></pre></td></tr></table></figure>
+<h1 id="其内容"><a href="#其内容" class="headerlink" title="其内容"></a>其内容</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/webapps/ROOT</span><br><span class="line"></span><br><span class="line">RUN rm -rf *</span><br><span class="line"></span><br><span class="line">COPY ./FHM.war .</span><br><span class="line"></span><br><span class="line">RUN unzip  FHM.war</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+<h2 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM 指定基础镜像"></a>FROM 指定基础镜像</h2><h2 id="RUN-执行命令"><a href="#RUN-执行命令" class="headerlink" title="RUN 执行命令"></a>RUN 执行命令</h2><h2 id="COPY-复制文件"><a href="#COPY-复制文件" class="headerlink" title="COPY 复制文件"></a>COPY 复制文件</h2><p>格式：</p>
+<ul>
+<li>COPY &lt;源路径&gt;… &lt;目标路径&gt;</li>
+<li>COPY [“&lt;源路径1&gt;”,… “&lt;目标路径&gt;”]</li>
+</ul>
+<p>和 RUN 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。<br>COPY 指令将从构建上下文目录中 &lt;源路径&gt; 的文件/目录复制到新的一层的镜像内的 &lt;目标路径&gt; 位置。</p>
+<h2 id="WORKDIR-指定工作目录"><a href="#WORKDIR-指定工作目录" class="headerlink" title="WORKDIR 指定工作目录"></a>WORKDIR 指定工作目录</h2><p>格式为<code>WORKDIR &lt;工作目录路径&gt;</code>。<br>使用 <code>WORKDIR</code>指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，<code>WORKDIR</code> 会帮你建立目录。</p>
+<h2 id="EXPOSE-暴露端口"><a href="#EXPOSE-暴露端口" class="headerlink" title="EXPOSE 暴露端口"></a>EXPOSE 暴露端口</h2><p>docker容器暴露端口给宿主机。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 </span><br><span class="line">//制定宿主机80端口访问容器的暴露端口</span><br><span class="line">docker run -p 80:8080 tomcat</span><br><span class="line"></span><br><span class="line">2 </span><br><span class="line">//随机端口访问容器的暴露端口</span><br><span class="line">docker run -P tomcat</span><br></pre></td></tr></table></figure></p>
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><p>在DockerFile文件下运行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker build -t 镜像名 .</span></span><br></pre></td></tr></table></figure></p>
+<p><code>.</code>。这个点是<code>上下文路径</code>。</p>
+<p>#修改端口号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p</span><br></pre></td></tr></table></figure>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#其内容"><span class="toc-text">其内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FROM-指定基础镜像"><span class="toc-text">FROM 指定基础镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RUN-执行命令"><span class="toc-text">RUN 执行命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COPY-复制文件"><span class="toc-text">COPY 复制文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WORKDIR-指定工作目录"><span class="toc-text">WORKDIR 指定工作目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXPOSE-暴露端口"><span class="toc-text">EXPOSE 暴露端口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构建镜像"><span class="toc-text">构建镜像</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-06-26</time>
-      <a target="_self" href="/passages/128/">微信小程序的缓存问题小知识</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">https://1056438464.github.io/passages/334/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-06-26</time>
-      <a target="_self" href="/passages/126/">git提示服务器与本地有冲突</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-22</time>
-      <a target="_self" href="/passages/125/">mysql 下 计算 两点 经纬度 之间的距离</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-22</time>
-      <a target="_self" href="/passages/124/">微信小程序js端生命周期问题</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-13</time>
-      <a target="_self" href="/passages/123/">log4j基础知识</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-11</time>
-      <a target="_self" href="/passages/121/"> 二次请求的错误</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-08</time>
-      <a target="_self" href="/passages/119/">php 中empty和isset的区别</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-05</time>
-      <a target="_self" href="/passages/117/">jQuery post提交数据</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-06-01</time>
-      <a target="_self" href="/passages/116/">sql DISTINCT 命令简单使用</a>
-    </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -290,19 +301,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/331/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/330/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
