@@ -6,16 +6,16 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>centOS 用rpm查看已经安装的程序 | jwssssss</title>
+  <title>Docker Compose | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Liunx,grep,文件,p,套件,参数,指定,指令,">
+    <meta name="keywords" content="Docker,">
   
 
   
-  <meta name="description" content="1rpm -qa | grep xxxx12-a：查询所有套件；-q：使用询问模式，当遇到任何问题时，rpm指令会先询问用户；所有参数：">
+  <meta name="description" content="尚文杰的小站">
 
   
 
@@ -158,11 +158,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-04-20
+      <i class="fa fa-calendar"></i>2019-05-04
     </span>
     
       <span>
-        | <a href="/categories/Liunx/"><i class="fa fa-bookmark"></i>Liunx</a>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
       </span>
     
     
@@ -172,11 +172,20 @@
     
   </div>
   <h1 class="passage-title">
-    centOS 用rpm查看已经安装的程序
+    Docker Compose
   </h1>
   
   <article class="passage-article">
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-a：查询所有套件；</span><br><span class="line">-b&lt;完成阶段&gt;&lt;套件档&gt;+或-t &lt;完成阶段&gt;&lt;套件档&gt;+：设置包装套件的完成阶段，并指定套件档的文件名称；</span><br><span class="line">-c：只列出组态配置文件，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-d：只列出文本文件，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-e&lt;套件档&gt;或--erase&lt;套件档&gt;：删除指定的套件；</span><br><span class="line">-f&lt;文件&gt;+：查询拥有指定文件的套件；</span><br><span class="line">-h或--hash：套件安装时列出标记；</span><br><span class="line">-i：显示套件的相关信息；</span><br><span class="line">-i&lt;套件档&gt;或--install&lt;套件档&gt;：安装指定的套件档；</span><br><span class="line">-l：显示套件的文件列表；</span><br><span class="line">-p&lt;套件档&gt;+：查询指定的RPM套件档；</span><br><span class="line">-q：使用询问模式，当遇到任何问题时，rpm指令会先询问用户；</span><br><span class="line">-R：显示套件的关联性信息；</span><br><span class="line">-s：显示文件状态，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-U&lt;套件档&gt;或--upgrade&lt;套件档&gt;：升级指定的套件档；</span><br><span class="line">-v：显示指令执行过程；</span><br><span class="line">-vv：详细显示指令执行过程，便于排错。</span><br></pre></td></tr></table></figure>
+    <p>先创建 <code>/usr/local/bin</code> 这个目录</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>直接删除即可</p>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>进入<code>/usr/local/docker/tomcat</code></p>
+<p><strong>缩进符必须是空格</strong></p>
+<p>编写 <code>docker-compose.yml</code> 文件，这个是 <code>Compose</code> 使用的主模板文件。<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  tomcat:</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8090</span><span class="string">:8080</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">	  <span class="bullet">-</span> <span class="string">[宿主机目录]:[容器目录]</span></span><br></pre></td></tr></table></figure></p>
+<p>运行 compose 项目<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up </span><br><span class="line"></span><br><span class="line">//守护态运行</span><br><span class="line">docker-compose up  -d</span><br></pre></td></tr></table></figure></p>
+<h2 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose logs -f 容器name</span><br></pre></td></tr></table></figure>
+<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -184,7 +193,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载"><span class="toc-text">卸载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动容器"><span class="toc-text">启动容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看日志"><span class="toc-text">查看日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除容器"><span class="toc-text">删除容器</span></a></li></ol>
   </div>
 </aside>
   
@@ -193,7 +202,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">https://1056438464.github.io/passages/38/</a>
+          <a href target="_blank">https://1056438464.github.io/passages/338/</a>
         </div>
       
       <div>
@@ -201,24 +210,6 @@
       </div>
     </aside>
   
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/grep/"><i class="fa fa-tags"></i>grep</a>
-     
-      <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
-     
-      <a href="/tags/p/"><i class="fa fa-tags"></i>p</a>
-     
-      <a href="/tags/套件/"><i class="fa fa-tags"></i>套件</a>
-     
-      <a href="/tags/参数/"><i class="fa fa-tags"></i>参数</a>
-     
-      <a href="/tags/指定/"><i class="fa fa-tags"></i>指定</a>
-     
-      <a href="/tags/指令/"><i class="fa fa-tags"></i>指令</a>
-    
-    </div>
   
 </div>
 
@@ -302,10 +293,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/40/" data-enable="true">
+    <a href="/passages/337/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/35/" data-enable="true">
+    <a href="/passages/336/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
