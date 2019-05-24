@@ -1,7 +1,7 @@
 (() => {
   function openGoogle(keywords) {
     keywords = `site:${window.location.hostname} ${decodeURIComponent(keywords)}`;
-    let href = `https://www.google.com/search?q=${keywords}`;
+    let href = `https://www.baidu.com/search?q=${keywords}`;
     window.open(href);
   }
 
