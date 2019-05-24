@@ -6,12 +6,12 @@
   <meta name="author" content="Shang Wenjie">
   
   
-  <title>归档: 2018/8 | 第2页 | jwssssss</title>
+  <title>hexo deploy失败 | jwssssss</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Swj">
+    <meta name="keywords" content="Other,hexo,">
   
 
   
@@ -42,7 +42,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2018-02-10",
     passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Shang Wenjie",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -154,43 +154,74 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 128篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-05-09
+    </span>
+    
+      <span>
+        | <a href="/categories/Other/"><i class="fa fa-bookmark"></i>Other</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    hexo deploy失败
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-08-11</time>
-      <a target="_self" href="/passages/192/">order by 多字段排序</a>
-    </div>
+  <article class="passage-article">
+    <h2 id="错误提示"><a href="#错误提示" class="headerlink" title="错误提示"></a>错误提示</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fatal: unable to access 'http://github.com/1056438464/1056438464.github.io.git/': Recv failure: Connection was reset</span><br><span class="line">FATAL Something's wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span><br><span class="line">Error: Spawn failed</span><br><span class="line">    at ChildProcess.&lt;anonymous&gt; (D:\hexo\node_modules\hexo-util\lib\spawn.js:52:19)</span><br><span class="line">    at ChildProcess.emit (events.js:189:13)</span><br><span class="line">    at ChildProcess.cp.emit (D:\hexo\node_modules\cross-spawn\lib\enoent.js:40:29)</span><br><span class="line">    at Process.ChildProcess._handle.onexit (internal/child_process.js:248:12)</span><br></pre></td></tr></table></figure>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把_config.yml文件中repository:https://github.com/1056438464/andybroker.github.io.git这个地址改为git@github.com:1056438464/1056438464.github.io.git</span><br></pre></td></tr></table></figure>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#错误提示"><span class="toc-text">错误提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-10</time>
-      <a target="_self" href="/passages/188/">Git Branch(分支)</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: 尚文杰</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">https://1056438464.github.io/passages/341/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-08</time>
-      <a target="_self" href="/passages/179/">PLSQL添加新的链接数据库（DBLINK方式）</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/hexo/"><i class="fa fa-tags"></i>hexo</a>
     
-    <div class="timeline-item">
-      <time>2018-08-06</time>
-      <a target="_self" href="/passages/178/">Centos7上卸载MariaDB数据库和本地Navicat连接不上虚拟机数据库</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-05</time>
-      <a target="_self" href="/passages/176/">linux_CentOS7_yum时出错，Could not retrieve mirrorlist</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -260,19 +291,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/archives/2018/08/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/340/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
