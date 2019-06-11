@@ -165,6 +165,67 @@
             </span>
             
               <span>
+                | <a href="/categories/DataBase/"><i class="fa fa-bookmark"></i>DataBase</a>
+              </span>
+            
+            
+              <span>
+                | <i class="fa fa-unlock-alt"></i>UNLOCK
+              </span>
+            
+          </div>
+          <h1 class="home-article-title">
+            <a href="/passages/44/">在本地用navicat链接不上阿里云ECS服务器上的数据库问题解决</a>
+          </h1>
+          <div class="home-article-content passage-article">
+            
+              <h1 id="问题原因：mysql权限问题"><a href="#问题原因：mysql权限问题" class="headerlink" title="问题原因：mysql权限问题"></a>问题原因：mysql权限问题</h1><h1 id="解决方法-1："><a href="#解决方法-1：" class="headerlink" title="解决方法 1："></a>解决方法 1：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//设置root用户通过123456密码可以从任何主机连接到mysql服务器</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &apos;username&apos;@&apos;%&apos; IDENTIFIED BY &apos;password&apos; WITH GRANT OPTION;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)  </span><br><span class="line">  </span><br><span class="line">//刷新mysql权限表</span><br><span class="line">mysql&gt;FLUSH PRIVILEGES;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec) </span><br><span class="line"></span><br><span class="line">//查询用户表</span><br><span class="line">mysql&gt; select host,user from user;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ALL PRIVILEGES –所有的权限，当然这里也可以写增删查改update delete insert select</li>
+<li><em>.</em>  – 指的是所有数据库的权限，‘<em>数据库.表’</em></li>
+</ul>
+            
+          </div>
+          <a class="home-article-read" href="/passages/44/">
+            README MORE >>>
+          </a>
+          
+            <div class="passage-tags">
+             
+              <a href="/tags/数据库/"><i class="fa fa-tags"></i>数据库</a>
+             
+              <a href="/tags/指定/"><i class="fa fa-tags"></i>指定</a>
+             
+              <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
+             
+              <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
+             
+              <a href="/tags/rows/"><i class="fa fa-tags"></i>rows</a>
+             
+              <a href="/tags/privileges/"><i class="fa fa-tags"></i>privileges</a>
+             
+              <a href="/tags/grant/"><i class="fa fa-tags"></i>grant</a>
+             
+              <a href="/tags/权限/"><i class="fa fa-tags"></i>权限</a>
+             
+              <a href="/tags/访问/"><i class="fa fa-tags"></i>访问</a>
+            
+            </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="home-article-wrapper clearfix">
+      <div class="home-article" data-cover="false">
+        <div class="home-article-inner" data-cover="false">
+          <div class="passage-meta">
+            <span>
+              <i class="fa fa-calendar"></i>2018-04-23
+            </span>
+            
+              <span>
                 | <a href="/categories/Liunx/"><i class="fa fa-bookmark"></i>Liunx</a>
               </span>
             
@@ -273,9 +334,9 @@
              
               <a href="/tags/zone/"><i class="fa fa-tags"></i>zone</a>
              
-              <a href="/tags/yes/"><i class="fa fa-tags"></i>yes</a>
-             
               <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
+             
+              <a href="/tags/yes/"><i class="fa fa-tags"></i>yes</a>
              
               <a href="/tags/ftpservice/"><i class="fa fa-tags"></i>ftpservice</a>
              
@@ -330,8 +391,6 @@
              
               <a href="/tags/grep/"><i class="fa fa-tags"></i>grep</a>
              
-              <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
-             
               <a href="/tags/p/"><i class="fa fa-tags"></i>p</a>
              
               <a href="/tags/套件/"><i class="fa fa-tags"></i>套件</a>
@@ -339,6 +398,8 @@
               <a href="/tags/参数/"><i class="fa fa-tags"></i>参数</a>
              
               <a href="/tags/指定/"><i class="fa fa-tags"></i>指定</a>
+             
+              <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
              
               <a href="/tags/指令/"><i class="fa fa-tags"></i>指令</a>
             
