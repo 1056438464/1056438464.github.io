@@ -177,7 +177,7 @@
   
   <article class="passage-article">
     <h1 id="1、注册二级域名"><a href="#1、注册二级域名" class="headerlink" title="1、注册二级域名"></a>1、注册二级域名</h1><p><a href="https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ</a></p>
-<p>域名——解析——添加解析<br><img src="http://pqiuhq1tw.bkt.clouddn.com/1762603534.png" alt><br>其实你申请的域名就是一个一级域名了。这样填写就是一个二级域名</p>
+<p>域名——解析——添加解析<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/1762603534.png" alt><br>其实你申请的域名就是一个一级域名了。这样填写就是一个二级域名</p>
 <h1 id="2、apache设置虚拟主机VirtualHost配置文件"><a href="#2、apache设置虚拟主机VirtualHost配置文件" class="headerlink" title="2、apache设置虚拟主机VirtualHost配置文件"></a>2、apache设置虚拟主机VirtualHost配置文件</h1><p>只需在http.conf文件最后添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerName map.swj233.top //你的域名</span><br><span class="line">DocumentRoot /var/www/maps //项目地址</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
 <p><strong>注意：</strong> 项目地址一定要写全！不能只写<br><code>/www/maps</code> 。这样会访问不到的。<br>方法：进入项目目录。<strong>pwd命令</strong>获得目录即可</p>
 <h2 id="虚拟主机配置参数："><a href="#虚拟主机配置参数：" class="headerlink" title="虚拟主机配置参数："></a>虚拟主机配置参数：</h2><p>ServerAdmin  管理员邮箱</p>
