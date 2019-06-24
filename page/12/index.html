@@ -161,6 +161,42 @@
         <div class="home-article-inner" data-cover="false">
           <div class="passage-meta">
             <span>
+              <i class="fa fa-calendar"></i>2018-06-08
+            </span>
+            
+              <span>
+                | <a href="/categories/Other/"><i class="fa fa-bookmark"></i>Other</a>
+              </span>
+            
+            
+              <span>
+                | <i class="fa fa-unlock-alt"></i>UNLOCK
+              </span>
+            
+          </div>
+          <h1 class="home-article-title">
+            <a href="/passages/119/">php 中empty和isset的区别</a>
+          </h1>
+          <div class="home-article-content passage-article">
+            
+              <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> if($order_type==1)&#123;</span><br><span class="line">            $whereCondition = (!empty($order_id))&amp;&amp;(!empty($goodsid))&amp;&amp;(!empty($order_type))&amp;&amp;(!empty($level));</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">           $whereCondition = (!empty($order_id))&amp;&amp;(!empty($goodsid))&amp;&amp;(!empty($order_type));</span><br><span class="line">        &#125;</span><br><span class="line">if($whereCondition)&#123;</span><br><span class="line">	....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>今天反了一个很低级的错误，如上述代码所写，第一个if是确定判断条件，判断条件必须都<strong>不空</strong>才行，而其中的一个参数<code>order_type</code>是<code>0</code>，但是<code>empty（）</code>是可以判断参数0或NULL返回true。这样虽然参数已经传了0，但是<code>！empty（）</code>也会返回一个false，这样不管怎么样 <code>if($whereCondition)</code>都会是<strong>false</strong>。这时应该用<code>isset（）</code>。</p>
+            
+          </div>
+          <a class="home-article-read" href="/passages/119/">
+            README MORE >>>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="home-article-wrapper clearfix">
+      <div class="home-article" data-cover="false">
+        <div class="home-article-inner" data-cover="false">
+          <div class="passage-meta">
+            <span>
               <i class="fa fa-calendar"></i>2018-06-05
             </span>
             
@@ -536,65 +572,6 @@
               <a href="/tags/private/"><i class="fa fa-tags"></i>private</a>
              
               <a href="/tags/final/"><i class="fa fa-tags"></i>final</a>
-            
-            </div>
-          
-        </div>
-        
-      </div>
-    </div>
-  
-    <div class="home-article-wrapper clearfix">
-      <div class="home-article" data-cover="false">
-        <div class="home-article-inner" data-cover="false">
-          <div class="passage-meta">
-            <span>
-              <i class="fa fa-calendar"></i>2018-05-09
-            </span>
-            
-              <span>
-                | <a href="/categories/Liunx/"><i class="fa fa-bookmark"></i>Liunx</a>
-              </span>
-            
-            
-              <span>
-                | <i class="fa fa-unlock-alt"></i>UNLOCK
-              </span>
-            
-          </div>
-          <h1 class="home-article-title">
-            <a href="/passages/62/">apache实现二级域名访问不同项目目录</a>
-          </h1>
-          <div class="home-article-content passage-article">
-            
-              
-            
-          </div>
-          <a class="home-article-read" href="/passages/62/">
-            README MORE >>>
-          </a>
-          
-            <div class="passage-tags">
-             
-              <a href="/tags/命令/"><i class="fa fa-tags"></i>命令</a>
-             
-              <a href="/tags/p/"><i class="fa fa-tags"></i>p</a>
-             
-              <a href="/tags/参数/"><i class="fa fa-tags"></i>参数</a>
-             
-              <a href="/tags/文件/"><i class="fa fa-tags"></i>文件</a>
-             
-              <a href="/tags/服务器/"><i class="fa fa-tags"></i>服务器</a>
-             
-              <a href="/tags/目录/"><i class="fa fa-tags"></i>目录</a>
-             
-              <a href="/tags/域名/"><i class="fa fa-tags"></i>域名</a>
-             
-              <a href="/tags/别名/"><i class="fa fa-tags"></i>别名</a>
-             
-              <a href="/tags/www/"><i class="fa fa-tags"></i>www</a>
-             
-              <a href="/tags/servername/"><i class="fa fa-tags"></i>servername</a>
             
             </div>
           
