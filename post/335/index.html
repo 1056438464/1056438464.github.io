@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+<meta charset="utf-8">
+<title>Docker数据卷 数据持久化 - jwssssss</title>
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<link rel="canonical" href="https://1056438464.github.io/post/335/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="description" content="数据卷是一个可供一个或多个容器使用的特殊目录，它绕过UFS直接对文件进行操作，可以提供很多有用的特性：  数据卷 可以在容器之间共享和重用 对 数据卷 的修改会立马生效 对 数据卷 的更新，不会影响镜像 数据卷 默认会一直存在，即使容器被删除  启动一个挂载数据卷的容器下面创建一个名为web 的容器，并加载一个 数据卷到容器的指定目录。1docker run -p 8080:8080 --name">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Docker数据卷 数据持久化">
+<meta property="og:url" content="https://1056438464.github.io/post/335/index.html">
+<meta property="og:site_name" content="jwssssss">
+<meta property="og:description" content="数据卷是一个可供一个或多个容器使用的特殊目录，它绕过UFS直接对文件进行操作，可以提供很多有用的特性：  数据卷 可以在容器之间共享和重用 对 数据卷 的修改会立马生效 对 数据卷 的更新，不会影响镜像 数据卷 默认会一直存在，即使容器被删除  启动一个挂载数据卷的容器下面创建一个名为web 的容器，并加载一个 数据卷到容器的指定目录。1docker run -p 8080:8080 --name">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<meta property="og:updated_time" content="2019-05-04T08:12:39.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker数据卷 数据持久化">
+<meta name="twitter:description" content="数据卷是一个可供一个或多个容器使用的特殊目录，它绕过UFS直接对文件进行操作，可以提供很多有用的特性：  数据卷 可以在容器之间共享和重用 对 数据卷 的修改会立马生效 对 数据卷 的更新，不会影响镜像 数据卷 默认会一直存在，即使容器被删除  启动一个挂载数据卷的容器下面创建一个名为web 的容器，并加载一个 数据卷到容器的指定目录。1docker run -p 8080:8080 --name">
+<meta name="twitter:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat" rel="stylesheet">
+<link href="/styles.9477318680c7e6b720a2.css" rel="stylesheet">
+<link rel="stylesheet" href="/theme.6814db2ccf672c87c4fb.css">
+<script src="/config.8cea2098084b858cfb4b.js"></script>
+</head>
+<body lang="en">
+<is-a></is-a>
+<script src="/runtime.caef73fae70e33459c5a.js"></script>
+<script src="/polyfills.28555e618578fe61f50a.js"></script>
+<script src="/main.aa5336b38b728b66fcad.js"></script>
+</body>
+</html>
