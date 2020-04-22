@@ -7,18 +7,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 <link rel="canonical" href="https://1056438464.github.io/post/370/">
 <link rel="icon" type="image/x-icon" href="https://c-ssl.duitang.com/uploads/item/202004/18/20200418161449_eExjE.thumb.1000_0.jpeg">
-<meta name="description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 2.索引数据结构12341、BTree 索引（主要）2、Hash索引3、full-text全文索引4、R-Tree索引 2.1 BTree数据结构图示 3.适合创建索引条件1234561、主键自动建立唯一索引2、频繁作为查询条件的字段应该建立索">
+<meta name="description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 1.1 创建索引123create index index_name on table_name(column_name);或者alter table table_name add index index_name(column_name);">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MySql 索引(index)">
 <meta property="og:url" content="https://1056438464.github.io/post/370/index.html">
 <meta property="og:site_name" content="shang wj">
-<meta property="og:description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 2.索引数据结构12341、BTree 索引（主要）2、Hash索引3、full-text全文索引4、R-Tree索引 2.1 BTree数据结构图示 3.适合创建索引条件1234561、主键自动建立唯一索引2、频繁作为查询条件的字段应该建立索">
+<meta property="og:description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 1.1 创建索引123create index index_name on table_name(column_name);或者alter table table_name add index index_name(column_name);">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://c-ssl.duitang.com/uploads/item/202004/18/20200418161449_eExjE.thumb.1000_0.jpeg">
-<meta property="og:updated_time" content="2020-04-09T15:04:39.203Z">
+<meta property="og:updated_time" content="2020-04-22T16:06:57.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql 索引(index)">
-<meta name="twitter:description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 2.索引数据结构12341、BTree 索引（主要）2、Hash索引3、full-text全文索引4、R-Tree索引 2.1 BTree数据结构图示 3.适合创建索引条件1234561、主键自动建立唯一索引2、频繁作为查询条件的字段应该建立索">
+<meta name="twitter:description" content="date: 2020-04-07 22:42:22 tags: MySql1.索引的概念1是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构 1.1 创建索引123create index index_name on table_name(column_name);或者alter table table_name add index index_name(column_name);">
 <meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/item/202004/18/20200418161449_eExjE.thumb.1000_0.jpeg">
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster" rel="stylesheet">
 <style>.bt{  
@@ -36,7 +36,7 @@
 </style>
 <link href="/styles.9477318680c7e6b720a2.css" rel="stylesheet">
 <link rel="stylesheet" href="/theme.9331629c48061e4b87ca.css">
-<script src="/config.0d80aba3e6c12d600232.js"></script>
+<script src="/config.6308f4cdd446e4f3d5a0.js"></script>
 </head>
 <body lang="en">
 <is-a></is-a>
