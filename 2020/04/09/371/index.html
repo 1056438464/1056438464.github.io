@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>MySql explain | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.执行计划包含字段123+------+-------------+--------------+------+---------------+------+---------+------+------+-------+| id   | select_type | table        | type | possible_keys | key  | key_len | ref  | row">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql explain">
+<meta property="og:url" content="http://example.com/2020/04/09/371/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.执行计划包含字段123+------+-------------+--------------+------+---------------+------+---------+------+------+-------+| id   | select_type | table        | type | possible_keys | key  | key_len | ref  | row">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-09T14:42:22.000Z">
+<meta property="article:modified_time" content="2020-08-20T13:51:19.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MySql">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-371" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/04/09/371/" class="article-date">
+  <time class="dt-published" datetime="2020-04-09T14:42:22.000Z" itemprop="datePublished">2020-04-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySql/">MySql</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      MySql explain
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1-执行计划包含字段"><a href="#1-执行计划包含字段" class="headerlink" title="1.执行计划包含字段"></a>1.执行计划包含字段</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+------+-------------+--------------+------+---------------+------+---------+------+------+-------+</span><br><span class="line">| id   | select_type | table        | type | possible_keys | key  | key_len | ref  | rows | Extra |</span><br><span class="line">+------+-------------+--------------+------+---------------+------+---------+------+------+-------+</span><br></pre></td></tr></table></figure>
+<h3 id="id-表的读取顺序"><a href="#id-表的读取顺序" class="headerlink" title="id 表的读取顺序"></a>id 表的读取顺序</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT识别符。这是SELECT的查询序列号</span><br><span class="line">我的理解是SQL执行的顺序的标识，SQL从大到小的执行</span><br><span class="line"></span><br><span class="line">1.id相同时，执行顺序由上至下</span><br><span class="line">2.如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行</span><br><span class="line">3.id如果相同，可以认为是一组，从上往下顺序执行；在所有组中，id值越大，优先级越高，越先执行</span><br></pre></td></tr></table></figure>
+<h3 id="select-type-数据读取操作的操作类型"><a href="#select-type-数据读取操作的操作类型" class="headerlink" title="select_type 数据读取操作的操作类型"></a>select_type 数据读取操作的操作类型</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">表示查询中每个select子句的类型</span><br><span class="line"></span><br><span class="line">1.SIMPLE(简单查询，不使用UNION或子查询等)</span><br><span class="line">2.PRIMARY(子查询中最外层查询，查询中若包含任何复杂的子部分，最外层的select被标记为PRIMARY)</span><br><span class="line">3.UNION(UNION中的第二个或后面的SELECT语句)</span><br><span class="line">4.DEPENDENT UNION(UNION中的第二个或后面的SELECT语句，取决于外面的查询)</span><br><span class="line">5.UNION RESULT(UNION的结果，union语句中第二个select开始后面所有select)</span><br><span class="line">6.SUBQUERY(子查询中的第一个SELECT，结果不依赖于外部查询)</span><br><span class="line">7.DEPENDENT SUBQUERY(子查询中的第一个SELECT，依赖于外部查询)</span><br><span class="line">8.DERIVED(派生表的SELECT, FROM子句的子查询，结果放在临时表里)</span><br><span class="line">9.UNCACHEABLE SUBQUERY(一个子查询的结果不能被缓存，必须重新评估外链接的第一行)</span><br></pre></td></tr></table></figure>
+<h3 id="type-访问类型排列"><a href="#type-访问类型排列" class="headerlink" title="type 访问类型排列"></a>type 访问类型排列</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">从最好到最差次序</span><br><span class="line">NULL&gt;system&gt;const&gt;eq_ref&gt;ref&gt;flltext&gt;ref_or_null&gt;index_merge&gt;unique_subquery&gt;index_subquery&gt;range&gt;index&gt;ALL</span><br><span class="line">省略次序</span><br><span class="line">system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL</span><br><span class="line"></span><br><span class="line">1.ALL：Full Table Scan， MySQL将遍历全表以找到匹配的行</span><br><span class="line">2.index: Full Index Scan，index与ALL区别为index类型只遍历索引树</span><br><span class="line">3.range:只检索给定范围的行，使用一个索引来选择行</span><br><span class="line">4.ref: （非唯一性索引扫描）表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</span><br><span class="line">5.eq_ref:（唯一性索引扫描） 类似ref，区别就在使用的索引是唯一索引，对于每个索引键值，表中只有一条记录匹配，简单来说，就是多表连接中使用primary key或者 unique key作为关联条件</span><br><span class="line">6.const、system: 当MySQL对查询某部分进行优化，并转换为一个常量时，使用这些类型访问。如将主键置于where列表中，MySQL就能将该查询转换为一个常量，system是const类型的特例，当查询的表只有一行的情况下，使用system.(主键索引)</span><br><span class="line">7.NULL: MySQL在优化过程中分解语句，执行时甚至不用访问表或索引，例如从一个索引列里选取最小值可以通过单独索引查找完成。</span><br></pre></td></tr></table></figure>
+<h3 id="possible-keys"><a href="#possible-keys" class="headerlink" title="possible_keys"></a>possible_keys</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则该索引将被列出，但不一定被查询实际使用</span><br></pre></td></tr></table></figure>
+<h3 id="key"><a href="#key" class="headerlink" title="key"></a>key</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key列显示MySQL实际决定使用的键（索引），必然包含在possible_keys中</span><br></pre></td></tr></table></figure>
+<h3 id="key-len"><a href="#key-len" class="headerlink" title="key_len"></a>key_len</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度（key_len显示的值为索引字段的最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得，不是通过表内检索出的）</span><br><span class="line">不损失精确性的情况下，长度越短越好 </span><br></pre></td></tr></table></figure>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">列与索引的比较，表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</span><br></pre></td></tr></table></figure>
+<h3 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">估算出结果集行数，表示MySQL根据表统计信息及索引选用情况，估算的找到所需的记录所需要读取的行数(每张表有多少行被优化器查询到)</span><br><span class="line">越少越好。</span><br></pre></td></tr></table></figure>
+<h3 id="Extra-其他重要信息"><a href="#Extra-其他重要信息" class="headerlink" title="Extra 其他重要信息"></a>Extra 其他重要信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">该列包含MySQL解决查询的详细信息,有以下几种情况：</span><br><span class="line"></span><br><span class="line">1.Using temporary：表示MySQL需要使用临时表来存储结果集，常见于排序和分组查询，常见 group by。</span><br><span class="line">最好按照你的索引个数和顺序来</span><br><span class="line">2.Using filesort：当Query中包含 order by 操作，而且无法利用索引完成的排序操作称为“文件排序”。</span><br><span class="line">3.Using Index：表示相应的select操作中使用了覆盖索引(Covering Index)， 避免访问了表的数据行，效率不错!</span><br><span class="line">如果同时出现using where,表明索引被用来执行索引键值的查找;</span><br><span class="line">如果没有同时出现usingwhere,表明索引用来读取数据而非执行查找动作。</span><br><span class="line">4.Using where:不用读取表中所有信息，仅通过索引就可以获取所需数据，</span><br><span class="line">这发生在对表的全部的请求列都是同一个索引的部分的时候，表示mysql服务器将在存储引擎检索行后再进行过滤</span><br><span class="line">5.Using join buffer：改值强调了在获取连接条件时没有使用索引,并且需要连接缓冲区来存储中间结果。如果出现了这个值，那应该注意，根据查询的具体情况可能需要添加索引来改进能。</span><br><span class="line">6.Impossible where：这个值强调了where语句会导致没有符合条件的行（通过收集统计信息不可能存在结果）。</span><br><span class="line">7.Select tables optimized away：这个值意味着仅通过使用索引，优化器可能仅从聚合函数结果中返回一行</span><br><span class="line">8.No tables used：Query语句中使用from dual 或不含任何from子句</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/04/09/371/" data-id="cm2qa2ssl00abof7613dc8odo" data-title="MySql explain" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySql/" rel="tag">MySql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/14/373/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MySql 事务
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/07/370/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySql 索引(index)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/BootStrap/">BootStrap</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/">DataBase</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/Liunx/">Liunx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataBase/Mybatis/">Mybatis</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/Linux/FastDFS/">FastDFS</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Dubbo/">Dubbo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/">Docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Docker/Zookeeper/">Zookeeper</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Liunx/">Liunx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Liunx/Other/">Other</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySql/">MySql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RabbitMQ/">RabbitMQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/Docker/">Docker</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tomcat/">tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/1-8-0/" rel="tag">1.8.0</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BootStrap/" rel="tag">BootStrap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-ElasticSearch/" rel="tag">Docker ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-Linux-FastDFS/" rel="tag">Docker Linux FastDFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dubbo/" rel="tag">Dubbo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Zookeeper/" rel="tag">Linux Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-sed/" rel="tag">Linux sed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySql/" rel="tag">MySql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/" rel="tag">Mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/" rel="tag">SpringCloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aux/" rel="tag">aux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/config/" rel="tag">config</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dao/" rel="tag">dao</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daosupport/" rel="tag">daosupport</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/db/" rel="tag">db&#39;</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error-info/" rel="tag">error_info</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/files/" rel="tag">files</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/final/" rel="tag">final</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/firewalld/" rel="tag">firewalld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flec/" rel="tag">flec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ftp/" rel="tag">ftp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ftpservice/" rel="tag">ftpservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gcj/" rel="tag">gcj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getter/" rel="tag">getter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grant/" rel="tag">grant</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/" rel="tag">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/his/" rel="tag">his</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/import/" rel="tag">import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/int/" rel="tag">int</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javarpm/" rel="tag">javarpm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdkrpm/" rel="tag">jdkrpm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/limit/" rel="tag">limit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/master/" rel="tag">master&#39;</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/named/" rel="tag">named</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nested/" rel="tag">nested</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-jdk/" rel="tag">open-jdk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p/" rel="tag">p</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pagesize/" rel="tag">pagesize</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern/" rel="tag">pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pattern2/" rel="tag">pattern2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/permanent/" rel="tag">permanent</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privileges/" rel="tag">privileges</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/procdure/" rel="tag">procdure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rows/" rel="tag">rows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/select/" rel="tag">select</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servername/" rel="tag">servername</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/" rel="tag">string</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/" rel="tag">tcp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/url2/" rel="tag">url2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/war/" rel="tag">war</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webapp/" rel="tag">webapp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/www/" rel="tag">www</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xampp/" rel="tag">xampp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yes/" rel="tag">yes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/" rel="tag">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zone/" rel="tag">zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%AB%E5%90%8D/" rel="tag">别名</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%B9%E9%85%8D/" rel="tag">匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%82%E6%95%B0/" rel="tag">参数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E9%87%8F/" rel="tag">变量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%91%BD%E4%BB%A4/" rel="tag">命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%9F%E5%90%8D/" rel="tag">域名</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A5%97%E4%BB%B6/" rel="tag">套件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/" rel="tag">客户端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E9%87%8F%E5%80%BC/" rel="tag">常量值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E4%BB%A4/" rel="tag">指令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E5%AE%9A/" rel="tag">指定</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%BE%E7%A4%BA/" rel="tag">显示</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E9%99%90/" rel="tag">权限</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%AE%E5%BD%95/" rel="tag">目录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AB%AF%E5%8F%A3/" rel="tag">端口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B3%BB%E7%BB%9F/" rel="tag">系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%91%E5%AE%9A/" rel="tag">绑定</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BF%E9%97%AE/" rel="tag">访问</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%8B%E5%80%BC/" rel="tag">赋值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B/" rel="tag">进程</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/1-8-0/" style="font-size: 10px;">1.8.0</a> <a href="/tags/BootStrap/" style="font-size: 10px;">BootStrap</a> <a href="/tags/Docker/" style="font-size: 12px;">Docker</a> <a href="/tags/Docker-ElasticSearch/" style="font-size: 10px;">Docker ElasticSearch</a> <a href="/tags/Docker-Linux-FastDFS/" style="font-size: 10px;">Docker Linux FastDFS</a> <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/ElasticSearch/" style="font-size: 10px;">ElasticSearch</a> <a href="/tags/Linux-Zookeeper/" style="font-size: 10px;">Linux Zookeeper</a> <a href="/tags/Linux-sed/" style="font-size: 10px;">Linux sed</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySql/" style="font-size: 18px;">MySql</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Nginx/" style="font-size: 12px;">Nginx</a> <a href="/tags/RabbitMQ/" style="font-size: 10px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 12px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/aux/" style="font-size: 10px;">aux</a> <a href="/tags/config/" style="font-size: 10px;">config</a> <a href="/tags/dao/" style="font-size: 10px;">dao</a> <a href="/tags/daosupport/" style="font-size: 10px;">daosupport</a> <a href="/tags/db/" style="font-size: 10px;">db'</a> <a href="/tags/enable/" style="font-size: 10px;">enable</a> <a href="/tags/error-info/" style="font-size: 12px;">error_info</a> <a href="/tags/files/" style="font-size: 10px;">files</a> <a href="/tags/final/" style="font-size: 10px;">final</a> <a href="/tags/firewalld/" style="font-size: 10px;">firewalld</a> <a href="/tags/flec/" style="font-size: 10px;">flec</a> <a href="/tags/ftp/" style="font-size: 10px;">ftp</a> <a href="/tags/ftpservice/" style="font-size: 10px;">ftpservice</a> <a href="/tags/gcj/" style="font-size: 10px;">gcj</a> <a href="/tags/getter/" style="font-size: 10px;">getter</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/golang/" style="font-size: 16px;">golang</a> <a href="/tags/grant/" style="font-size: 10px;">grant</a> <a href="/tags/grep/" style="font-size: 16px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/his/" style="font-size: 10px;">his</a> <a href="/tags/http/" style="font-size: 14px;">http</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/int/" style="font-size: 10px;">int</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javarpm/" style="font-size: 10px;">javarpm</a> <a href="/tags/jdkrpm/" style="font-size: 10px;">jdkrpm</a> <a href="/tags/limit/" style="font-size: 10px;">limit</a> <a href="/tags/master/" style="font-size: 10px;">master'</a> <a href="/tags/mysql/" style="font-size: 12px;">mysql</a> <a href="/tags/named/" style="font-size: 10px;">named</a> <a href="/tags/nested/" style="font-size: 10px;">nested</a> <a href="/tags/obj/" style="font-size: 10px;">obj</a> <a href="/tags/open-jdk/" style="font-size: 10px;">open-jdk</a> <a href="/tags/p/" style="font-size: 14px;">p</a> <a href="/tags/pagesize/" style="font-size: 10px;">pagesize</a> <a href="/tags/pattern/" style="font-size: 10px;">pattern</a> <a href="/tags/pattern2/" style="font-size: 10px;">pattern2</a> <a href="/tags/permanent/" style="font-size: 12px;">permanent</a> <a href="/tags/php/" style="font-size: 14px;">php</a> <a href="/tags/php-fpm/" style="font-size: 12px;">php-fpm</a> <a href="/tags/private/" style="font-size: 10px;">private</a> <a href="/tags/privileges/" style="font-size: 10px;">privileges</a> <a href="/tags/procdure/" style="font-size: 10px;">procdure</a> <a href="/tags/rows/" style="font-size: 10px;">rows</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/servername/" style="font-size: 10px;">servername</a> <a href="/tags/service/" style="font-size: 10px;">service</a> <a href="/tags/str/" style="font-size: 10px;">str</a> <a href="/tags/string/" style="font-size: 10px;">string</a> <a href="/tags/systemctl/" style="font-size: 14px;">systemctl</a> <a href="/tags/tcp/" style="font-size: 12px;">tcp</a> <a href="/tags/tomcat/" style="font-size: 12px;">tomcat</a> <a href="/tags/url2/" style="font-size: 10px;">url2</a> <a href="/tags/war/" style="font-size: 10px;">war</a> <a href="/tags/webapp/" style="font-size: 10px;">webapp</a> <a href="/tags/www/" style="font-size: 10px;">www</a> <a href="/tags/xampp/" style="font-size: 10px;">xampp</a> <a href="/tags/yes/" style="font-size: 10px;">yes</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/zone/" style="font-size: 12px;">zone</a> <a href="/tags/%E5%88%AB%E5%90%8D/" style="font-size: 10px;">别名</a> <a href="/tags/%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">匹配</a> <a href="/tags/%E5%8F%82%E6%95%B0/" style="font-size: 16px;">参数</a> <a href="/tags/%E5%8F%98%E9%87%8F/" style="font-size: 10px;">变量</a> <a href="/tags/%E5%91%BD%E4%BB%A4/" style="font-size: 20px;">命令</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E5%A5%97%E4%BB%B6/" style="font-size: 10px;">套件</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/" style="font-size: 10px;">客户端</a> <a href="/tags/%E5%B8%B8%E9%87%8F%E5%80%BC/" style="font-size: 10px;">常量值</a> <a href="/tags/%E5%BC%80%E6%9C%BA/" style="font-size: 10px;">开机</a> <a href="/tags/%E5%BF%83%E6%83%85/" style="font-size: 10px;">心情</a> <a href="/tags/%E6%8C%87%E4%BB%A4/" style="font-size: 10px;">指令</a> <a href="/tags/%E6%8C%87%E5%AE%9A/" style="font-size: 14px;">指定</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6/" style="font-size: 20px;">文件</a> <a href="/tags/%E6%98%BE%E7%A4%BA/" style="font-size: 10px;">显示</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 14px;">服务器</a> <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 10px;">权限</a> <a href="/tags/%E7%9B%AE%E5%BD%95/" style="font-size: 16px;">目录</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" style="font-size: 10px;">知识点</a> <a href="/tags/%E7%AB%AF%E5%8F%A3/" style="font-size: 10px;">端口</a> <a href="/tags/%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">系统</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E7%BB%91%E5%AE%9A/" style="font-size: 10px;">绑定</a> <a href="/tags/%E8%AE%BF%E9%97%AE/" style="font-size: 10px;">访问</a> <a href="/tags/%E8%B5%8B%E5%80%BC/" style="font-size: 10px;">赋值</a> <a href="/tags/%E8%BF%9B%E7%A8%8B/" style="font-size: 10px;">进程</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/15/381/">https过程</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/15/382/">https过程</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/14/380/">http和rpc的区别</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/14/379/">Redis缓存过期机制和内存淘汰管理机制</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/14/378/">golang 并发控制context实现原理剖析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
