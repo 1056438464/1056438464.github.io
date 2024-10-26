@@ -1,39 +1,38 @@
-(() => {
-  // Theme switch
+// 搜索
+function onDocSearch() {
+  const searchIconEle = document.getElementById('sea-search-icon');
+  const searchInputEle = document.getElementById('sea-search-input');
+  if (!searchIconEle) return;
+  searchIconEle.addEventListener('click', () => {
+    const btnEle = searchInputEle.querySelector('.DocSearch');
+    btnEle.click();
+  });
+}
+
+// 移动端菜单
+function onMobileNavShow() {
   const body = document.body;
-  const lamp = document.getElementById("mode");
+  const navToggle = document.getElementById('sea-nav-toggle');
+  const dimmer = document.getElementById('sea-nav-dimmer');
+  const closeBtn = document.getElementById('sea-menu-close-icon');
+  const CLASS_NAME = 'sea-nav-on';
+  if (!navToggle) return;
 
-  let elem = document.querySelectorAll('figure.highlight')
-  elem.forEach(function(item){
-    let langName = item.getAttribute('class').split(' ')[1]
-    if (langName === 'plain' || langName === undefined) langName = 'Code'
-    item.setAttribute('data-lang',langName);
-  })
+  navToggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    body.classList.toggle(CLASS_NAME);
+  });
 
-  const toggleTheme = (state) => {
-    if (state === "dark") {
-      localStorage.setItem("theme", "light");
-      body.removeAttribute("data-theme");
-    } else if (state === "light") {
-      localStorage.setItem("theme", "dark");
-      body.setAttribute("data-theme", "dark");
-    } else {
-      initTheme(state);
-    }
+  const closeFun = (e) => {
+    if (!body.classList.contains(CLASS_NAME)) return;
+    e.preventDefault();
+    body.classList.remove(CLASS_NAME);
   };
 
-  lamp.addEventListener("click", () =>
-    toggleTheme(localStorage.getItem("theme"))
-  );
+  dimmer.addEventListener('click', closeFun);
+  closeBtn.addEventListener('click', closeFun);
+}
 
-  // Blur the content when the menu is open
-  const cbox = document.getElementById("menu-trigger");
-
-  cbox.addEventListener("change", function () {
-    const area = document.querySelector(".wrapper");
-    this.checked
-      ? area.classList.add("blurry")
-      : area.classList.remove("blurry");
-  });
-})();
-
+onDocSearch();
+onMobileNavShow();

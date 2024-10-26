@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>简单的ajax请求加php逻辑处理 | shang wj</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="http://example.com/2018/05/31/113/">
+
+  <link rel="shortcut icon" href="/">
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+
+  
+  <meta name="description" content="处理逻辑    html请求页面——&gt;php1——&gt;php2——html显示 php1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的ajax请求加php逻辑处理">
+<meta property="og:url" content="http://example.com/2018/05/31/113/index.html">
+<meta property="og:site_name" content="shang wj">
+<meta property="og:description" content="处理逻辑    html请求页面——&gt;php1——&gt;php2——html显示 php1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-31T03:19:00.000Z">
+<meta property="article:modified_time" content="2019-04-27T13:26:47.000Z">
+<meta property="article:author" content="shang wj">
+<meta name="twitter:card" content="summary">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <h1 class="sea-nav-logo" title="">
+    <a href="/">shang wj</a>
+  </h1>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div class="sea-menu-wrap">
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+  
+
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+<div id="sea-nav-dimmer"></div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper">
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title">简单的ajax请求加php逻辑处理</h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2018-05-31T03:19:00.000Z">2018-05-31</time>
+</div>
+        
+  <div class="sea-post-categories">
+    <svg t="1716964680422" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4550" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M810.666667 85.333333a85.333333 85.333333 0 0 1 85.333333 85.333334v152.021333c36.821333 9.493333 64 42.88 64 82.645333v405.333334a128 128 0 0 1-128 128H192a128 128 0 0 1-128-128V298.666667a85.376 85.376 0 0 1 64-82.645334V170.666667a85.333333 85.333333 0 0 1 85.333333-85.333334h597.333334zM128.149333 296.170667L128 298.666667v512a64 64 0 0 0 60.245333 63.893333L192 874.666667h640a64 64 0 0 0 63.893333-60.245334L896 810.666667V405.333333a21.333333 21.333333 0 0 0-18.837333-21.184L874.666667 384H638.165333l-122.069333-101.717333a21.333333 21.333333 0 0 0-10.688-4.736l-2.986667-0.213334H149.333333a21.333333 21.333333 0 0 0-21.184 18.837334zM535.189333 213.333333l127.978667 106.666667H832V170.666667a21.333333 21.333333 0 0 0-18.837333-21.184L810.666667 149.333333H213.333333a21.333333 21.333333 0 0 0-21.184 18.837334L192 170.666667v42.666666h343.168z" p-id="4551"></path></svg>
+    <a class="category-link" href="/categories/Other/">Other</a>
+  </div>
+
+        
+      </div>
+    
+  </header>
+  <div class="sea-article-content sea-doc">
+    <p>处理逻辑    html请求页面——&gt;php1——&gt;php2——html显示</p>
+<h3 id="php1"><a href="#php1" class="headerlink" title="php1"></a>php1</h3><span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if (!(defined(&#x27;IN_IA&#x27;))) &#123;</span><br><span class="line">    exit(&#x27;Access Deined&#x27;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ExchangeList_EweiShopV2Page extends ComWebPage &#123;</span><br><span class="line">    </span><br><span class="line">    public function main() &#123;</span><br><span class="line">         global $_W;</span><br><span class="line">        global $_GPC;</span><br><span class="line">        </span><br><span class="line">        $pindex = max(1, intval($_GPC[&#x27;page&#x27;]));</span><br><span class="line">        $psize = 20;</span><br><span class="line">        </span><br><span class="line">        $whereTotal = &quot;&quot;;</span><br><span class="line">        $paramTotal = array(&#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;]);</span><br><span class="line">        </span><br><span class="line">        if(!empty($_GPC[&#x27;keyword&#x27;]))&#123;</span><br><span class="line">             $whereTotal.= &quot; and (a.nickname like &#x27;%&quot;.$_GPC[&#x27;keyword&#x27;].&quot;%&#x27; or a.realname like &#x27;%&quot;.$_GPC[&#x27;keyword&#x27;].&quot;%&#x27;) &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        $total = pdo_fetch(&#x27;select count(1) as number from &#x27;  . tablename(&#x27;weikang_deposit_refund&#x27;) .&#x27;a left join &#x27;.tablename(&#x27;weikang_deposit&#x27;).&#x27;b on a.deposit_id = b.id  where a.uniacid =:uniacid &#x27;.$whereTotal, $paramTotal);</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        if (!(empty($total))) &#123;</span><br><span class="line">            $data = pdo_fetchall(&#x27;select a.id,a.uniacid, a.openid,a.nickname,a.realname,a.deposit_id,a.draw_money,a.draw_status,a.fail_message,a.operate_user,a.deal_time,a.create_time from&#x27;</span><br><span class="line">            . tablename(&#x27;weikang_deposit_refund&#x27;) .&#x27;a left join &#x27;.tablename(&#x27;weikang_deposit&#x27;).&#x27;b on a.deposit_id = b.id  where a.uniacid =:uniacid &#x27;.$whereTotal.&#x27; ORDER BY a.id DESC LIMIT &#x27; . (($pindex - 1) * $psize) . &#x27;,&#x27; . $psize, $paramTotal);</span><br><span class="line">            $pager = pagination2($total[&#x27;number&#x27;], $pindex, $psize);</span><br><span class="line">        &#125; </span><br><span class="line">        include $this-&gt;template(&#x27;share/exchangelist/exchangelist&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 申请通过</span><br><span class="line">     */</span><br><span class="line">    public function edit()&#123;</span><br><span class="line">        $this-&gt;post();</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 跳转逻辑判断</span><br><span class="line">     */</span><br><span class="line">    public function post()&#123;</span><br><span class="line">    require dirname(__FILE__).&#x27;/exchangelistpost.php&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">	//dirname(__FILE__)获得当前文件的绝对地址，不包含文件名，只取绝对地址 例：d：//.....后面跟.&#x27;/exchangelistpost.php&#x27;连接这个文件名</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="php2-post处理页面show-json"><a href="#php2-post处理页面show-json" class="headerlink" title="php2 post处理页面show_json"></a>php2 post处理页面show_json</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">global $_W;</span><br><span class="line">global $_GPC;</span><br><span class="line">$id = intval($_GPC[&#x27;id&#x27;]);</span><br><span class="line">$paramTotal = array(&#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;]);</span><br><span class="line"></span><br><span class="line">if (!empty($id)) &#123;</span><br><span class="line">    //查询出当前id的申请退款表中的信息</span><br><span class="line">    $data = pdo_fetch(&#x27;select * from &#x27; . tablename(weikang_deposit_refund) . &#x27;where id =&#x27; . $id . &#x27; and uniacid =:uniacid &#x27;, $paramTotal);</span><br><span class="line">    $refundData = pdo_fetchall(&#x27;select b.status  from &#x27; . tablename(&#x27;weikang_deposit_refund&#x27;) . &#x27;a left join &#x27; . tablename(&#x27;ewei_shop_order&#x27;) . &#x27;b on a.openid = b.openid  where a.uniacid=:uniacid and b.order_type =1 and b.status in (0,1,2)&#x27;, $paramTotal);</span><br><span class="line">    </span><br><span class="line">    if(count($refundData) &gt; 0)&#123;</span><br><span class="line">        show_json(0,array(&quot;id&quot;=&gt;$id,&quot;message&quot;=&gt;&quot;存在未支付订单&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //正在使用的订单是空的，更新申请退款表和押金表中的数据</span><br><span class="line">    $refundData = array(&#x27;deal_time&#x27; =&gt; date(&quot;Y-m-d H:i:s&quot;), &#x27;draw_status&#x27; =&gt; 1, &#x27;operate_user&#x27; =&gt; $_W[&#x27;account&#x27;][&#x27;name&#x27;]);</span><br><span class="line">    $depositData = array(&#x27;refund_time&#x27; =&gt; date(&quot;Y-m-d H:i:s&quot;), &#x27;refund_id&#x27; =&gt; $id);</span><br><span class="line">    //更新数据</span><br><span class="line">    pdo_update(&#x27;ims_weikang_deposit&#x27;, $depositData, array(&#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;], &#x27;id&#x27; =&gt; $data[&#x27;deposit_id&#x27;]));</span><br><span class="line"></span><br><span class="line">    pdo_update(&#x27;ims_weikang_deposit_refund&#x27;, $refundData, array(&#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;], &#x27;id&#x27; =&gt; $id));</span><br><span class="line">    </span><br><span class="line">    show_json(1,array(&quot;id&quot;=&gt;$id,&quot;message&quot;=&gt;&quot;申请成功&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">show_json 格式：&#123;&quot;status&quot;:1,&quot;result&quot;:&#123;&quot;id&quot;:1,&quot;message&quot;:&quot;\u7533\u8bf7\u6210\u529f&quot;,&quot;url&quot;:&quot;http:\/\/localhost:8080\/&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line">下面会下如何取得json中的数据</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="html页面"><a href="#html页面" class="headerlink" title="html页面"></a>html页面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr class=&quot;tr_&#123;$item[&#x27;id&#x27;]&#125;&quot;&gt;</span><br><span class="line">	&lt;th&gt;申请状态&lt;/th&gt;</span><br><span class="line">	...</span><br><span class="line">	&lt;th&gt;操作&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">	&lt;td&gt;</span><br><span class="line">		&#123;if $item[&#x27;draw_status&#x27;]==0&#125;</span><br><span class="line">          正在申请</span><br><span class="line">        &#123;elseif $item[&#x27;draw_status&#x27;]==1&#125;</span><br><span class="line">          处理成功</span><br><span class="line">        &#123;elseif $item[&#x27;draw_status&#x27;]==2&#125;</span><br><span class="line">          审核失败</span><br><span class="line">        &#123;elseif $item[&#x27;draw_status&#x27;]==3&#125;</span><br><span class="line">          打款失败</span><br><span class="line">        &#123;elseif $item[&#x27;draw_status&#x27;]==4&#125;</span><br><span class="line">          用户取消</span><br><span class="line">        &#123;/if&#125;</span><br><span class="line">	&lt;/td&gt;</span><br><span class="line">	...</span><br><span class="line">	&lt;td  style=&quot;overflow:visible;position:relative&quot;&gt; </span><br><span class="line">               &lt;a  class=&#x27; apply_draw_money&#x27; applyid=&quot;&#123;$item[&#x27;id&#x27;]&#125;&quot; </span><br><span class="line">			   href=&quot;javascript:;&quot; title=&quot;通过申请&quot;&gt;&lt;i class=&#x27;fa fa-check&#x27;&gt;&lt;/i&gt; &lt;/a&gt;             </span><br><span class="line">            &lt;/td&gt;&lt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">	//$(document).ready(function()&#123;.... &#125;)这个函数是用来取代页面中的window.onload;</span><br><span class="line">    $(document).ready(function ()&#123; </span><br><span class="line">	//bind()方法的主要功能是在向它绑定的对象上面提供一些事件方法的行为。捕捉到操作栏的请求</span><br><span class="line">       $(&quot;.apply_draw_money&quot;).bind(&quot;click&quot;,function ()&#123;</span><br><span class="line">	   			//在页面显示提示框“是否”confirm() 方法用于显示一个带有指定消息和 OK 及取消按钮的对话框。</span><br><span class="line">           if(confirm(&#x27;是否？&#x27;))&#123;</span><br><span class="line">		   					//ajax请求post，url php1——&gt;php2——&gt;html</span><br><span class="line">                $.ajax(&#123;type: &quot;POST&quot;,url: &quot;&#123;php echo webUrl(&#x27;share/exchangelist/edit&#x27;)&#125;&amp;id=&quot;+$(this).attr(&quot;applyid&quot;) ,dataType:&quot;json&quot;,success: function(data)&#123;</span><br><span class="line">				//因为上级的funciton（data）,所以用data.status取得json中的status数据</span><br><span class="line">                        if(data.status == 1)&#123; </span><br><span class="line">						//同理取得json中的result中的message</span><br><span class="line">                            alert(data.result.message);</span><br><span class="line">							//在html页面中显示“处理成功”的提示框.表单是&lt;td&gt;从0开始</span><br><span class="line">                            $(&quot;.tr_&quot;+data.result.id).find(&quot;td&quot;).eq(4).html(&quot;处理成功&quot;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">show_json(1,array(&quot;id&quot;=&gt;$id,&quot;message&quot;=&gt;&quot;申请成功&quot;)); //定义json</span><br><span class="line"> </span><br><span class="line">show_json 格式：&#123;&quot;status&quot;:1,&quot;result&quot;:&#123;&quot;id&quot;:1,&quot;message&quot;:&quot;\u7533\u8bf7\u6210\u529f&quot;,&quot;url&quot;:&quot;http:\/\/localhost:8080\/&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <span><</span>
+        <a class="link" href="/2018/06/01/116/">
+          sql DISTINCT 命令简单使用
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2018/05/29/112/">
+          php Incorrect Table Name错误
+        </a>
+        <span>></span>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+    </div>
+  </div>
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2024
+      
+      <span>·</span>
+      shang wj
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+<script src="/js/main.js"></script>
+
+
+<script src="/js/theme.js"></script>
+
+</body>
+</html>
