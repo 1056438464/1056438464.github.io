@@ -1,53 +1,269 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>阿里云服务器下(centOS)中安装ftp | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿里云服务器下(centOS)中安装ftp [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        阿里云服务器下(centOS)中安装ftp
-    </div>
-    <p class="sub">Apr 20 2018</p>
-    <div class="post-content">
-        <h1 id="1-安装常用工具和依赖库"><a href="#1-安装常用工具和依赖库" class="headerlink" title="1.安装常用工具和依赖库"></a>1.安装常用工具和依赖库</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install wget axel unzip gcc bison git autoconf nfs-utils pcre-devel zlib-devel bzip2-devel cmake gcc-c++ ncurses-devel perl-Data-Dumper libicu-devel libquadmath-devel python-devel libxml2-devel openssl-devel libcurl-devel libpng-devel freetype-devel freetype-devel gd-devel libmcrypt-devel libxslt-devel libevent-devel systemd-devel make gtk+-devel openssl keyutils patch perl</span><br></pre></td></tr></table></figure>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/systemctl/" class="tag"># systemctl</a><a href="/tags/%E5%91%BD%E4%BB%A4/" class="tag"># 命令</a><a href="/tags/tcp/" class="tag"># tcp</a><a href="/tags/permanent/" class="tag"># permanent</a><a href="/tags/zone/" class="tag"># zone</a><a href="/tags/%E6%96%87%E4%BB%B6/" class="tag"># 文件</a><a href="/tags/yes/" class="tag"># yes</a><a href="/tags/ftpservice/" class="tag"># ftpservice</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="tag"># 服务器</a><a href="/tags/ftp/" class="tag"># ftp</a><a href="/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/" class="tag"># 客户端</a><a href="/tags/%E7%AB%AF%E5%8F%A3/" class="tag"># 端口</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">阿里云服务器下(centOS)中安装ftp</h1>
+          <div class="post-meta">
+            <time>Apr 20, 2018</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h1 id="1-安装常用工具和依赖库"><a href="#1-安装常用工具和依赖库" class="headerlink" title="1.安装常用工具和依赖库"></a>1.安装常用工具和依赖库</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install wget axel unzip gcc bison git autoconf nfs-utils pcre-devel zlib-devel bzip2-devel cmake gcc-c++ ncurses-devel perl-Data-Dumper libicu-devel libquadmath-devel python-devel libxml2-devel openssl-devel libcurl-devel libpng-devel freetype-devel freetype-devel gd-devel libmcrypt-devel libxslt-devel libevent-devel systemd-devel make gtk+-devel openssl keyutils patch perl</span><br></pre></td></tr></table></figure>
 <h1 id="2-获取PHP"><a href="#2-获取PHP" class="headerlink" title="2.获取PHP"></a>2.获取PHP</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://cn2.php.net/distributions/php-7.1.9.tar.gz</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h1 id="3-安装PHP"><a href="#3-安装PHP" class="headerlink" title="3.安装PHP"></a>3.安装PHP</h1><h2 id="3-1编译安装"><a href="#3-1编译安装" class="headerlink" title="3.1编译安装"></a>3.1编译安装</h2><p>在PHP的下载目录，解压后，运行.&#x2F;configure生成Makefile。</p>
@@ -75,131 +291,50 @@
 <h3 id="4-3-1开放端口"><a href="#4-3-1开放端口" class="headerlink" title="4.3.1开放端口"></a>4.3.1开放端口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=50000-51000/tcp –permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=20/tcp –permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=21/tcp –permanent</span><br><span class="line">重启防火墙</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
 <p>开通服务</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/bin/systemctl start  vsftpd.service 开启服务</span><br><span class="line">/bin/systemctl status  vsftpd.service 查看状态</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在即可用ftp://usenmae:password@ip:端口号</span><br></pre></td></tr></table></figure>
-    </div>
-    </article>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在即可用ftp://usenmae:password@ip:端口号</span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2018/04/23/43/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">CentSO 7.4 下安装jdk1.8、mysql、php服务</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2018/04/20/38/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">centOS 用rpm查看已经安装的程序</span>
+    </a>
+    
+  </nav>
+
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-text">1.安装常用工具和依赖库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96PHP"><span class="toc-text">2.获取PHP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85PHP"><span class="toc-text">3.安装PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="toc-text">3.1编译安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E9%85%8D%E7%BD%AEvsftp"><span class="toc-text">4.1 配置vsftp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-%E5%AE%89%E8%A3%85"><span class="toc-text">4.1.1 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E9%85%8D%E7%BD%AEftp%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84"><span class="toc-text">4.2 配置ftp服务器文件存储路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E9%85%8D%E7%BD%AEvsftpd"><span class="toc-text">4.3 配置vsftpd</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9C%80%E8%A6%81%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E4%BE%8B%E4%B8%AD%E5%BC%80%E9%80%9A50000-51000%E7%9A%84%E5%AE%89%E5%85%A8%E8%A7%84%E5%88%99"><span class="toc-text">阿里云服务器需要在服务器实例中开通50000-51000的安全规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-text">4.3.1开放端口</span></a></li></ol></li></ol></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-                    <a href="/tags/systemctl/">systemctl</a>
-                
-                    <a href="/tags/%E5%91%BD%E4%BB%A4/">命令</a>
-                
-                    <a href="/tags/tcp/">tcp</a>
-                
-                    <a href="/tags/permanent/">permanent</a>
-                
-                    <a href="/tags/zone/">zone</a>
-                
-                    <a href="/tags/%E6%96%87%E4%BB%B6/">文件</a>
-                
-                    <a href="/tags/yes/">yes</a>
-                
-                    <a href="/tags/ftpservice/">ftpservice</a>
-                
-                    <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
-                
-                    <a href="/tags/ftp/">ftp</a>
-                
-                    <a href="/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
-                
-                    <a href="/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2018/04/23/43/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">CentSO 7.4 下安装jdk1.8、mysql、php服务</span>
-            </a>
-        
-        
-            <a class="next" href="/2018/04/20/38/">
-                
-                <span class="prev-text">centOS 用rpm查看已经安装的程序</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

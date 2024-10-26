@@ -1,53 +1,269 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>PageHelper | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PageHelper [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        PageHelper
-    </div>
-    <p class="sub">Dec 21 2022</p>
-    <div class="post-content">
-        <p>pom.xml中引入依赖</p>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/PageHelper/" class="tag"># PageHelper</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">PageHelper</h1>
+          <div class="post-meta">
+            <time>Dec 21, 2022</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><p>pom.xml中引入依赖</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <p>application.yml中引入配置</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pagehelper:</span></span><br><span class="line">  <span class="attr">helperDialect:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">reasonable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">supportMethodsArguments:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">params:</span> <span class="string">count=countSql</span></span><br></pre></td></tr></table></figure>
@@ -77,109 +293,50 @@
 <p>3、对于同一线程的不同ThreadLocal来讲，这些ThreadLocal实例共享一个table数组，然后每个ThreadLocal实例在table中的索引i是不同的。</p>
 <h4 id="三、PageHelper实际拦截SQL"><a href="#三、PageHelper实际拦截SQL" class="headerlink" title="三、PageHelper实际拦截SQL"></a>三、PageHelper实际拦截SQL</h4><p>一说到sql的拦截功能，大家应该会想到Mybatis的拦截器吧。Mybatis拦截器可以对下面4种对象进行拦截：</p>
 <p>•Executor：mybatis的内部执行器，作为调度核心负责调用StatementHandler操作数据库，并把结果集通过ResultSetHandler进行自动映射<br>•StatementHandler：封装了JDBC Statement操作，是sql语法的构建器，负责和数据库进行交互执行sql语句<br>•ParameterHandler：作为处理sql参数设置的对象，主要实现读取参数和对PreparedStatement的参数进行赋值<br>•ResultSetHandler：处理Statement执行完成后返回结果集的接口对象，mybatis通过它把ResultSet集合映射成实体对象<br>PageHelper也是用的mybatis的拦截器进行分页的，接下来就让我们看下代码吧：首先进入<code>PageInterceptor</code> 拦截器</p>
-<h5 id="关注关键代码"><a href="#关注关键代码" class="headerlink" title="关注关键代码"></a>关注关键代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        resultList = ExecutorUtil.pageQuery(dialect, executor,</span><br><span class="line">                                            ms, parameter, rowBounds, resultHandler, boundSql, cacheKey);</span><br><span class="line">        ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; List&lt;E&gt; <span class="title function_">pageQuery</span><span class="params">(Dialect dialect, Executor executor, MappedStatement ms, Object parameter,RowBounds rowBounds, ResultHandler resultHandler,BoundSql boundSql, CacheKey cacheKey)</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">        <span class="comment">//判断是否需要进行分页查询</span></span><br><span class="line">        <span class="keyword">if</span> (dialect.beforePage(ms, parameter, rowBounds)) &#123;</span><br><span class="line">            <span class="comment">//生成分页的缓存 key</span></span><br><span class="line">            <span class="type">CacheKey</span> <span class="variable">pageKey</span> <span class="operator">=</span> cacheKey;</span><br><span class="line">            <span class="comment">//处理参数对象</span></span><br><span class="line">            parameter = dialect.processParameterObject(ms, parameter, boundSql, pageKey);</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">获取到ThreadLocal中的page对象</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">processParameterObject</span><span class="params">(MappedStatement ms, Object parameterObject, BoundSql boundSql, CacheKey pageKey)</span> &#123;</span><br><span class="line">     ...</span><br><span class="line">     <span class="keyword">return</span> processPageParameter(ms, paramMap, page, boundSql, pageKey);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
-    </div>
-    </article>
+<h5 id="关注关键代码"><a href="#关注关键代码" class="headerlink" title="关注关键代码"></a>关注关键代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        resultList = ExecutorUtil.pageQuery(dialect, executor,</span><br><span class="line">                                            ms, parameter, rowBounds, resultHandler, boundSql, cacheKey);</span><br><span class="line">        ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; List&lt;E&gt; <span class="title function_">pageQuery</span><span class="params">(Dialect dialect, Executor executor, MappedStatement ms, Object parameter,RowBounds rowBounds, ResultHandler resultHandler,BoundSql boundSql, CacheKey cacheKey)</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">        <span class="comment">//判断是否需要进行分页查询</span></span><br><span class="line">        <span class="keyword">if</span> (dialect.beforePage(ms, parameter, rowBounds)) &#123;</span><br><span class="line">            <span class="comment">//生成分页的缓存 key</span></span><br><span class="line">            <span class="type">CacheKey</span> <span class="variable">pageKey</span> <span class="operator">=</span> cacheKey;</span><br><span class="line">            <span class="comment">//处理参数对象</span></span><br><span class="line">            parameter = dialect.processParameterObject(ms, parameter, boundSql, pageKey);</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">获取到ThreadLocal中的page对象</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">processParameterObject</span><span class="params">(MappedStatement ms, Object parameterObject, BoundSql boundSql, CacheKey pageKey)</span> &#123;</span><br><span class="line">     ...</span><br><span class="line">     <span class="keyword">return</span> processPageParameter(ms, paramMap, page, boundSql, pageKey);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2023/01/21/390/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">面试必备常见存储引擎与锁的分类</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2022/12/19/387/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">附近人功能实现</span>
+    </a>
+    
+  </nav>
+
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%88%86%E9%A1%B5%E7%9A%84"><span class="toc-text">如何实现分页的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9AThreadLocal"><span class="toc-text">一、先说一个小的知识点：ThreadLocal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9C%8B%E4%B8%80%E4%B8%8BThreadLocal-%E5%9C%A8PageHelper%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E7%9B%B4%E6%8E%A5%E4%B8%8A%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-text">二、看一下ThreadLocal 在PageHelper中的应用（直接上代码）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A"><span class="toc-text">知识点：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81PageHelper%E5%AE%9E%E9%99%85%E6%8B%A6%E6%88%AASQL"><span class="toc-text">三、PageHelper实际拦截SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E6%B3%A8%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="toc-text">关注关键代码</span></a></li></ol></li></ol></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-                    <a href="/tags/PageHelper/">PageHelper</a>
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2023/01/21/390/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">面试必备常见存储引擎与锁的分类</span>
-            </a>
-        
-        
-            <a class="next" href="/2022/12/19/387/">
-                
-                <span class="prev-text">附近人功能实现</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

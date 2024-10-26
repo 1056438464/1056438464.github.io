@@ -1,53 +1,269 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>Consumer 接口 | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consumer 接口 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        Consumer 接口
-    </div>
-    <p class="sub">Jun 19 2023</p>
-    <div class="post-content">
-        <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>第一步创建主表数据，插入A表；第二步调用第三方接口插入B表同时更新A表的状态。此时大家应该都会想到在进行第二步的时候需要做好数据的幂等性。这样的话就会存在以下几种情况：</p>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Java/" class="tag"># Java</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">Consumer 接口</h1>
+          <div class="post-meta">
+            <time>Jun 19, 2023</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>第一步创建主表数据，插入A表；第二步调用第三方接口插入B表同时更新A表的状态。此时大家应该都会想到在进行第二步的时候需要做好数据的幂等性。这样的话就会存在以下几种情况：</p>
 <p>一、B表中不存在与A表关联的数据，此时需要调用第三方接口，插入B表同时更新A表的状态；</p>
 <p>二、B表中存在与A表关联的数据；</p>
 <p>A表中的状态为处理中：直接返回处理中字样；<br>A表中的状态为处理成功：直接返回成功的字样；<br>A表中的状态为处理失败：此时需要调用第三方接口，更新B表同时更新A表的状态；</p>
@@ -71,109 +287,50 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[张三, 李四, 王五]</span><br></pre></td></tr></table></figure>
 <p>Predicate我们称之为“判断者”，通过接收参数 T 来返回 boolean 的结果。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Predicate</span>&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  接收一个参数, 判断这个参数是否匹配某种规则, 匹配成功返回true, 匹配失败则返回false</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(T t)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  接收一个 Predicate 类型的参数，用当前函数和 other 函数逻辑与判断参数 t 是否匹配规则，成功返回true，失败返回 false </span></span><br><span class="line"><span class="comment">     *  如果当前函数返回 false，则 other 函数不进行计算</span></span><br><span class="line"><span class="comment">     * 在评估 Predicate 期间引发的任何异常都会转发给调用方</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> Predicate&lt;T&gt; <span class="title function_">and</span><span class="params">(Predicate&lt;? <span class="built_in">super</span> T&gt; other)</span> &#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; test(t) &amp;&amp; other.test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  返回当前Predicate取反操作之后的Predicate</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> Predicate&lt;T&gt; <span class="title function_">negate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; !test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  接收一个 Predicate 类型的参数，用当前函数和 other 函数 逻辑或 判断参数 t 是否匹配规则，成功返回true，失败返回 false </span></span><br><span class="line"><span class="comment">     *  如果当前函数返回 true，则 other 函数不进行计算</span></span><br><span class="line"><span class="comment">     * 在评估 Predicate 期间引发的任何异常都会转发给调用方</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">default</span> Predicate&lt;T&gt; <span class="title function_">or</span><span class="params">(Predicate&lt;? <span class="built_in">super</span> T&gt; other)</span> &#123;</span><br><span class="line">        Objects.requireNonNull(other);</span><br><span class="line">        <span class="keyword">return</span> (t) -&gt; test(t) || other.test(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  静态方法：传入一个参数，用来生成一个 Predicate，调用test() 方法时调的 object -&gt; targetRef.equals(object) 函数式</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T&gt; Predicate&lt;T&gt; <span class="title function_">isEqual</span><span class="params">(Object targetRef)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="literal">null</span> == targetRef)</span><br><span class="line">                ? Objects::isNull</span><br><span class="line">                : object -&gt; targetRef.equals(object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    List&lt;Teacher&gt; list = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;张三&quot;</span>,<span class="number">25</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;李四&quot;</span>,<span class="number">28</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;王五&quot;</span>,<span class="number">18</span>));</span><br><span class="line"></span><br><span class="line">    list = list.stream().filter(item -&gt; item.getAge()&gt;<span class="number">25</span>).collect(Collectors.toList());</span><br><span class="line">    list.stream().forEach(item-&gt;System.out.println(item.getName()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-    </div>
-    </article>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    List&lt;Teacher&gt; list = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;张三&quot;</span>,<span class="number">25</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;李四&quot;</span>,<span class="number">28</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;王五&quot;</span>,<span class="number">18</span>));</span><br><span class="line"></span><br><span class="line">    list = list.stream().filter(item -&gt; item.getAge()&gt;<span class="number">25</span>).collect(Collectors.toList());</span><br><span class="line">    list.stream().forEach(item-&gt;System.out.println(item.getName()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2023/06/23/395/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">try-catch-finally</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2023/05/11/393/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">接口的参数进行验签处理</span>
+    </a>
+    
+  </nav>
+
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF"><span class="toc-text">场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-text">伪代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3"><span class="toc-text">函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FunctionalInterface"><span class="toc-text">@FunctionalInterface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Consumer"><span class="toc-text">Consumer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B"><span class="toc-text">例:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-                    <a href="/tags/Java/">Java</a>
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2023/06/23/395/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">try-catch-finally</span>
-            </a>
-        
-        
-            <a class="next" href="/2023/05/11/393/">
-                
-                <span class="prev-text">接口的参数进行验签处理</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

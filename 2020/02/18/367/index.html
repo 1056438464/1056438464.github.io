@@ -1,53 +1,269 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>Springboot集成ElasticSearch7.4 | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Springboot集成ElasticSearch7.4 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        Springboot集成ElasticSearch7.4
-    </div>
-    <p class="sub">Feb 18 2020</p>
-    <div class="post-content">
-        <h2 id="1-各系统版本"><a href="#1-各系统版本" class="headerlink" title="1.各系统版本"></a>1.各系统版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ElasticSearch:7.4.0</span><br><span class="line">SpringBoot:2.2.0.RELEASE</span><br><span class="line">spring-boot-starter-data-elasticsearch:2.2.0.RELEASE</span><br><span class="line">SpringCloud:Hoxton.SR1</span><br></pre></td></tr></table></figure>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/ElasticSearch/" class="tag"># ElasticSearch</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">Springboot集成ElasticSearch7.4</h1>
+          <div class="post-meta">
+            <time>Feb 18, 2020</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h2 id="1-各系统版本"><a href="#1-各系统版本" class="headerlink" title="1.各系统版本"></a>1.各系统版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ElasticSearch:7.4.0</span><br><span class="line">SpringBoot:2.2.0.RELEASE</span><br><span class="line">spring-boot-starter-data-elasticsearch:2.2.0.RELEASE</span><br><span class="line">SpringCloud:Hoxton.SR1</span><br></pre></td></tr></table></figure>
 <p>#####特记：<br>如果要使用<code>spring-data-elasticsearch</code>目前只能使用<code>ElasticSearch:6.7.2</code>以下版本,所以现在只能用<code>spring-boot-starter-data-elasticsearch</code>连接ES7.4.0版本。</p>
 <p><code>springboot</code>对应的<code>springcloud</code>也是有版本对应。要不然会报<code>Error creating bean with name &#39;traceFilterRegistration&#39; defined in class path resource</code>的错误，而这个导致这个错误的原因是<code>springboot</code>和<code>spingclould</code>版本不匹配导致，<code>parent</code>采用了一个版本，内部又重新采用了另一个版本。<br>下面是版本对应：<br>官方网址：<a target="_blank" rel="noopener" href="https://start.spring.io/actuator/info">https://start.spring.io/actuator/info</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&quot;spring-cloud&quot;: &#123;</span><br><span class="line">      &quot;Finchley.M2&quot;: &quot;Spring Boot &gt;=2.0.0.M3 and &lt;2.0.0.M5&quot;,</span><br><span class="line">      &quot;Finchley.M3&quot;: &quot;Spring Boot &gt;=2.0.0.M5 and &lt;=2.0.0.M5&quot;,</span><br><span class="line">      &quot;Finchley.M4&quot;: &quot;Spring Boot &gt;=2.0.0.M6 and &lt;=2.0.0.M6&quot;,</span><br><span class="line">      &quot;Finchley.M5&quot;: &quot;Spring Boot &gt;=2.0.0.M7 and &lt;=2.0.0.M7&quot;,</span><br><span class="line">      &quot;Finchley.M6&quot;: &quot;Spring Boot &gt;=2.0.0.RC1 and &lt;=2.0.0.RC1&quot;,</span><br><span class="line">      &quot;Finchley.M7&quot;: &quot;Spring Boot &gt;=2.0.0.RC2 and &lt;=2.0.0.RC2&quot;,</span><br><span class="line">      &quot;Finchley.M9&quot;: &quot;Spring Boot &gt;=2.0.0.RELEASE and &lt;=2.0.0.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.RC1&quot;: &quot;Spring Boot &gt;=2.0.1.RELEASE and &lt;2.0.2.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.RC2&quot;: &quot;Spring Boot &gt;=2.0.2.RELEASE and &lt;2.0.3.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.SR4&quot;: &quot;Spring Boot &gt;=2.0.3.RELEASE and &lt;2.0.999.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Finchley.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.0.999.BUILD-SNAPSHOT and &lt;2.1.0.M3&quot;,</span><br><span class="line">      &quot;Greenwich.M1&quot;: &quot;Spring Boot &gt;=2.1.0.M3 and &lt;2.1.0.RELEASE&quot;,</span><br><span class="line">      &quot;Greenwich.SR4&quot;: &quot;Spring Boot &gt;=2.1.0.RELEASE and &lt;2.1.12.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Greenwich.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.1.12.BUILD-SNAPSHOT and &lt;2.2.0.M4&quot;,</span><br><span class="line">      &quot;Hoxton.SR1&quot;: &quot;Spring Boot &gt;=2.2.0.M4 and &lt;2.2.3.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Hoxton.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.2.3.BUILD-SNAPSHOT&quot;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -57,109 +273,50 @@
 <h3 id="3-3-ESManagerMapper-java文件"><a href="#3-3-ESManagerMapper-java文件" class="headerlink" title="3.3 ESManagerMapper.java文件"></a>3.3 ESManagerMapper.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.repository.ElasticsearchRepository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ESManagerMapper</span> <span class="keyword">extends</span> <span class="title class_">ElasticsearchRepository</span>&lt;SkuInfo,Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="3-4-ESManagerServiceImpl-java文件"><a href="#3-4-ESManagerServiceImpl-java文件" class="headerlink" title="3.4 ESManagerServiceImpl.java文件"></a>3.4 ESManagerServiceImpl.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.swj.crawler.fegin.SKUFegin;</span><br><span class="line"><span class="keyword">import</span> com.swj.crawler.model.TbSku;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.mapper.ESManagerMapper;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.service.ESManagerService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.ElasticsearchTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ESManagerServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ESManagerService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ElasticsearchTemplate elasticsearchTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> SKUFegin skuFegin;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ESManagerMapper esManagerMapper;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建索引库结构</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createMappingAndIndex</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 创建索引</span></span><br><span class="line">    elasticsearchTemplate.createIndex(SkuInfo.class);</span><br><span class="line">    <span class="comment">// 创建映射</span></span><br><span class="line">    elasticsearchTemplate.putMapping(SkuInfo.class);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">importAll</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 查询sku集合</span></span><br><span class="line">    List&lt;TbSku&gt; tbSkus = skuFegin.selectAll();</span><br><span class="line">    <span class="type">String</span> <span class="variable">jsonTbSkus</span> <span class="operator">=</span> JSON.toJSONString(tbSkus);</span><br><span class="line">    List&lt;SkuInfo&gt; skuInfos = JSON.parseArray(jsonTbSkus, SkuInfo.class);</span><br><span class="line">    <span class="keyword">for</span> (SkuInfo skuInfo : skuInfos) &#123;</span><br><span class="line">      <span class="type">Map</span> <span class="variable">spaceMap</span> <span class="operator">=</span> JSON.parseObject(skuInfo.getSpec(), Map.class);</span><br><span class="line">      skuInfo.setSpecMap(spaceMap);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 导入索引库</span></span><br><span class="line">    esManagerMapper.saveAll(skuInfos);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">importDataBySpuId</span><span class="params">(String spuId)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delDataBySpuId</span><span class="params">(String spuId)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="3-4-SearchServiceImpl-java文件"><a href="#3-4-SearchServiceImpl-java文件" class="headerlink" title="3.4 SearchServiceImpl.java文件"></a>3.4 SearchServiceImpl.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.service.SearchService;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.search.SearchResponse;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.BoolQueryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.Operator;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.QueryBuilders;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.SearchHit;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.SearchHits;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.fetch.subphase.highlight.HighlightField;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.domain.Pageable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.ElasticsearchTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.SearchResultMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SearchServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">SearchService</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ElasticsearchTemplate elasticsearchTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Map <span class="title function_">search</span><span class="params">(Map&lt;String, String&gt; searchMap)</span> &#123;</span><br><span class="line">    Map&lt;String, Object&gt; resultMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">if</span> (searchMap != <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// 构建查询条件</span></span><br><span class="line">      <span class="type">NativeSearchQueryBuilder</span> <span class="variable">nativeSearchQueryBuilder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NativeSearchQueryBuilder</span>();</span><br><span class="line">      <span class="type">BoolQueryBuilder</span> <span class="variable">boolQuery</span> <span class="operator">=</span> QueryBuilders.boolQuery();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 按照关键字查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;keywords&quot;</span>))) &#123;</span><br><span class="line">        boolQuery.must(</span><br><span class="line">            QueryBuilders.matchQuery(<span class="string">&quot;name&quot;</span>, searchMap.get(<span class="string">&quot;keywords&quot;</span>)).operator(Operator.AND));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 按照品牌进行过滤查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;brand&quot;</span>))) &#123;</span><br><span class="line">        boolQuery.filter(QueryBuilders.termQuery(<span class="string">&quot;brandName&quot;</span>, searchMap.get(<span class="string">&quot;brand&quot;</span>)));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 范围查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;price&quot;</span>))) &#123;</span><br><span class="line">        String[] prices = searchMap.get(<span class="string">&quot;price&quot;</span>).split(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (prices.length == <span class="number">2</span>) &#123;</span><br><span class="line">          boolQuery.filter(QueryBuilders.rangeQuery(<span class="string">&quot;price&quot;</span>).lte(prices[<span class="number">0</span>]));</span><br><span class="line">        &#125;</span><br><span class="line">        boolQuery.filter(QueryBuilders.rangeQuery(<span class="string">&quot;price&quot;</span>).gte(prices[<span class="number">1</span>]));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      nativeSearchQueryBuilder.withQuery(boolQuery);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 开启查询</span></span><br><span class="line">      <span class="comment">/** 第一个参数: 条件构建对象 第二个参数: 查询操作实体类 第三个参数: 查询结果操作对象 */</span></span><br><span class="line">      <span class="comment">// 封装查询结果</span></span><br><span class="line">      AggregatedPage&lt;SkuInfo&gt; aggregatedPage =</span><br><span class="line">          elasticsearchTemplate.queryForPage(</span><br><span class="line">              nativeSearchQueryBuilder.build(),</span><br><span class="line">              SkuInfo.class,</span><br><span class="line">              <span class="keyword">new</span> <span class="title class_">SearchResultMapper</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> &lt;T&gt; AggregatedPage&lt;T&gt; <span class="title function_">mapResults</span><span class="params">(</span></span><br><span class="line"><span class="params">                    SearchResponse searchResponse, Class&lt;T&gt; aClass, Pageable pageable)</span> &#123;</span><br><span class="line"></span><br><span class="line">                  <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">                  <span class="comment">// 获取查询结果集</span></span><br><span class="line">                  <span class="type">SearchHits</span> <span class="variable">searchHits</span> <span class="operator">=</span> searchResponse.getHits();</span><br><span class="line">                  <span class="keyword">for</span> (SearchHit searchHit : searchHits) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (searchHit != <span class="literal">null</span>) &#123;</span><br><span class="line">                      <span class="type">SkuInfo</span> <span class="variable">skuInfo</span> <span class="operator">=</span> JSON.parseObject(searchHit.toString(), SkuInfo.class);</span><br><span class="line">                      Map&lt;String, HighlightField&gt; highlightFields = searchHit.getHighlightFields();</span><br><span class="line">                      <span class="keyword">if</span> (highlightFields != <span class="literal">null</span> &amp;&amp; highlightFields.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="comment">// 替换数据</span></span><br><span class="line">                        skuInfo.setName(highlightFields.get(<span class="string">&quot;name&quot;</span>).getFragments()[<span class="number">0</span>].toString());</span><br><span class="line">                      &#125;</span><br><span class="line"></span><br><span class="line">                      list.add((T) skuInfo);</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line"></span><br><span class="line">                  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AggregatedPageImpl</span>&lt;T&gt;(</span><br><span class="line">                      list, pageable, searchHits.getTotalHits(), searchResponse.getAggregations());</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Nullable</span></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> &lt;T&gt; T <span class="title function_">mapSearchHit</span><span class="params">(SearchHit searchHit, Class&lt;T&gt; aClass)</span> &#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;);</span><br><span class="line"></span><br><span class="line">      resultMap.put(<span class="string">&quot;rows&quot;</span>, aggregatedPage.getContent());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2020/03/07/368/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">docker-compose选择启动容器</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2020/02/10/366/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Docker安装ElasticSearch</span>
+    </a>
+    
+  </nav>
 
-    </div>
-    </article>
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%90%84%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC"><span class="toc-text">1.各系统版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">2.项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E6%96%87%E4%BB%B6%EF%BC%88%E8%BF%99%E9%87%8C%E5%8F%AA%E7%BB%99%E5%87%BA%E5%85%B3%E9%94%AE%E6%96%87%E4%BB%B6%EF%BC%89"><span class="toc-text">3.具体文件（这里只给出关键文件）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-parent-pom%E6%96%87%E4%BB%B6"><span class="toc-text">3.1 parent pom文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-SkuInfo-java%E6%96%87%E4%BB%B6"><span class="toc-text">3.2 SkuInfo.java文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-ESManagerMapper-java%E6%96%87%E4%BB%B6"><span class="toc-text">3.3 ESManagerMapper.java文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-ESManagerServiceImpl-java%E6%96%87%E4%BB%B6"><span class="toc-text">3.4 ESManagerServiceImpl.java文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-SearchServiceImpl-java%E6%96%87%E4%BB%B6"><span class="toc-text">3.4 SearchServiceImpl.java文件</span></a></li></ol></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-                    <a href="/tags/ElasticSearch/">ElasticSearch</a>
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2020/03/07/368/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">docker-compose选择启动容器</span>
-            </a>
-        
-        
-            <a class="next" href="/2020/02/10/366/">
-                
-                <span class="prev-text">Docker安装ElasticSearch</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

@@ -1,53 +1,269 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>golang 并发控制context实现原理剖析 | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>golang 并发控制context实现原理剖析 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        golang 并发控制context实现原理剖析
-    </div>
-    <p class="sub">Jul 14 2020</p>
-    <div class="post-content">
-        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>Golang context是Golang应用开发常用的并发控制技术，它与WaitGroup最大的不同点是context对于派生goroutine有更强的控制力，它可以控制多级的goroutine。</p>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/golang/" class="tag"># golang</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">golang 并发控制context实现原理剖析</h1>
+          <div class="post-meta">
+            <time>Jul 14, 2020</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>Golang context是Golang应用开发常用的并发控制技术，它与WaitGroup最大的不同点是context对于派生goroutine有更强的控制力，它可以控制多级的goroutine。</p>
 <p>context翻译成中文是”上下文”，即它可以控制一组呈树状结构的goroutine，每个goroutine拥有相同的上下文。</p>
 <p>典型的使用场景如下图所示：</p>
 <p><img src="/../images/context1.png" alt="avatar"></p>
@@ -175,109 +391,50 @@
 <li>valueCtx实现了Context接口，通过WithValue()创建valueCtx实例；</li>
 <li>三种context实例可互为父节点，从而可以组合成不同的应用形式；</li>
 </ul>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2021/01/14/379/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Redis缓存过期机制和内存淘汰管理机制</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2020/07/13/377/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">golang WaitGroup实现原理</span>
+    </a>
+    
+  </nav>
 
-    </div>
-    </article>
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%89%8D%E8%A8%80"><span class="toc-text">1. 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Context%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-text">2. Context实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89"><span class="toc-text">2.1 接口定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-Deadline"><span class="toc-text">2.1.1 Deadline()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-Done"><span class="toc-text">2.1.2 Done()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-Err"><span class="toc-text">2.1.3 Err()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-Value"><span class="toc-text">2.1.3 Value()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A9%BAcontext"><span class="toc-text">2.2 空context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-cancelCtx"><span class="toc-text">2.3 cancelCtx</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-Done-%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3.1 Done()接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-Err-%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3.2 Err()接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-cancel-%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3.3 cancel()接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-4-WithCancel-%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3.4 WithCancel()方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-5-%E5%85%B8%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="toc-text">2.3.5 典型使用案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-timerCtx"><span class="toc-text">2.4 timerCtx</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-Deadline-%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.4.1 Deadline()接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-cancel-%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.4.2 cancel()接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-3-WithDeadline-%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.4.3 WithDeadline()方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-4-WithTimeout-%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.4.4 WithTimeout()方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-5-%E5%85%B8%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="toc-text">2.4.5 典型使用案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-valueCtx"><span class="toc-text">2.5 valueCtx</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-Value%EF%BC%88%EF%BC%89%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.5.1 Value（）接口实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-WithValue%EF%BC%88%EF%BC%89%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.5.2 WithValue（）方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-3-%E5%85%B8%E5%9E%8B%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="toc-text">2.5.3 典型使用案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-                    <a href="/tags/golang/">golang</a>
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2021/01/14/379/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">Redis缓存过期机制和内存淘汰管理机制</span>
-            </a>
-        
-        
-            <a class="next" href="/2020/07/13/377/">
-                
-                <span class="prev-text">golang WaitGroup实现原理</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

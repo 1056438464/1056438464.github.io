@@ -1,314 +1,369 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
-
-
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
-            
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-    <div class="posts-wrapper">
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/07/258/">错误：java.sql.SQLException: The Network Adapter could not establish the connection</a>
-            </div>
-            <p class="sub">Sep 07 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="控制台错误："><a href="#控制台错误：" class="headerlink" title="控制台错误："></a>控制台错误：</h3><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/4050776121.png"></p>
-<h3 id="错误原因："><a href="#错误原因：" class="headerlink" title="错误原因："></a>错误原因：</h3><p>看了看<strong>dbconfig.properties</strong>配置文件，发现<strong>url地址</strong>被人改了，导致链接不上orcale。</p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/05/253/">JDK8 Lambda表达式——groupingby</a>
-            </div>
-            <p class="sub">Sep 05 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p>根据结果，先对商品名分组（商品id），再根据开始时间分组</p>
-<h4 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h4><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/3853658721.png"><br>###解决方法<br><code>groupingBy</code>先将第一个对象（对象中有get和set方法）作为<code>map</code>的<strong>Key</strong>，第二个作为<strong>value</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	List&lt;PlanInfo&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    list = orderNInfoService.getPlanInfo(pd);  <span class="comment">//这里我在mybatis用resultmap将结果集用PlanInfo实体类来接受返回，但这个查询是查询List，所以就是List&lt;PlanInfo&gt;来接受</span></span><br><span class="line">    Map&lt;String, Map&lt;String, List&lt;PlanInfo&gt;&gt;&gt; map = list.stream()</span><br><span class="line">.collect(Collectors.groupingBy(PlanInfo::getProduct_name,Collectors.groupingBy(PlanInfo::getOrder_start_time)));</span><br></pre></td></tr></table></figure>
-<h4 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h4><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/2805876346.png"></p>
-<p>具体的例子：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zxc514257857/article/details/72809312">https://blog.csdn.net/zxc514257857/article/details/72809312</a></p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/03/250/">String字符串拼接</a>
-            </div>
-            <p class="sub">Sep 03 2018</p>
-            <div class="post-content">
-                
-                    <p>我们所知道的字符串String的拼接有： “+” 、 concat () 方式实现，或者使用StringBuilder、StringBuffer类实现。这几种方式性能的从低到高进行排序，则顺序为：“+”  &lt;  concat ()  &lt; StringBuffer &lt; StringBuilder 。<strong>使用”+”性能是最差的，应该避免使用！！！</strong></p>
-<p>StringBuilder的性能是最高的，大家可能在StringBuffer和StringBuilder之间不知道怎么取舍要用哪个？两者的区别是：<strong>StringBuffer是线程安全的，而StringBuilder不是。在高并发的应用中，应该考虑使用StringBuffer! ！<br>**<br>大家查看JDK源码就可以知道，StringBuffer和StringBuilder这两个类实现的接口都是一样的，只不过 StringBuffer的很多方法都加上了</strong>synchronized**关键字修饰。</p>
-<p><code>concat</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string.concat()</span><br></pre></td></tr></table></figure>
-
-<p><code>StringBuffer和StringBuilder</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//StringBuffer</span></span><br><span class="line"><span class="type">StringBuffer</span> <span class="variable">stringbuffer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">stringbuffer.append();</span><br><span class="line">stringbuffer.toString;</span><br><span class="line"></span><br><span class="line"><span class="comment">//StringBuilder</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">stringbuilder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">stringbuilder.append();</span><br><span class="line">stringbuilder.toString;</span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/02/249/">Mybatis中关联查询和resultMap使用</a>
-            </div>
-            <p class="sub">Sep 02 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="1-配置myBatis-config-xml"><a href="#1-配置myBatis-config-xml" class="headerlink" title="1.配置myBatis-config.xml"></a>1.配置myBatis-config.xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过别名简化对类的使用 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;cn.itcast.entity.Dept&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;Dept&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;cn.itcast.entity.Emp&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;Emp&quot;</span> /&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"> …….</span><br><span class="line"><span class="comment">&lt;!--导入SQL映射文件 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;cn/itcast/entity/DeptMapper.xml&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;cn/itcast/entity/EmpMapper.xml&quot;</span> /&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="2-1-基于association查询（用于多对一或一对一）"><a href="#2-1-基于association查询（用于多对一或一对一）" class="headerlink" title="2.1 基于association查询（用于多对一或一对一）"></a>2.1 基于association查询（用于多对一或一对一）</h3><h4 id="配置DeptMapper-xml"><a href="#配置DeptMapper-xml" class="headerlink" title="配置DeptMapper.xml"></a>配置DeptMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.DeptMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--resultMap用于查询，可以把查询后字段值封装到对应类的属性， type指定的是对应的实体类 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span> <span class="attr">id</span>=<span class="string">&quot;deptResultMap&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- id用来配置表的主键与类的属性的映射关系 ,column指定的是表的字段名； property指定的是类的属性名--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;dept_id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;deptId&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- result用来配置 普通字段与类的属性的映射关系 ,column指定的是表的字段名； property指定的是类的属性名--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;dept_address&quot;</span> <span class="attr">property</span>=<span class="string">&quot;deptAddress&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="EmpMapper-xml"><a href="#EmpMapper-xml" class="headerlink" title="EmpMapper.xml"></a>EmpMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.EmpMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 表字段和对应实体属性命名一致时可以不配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;empId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_id&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empSex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_sex&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- association配置对一关联 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_id&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;Dept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;cn.itcast.entity.DeptMapper.deptResultMap&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--根据部门名称查询员工（包括员工所在部门）信息 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmpDeptList&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Emp&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empResultMap&quot;</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 访问emp.dept.deptName, 前面不用写emp, 直接写 dept.deptName--&gt;</span></span><br><span class="line">		select e.*,d.* from emp e inner join dept d on</span><br><span class="line">		e.dept_id=d.dept_id where d.dept_name like #&#123;dept.deptName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="2-2-基于collection查询（用于一对多或多对多）"><a href="#2-2-基于collection查询（用于一对多或多对多）" class="headerlink" title="2.2 基于collection查询（用于一对多或多对多）"></a>2.2 基于collection查询（用于一对多或多对多）</h4><h4 id="配置DeptMapper-xml-1"><a href="#配置DeptMapper-xml-1" class="headerlink" title="配置DeptMapper.xml"></a>配置DeptMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.DeptMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 表字段和对应实体属性命名一致时可以不配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;deptResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;deptId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_id&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptAddress&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_address&quot;</span> /&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- collection中resultMap引用的是其它文件的map 需要命名空间+id,例如：cn.itcast.entity.EmpMapper.empResultMap --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;emps&quot;</span>  <span class="attr">ofType</span>=<span class="string">&quot;Emp&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;cn.itcast.entity.EmpMapper.empResultMap&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectDeptEmpList&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Dept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;deptResultMap&quot;</span>&gt;</span></span><br><span class="line">	select d.*, e.* from dept d inner join emp e on	d.dept_id=e.dept_id where d.dept_name like #&#123;deptName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="EmpMapper-xml-1"><a href="#EmpMapper-xml-1" class="headerlink" title="EmpMapper.xml"></a>EmpMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.EmpMapper&quot;</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 表字段和对应实体属性命名一致时可以不配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;empId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_id&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empSex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_sex&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="2-3-一对多双向关联查询示例"><a href="#2-3-一对多双向关联查询示例" class="headerlink" title="2.3 一对多双向关联查询示例"></a>2.3 一对多双向关联查询示例</h4><h4 id="配置DeptMapper-xml-2"><a href="#配置DeptMapper-xml-2" class="headerlink" title="配置DeptMapper.xml"></a>配置DeptMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.DeptMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 表字段和对应实体属性命名一致时可以不配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;deptResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;deptId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_id&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptAddress&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_address&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 一对多时，“多”的关联属性可独立配置resultMap，采用extends继承基本属性的resultMap --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;deptExtResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span> <span class="attr">extends</span>=<span class="string">&quot;deptResultMap&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- collection中resultMap引用的是其它文件的map 需要命名空间+id,例如：cn.itcast.entity.EmpMapper.empResultMap --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;emps&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;Emp&quot;</span></span></span><br><span class="line"><span class="tag">			<span class="attr">resultMap</span>=<span class="string">&quot;cn.itcast.entity.EmpMapper.empResultMap&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--用于部门和员工关联查询，返回部门信息（包含部门员工信息）列表，采用extends继承基本属性的resultMap --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectDeptEmpList&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Dept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;deptExtResultMap&quot;</span>&gt;</span></span><br><span class="line">		select d.*, e.* from dept d inner join emp e on d.dept_id=e.dept_id</span><br><span class="line">		where d.dept_name like #&#123;deptName&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="EmpMapper-xml-2"><a href="#EmpMapper-xml-2" class="headerlink" title="EmpMapper.xml"></a>EmpMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;cn.itcast.entity.EmpMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 表字段和对应实体属性命名一致时可以不配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;empId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_id&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empSex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_sex&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--注意association元素的resultMap的值为没有配置“多”的属性映射的deptResultMap，如下  --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_id&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;cn.itcast.entity.DeptMapper.deptResultMap&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 用于员工和部门关联查询，返回员工信息（包含部门信息）列表 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmpDeptList&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Emp&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empResultMap&quot;</span>&gt;</span></span><br><span class="line">		select e.*,d.* from emp e inner join dept d on</span><br><span class="line">		e.dept_id=d.dept_id where d.dept_name like #&#123;dept.deptName&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/02/248/">Mybatis中动态sql语句——ForEach语句</a>
-            </div>
-            <p class="sub">Sep 02 2018</p>
-            <div class="post-content">
-                
-                    <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义根据多个部门ID查询部门相关部门信息的SQL语句 ,resultMap的值是指集合里元素的类型,parameterType不用指定 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectListUseForeach&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer[]&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;deptResultMap&quot;</span>&gt;</span></span><br><span class="line">		select * from dept where dept_id in</span><br><span class="line">		<span class="comment">&lt;!-- collection＝&quot;array或list&quot;,array用来对应参数为数组，list对应参数为 集合 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;array&quot;</span> <span class="attr">item</span>=<span class="string">&quot;deptId&quot;</span> <span class="attr">open</span>=<span class="string">&quot;(&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span>&gt;</span></span><br><span class="line">			#&#123;deptId&#125;</span><br><span class="line">		<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/09/02/247/">Spring中的事物管理</a>
-            </div>
-            <p class="sub">Sep 02 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="1-编程式事务管理"><a href="#1-编程式事务管理" class="headerlink" title="1.编程式事务管理"></a>1.编程式事务管理</h3><p>编写程序式的事务管理可以清楚的定义事务的边界，可以实<strong>现细粒度的事务控制</strong>，比如你可以通过程序代码来控制你的事务何时开始，何时结束等，与后面介绍的声明式事务管理相比，它可以实现细粒度的事务控制，例如jdbc,hibernate。但spring中不提倡使用<br>优缺点：<br>        1. 事务控制精确<br>        2. 事务代码，与业务逻辑处理代码，耦合在一起!事务代码，不能共用！ 重新写事务控制操作！开发效率低，不便于维护！  (不想用事务，要改代码！)</p>
-<h3 id="2-声明式事务管理-在Spring中使用"><a href="#2-声明式事务管理-在Spring中使用" class="headerlink" title="2.声明式事务管理  (在Spring中使用)"></a>2.声明式事务管理  (在Spring中使用)</h3><p> 如果你并不需要细粒度的事务控制，你可以使用声明式事务，在Spring中，你只需要在Spring配置文件中做一些配置，即可将操作纳入到事务管理中，解除了和代码的耦合， 这是对应用代码影响最小的选择，从这一点再次验证了Spring关于AOP的概念。当你不需要事务管理的时候，可以直接从Spring配置文件中移除该设置</p>
-<h4 id="2-1-xml配置声明式事物管理"><a href="#2-1-xml配置声明式事物管理" class="headerlink" title="2.1 xml配置声明式事物管理"></a>2.1 xml配置声明式事物管理</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> </span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span> </span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:tx</span>=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">    	 http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">     	 http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://www.springframework.org/schema/aop/spring-aop.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://www.springframework.org/schema/tx</span></span></span><br><span class="line"><span class="string"><span class="tag">     	 http://www.springframework.org/schema/tx/spring-tx.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 1. 数据源配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql:///hib_demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;initialPoolSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxPoolSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;6&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 2. JdbcTemplate配置 ,  注入数据源--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;jdbcTemplate&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.core.JdbcTemplate&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 3. dao实例，注入jdbcTemplate --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;deptDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.a_tx_jdbc.DeptDao&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcTemplate&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;jdbcTemplate&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 4. Service实例，注入dao实例 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;deptService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.a_tx_jdbc.DeptService&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;deptDao&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;deptDao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 5. Spring声明式事务管理配置 --&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 5.1 配置事务管理器类 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;txManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 5.2 事务通知配置, 拦截到指定的方法后如何管理事务 --&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- find*  find开头的方法，是只读的事务 --&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--   *    上面所有的方法都不满足时候，采用的事务控制规则 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;txAdvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;txManager&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;find*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">			&lt;tx:met****hod name=&quot;get*&quot; read-only=&quot;true&quot;/&gt;</span><br><span class="line">			<span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 5.3 事务Aop配置 = 切入点表达式  + 应用上面的事务通知 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* cn.itcast.a_tx_jdbc.*Service.*(..))&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;txAdvice&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span>     </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="2-2-注解实现声明式事物"><a href="#2-2-注解实现声明式事物" class="headerlink" title="2.2 注解实现声明式事物"></a>2.2 注解实现声明式事物</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开启</span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;txManager&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>在service中添加注解<code>@Transactional </code></p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/08/30/246/">idea运行错误Method breakpoints may dramatically slow down debugging</a>
-            </div>
-            <p class="sub">Aug 30 2018</p>
-            <div class="post-content">
-                
-                    <p>今天发现项目怎么跑不起来，发现报了<code>Method breakpoints may dramatically slow down debugging</code></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>idea卡在某个方法。</p>
-<p>crtl+shift+F8调出Breakpoints,去掉卡在的断点前的对号</p>
-<p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/918699418.png"></p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/08/28/240/">如何在pom文件中引用本地jar包</a>
-            </div>
-            <p class="sub">Aug 28 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="错误："><a href="#错误：" class="headerlink" title="错误："></a>错误：</h3><p>在本地引入了一个jar包，但是程序怎么也不能引用这个jar包<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/548274255.png"></p>
-<h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><p><strong>pom文件中添加如下代码</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>bcprov<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>bcprov<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>system<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">systemPath</span>&gt;</span>$&#123;project.basedir&#125;/src/main/webapp/WEB-INF/lib/bcprov-jdk14-128.jar<span class="tag">&lt;/<span class="name">systemPath</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/08/28/236/">java对json格式数据的处理</a>
-            </div>
-            <p class="sub">Aug 28 2018</p>
-            <div class="post-content">
-                
-                    <h3 id="JSONArray和JSONObject的区别"><a href="#JSONArray和JSONObject的区别" class="headerlink" title="JSONArray和JSONObject的区别"></a>JSONArray和JSONObject的区别</h3><p>是否有<code>&quot;[]&quot;</code>,有的话是JSONArray，没有的话是JSONObject</p>
-<h3 id="1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型"><a href="#1-将-Array-解析成-Json-串。使用-JSONArray-可以解析-Array-类型" class="headerlink" title="1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型"></a>1. 将 Array 解析成 Json 串。使用 JSONArray 可以解析 Array 类型</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Array 解析成 Json 串</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       String[] str = &#123; <span class="string">&quot;Jack&quot;</span>, <span class="string">&quot;Tom&quot;</span>, <span class="string">&quot;90&quot;</span>, <span class="string">&quot;true&quot;</span> &#125;;</span><br><span class="line">       <span class="type">JSONArray</span> <span class="variable">json</span> <span class="operator">=</span> JSONArray.fromObject(str);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 对像数组，注意数字和布而值</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Object[] o = &#123; <span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>, <span class="number">89</span>, <span class="literal">true</span>, <span class="number">90.87</span> &#125;;</span><br><span class="line">       json = JSONArray.fromObject(o);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 使用集合类</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">       list.add(<span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">       list.add(<span class="string">&quot;Rose&quot;</span>);</span><br><span class="line">       json = JSONArray.fromObject(list);</span><br><span class="line">       System.err.println(json);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 使用 set 集</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Set&lt;Object&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Object&gt;();</span><br><span class="line">       set.add(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">       set.add(<span class="literal">true</span>);</span><br><span class="line">       set.add(<span class="number">99</span>);</span><br><span class="line">       json = JSONArray.fromObject(set);</span><br><span class="line">       System.err.println(json);</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果如下：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[&quot;Jack&quot;,&quot;Tom&quot;,&quot;90&quot;,&quot;true&quot;]</span><br><span class="line">[&quot;北京&quot;,&quot;上海&quot;,89,true,90.87]</span><br><span class="line">[&quot;Jack&quot;,&quot;Rose&quot;]</span><br><span class="line">[99,true,&quot;Hello&quot;]</span><br></pre></td></tr></table></figure>
-<h3 id="2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析："><a href="#2-将-JavaBean-Map-解析成-JSON-串。-使用JSONObject-解析：" class="headerlink" title="2. 将 JavaBean&#x2F;Map 解析成 JSON 串。 使用JSONObject 解析："></a>2. 将 JavaBean&#x2F;Map 解析成 JSON 串。 使用JSONObject 解析：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析 HashMap</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       Map&lt;String, Object&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Object&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Tom&quot;</span>);</span><br><span class="line">       map.put(<span class="string">&quot;age&quot;</span>, <span class="number">33</span>);</span><br><span class="line">       <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSONObject.fromObject(map);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析 JavaBean</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;A001&quot;</span>, <span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">       jsonObject = jsonObject.fromObject(person);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 解析嵌套的对象</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       map.put(<span class="string">&quot;person&quot;</span>, person);</span><br><span class="line">       jsonObject = jsonObject.fromObject(map);</span><br><span class="line">       System.out.println(jsonObject);</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果如下：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;&#125;</span><br><span class="line">&#123;&quot;person&quot;:&#123;&quot;id&quot;:&quot;A001&quot;,&quot;name&quot;:&quot;Jack&quot;&#125;,&quot;age&quot;:33,&quot;name&quot;:&quot;Tom&quot;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map"><a href="#3-使用-JsonConfig-过虑属性：适用于-JavaBean-Map" class="headerlink" title="3. 使用 JsonConfig 过虑属性：适用于 JavaBean&#x2F;Map"></a>3. 使用 JsonConfig 过虑属性：适用于 JavaBean&#x2F;Map</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">JsonConfig</span> <span class="variable">config</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JsonConfig</span>();</span><br><span class="line">       config.setExcludes(<span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;name&quot;</span> &#125;);                      <span class="comment">// 指定在转换时不包含哪些属性</span></span><br><span class="line">       <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;A001&quot;</span>, <span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">       <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSONObject.fromObject(person, config);    <span class="comment">// 在转换时传入之前的配置对象</span></span><br><span class="line">       System.out.println(jsonObject);</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果如下，在运行结果中我们可以看到 name 属性被过滤掉了：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;A001&quot;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-将-Json-串转换成-Array："><a href="#4-将-Json-串转换成-Array：" class="headerlink" title="4. 将 Json 串转换成 Array："></a>4. 将 Json 串转换成 Array：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">JSONArray</span> <span class="variable">jsonArray</span> <span class="operator">=</span> JSONArray.fromObject(<span class="string">&quot;[89,90,99]&quot;</span>);</span><br><span class="line">      <span class="type">Object</span> <span class="variable">array</span> <span class="operator">=</span> JSONArray.toArray(jsonArray);</span><br><span class="line">      System.out.println(array);</span><br><span class="line">      System.out.println(Arrays.asList((Object[]) array));</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果如下：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Ljava.lang.Object;@1e5003f6</span><br><span class="line">[89, 90, 99]</span><br></pre></td></tr></table></figure>
-<h3 id="5-将-Json-串转成-JavaBean-Map："><a href="#5-将-Json-串转成-JavaBean-Map：" class="headerlink" title="5. 将 Json 串转成 JavaBean&#x2F;Map："></a>5. 将 Json 串转成 JavaBean&#x2F;Map：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Json 形式的字符串转换为 Map</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;name\&quot;:\&quot;Tom\&quot;,\&quot;age\&quot;:90&#125;&quot;</span>;</span><br><span class="line">       <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSONObject.fromObject(str);</span><br><span class="line">       Map&lt;String, Object&gt; map = (Map&lt;String, Object&gt;) JSONObject.toBean(jsonObject, Map.class);</span><br><span class="line">       System.out.println(map);</span><br><span class="line"></span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 将 Json 形式的字符串转换为 JavaBean</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       str = <span class="string">&quot;&#123;\&quot;id\&quot;:\&quot;A001\&quot;,\&quot;name\&quot;:\&quot;Jack\&quot;&#125;&quot;</span>;</span><br><span class="line">       jsonObject = JSONObject.fromObject(str);</span><br><span class="line">       System.out.println(jsonObject);</span><br><span class="line">       <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> (Person) JSONObject.toBean(jsonObject, Person.class);</span><br><span class="line">       System.out.println(person);</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果如下：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;age=90, name=Tom&#125;</span><br><span class="line">Person [id=A001, name=Jack]</span><br></pre></td></tr></table></figure>
-<h4 id="在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误："><a href="#在将-Json-形式的字符串转换为-JavaBean-的时候需要注意-JavaBean-中必须有无参构造函数，否则会报如下找不到初始化方法的错误：" class="headerlink" title="在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误："></a>在将 Json 形式的字符串转换为 JavaBean 的时候需要注意 JavaBean 中必须有无参构造函数，否则会报如下找不到初始化方法的错误：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> net.sf.json.JSONException: java.lang.NoSuchMethodException: cn.sunzn.json.Person.&lt;init&gt;()</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">288</span>)</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">233</span>)</span><br><span class="line">   at cn.sunzn.json.JsonLib.main(JsonLib.java:<span class="number">23</span>)</span><br><span class="line">Caused by: java.lang.NoSuchMethodException: cn.sunzn.json.Person.&lt;init&gt;()</span><br><span class="line">   at java.lang.Class.getConstructor0(Unknown Source)</span><br><span class="line">   at java.lang.Class.getDeclaredConstructor(Unknown Source)</span><br><span class="line">   at net.sf.json.util.NewBeanInstanceStrategy$DefaultNewBeanInstanceStrategy.newInstance(NewBeanInstanceStrategy.java:<span class="number">55</span>)</span><br><span class="line">   at net.sf.json.JSONObject.toBean(JSONObject.java:<span class="number">282</span>)</span><br><span class="line">   ... <span class="number">2</span> more</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2018/08/28/235/"> java decode(解码) encode(译码)</a>
-            </div>
-            <p class="sub">Aug 28 2018</p>
-            <div class="post-content">
-                
-                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// encode(编码)</span></span><br><span class="line"><span class="type">String</span> <span class="variable">encodedUrl</span> <span class="operator">=</span> URLEncoder.encode(url, <span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line"><span class="comment">// decode(解码)</span></span><br><span class="line"><span class="type">String</span> <span class="variable">decodedUrl</span> <span class="operator">=</span> URLDecoder.decode(encodedUrl, <span class="string">&quot;UTF-8&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-</div>
-<div class="side-bar">
-
-
-    <div class="avator" id="avator">
-    <div class="title">
-        <a href="#" class="text-underline">About Me</a>
-    </div>
-        <img src="avator.jpg" class="ava-img">
-        <h3 class="author">shang wj</h3>
-        <div class="icon-list">
-        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
-        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
-        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
-        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
-        </div>
-    <div class="tags">
-    <h3 class="tags-title">Tags</h3>
-    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
-</div>
-    </div>
-</div>
-
-</section>
-
-    <nav class="page-nav">
-    
-        <a class="prev" href="/page/13/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text">Prev</span>
-        </a>
-    
-    
-        <a class="next" href="/page/15/">
-            <span class="next-text">Next</span>
-            <i class="iconfont icon-right"></i>
-        </a>
-    
-    </nav>
+    <meta name="author" content="shang wj">
 
 
 
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
 
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
 
-    
-<script src="/js/back-to-top.js"></script>
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
 
-    
-<script src="/js/scroll.js"></script>
 
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
         }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="wrapper">
+    <div class="author">
+        <div class="author-avatar-wrapper">
+          <img
+            class="author-avatar"
+            src="https://cdn.jsdelivr.net/gh/dewjohn/CDN@latest/images/avatar.webp"
+            alt="avatar"
+            loading="lazy"
+          />
+      </div>
+      <h2 class="author-name">shang wj</h2>
+      <p class="author-bio">I just want something simpler...</p>
+    </div>
+    <main aria-label="Content">
+      
 
+    <h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-07T00:45:31.000Z">Sep 07, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/07/258/">错误：java.sql.SQLException: The Network Adapter could not establish the connection</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-05T02:03:00.000Z">Sep 05, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/05/253/">JDK8 Lambda表达式——groupingby</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-03T02:03:42.000Z">Sep 03, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/03/250/">String字符串拼接</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-02T03:40:55.000Z">Sep 02, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/02/249/">Mybatis中关联查询和resultMap使用</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-02T00:57:56.000Z">Sep 02, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/02/248/">Mybatis中动态sql语句——ForEach语句</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-09-01T22:35:00.000Z">Sep 02, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/09/02/247/">Spring中的事物管理</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-08-30T02:00:00.000Z">Aug 30, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/08/30/246/">idea运行错误Method breakpoints may dramatically slow down debugging</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-08-28T03:09:00.000Z">Aug 28, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/08/28/240/">如何在pom文件中引用本地jar包</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-08-28T02:58:38.000Z">Aug 28, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/08/28/236/">java对json格式数据的处理</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2018-08-28T02:12:11.000Z">Aug 28, 2018</span>
+        <h4 class="post-item-title">
+          <a href="/2018/08/28/235/"> java decode(解码) encode(译码)</a>
+        </h4>
+      </article>
+    
+
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

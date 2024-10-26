@@ -1,391 +1,369 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
-
-
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
-            
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-    <div class="posts-wrapper">
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/10/09/357/">SpringBoot打包War</a>
-            </div>
-            <p class="sub">Oct 09 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="一、修改pom-xml文件将默认的jar方式改为war："><a href="#一、修改pom-xml文件将默认的jar方式改为war：" class="headerlink" title="一、修改pom.xml文件将默认的jar方式改为war："></a>一、修改pom.xml文件将默认的jar方式改为war：</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>application<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--默认为jar方式--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;packaging&gt;jar&lt;/packaging&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--改为war方式--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="二、排除内置的Tomcat容器（两种方式都可）："><a href="#二、排除内置的Tomcat容器（两种方式都可）：" class="headerlink" title="二、排除内置的Tomcat容器（两种方式都可）："></a>二、排除内置的Tomcat容器（两种方式都可）：</h2><h3 id="1-排除spring-boot-starter-web中的Tomcat"><a href="#1-排除spring-boot-starter-web中的Tomcat" class="headerlink" title="1.排除spring-boot-starter-web中的Tomcat"></a>1.排除spring-boot-starter-web中的Tomcat</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-添加依赖"><a href="#2-添加依赖" class="headerlink" title="2.添加依赖"></a>2.添加依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--打包的时候可以不用包进去，别的设施会提供。事实上该依赖理论上可以参与编译，测试，运行等周期。</span></span><br><span class="line"><span class="comment">        相当于compile，但是打包阶段做了exclude操作--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="三、继承org-springframework-boot-web-servlet-support-SpringBootServletInitializer，实现configure方法："><a href="#三、继承org-springframework-boot-web-servlet-support-SpringBootServletInitializer，实现configure方法：" class="headerlink" title="三、继承org.springframework.boot.web.servlet.support.SpringBootServletInitializer，实现configure方法："></a>三、继承org.springframework.boot.web.servlet.support.SpringBootServletInitializer，实现configure方法：</h2><h3 id="1-方式一，启动类继承SpringBootServletInitializer实现configure："><a href="#1-方式一，启动类继承SpringBootServletInitializer实现configure：" class="headerlink" title="1.方式一，启动类继承SpringBootServletInitializer实现configure："></a>1.方式一，启动类继承SpringBootServletInitializer实现configure：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> <span class="keyword">extends</span> <span class="title class_">SpringBootServletInitializer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> SpringApplicationBuilder <span class="title function_">configure</span><span class="params">(SpringApplicationBuilder builder)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> builder.sources(Application.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-方式二，新增加一个类继承SpringBootServletInitializer实现configure："><a href="#2-方式二，新增加一个类继承SpringBootServletInitializer实现configure：" class="headerlink" title="2.方式二，新增加一个类继承SpringBootServletInitializer实现configure："></a>2.方式二，新增加一个类继承SpringBootServletInitializer实现configure：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletInitializer</span> <span class="keyword">extends</span> <span class="title class_">SpringBootServletInitializer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> SpringApplicationBuilder <span class="title function_">configure</span><span class="params">(SpringApplicationBuilder builder)</span> &#123;</span><br><span class="line">        <span class="comment">//此处的Application.class为带有@SpringBootApplication注解的启动类</span></span><br><span class="line">        <span class="keyword">return</span> builder.sources(Application.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/09/26/355/">Spring 共通异常捕获</a>
-            </div>
-            <p class="sub">Sep 26 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获异常，并发送邮件</span><br></pre></td></tr></table></figure>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.tre.common.base;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.tre.common.utils.R;</span><br><span class="line"><span class="keyword">import</span> com.tre.mail.MailOutBox;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.WebRequest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintStream;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoResultExceptionHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(AutoResultExceptionHandler.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailUrl&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailUrl;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailUser&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailUser;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailPassward&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailPassward;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailFrom&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailFrom;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailTo&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailTo;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;toOther1&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String toOther1;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;toOther2&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String toOther2;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailTitle&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailTitle;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ExceptionHandler(value = Exception.class)</span></span><br><span class="line">  <span class="keyword">public</span> R <span class="title function_">handleOtherExceptions</span><span class="params">(<span class="keyword">final</span> Exception ex, <span class="keyword">final</span> WebRequest req)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">ServletRequestAttributes</span> <span class="variable">attributes</span> <span class="operator">=</span></span><br><span class="line">        (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">    <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> attributes.getRequest();</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">branchcd</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (request.getHeader(<span class="string">&quot;branchcd&quot;</span>) != <span class="literal">null</span>) &#123;</span><br><span class="line">      branchcd = request.getHeader(<span class="string">&quot;branchcd&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      branchcd = (String) request.getSession().getAttribute(<span class="string">&quot;branchcd&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">errorInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    <span class="type">StackTraceElement</span> <span class="variable">st</span> <span class="operator">=</span> ex.getStackTrace()[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">//    for (StackTraceElement stackTraceElement : st) &#123;</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exclass</span> <span class="operator">=</span> st.getClassName();</span><br><span class="line">    <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> st.getMethodName();</span><br><span class="line">    <span class="type">int</span> <span class="variable">Number</span> <span class="operator">=</span> st.getLineNumber();</span><br><span class="line"></span><br><span class="line">    <span class="type">ByteArrayOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">    <span class="type">PrintStream</span> <span class="variable">pout</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintStream</span>(out);</span><br><span class="line">    ex.printStackTrace(pout);</span><br><span class="line">    <span class="type">String</span> <span class="variable">ret</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(out.toByteArray());</span><br><span class="line">    pout.close();</span><br><span class="line">    out.close();</span><br><span class="line"></span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误类：&quot;</span> + exclass + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误方法：&quot;</span> + method + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误行数：&quot;</span> + Number + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误原因：&quot;</span> + ret + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;店铺：&quot;</span> + branchcd + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(ret);</span><br><span class="line">    <span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    MailOutBox.open(emailUrl, <span class="number">25</span>, emailUser, emailPassward)</span><br><span class="line">        .from(emailFrom)</span><br><span class="line">        .to(emailTo, toOther1, toOther2)</span><br><span class="line">        .subject(emailTitle)</span><br><span class="line">        .addText(errorInfo.toString())</span><br><span class="line">        .send()</span><br><span class="line">        .close();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> R.error(-<span class="number">1</span>, ex.getMessage());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/09/26/356/">Spring读取配置文件</a>
-            </div>
-            <p class="sub">Sep 26 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.tre.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.ResourceBundle;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">readUtil</span> &#123;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//ccl 目录 /resources/ccl.properties</span></span><br><span class="line">   <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">readProperty</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ResourceBundle</span> <span class="variable">resourceBundle</span> <span class="operator">=</span> ResourceBundle.getBundle(<span class="string">&quot;ccl&quot;</span>);</span><br><span class="line">        Map&lt;String, Object&gt; property = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">//遍历取值</span></span><br><span class="line">        <span class="type">Enumeration</span> <span class="variable">enumeration</span> <span class="operator">=</span> resourceBundle.getKeys();</span><br><span class="line">        <span class="keyword">while</span> (enumeration.hasMoreElements()) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">            	<span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> (String) enumeration.nextElement();</span><br><span class="line">                <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> resourceBundle.getString(key);</span><br><span class="line">                <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(value.getBytes(<span class="string">&quot;iso-8859-1&quot;</span>), <span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">                property.put(key, value);</span><br><span class="line">               </span><br><span class="line">            &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">      <span class="keyword">return</span> property;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/08/09/358/">SpringBoot 访问项目时加项目名称</a>
-            </div>
-            <p class="sub">Aug 09 2019</p>
-            <div class="post-content">
-                
-                    <p>springboot 项目一般直接地址加端口就可以访问了，不像放在tomcat里面还需要加上项目名。</p>
-<p>现在，想访问的时候加上项目名用来区分，只要在配置文件里面加上</p>
-<p>server.servlet.context-path&#x3D;&#x2F;项目名，就可以了</p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/22/352/">基于Docker的Nginx安装和配置</a>
-            </div>
-            <p class="sub">Jul 22 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="docker-compose-yml-配置如下"><a href="#docker-compose-yml-配置如下" class="headerlink" title="docker-compose.yml 配置如下"></a>docker-compose.yml 配置如下</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    image: nginx</span><br><span class="line">    container_name: nginx</span><br><span class="line">    ports:</span><br><span class="line">      - 81:80</span><br><span class="line">    volumes:</span><br><span class="line">      - ./conf/nginx.conf:/etc/nginx/nginx.conf</span><br><span class="line">      - ./wwwroot:/usr/share/nginx/wwwroot</span><br></pre></td></tr></table></figure>
-<h2 id="基于端口的虚拟主机配置"><a href="#基于端口的虚拟主机配置" class="headerlink" title="基于端口的虚拟主机配置"></a>基于端口的虚拟主机配置</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>Nginx 对外提供 80 和 8080 两个端口监听服务<br>请求 80 端口则请求 html80 目录下的 html<br>请求 8080 端口则请求 html8080 目录下的 html</p>
-<h3 id="创建目录及文件"><a href="#创建目录及文件" class="headerlink" title="创建目录及文件"></a>创建目录及文件</h3><p>在 &#x2F;usr&#x2F;local&#x2F;docker&#x2F;nginx&#x2F;wwwroot 目录下创建 html80 和 html8080 两个目录，并分辨创建两个 index.html 文件</p>
-<h3 id="配置虚拟主机"><a href="#配置虚拟主机" class="headerlink" title="配置虚拟主机"></a>配置虚拟主机</h3><p>修改 &#x2F;usr&#x2F;local&#x2F;docker&#x2F;nginx&#x2F;conf 目录下的 nginx.conf 配置文件：<br><code>注： 每个 server 就是一个虚拟主机</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    </span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    # 配置虚拟主机 192.168.75.145</span><br><span class="line">    server &#123;</span><br><span class="line">	# 监听的ip和端口，配置 192.168.75.145:80</span><br><span class="line">        listen       80;</span><br><span class="line">	# 虚拟主机名称这里配置ip地址</span><br><span class="line">        server_name  192.168.75.145;</span><br><span class="line">	# 所有的请求都以 / 开始，所有的请求都可以匹配此 location</span><br><span class="line">        location / &#123;</span><br><span class="line">	    # 使用 root 指令指定虚拟主机目录即网页存放目录</span><br><span class="line">	    # 比如访问 http://ip/index.html 将找到 /usr/local/docker/nginx/wwwroot/html80/index.html</span><br><span class="line">	    # 比如访问 http://ip/item/index.html 将找到 /usr/local/docker/nginx/wwwroot/html80/item/index.html</span><br><span class="line"></span><br><span class="line">            root   /usr/share/nginx/wwwroot/html80;</span><br><span class="line">	    # 指定欢迎页面，按从左到右顺序查找</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    # 配置虚拟主机 192.168.75.245</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       8080;</span><br><span class="line">        server_name  192.168.75.145;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   /usr/share/nginx/wwwroot/html8080;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注：需开放docker-compose的8080端口</p>
-<h2 id="基于域名的虚拟主机配置"><a href="#基于域名的虚拟主机配置" class="headerlink" title="基于域名的虚拟主机配置"></a>基于域名的虚拟主机配置</h2><h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>两个域名指向同一台 Nginx 服务器，用户访问不同的域名显示不同的网页内容<br>两个域名是 admin.service.itoken.com 和 admin.web.itoken.com<br>Nginx 服务器使用虚拟机 192.168.75.145</p>
-<h3 id="配置-Windows-Hosts-文件"><a href="#配置-Windows-Hosts-文件" class="headerlink" title="配置 Windows Hosts 文件"></a>配置 Windows Hosts 文件</h3><p>通过 host 文件指定 admin.service.itoken.com 和 admin.web.itoken.com 对应 192.168.75.145 虚拟机：<br>修改 window 的 hosts 文件：（C:\Windows\System32\drivers\etc）</p>
-<h3 id="创建目录及文件-1"><a href="#创建目录及文件-1" class="headerlink" title="创建目录及文件"></a>创建目录及文件</h3><p>在 &#x2F;usr&#x2F;local&#x2F;docker&#x2F;nginx&#x2F;wwwroot 目录下创建 htmlservice 和 htmlweb 两个目录，并分辨创建两个 index.html 文件</p>
-<h3 id="配置虚拟主机-1"><a href="#配置虚拟主机-1" class="headerlink" title="配置虚拟主机"></a>配置虚拟主机</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">user  nginx;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  admin.service.itoken.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root   /usr/share/nginx/wwwroot/htmlservice;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  admin.web.itoken.com;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   /usr/share/nginx/wwwroot/htmlweb;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-Nginx-反向代理-Tomcat"><a href="#使用-Nginx-反向代理-Tomcat" class="headerlink" title="使用 Nginx 反向代理 Tomcat"></a>使用 Nginx 反向代理 Tomcat</h2><h3 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h3><p>两个 tomcat 服务通过 nginx 反向代理<br>nginx 服务器：192.168.75.145:80<br>tomcat1 服务器：192.168.75.145:9090<br>tomcat2 服务器：192.168.75.145:9091</p>
-<h3 id="启动-Tomcat-容器"><a href="#启动-Tomcat-容器" class="headerlink" title="启动 Tomcat 容器"></a>启动 Tomcat 容器</h3><p>启动两个 Tomcat 容器，映射端口为 9090 和 9091，docker-compose.yml 如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  tomcat1:</span><br><span class="line">    image: tomcat</span><br><span class="line">    container_name: tomcat1</span><br><span class="line">    ports:</span><br><span class="line">      - 9090:8080</span><br><span class="line"></span><br><span class="line">  tomcat2:</span><br><span class="line">    image: tomcat</span><br><span class="line">    container_name: tomcat2</span><br><span class="line">    ports:</span><br><span class="line">      - 9091:8080</span><br></pre></td></tr></table></figure>
-<h3 id="配置-Nginx-反向代理"><a href="#配置-Nginx-反向代理" class="headerlink" title="配置 Nginx 反向代理"></a>配置 Nginx 反向代理</h3><p>修改 &#x2F;usr&#x2F;local&#x2F;docker&#x2F;nginx&#x2F;conf 目录下的 nginx.conf 配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">user  nginx;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	</span><br><span class="line">	# 配置一个代理即 tomcat1 服务器</span><br><span class="line">	upstream tomcatServer1 &#123;</span><br><span class="line">		server 192.168.75.145:9090;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	# 配置一个代理即 tomcat2 服务器</span><br><span class="line">	upstream tomcatServer2 &#123;</span><br><span class="line">		server 192.168.75.145:9091;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	# 配置一个虚拟主机</span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name admin.service.itoken.com;</span><br><span class="line">		location / &#123;</span><br><span class="line">				# 域名 admin.service.itoken.com 的请求全部转发到 tomcat_server1 即 tomcat1 服务上</span><br><span class="line">				proxy_pass http://tomcatServer1;</span><br><span class="line">				# 欢迎页面，按照从左到右的顺序查找页面</span><br><span class="line">				index index.jsp index.html index.htm;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name admin.web.itoken.com;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			# 域名 admin.web.itoken.com 的请求全部转发到 tomcat_server2 即 tomcat2 服务上</span><br><span class="line">			proxy_pass http://tomcatServer2;</span><br><span class="line">			index index.jsp index.html index.htm;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：新版 Nginx 的 upstream 配置中的名称不可以有下划线(“_”)，否则会报 400 错误</p>
-<h2 id="Nginx-实现负载均衡"><a href="#Nginx-实现负载均衡" class="headerlink" title="Nginx 实现负载均衡"></a>Nginx 实现负载均衡</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx 作为负载均衡服务器，用户请求先到达 nginx，再由 nginx 根据负载配置将请求转发至 tomcat 服务器</span><br><span class="line">nginx 负载均衡服务器：192.168.75.145:80</span><br><span class="line">tomcat1 服务器：192.168.75.145:9090</span><br><span class="line">tomcat2 服务器：192.168.75.145:9091</span><br></pre></td></tr></table></figure>
-<h3 id="Nginx-配置负载均衡"><a href="#Nginx-配置负载均衡" class="headerlink" title="Nginx 配置负载均衡"></a>Nginx 配置负载均衡</h3><p>修改 &#x2F;usr&#x2F;local&#x2F;docker&#x2F;nginx&#x2F;conf 目录下的 nginx.conf 配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">user  nginx;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	# 设置两个tomcat的地址可实现负载均衡</span><br><span class="line">	upstream myapp1 &#123;</span><br><span class="line">		server 192.168.75.145:9090 weight=10;</span><br><span class="line">		server 192.168.75.145:9091 weight=10;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name nginx.funtl.com;</span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass http://myapp1;</span><br><span class="line">			index index.jsp index.html index.htm;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="相关配置说明"><a href="#相关配置说明" class="headerlink" title="相关配置说明"></a>相关配置说明</h3><h3 id="定义负载均衡设备的-Ip及设备状态"><a href="#定义负载均衡设备的-Ip及设备状态" class="headerlink" title="定义负载均衡设备的 Ip及设备状态"></a>定义负载均衡设备的 Ip及设备状态</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream myServer &#123;</span><br><span class="line">    server 127.0.0.1:9090 down;</span><br><span class="line">    server 127.0.0.1:8080 weight=2;</span><br><span class="line">    server 127.0.0.1:6060;</span><br><span class="line">    server 127.0.0.1:7070 backup;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在需要使用负载的 Server 节点下添加</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">proxy_pass http://myServer;</span><br><span class="line">upstream：每个设备的状态:</span><br><span class="line">down：表示当前的 server 暂时不参与负载</span><br><span class="line">weight：默认为 1 weight 越大，负载的权重就越大。</span><br><span class="line">max_fails：允许请求失败的次数默认为 1 当超过最大次数时，返回 proxy_next_upstream 模块定义的错误</span><br><span class="line">fail_timeout:max_fails 次失败后，暂停的时间。</span><br><span class="line">backup：其它所有的非 backup 机器 down 或者忙的时候，请求 backup 机器。所以这台机器压力会最轻</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/22/353/">基于Docker的RabbitMQ安装</a>
-            </div>
-            <p class="sub">Jul 22 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="docker-compose-yml-配置如下"><a href="#docker-compose-yml-配置如下" class="headerlink" title="docker-compose.yml 配置如下"></a>docker-compose.yml 配置如下</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">  rabbitmq:</span><br><span class="line">    restart: always</span><br><span class="line">    image: rabbitmq:management</span><br><span class="line">    container_name: rabbitmq</span><br><span class="line">    ports:</span><br><span class="line">      - 5672:5672</span><br><span class="line">      - 15672:15672</span><br><span class="line">    environment:</span><br><span class="line">      TZ: Asia/Shanghai</span><br><span class="line">      RABBITMQ_DEFAULT_USER: rabbit</span><br><span class="line">      RABBITMQ_DEFAULT_PASS: 123456</span><br><span class="line">    volumes:</span><br><span class="line">      - ./data:/var/lib/rabbitmq</span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/22/354/">IDEA tomcat打印日志出现中文乱码</a>
-            </div>
-            <p class="sub">Jul 22 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="只需修改配置"><a href="#只需修改配置" class="headerlink" title="只需修改配置"></a>只需修改配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/05/365/">Nginx 限流</a>
-            </div>
-            <p class="sub">Jul 05 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 &quot;leaky bucket&quot;。</span><br><span class="line">limit_req_conn 用来限制同一时间连接数，即并发限制。</span><br></pre></td></tr></table></figure>
-<h2 id="1-limit-req-zone-参数配置"><a href="#1-limit-req-zone-参数配置" class="headerlink" title="1.limit_req_zone 参数配置"></a>1.limit_req_zone 参数配置</h2><h3 id="命令1"><a href="#命令1" class="headerlink" title="命令1"></a>命令1</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 第一个参数：$binary_remote_addr 表示通过remote_addr这个标识来做限制，“binary_”的目的是缩写内存占用量，是限制同一客户端ip地址。</span><br><span class="line">* 第二个参数：zone=one:10m表示生成一个大小为10M，名字为one的内存区域，用来存储访问的频次信息。</span><br><span class="line">* 第三个参数：rate=1r/s表示允许相同标识的客户端的访问频次，这里限制的是每秒1次，还可以有比如30r/m的。</span><br></pre></td></tr></table></figure>
-<h3 id="命令2"><a href="#命令2" class="headerlink" title="命令2"></a>命令2</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_req zone=one burst=5 nodelay;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 第一个参数：zone=one 设置使用哪个配置区域来做限制，与上面limit_req_zone 里的name对应。</span><br><span class="line">* 第二个参数：burst=5，重点说明一下这个配置，burst爆发的意思，这个配置的意思是设置一个大小为5的缓冲区当有大量请求（爆发）过来时，超过了访问频次限制的请求可以先放到这个缓冲区内。</span><br><span class="line">* 第三个参数：nodelay，如果设置，超过访问频次而且缓冲区也满了的时候就会直接返回503，如果没有设置，则所有请求会等待排队</span><br></pre></td></tr></table></figure>
-<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">相同ip一秒只能访问一次</span></span><br><span class="line">    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;</span><br><span class="line">    server &#123;</span><br><span class="line">        location /search/ &#123;</span><br><span class="line">            limit_req zone=one burst=5 nodelay;</span><br><span class="line">        &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<h2 id="2-limit-conn-zone-参数配置"><a href="#2-limit-conn-zone-参数配置" class="headerlink" title="2.limit_conn_zone  参数配置"></a>2.limit_conn_zone  参数配置</h2><p>这个模块用来限制单个IP的请求数。并非所有的连接都被计数。只有在服务器处理了请求并且已经读取了整个请求头时，连接才被计数。</p>
-<h3 id="命令1-1-设置个人请求IP的限流容量"><a href="#命令1-1-设置个人请求IP的限流容量" class="headerlink" title="命令1.1 设置个人请求IP的限流容量"></a>命令1.1 设置个人请求IP的限流容量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_conn_zone $binary_remote_addr zone=addr:10m;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 第一个参数：$binary_remote_addr 表示通过remote_addr这个标识来做限制，“binary_”的目的是缩写内存占用量，是限制同一客户端ip地址。</span><br><span class="line">* 第二个参数：zone=one:10m表示生成一个大小为10M，名字为one的内存区域，用来存储访问的频次信息。</span><br></pre></td></tr></table></figure>
-<h3 id="命令1-2-设置整个location对应的请求的并发容量配置"><a href="#命令1-2-设置整个location对应的请求的并发容量配置" class="headerlink" title="命令1.2 设置整个location对应的请求的并发容量配置"></a>命令1.2 设置整个location对应的请求的并发容量配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_conn_zone $server_name zone=perserver:10m;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 第一个参数：$server_name 限制同一server最大并发数。</span><br><span class="line">* 第二个参数：zone=perserver:10m表示生成一个大小为10M，名字为perserver的内存区域，用来存储访问的频次信息。</span><br></pre></td></tr></table></figure>
-<h3 id="命令2-1"><a href="#命令2-1" class="headerlink" title="命令2"></a>命令2</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">limit_conn perip 2; # 同一个ip只能响应两次</span><br><span class="line">limit_conn perserver 20; # 整个location并发总量20次</span><br><span class="line">limit_rate 100k;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* limit_conn为限制并发连接数；</span><br><span class="line">* limit_rate为限制下载速度</span><br></pre></td></tr></table></figure>
-<h3 id="例-1"><a href="#例-1" class="headerlink" title="例"></a>例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	</span><br><span class="line">    limit_conn_zone $binary_remote_addr zone=perip:10m;</span><br><span class="line">	limit_conn_zone $server_name zone=perserver:10m;</span><br><span class="line">    server &#123;</span><br><span class="line">        location /search/ &#123;</span><br><span class="line">            limit_conn perip 2;</span><br><span class="line">			limit_conn perserver 20;</span><br><span class="line">			limit_rate 100k;</span><br><span class="line">        &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/03/350/">Mybatis执行n条语句</a>
-            </div>
-            <p class="sub">Jul 03 2019</p>
-            <div class="post-content">
-                
-                    <p>项目用例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>关于<strong>foreach</strong>标签,有几个属性应该注意一下:</p>
-<p>属性描述</p>
-<pre><code>collection	指定要遍历的集合,list类型的参数会特殊处理封装在map中，map的key就叫list
-item	将当前遍历出的元素赋值给指定的变量
-separator	每个元素之间的分隔符
-open	遍历出所有结果拼接一个开始的字符
-close	遍历出所有结果拼接一个结束的字符
-index	索引。遍历list的时候是index就是索引，item就是当前值。遍历map的时候index表示的就是map的key，item就是map的值， #&#123;变量名&#125;就能取出变量的值也就是当前遍历出的元素。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 一、使用MyBatis对表执行UPDATE批处理——基于XML的实现</span><br><span class="line">## 1、定义mapper接口方法</span><br><span class="line">```java</span><br><span class="line">public interface UserMapper extends BaseDao&lt;UserModel&gt; &#123;</span><br><span class="line"></span><br><span class="line">    //Mybatis中进行批量更新1</span><br><span class="line">    public int updateBatch1(List&lt;User&gt;) throws Exception;</span><br><span class="line"></span><br><span class="line">    //Mybatis中进行批量更新2</span><br><span class="line">    public int updateBatch2(List&lt;User&gt;) throws Exception;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-## 2、定义sql映射xml文件
-
-以userMapper.xml文件的CUD内容为例，如下：
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的</span></span><br><span class="line"><span class="comment">例如namespace=&quot;com.tre.mapper.userMapper&quot;就是com.tre.mapper(包名)+userMapper(userMapper.xml文件去除后缀)</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.tre.mapper.userMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 开启二级缓存 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">cache</span> <span class="attr">type</span>=<span class="string">&quot;org.mybatis.caches.ehcache.LoggingEhcache&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 通用查询映射结果 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.tre.model.SysLog&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;years&quot;</span> <span class="attr">property</span>=<span class="string">&quot;years&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复</span></span><br><span class="line"><span class="comment">    使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型</span></span><br><span class="line"><span class="comment">    resultType=&quot;com.tre.model.User&quot;就表示将查询结果封装成一个User类的对象返回</span></span><br><span class="line"><span class="comment">    User类就是users表所对应的实体类</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--更新多条记录为多个字段为不同的值--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateBatch1&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> <span class="attr">index</span>=<span class="string">&quot;index&quot;</span> <span class="attr">open</span>=<span class="string">&quot;&quot;</span> <span class="attr">close</span>=<span class="string">&quot;&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;;&quot;</span>&gt;</span></span><br><span class="line">            update users</span><br><span class="line">            <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">                name=$&#123;item.name&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">            where id = $&#123;item.id&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateBatch2&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">        update users </span><br><span class="line">        set  status=</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> <span class="attr">index</span>=<span class="string">&quot;index&quot;</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">separator</span>=<span class="string">&quot; &quot;</span> <span class="attr">open</span>=<span class="string">&quot;case ID&quot;</span> <span class="attr">close</span>=<span class="string">&quot;end&quot;</span>&gt;</span></span><br><span class="line">            when #&#123;item.id&#125; then #&#123;item.status&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">        where id in</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">index</span>=<span class="string">&quot;index&quot;</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span> <span class="attr">open</span>=<span class="string">&quot;(&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span>&gt;</span></span><br><span class="line">            #&#123;item.id,jdbcType=BIGINT&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-# 二、使用MyBatis对表执行INSERT批处理——基于XML的实现
-## 第一种：
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO <span class="title function_">table</span> <span class="params">(field1,field2,field3)</span> VALUES (<span class="string">&#x27;a&#x27;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>), (<span class="string">&#x27;a&#x27;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>),(<span class="string">&#x27;a&#x27;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-Mybatis通过foreach循环拼装了如上的sql语句。
-
-### 1、定义对应的mapper接口
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insertBatch</span><span class="params">(<span class="meta">@Param(&quot;emps&quot;)</span>List&lt;User&gt; emps)</span>;</span><br></pre></td></tr></table></figure>
-### 2、定义sql映射xml文件
-
-这里以批量插入数据为例:
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的</span></span><br><span class="line"><span class="comment">例如namespace=&quot;com.tre.mapper.userMapper&quot;就是com.tre.mapper(包名)+userMapper(userMapper.xml文件去除后缀)</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.tre.mapper.userMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 开启二级缓存 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">cache</span> <span class="attr">type</span>=<span class="string">&quot;org.mybatis.caches.ehcache.LoggingEhcache&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 通用查询映射结果 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.tre.model.SysLog&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;years&quot;</span> <span class="attr">property</span>=<span class="string">&quot;years&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertBatch&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">        INSERT INTO tb1_emplyee(userid,username,years)</span><br><span class="line">        VALUES </span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;emps&quot;</span> <span class="attr">item</span>=<span class="string">&quot;emp&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">            (#&#123;emp.userid&#125;,#&#123;emp.username&#125;,#&#123;emp.years&#125;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-### 3，junit类测试
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsertBatch</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    List&lt;User&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    User user;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">        user = <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setUserid(<span class="string">&quot;test&quot;</span> + i);</span><br><span class="line">        user.setUsername(<span class="string">&quot;name&quot;</span> + i);</span><br><span class="line">        user.setYears(<span class="number">20</span>);</span><br><span class="line">        list.add(user);</span><br><span class="line">    &#125;</span><br><span class="line">    userMapper.insertBatch(list);</span><br><span class="line">    <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    System.out.println(<span class="string">&quot;---------------&quot;</span> + (start - end) + <span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-**特别注意：**
-
-mysql默认接受sql的大小是1048576(1M)，即第三种方式若数据量超过1M会报如下异常：
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">（可通过调整MySQL安装目录下的my.ini文件中[mysqld]段的＂max_allowed_packet = 1M＂）</span><br><span class="line"></span><br><span class="line">nested exception is com.mysql.jdbc.PacketTooBigException: Packet for query is too large (5677854 &gt; 1048576).</span><br><span class="line"></span><br><span class="line">You can change this value on the server by setting the max_allowed_packet&#x27; variable.</span><br></pre></td></tr></table></figure>
-
-## 第二种：
-
-mybatis BATCH模式插入
-
-### 1、定义对应的mapper接口
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span>User user)</span>;</span><br><span class="line">```java</span><br><span class="line"></span><br><span class="line">### <span class="number">2</span>、定义sql映射xml文件</span><br><span class="line">```xml</span><br><span class="line">&lt;insert id=<span class="string">&quot;insert&quot;</span>&gt;</span><br><span class="line">    INSERT INTO <span class="title function_">t_user</span> <span class="params">(id, name, del_flag)</span></span><br><span class="line">          VALUES(#&#123;id&#125;, #&#123;name&#125;, #&#123;delFlag&#125;)</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure>
-
-### 3，junit类测试
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsertBatch2</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    User user;</span><br><span class="line">    <span class="type">SqlSession</span> <span class="variable">sqlSession</span> <span class="operator">=</span> sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, <span class="literal">false</span>);</span><br><span class="line">    <span class="type">UserDao</span> <span class="variable">mapper</span> <span class="operator">=</span> sqlSession.getMapper(UserDao.class);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">500</span>; i++) &#123;</span><br><span class="line">        user = <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setId(<span class="string">&quot;test&quot;</span> + i);</span><br><span class="line">        user.setName(<span class="string">&quot;name&quot;</span> + i);</span><br><span class="line">        user.setDelFlag(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">        mapper.insert(user);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlSession.commit();</span><br><span class="line">    <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    System.out.println(<span class="string">&quot;---------------&quot;</span> + (start - end) + <span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-## 注意：
-第一种方式
-我测试了1w条数据的时候差不多需要一秒多时间，可是当我改成10w条的时候，直接ka着不会动了。这种方式是把所有数据拼成一条sql传递给数据库。
-第二种方式
-在测试1w条的时候虽然看起来比拼接sql慢一点，但在插入10w条的时候不会卡死，差不多就是插入1w条的10倍。数据量较大时推荐使用mybatis提供的ExcecutorType.BATCH。
-
-# 三、使用MyBatis对表执行DELETE批处理——基于XML的实现
-当collection=”array“时,表名参数为数组;
-
-当collection=”list“时,表名参数为集合.
-
-## 1、定义对应的mapper接口
-
-public void deleteBatch(int[] arr);
-## 2、定义sql映射xml文件
-
-这里以批量插入数据为例:
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的</span></span><br><span class="line"><span class="comment">例如namespace=&quot;com.tre.mapper.userMapper&quot;就是com.tre.mapper(包名)+userMapper(userMapper.xml文件去除后缀)</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.tre.mapper.userMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 开启二级缓存 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">cache</span> <span class="attr">type</span>=<span class="string">&quot;org.mybatis.caches.ehcache.LoggingEhcache&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 通用查询映射结果 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.tre.model.SysLog&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;years&quot;</span> <span class="attr">property</span>=<span class="string">&quot;years&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 批量删除 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;deleteBatch&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int[]&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- delete from emp where empno in(7789,7790) --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item </span></span><br><span class="line"><span class="comment">            : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符 --&gt;</span></span><br><span class="line">        delete from emp where empno in</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;array&quot;</span> <span class="attr">item</span>=<span class="string">&quot;arr&quot;</span> <span class="attr">index</span>=<span class="string">&quot;no&quot;</span> <span class="attr">open</span>=<span class="string">&quot;(&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span>&gt;</span></span><br><span class="line">            #&#123;arr&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-## 3，junit类测试
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsertBatch</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    System.out.println(<span class="string">&quot;----------批量删除----------&quot;</span>);</span><br><span class="line">    <span class="type">int</span>[] arr = &#123; <span class="number">7791</span>, <span class="number">7792</span> &#125;;<span class="comment">//删除的主键</span></span><br><span class="line">    userMapper.deleteBatch(arr);</span><br><span class="line">    <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    System.out.println(<span class="string">&quot;---------------&quot;</span> + (start - end) + <span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/07/03/351/">SpringCloud配置中心链接404</a>
-            </div>
-            <p class="sub">Jul 03 2019</p>
-            <div class="post-content">
-                
-                    <h2 id="docker里搭建了springbloud-conifg配置中心，配置文件集中放在github里，但是用一下配置，不知怎么一直访问404，如下"><a href="#docker里搭建了springbloud-conifg配置中心，配置文件集中放在github里，但是用一下配置，不知怎么一直访问404，如下" class="headerlink" title="docker里搭建了springbloud-conifg配置中心，配置文件集中放在github里，但是用一下配置，不知怎么一直访问404，如下"></a>docker里搭建了springbloud-conifg配置中心，配置文件集中放在github里，但是用一下配置，不知怎么一直访问404，如下</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot clone or checkout repository: git@github.com:1056438464/myProject-SpringCloud.git</span><br></pre></td></tr></table></figure>
-<h3 id="配置详情"><a href="#配置详情" class="headerlink" title="配置详情"></a>配置详情</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: itoken-config</span><br><span class="line">  boot:</span><br><span class="line">    admin:</span><br><span class="line">      client:</span><br><span class="line">        url: http://192.168.240.131:8084</span><br><span class="line">  cloud:</span><br><span class="line">    config:</span><br><span class="line">      label: master</span><br><span class="line">      server:</span><br><span class="line">        git:</span><br><span class="line">          uri: git@github.com:1056438464/myProject-SpringCloud.git</span><br><span class="line">          search-paths: spring-cloud-config</span><br><span class="line">          username: </span><br><span class="line">          password: </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">  port: 8888</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url改成</span><br><span class="line">https://github.com/1056438464/myProject-SpringCloud.git</span><br><span class="line">即可</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-</div>
-<div class="side-bar">
-
-
-    <div class="avator" id="avator">
-    <div class="title">
-        <a href="#" class="text-underline">About Me</a>
-    </div>
-        <img src="avator.jpg" class="ava-img">
-        <h3 class="author">shang wj</h3>
-        <div class="icon-list">
-        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
-        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
-        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
-        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
-        </div>
-    <div class="tags">
-    <h3 class="tags-title">Tags</h3>
-    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
-</div>
-    </div>
-</div>
-
-</section>
-
-    <nav class="page-nav">
-    
-        <a class="prev" href="/page/5/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text">Prev</span>
-        </a>
-    
-    
-        <a class="next" href="/page/7/">
-            <span class="next-text">Next</span>
-            <i class="iconfont icon-right"></i>
-        </a>
-    
-    </nav>
+    <meta name="author" content="shang wj">
 
 
 
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
 
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
 
-    
-<script src="/js/back-to-top.js"></script>
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
 
-    
-<script src="/js/scroll.js"></script>
 
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
         }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="wrapper">
+    <div class="author">
+        <div class="author-avatar-wrapper">
+          <img
+            class="author-avatar"
+            src="https://cdn.jsdelivr.net/gh/dewjohn/CDN@latest/images/avatar.webp"
+            alt="avatar"
+            loading="lazy"
+          />
+      </div>
+      <h2 class="author-name">shang wj</h2>
+      <p class="author-bio">I just want something simpler...</p>
+    </div>
+    <main aria-label="Content">
+      
 
+    <h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-10-09T06:22:22.000Z">Oct 09, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/10/09/357/">SpringBoot打包War</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-09-26T06:22:22.000Z">Sep 26, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/09/26/355/">Spring 共通异常捕获</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-09-26T06:22:22.000Z">Sep 26, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/09/26/356/">Spring读取配置文件</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-08-09T06:22:22.000Z">Aug 09, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/08/09/358/">SpringBoot 访问项目时加项目名称</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-22T06:22:22.000Z">Jul 22, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/22/352/">基于Docker的Nginx安装和配置</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-22T06:22:22.000Z">Jul 22, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/22/353/">基于Docker的RabbitMQ安装</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-22T06:22:22.000Z">Jul 22, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/22/354/">IDEA tomcat打印日志出现中文乱码</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-05T15:42:22.000Z">Jul 05, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/05/365/">Nginx 限流</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-03T06:22:22.000Z">Jul 03, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/03/350/">Mybatis执行n条语句</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-07-03T06:22:22.000Z">Jul 03, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/07/03/351/">SpringCloud配置中心链接404</a>
+        </h4>
+      </article>
+    
+
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

@@ -1,159 +1,314 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>java压缩文件夹并发送给前端 | shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>java压缩文件夹并发送给前端 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
+    <meta name="author" content="shang wj">
 
 
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
             
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-<div class="post-wrapper">
-    <article class="post article-entry">
-    <div class="post-title">
-        java压缩文件夹并发送给前端
-    </div>
-    <p class="sub">Feb 18 2019</p>
-    <div class="post-content">
-        <h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p><code>ServletOutputStream.getOutputStream()</code><br>获得字节流，通过该字节流的write(byte[] bytes)可以向response缓冲区中写入字节，再由Tomcat服务器将字节内容组成Http响应返回给浏览器。</p>
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+        <h1 class="header-title" itemprop="headline">java压缩文件夹并发送给前端</h1>
+          <div class="post-meta">
+            <time>Feb 18, 2019</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p><code>ServletOutputStream.getOutputStream()</code><br>获得字节流，通过该字节流的write(byte[] bytes)可以向response缓冲区中写入字节，再由Tomcat服务器将字节内容组成Http响应返回给浏览器。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/FileComponent&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileComponentController</span> <span class="keyword">extends</span> <span class="title class_">BaseController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span>  </span><br><span class="line">	<span class="keyword">private</span>  HttpServletResponse  response;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> zipUtil ziputil;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(value =&quot;/getZipFile&quot;)</span></span><br><span class="line">	<span class="meta">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">getZipFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			</span><br><span class="line">			List&lt;String&gt; fileinfo = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">			fileinfo = fileBuild.creatTxtFile(<span class="string">&quot;111&quot;</span>, <span class="string">&quot;ziptest.txt&quot;</span>, <span class="string">&quot;192310&quot;</span>);</span><br><span class="line">				System.out.println(fileinfo.get(<span class="number">1</span>));</span><br><span class="line">				response.setContentType(<span class="string">&quot;application/zip&quot;</span>);</span><br><span class="line">				response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;attachment; filename=excel.zip&quot;</span>);  </span><br><span class="line">			 ziputil.toZip(fileinfo.get(<span class="number">1</span>), response.getOutputStream(),<span class="literal">false</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			System.out.println(e.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="zipUtil"><a href="#zipUtil" class="headerlink" title="zipUtil"></a>zipUtil</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">zipUtil</span> &#123;</span><br><span class="line">	 <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span>  <span class="variable">BUFFER_SIZE</span> <span class="operator">=</span> <span class="number">2</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">	     <span class="comment">/**</span></span><br><span class="line"><span class="comment">	      * 压缩成ZIP 方法</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> srcDir 压缩文件夹路径 </span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> out    压缩文件输出流</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; </span></span><br><span class="line"><span class="comment">	      *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@throws</span> RuntimeException 压缩失败会抛出运行时异常</span></span><br><span class="line"><span class="comment">	      */</span></span><br><span class="line">	     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">toZip</span><span class="params">(String srcDir, OutputStream out, <span class="type">boolean</span> KeepDirStructure)</span><span class="keyword">throws</span> RuntimeException&#123;</span><br><span class="line"></span><br><span class="line">	         <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">	         <span class="type">ZipOutputStream</span> <span class="variable">zos</span> <span class="operator">=</span> <span class="literal">null</span> ;</span><br><span class="line"></span><br><span class="line">	         <span class="keyword">try</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	             zos = <span class="keyword">new</span> <span class="title class_">ZipOutputStream</span>(out);</span><br><span class="line">	             <span class="type">File</span> <span class="variable">sourceFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(srcDir);</span><br><span class="line">	             compress(sourceFile,zos,sourceFile.getName(),KeepDirStructure);</span><br><span class="line">	 </span><br><span class="line">	         &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;zip error from ZipUtils&quot;</span>,e);</span><br><span class="line">	         &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">	             <span class="keyword">if</span>(zos != <span class="literal">null</span>)&#123;</span><br><span class="line">	                 <span class="keyword">try</span> &#123;</span><br><span class="line">	                     zos.close();</span><br><span class="line">	                 &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	                     e.printStackTrace();</span><br><span class="line">	                 &#125;</span><br><span class="line">	 </span><br><span class="line">	             &#125;</span><br><span class="line">	 </span><br><span class="line">	         &#125;</span><br><span class="line">	</span><br><span class="line">	     &#125;</span><br><span class="line">	     </span><br><span class="line">	     </span><br><span class="line">	     <span class="comment">/**</span></span><br><span class="line"><span class="comment">	          * 递归压缩方法</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> sourceFile 源文件</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> zos        zip输出流</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> name       压缩后的名称</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; </span></span><br><span class="line"><span class="comment">	          *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	          */</span></span><br><span class="line"></span><br><span class="line">	         <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">compress</span><span class="params">(File sourceFile, ZipOutputStream zos, String name,<span class="type">boolean</span> KeepDirStructure)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">	     </span><br><span class="line">	             <span class="type">byte</span>[] buf = <span class="keyword">new</span> <span class="title class_">byte</span>[BUFFER_SIZE];</span><br><span class="line">	     </span><br><span class="line">	             <span class="keyword">if</span>(sourceFile.isFile())&#123;</span><br><span class="line">	    </span><br><span class="line">	                 <span class="comment">// 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字	 </span></span><br><span class="line">	                 zos.putNextEntry(<span class="keyword">new</span> <span class="title class_">ZipEntry</span>(name));	     </span><br><span class="line">	                 <span class="comment">// copy文件到zip输出流中	     </span></span><br><span class="line">	                 <span class="type">int</span> len;	     </span><br><span class="line">	                 <span class="type">FileInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(sourceFile);</span><br><span class="line">	     </span><br><span class="line">	                 <span class="keyword">while</span> ((len = in.read(buf)) != -<span class="number">1</span>)&#123;</span><br><span class="line">	     </span><br><span class="line">	                     zos.write(buf, <span class="number">0</span>, len);</span><br><span class="line">	     </span><br><span class="line">	                 &#125;</span><br><span class="line">	     </span><br><span class="line">	                <span class="comment">// Complete the entry</span></span><br><span class="line">	                 zos.closeEntry();</span><br><span class="line">	                 in.close();</span><br><span class="line">	     </span><br><span class="line">	             &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                 File[] listFiles = sourceFile.listFiles();</span><br><span class="line">	     </span><br><span class="line">	                 <span class="keyword">if</span>(listFiles == <span class="literal">null</span> || listFiles.length == <span class="number">0</span>)&#123;</span><br><span class="line">	     </span><br><span class="line">	                     <span class="comment">// 需要保留原来的文件结构时,需要对空文件夹进行处理</span></span><br><span class="line">	                     <span class="keyword">if</span>(KeepDirStructure)&#123;</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 空文件夹的处理</span></span><br><span class="line">	                         zos.putNextEntry(<span class="keyword">new</span> <span class="title class_">ZipEntry</span>(name + <span class="string">&quot;/&quot;</span>));</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 没有文件，不需要文件的copy</span></span><br><span class="line">	                        zos.closeEntry();</span><br><span class="line">	     </span><br><span class="line">	                     &#125;</span><br><span class="line"></span><br><span class="line">	                 &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                     <span class="keyword">for</span> (File file : listFiles) &#123;</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 判断是否需要保留原来的文件结构	     </span></span><br><span class="line">	                         <span class="keyword">if</span> (KeepDirStructure) &#123;</span><br><span class="line">	     </span><br><span class="line">	                             <span class="comment">// 注意：file.getName()前面需要带上父文件夹的名字加一斜杠,	     </span></span><br><span class="line">	                             <span class="comment">// 不然最后压缩包中就不能保留原来的文件结构,即：所有文件都跑到压缩包根目录下了	     </span></span><br><span class="line">	                             compress(file, zos, name + <span class="string">&quot;/&quot;</span> + file.getName(),KeepDirStructure);</span><br><span class="line">	     </span><br><span class="line">	                         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                             compress(file, zos, file.getName(),KeepDirStructure);</span><br><span class="line">	     </span><br><span class="line">	                         &#125;</span><br><span class="line"></span><br><span class="line">	                     &#125;</span><br><span class="line">	     </span><br><span class="line">	                 &#125;</span><br><span class="line">	     </span><br><span class="line">	             &#125;</span><br><span class="line">	     </span><br><span class="line">	         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>fileUtil</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">fileBuild</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title function_">creatTxtFile</span><span class="params">(String info,String filename , String storecd)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">		List&lt;String&gt; fileinfo = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">		<span class="type">DateFormat</span> <span class="variable">df</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyyMMddHHmm&quot;</span>);</span><br><span class="line">		<span class="type">Calendar</span> <span class="variable">calendar</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line">		<span class="type">String</span> <span class="variable">dateName</span> <span class="operator">=</span> df.format(calendar.getTime());</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> storecd+dateName+<span class="string">&quot;/&quot;</span>;</span><br><span class="line">		<span class="comment">//String path = &quot;/src/main/webapp/WEB-INF/&quot;+name;</span></span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">textpath</span> <span class="operator">=</span> fileBuild.class.getResource(<span class="string">&quot;/&quot;</span>).getPath()+name;</span><br><span class="line">		<span class="type">File</span> <span class="variable">filepath</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(textpath);</span><br><span class="line">		filepath.mkdir();</span><br><span class="line">		<span class="type">String</span> <span class="variable">nowfilepath</span> <span class="operator">=</span> (fileBuild.class.getResource(<span class="string">&quot;/&quot;</span>).getPath()+name+filename);</span><br><span class="line">		nowfilepath = nowfilepath.substring(<span class="number">1</span>,nowfilepath.length());</span><br><span class="line">		fileinfo.add(filename);</span><br><span class="line">		fileinfo.add(textpath);   </span><br><span class="line">		<span class="type">File</span> <span class="variable">file1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(nowfilepath);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (!file1.exists()) &#123;</span><br><span class="line">			file1.createNewFile();</span><br><span class="line">			  		</span><br><span class="line">			<span class="type">BufferedWriter</span> <span class="variable">fileWriter</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(<span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file1),<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">			<span class="comment">//FileWriter fileWriter = new FileWriter(filename);  </span></span><br><span class="line">			fileWriter.write(info);  </span><br><span class="line">			fileWriter.flush();</span><br><span class="line">			fileWriter.close(); </span><br><span class="line">		</span><br><span class="line">			<span class="keyword">return</span> fileinfo;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">		 </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>参考博客<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/csdn_kenneth/article/details/78725607">https://blog.csdn.net/csdn_kenneth/article/details/78725607</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zeng1994/p/7862288.html">https://www.cnblogs.com/zeng1994/p/7862288.html</a></p>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/02/28/313/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">mybatis配置log4j控制台打印SQL语句</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2019/02/11/310/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">情景linux--一张图搞懂head -n和tail -n</span>
+    </a>
+    
+  </nav>
 
-    </div>
-    </article>
+   </main>
 </div>
 
-    <div class="_toc">
-        <strong class="toc-title">
-        Contents
-        </strong>
-        <div class="toc-content">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller"><span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zipUtil"><span class="toc-text">zipUtil</span></a></li></ol>
-        </div>
-    </div>
-
-</section>
-
-
-    <nav class="post-nav">
-        
-            <div class="page-tags">
-                
-            </div>
-        
-    </nav>
-
-
-
-    <nav class="paginator clearfix">
-        
-            <a class="prev" href="/2019/02/28/313/">
-                <i class="iconfont icon-left"></i>
-                <span class="prev-text">mybatis配置log4j控制台打印SQL语句</span>
-            </a>
-        
-        
-            <a class="next" href="/2019/02/11/310/">
-                
-                <span class="prev-text">情景linux--一张图搞懂head -n和tail -n</span>
-                <i class="iconfont icon-right"></i>
-            </a>
-        
-    </nav>
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
 
     
-<script src="/js/back-to-top.js"></script>
-
+      <script src="/js/main.js"></script>
     
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

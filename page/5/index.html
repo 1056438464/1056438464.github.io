@@ -1,370 +1,369 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
-
-
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
-            
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-    <div class="posts-wrapper">
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2020/04/07/370/">MySql 索引(index)</a>
-            </div>
-            <p class="sub">Apr 07 2020</p>
-            <div class="post-content">
-                
-                    <h2 id="1-索引的概念"><a href="#1-索引的概念" class="headerlink" title="1.索引的概念"></a>1.索引的概念</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是帮助MySql高效获取数据的数据结构。排好序的快速查找数据结构</span><br></pre></td></tr></table></figure>
-<h3 id="1-1-创建索引"><a href="#1-1-创建索引" class="headerlink" title="1.1 创建索引"></a>1.1 创建索引</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on table_name(column_name);</span><br><span class="line">或者</span><br><span class="line">alter table table_name add index index_name(column_name);</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-删除索引"><a href="#1-2-删除索引" class="headerlink" title="1.2 删除索引"></a>1.2 删除索引</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table table_name drop index index_name;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-索引数据结构"><a href="#2-索引数据结构" class="headerlink" title="2.索引数据结构"></a>2.索引数据结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、BTree 索引（主要）</span><br><span class="line">2、Hash索引</span><br><span class="line">3、full-text全文索引</span><br><span class="line">4、R-Tree索引</span><br></pre></td></tr></table></figure>
-<h3 id="2-1-BTree数据结构图示"><a href="#2-1-BTree数据结构图示" class="headerlink" title="2.1 BTree数据结构图示"></a>2.1 BTree数据结构图示</h3><p><img src="https://pic1.zhimg.com/80/v2-bde60c8f3451da0e630630281498a1e0_720w.png" alt="avatar"></p>
-<h3 id="2-2-btree索引和hash索引的区别"><a href="#2-2-btree索引和hash索引的区别" class="headerlink" title="2.2 btree索引和hash索引的区别"></a>2.2 btree索引和hash索引的区别</h3><p>** 1、BTREE（B树（可以是多叉树））{主流使用}。<br>** 2、HASH（key,value） 这种方式对范围查询支持得不是很好。<br>hash索引结构的特殊性，其检索效率非常高，索引的检索可以一次定位，不像B-Tree 索引需要从根节点到枝节点，最后才能访问到页节点这样多次的IO访问，所以 Hash 索引的查询效率要远高于 B-Tree 索引。<br>可 能很多人又有疑问了，既然 Hash 索引的效率要比 B-Tree 高很多，为什么大家不都用 Hash 索引而还要使用 B-Tree 索引呢？任何事物都是有两面性的，Hash 索引也一样，虽然 Hash 索引效率高，但是 Hash 索引本身由于其特殊性也带来了很多限制和弊端，主要有以下这些。</p>
-<ul>
-<li>（1）Hash 索引仅仅能满足<code>”=”,”IN”和”&lt;=&gt;”</code>查询，不能使用范围查询。<br>由于 Hash 索引比较的是进行 Hash 运算之后的 Hash 值，所以它只能用于等值的过滤，不能用于基于范围的过滤，因为经过相应的 Hash 算法处理之后的 Hash 值的大小关系，并不能保证和Hash运算前完全一样。</li>
-<li>（2）Hash 索引无法被用来避免数据的排序操作。<br>由于 Hash 索引中存放的是经过 Hash 计算之后的 Hash 值，而且Hash值的大小关系并不一定和 Hash 运算前的键值完全一样，所以数据库无法利用索引的数据来避免任何排序运算；</li>
-<li>（3）Hash 索引不能利用部分索引键查询。<br>对于组合索引，Hash 索引在计算 Hash 值的时候是组合索引键合并后再一起计算 Hash 值，而不是单独计算 Hash 值，所以通过组合索引的前面一个或几个索引键进行查询的时候，Hash 索引也无法被利用。</li>
-<li>（4）Hash 索引在任何时候都不能避免表扫描。<br>前面已经知道，Hash 索引是将索引键通过 Hash 运算之后，将 Hash运算结果的 Hash 值和所对应的行指针信息存放于一个 Hash 表中，由于不同索引键存在相同 Hash 值，所以即使取满足某个 Hash 键值的数据的记录条数，也无法从 Hash 索引中直接完成查询，还是要通过访问表中的实际数据进行相应的比较，并得到相应的结果。</li>
-<li>（5）Hash 索引遇到大量Hash值相等的情况后性能并不一定就会比B-Tree索引高。</li>
-</ul>
-<h2 id="3-索引类型"><a href="#3-索引类型" class="headerlink" title="3.索引类型"></a>3.索引类型</h2><ul>
-<li>normal：表示普通索引；</li>
-<li>unique：表示唯一的，不允许重复的索引，如果该字段信息保证不会重复例如身份证号用作索引时，可设置为unique；</li>
-<li>full textl: 表示全文搜索的索引。FULLTEXT 用于搜索很长一篇文章的时候，效果最好。用在比较短的文本，如果就一两行字的，普通的 INDEX 也可以；</li>
-<li>SPATIAL:空间索引,空间索引是对空间数据类型的字段建立的索引；</li>
-</ul>
-<h2 id="4-适合创建索引条件"><a href="#4-适合创建索引条件" class="headerlink" title="4.适合创建索引条件"></a>4.适合创建索引条件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、主键自动建立唯一索引</span><br><span class="line">2、频繁作为查询条件的字段应该建立索引</span><br><span class="line">3、查询中与其他表关联的字段，外键关系建立索引</span><br><span class="line">4、单键/组合索引的选择问题，组合索引性价比更高</span><br><span class="line">5、查询中排序的字段，排序字段若通过索引去访问将大大提高排序效率</span><br><span class="line">6、查询中统计或者分组字段</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-不适合创建索引条件"><a href="#5-不适合创建索引条件" class="headerlink" title="5.不适合创建索引条件"></a>5.不适合创建索引条件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、表记录少的</span><br><span class="line">2、经常增删改的表或者字段</span><br><span class="line">3、where条件里用不到的字段不创建索引</span><br><span class="line">4、过滤性不好的不适合建索引</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2020/04/04/369/">MySql常用函数</a>
-            </div>
-            <p class="sub">Apr 04 2020</p>
-            <div class="post-content">
-                
-                    <h2 id="1-字符函数"><a href="#1-字符函数" class="headerlink" title="1.字符函数"></a>1.字符函数</h2><h3 id="1-1-CONCAT-拼接字符"><a href="#1-1-CONCAT-拼接字符" class="headerlink" title="1.1 CONCAT 拼接字符"></a>1.1 CONCAT 拼接字符</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select concat(&quot;hello&quot;,&quot;world&quot;);</span><br><span class="line">+-------------------------+</span><br><span class="line">| concat(&quot;hello&quot;,&quot;world&quot;) |</span><br><span class="line">+-------------------------+</span><br><span class="line">| helloworld              |</span><br><span class="line">+-------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-LENGTH-获取字节长度"><a href="#1-2-LENGTH-获取字节长度" class="headerlink" title="1.2 LENGTH 获取字节长度"></a>1.2 LENGTH 获取字节长度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select length(&quot;hello world&quot;);</span><br><span class="line">+-----------------------+</span><br><span class="line">| length(&quot;hello world&quot;) |</span><br><span class="line">+-----------------------+</span><br><span class="line">|                    11 |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select length(&quot;尚文杰&quot;);</span><br><span class="line">+---------------------+</span><br><span class="line">| length(&quot;尚文杰&quot;)    |</span><br><span class="line">+---------------------+</span><br><span class="line">|                   9 |</span><br><span class="line">+---------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-CHAR-LENGTH-获取字符长度"><a href="#1-3-CHAR-LENGTH-获取字符长度" class="headerlink" title="1.3 CHAR_LENGTH 获取字符长度"></a>1.3 CHAR_LENGTH 获取字符长度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select char_length(&quot;尚文杰&quot;);</span><br><span class="line">+--------------------------+</span><br><span class="line">| char_length(&quot;尚文杰&quot;)    |</span><br><span class="line">+--------------------------+</span><br><span class="line">|                        3 |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-4-SUBSTRING-截取字符串"><a href="#1-4-SUBSTRING-截取字符串" class="headerlink" title="1.4 SUBSTRING 截取字符串"></a>1.4 SUBSTRING 截取字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select substr(&quot;尚文杰&quot;,1,2);</span><br><span class="line">+-------------------------+</span><br><span class="line">| substr(&quot;尚文杰&quot;,1,2)    |</span><br><span class="line">+-------------------------+</span><br><span class="line">| 尚文                    |</span><br><span class="line">+-------------------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select substr(&quot;尚文杰&quot;,2);</span><br><span class="line">+-----------------------+</span><br><span class="line">| substr(&quot;尚文杰&quot;,2)    |</span><br><span class="line">+-----------------------+</span><br><span class="line">| 文杰                  |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-5-INSTR-字符第一次出现的位置"><a href="#1-5-INSTR-字符第一次出现的位置" class="headerlink" title="1.5 INSTR 字符第一次出现的位置"></a>1.5 INSTR 字符第一次出现的位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select instr(&quot;尚文杰&quot;,&quot;尚&quot;);</span><br><span class="line">+--------------------------+</span><br><span class="line">| instr(&quot;尚文杰&quot;,&quot;尚&quot;)     |</span><br><span class="line">+--------------------------+</span><br><span class="line">|                        1 |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-6-TRIM-去前后字符（默认去空格）"><a href="#1-6-TRIM-去前后字符（默认去空格）" class="headerlink" title="1.6 TRIM 去前后字符（默认去空格）"></a>1.6 TRIM 去前后字符（默认去空格）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select trim(&quot; hello world &quot;);</span><br><span class="line">+-----------------------+</span><br><span class="line">| trim(&quot; hello world &quot;) |</span><br><span class="line">+-----------------------+</span><br><span class="line">| hello world           |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select trim(&quot;x&quot; from &quot;xxhello worldxx&quot;);</span><br><span class="line">+----------------------------------+</span><br><span class="line">| trim(&quot;x&quot; from &quot;xxhello worldxx&quot;) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| hello world                      |</span><br><span class="line">+----------------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-7-LPAD-RPAD-左填充-右填充"><a href="#1-7-LPAD-RPAD-左填充-右填充" class="headerlink" title="1.7 LPAD&#x2F;RPAD 左填充&#x2F;右填充"></a>1.7 LPAD&#x2F;RPAD 左填充&#x2F;右填充</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select lpad(&quot;hello&quot;,10,&quot;x&quot;);</span><br><span class="line">+----------------------+</span><br><span class="line">| lpad(&quot;hello&quot;,10,&quot;x&quot;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| xxxxxhello           |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select rpad(&quot;hello&quot;,10,&quot;x&quot;);</span><br><span class="line">+----------------------+</span><br><span class="line">| rpad(&quot;hello&quot;,10,&quot;x&quot;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| helloxxxxx           |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-8-UPPER-LOWER-变大写-变小写"><a href="#1-8-UPPER-LOWER-变大写-变小写" class="headerlink" title="1.8 UPPER&#x2F;LOWER 变大写&#x2F;变小写"></a>1.8 UPPER&#x2F;LOWER 变大写&#x2F;变小写</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select upper(&quot;hello&quot;);</span><br><span class="line">+----------------+</span><br><span class="line">| upper(&quot;hello&quot;) |</span><br><span class="line">+----------------+</span><br><span class="line">| HELLO          |</span><br><span class="line">+----------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select lower(&quot;HELLO&quot;);</span><br><span class="line">+----------------+</span><br><span class="line">| lower(&quot;HELLO&quot;) |</span><br><span class="line">+----------------+</span><br><span class="line">| hello          |</span><br><span class="line">+----------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-9-STRCMP-比较"><a href="#1-9-STRCMP-比较" class="headerlink" title="1.9 STRCMP 比较"></a>1.9 STRCMP 比较</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select strcmp(&quot;aa&quot;,&quot;bb&quot;);</span><br><span class="line">+-------------------+</span><br><span class="line">| strcmp(&quot;aa&quot;,&quot;bb&quot;) |</span><br><span class="line">+-------------------+</span><br><span class="line">|                -1 |</span><br><span class="line">+-------------------+</span><br><span class="line">select strcmp(&quot;bb&quot;,&quot;aa&quot;);</span><br><span class="line">+-------------------+</span><br><span class="line">| strcmp(&quot;bb&quot;,&quot;aa&quot;) |</span><br><span class="line">+-------------------+</span><br><span class="line">|                 1 |</span><br><span class="line">+-------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="1-9-LEFT-RIGHT-左截-右截"><a href="#1-9-LEFT-RIGHT-左截-右截" class="headerlink" title="1.9 LEFT&#x2F;RIGHT 左截&#x2F;右截"></a>1.9 LEFT&#x2F;RIGHT 左截&#x2F;右截</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select left(&quot;ab&quot;,1);</span><br><span class="line">+--------------+</span><br><span class="line">| left(&quot;ab&quot;,1) |</span><br><span class="line">+--------------+</span><br><span class="line">| a            |</span><br><span class="line">+--------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select right(&quot;ab&quot;,1);</span><br><span class="line">+---------------+</span><br><span class="line">| right(&quot;ab&quot;,1) |</span><br><span class="line">+---------------+</span><br><span class="line">| b             |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
-<h2 id="2-数学函数"><a href="#2-数学函数" class="headerlink" title="2.数学函数"></a>2.数学函数</h2><h3 id="2-1-ABS-绝对值"><a href="#2-1-ABS-绝对值" class="headerlink" title="2.1 ABS 绝对值"></a>2.1 ABS 绝对值</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select abs(-1);</span><br><span class="line">+---------+</span><br><span class="line">| abs(-1) |</span><br><span class="line">+---------+</span><br><span class="line">|       1 |</span><br><span class="line">+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="2-2-CEIL-向上取整-返回-该整数的最小整数"><a href="#2-2-CEIL-向上取整-返回-该整数的最小整数" class="headerlink" title="2.2 CEIL 向上取整 返回&gt;&#x3D;该整数的最小整数"></a>2.2 CEIL 向上取整 返回&gt;&#x3D;该整数的最小整数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select ceil(1.09);</span><br><span class="line">+------------+</span><br><span class="line">| ceil(1.09) |</span><br><span class="line">+------------+</span><br><span class="line">|          2 |</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
-<h3 id="2-3-FLOOR-向下取整-返回"><a href="#2-3-FLOOR-向下取整-返回" class="headerlink" title="2.3 FLOOR 向下取整 返回&lt;&#x3D;该整数的最大整数"></a>2.3 FLOOR 向下取整 返回&lt;&#x3D;该整数的最大整数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select floor(1.09);</span><br><span class="line">+-------------+</span><br><span class="line">| floor(1.09) |</span><br><span class="line">+-------------+</span><br><span class="line">|           1 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
-<h3 id="2-4-ROUND-四舍五入"><a href="#2-4-ROUND-四舍五入" class="headerlink" title="2.4 ROUND 四舍五入"></a>2.4 ROUND 四舍五入</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select round(1.09);</span><br><span class="line">+-------------+</span><br><span class="line">| round(1.09) |</span><br><span class="line">+-------------+</span><br><span class="line">|           1 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select round(1.8989,2);</span><br><span class="line">+-----------------+</span><br><span class="line">| round(1.8989,2) |</span><br><span class="line">+-----------------+</span><br><span class="line">|            1.90 |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
-<h3 id="2-5-TRUNCATE-截断"><a href="#2-5-TRUNCATE-截断" class="headerlink" title="2.5 TRUNCATE 截断"></a>2.5 TRUNCATE 截断</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select truncate(1.8989,1);</span><br><span class="line">+--------------------+</span><br><span class="line">| truncate(1.8989,1) |</span><br><span class="line">+--------------------+</span><br><span class="line">|                1.8 |</span><br><span class="line">+--------------------+</span><br><span class="line">select truncate(1.8989,2);</span><br><span class="line">+--------------------+</span><br><span class="line">| truncate(1.8989,2) |</span><br><span class="line">+--------------------+</span><br><span class="line">|               1.89 |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="2-6-MOD-取余"><a href="#2-6-MOD-取余" class="headerlink" title="2.6 MOD 取余"></a>2.6 MOD 取余</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select mod(10,2);</span><br><span class="line">+-----------+</span><br><span class="line">| mod(10,2) |</span><br><span class="line">+-----------+</span><br><span class="line">|         0 |</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure>
-<h2 id="3-日期函数"><a href="#3-日期函数" class="headerlink" title="3.日期函数"></a>3.日期函数</h2><h3 id="3-1-NOW"><a href="#3-1-NOW" class="headerlink" title="3.1 NOW"></a>3.1 NOW</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select now();</span><br><span class="line">+---------------------+</span><br><span class="line">| now()               |</span><br><span class="line">+---------------------+</span><br><span class="line">| 2020-04-05 22:36:09 |</span><br><span class="line">+---------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-CURDATE-只取日期"><a href="#3-2-CURDATE-只取日期" class="headerlink" title="3.2 CURDATE 只取日期"></a>3.2 CURDATE 只取日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select curdate();</span><br><span class="line">+------------+</span><br><span class="line">| curdate()  |</span><br><span class="line">+------------+</span><br><span class="line">| 2020-04-05 |</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-CURTIME-只取时间"><a href="#3-3-CURTIME-只取时间" class="headerlink" title="3.3 CURTIME 只取时间"></a>3.3 CURTIME 只取时间</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select curtime();</span><br><span class="line">+-----------+</span><br><span class="line">| curtime() |</span><br><span class="line">+-----------+</span><br><span class="line">| 22:38:06  |</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure>
-<h3 id="3-4-DATEDIFF-取时间差"><a href="#3-4-DATEDIFF-取时间差" class="headerlink" title="3.4 DATEDIFF 取时间差"></a>3.4 DATEDIFF 取时间差</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select datediff(&#x27;2020-04-08&#x27;,&#x27;2020-05-09&#x27;);</span><br><span class="line">+-------------------------------------+</span><br><span class="line">| datediff(&#x27;2020-04-08&#x27;,&#x27;2020-05-09&#x27;) |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">|                                 -31 |</span><br><span class="line">+-------------------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="3-5-DATE-FORMAT-格式化日期"><a href="#3-5-DATE-FORMAT-格式化日期" class="headerlink" title="3.5 DATE_FORMAT 格式化日期"></a>3.5 DATE_FORMAT 格式化日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select date_format(now(),&#x27;%Y年%m月%d日 %H时%m分%s秒&#x27;);</span><br><span class="line">+------------------------------------------------------+</span><br><span class="line">| date_format(now(),&#x27;%Y年%m月%d日 %H时%m分%s秒&#x27;)       |</span><br><span class="line">+------------------------------------------------------+</span><br><span class="line">| 2020年04月05日 22时04分10秒                          |</span><br><span class="line">+------------------------------------------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="3-6-STR-TO-DATE-按指定格式解析字符串为日期"><a href="#3-6-STR-TO-DATE-按指定格式解析字符串为日期" class="headerlink" title="3.6 STR_TO_DATE 按指定格式解析字符串为日期"></a>3.6 STR_TO_DATE 按指定格式解析字符串为日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select str_to_date(&#x27;05/04 2020&#x27;,&#x27;%m/%d %Y&#x27;);</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| str_to_date(&#x27;05/04 2020&#x27;,&#x27;%m/%d %Y&#x27;) |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| 2020-05-04                           |</span><br><span class="line">+--------------------------------------+</span><br></pre></td></tr></table></figure>
-<h2 id="4-流程控制函数"><a href="#4-流程控制函数" class="headerlink" title="4.流程控制函数"></a>4.流程控制函数</h2><h3 id="4-1-IF"><a href="#4-1-IF" class="headerlink" title="4.1 IF"></a>4.1 IF</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select if(100&gt;1,&#x27;yes&#x27;,&#x27;no&#x27;);</span><br><span class="line">+----------------------+</span><br><span class="line">| if(100&gt;1,&#x27;yes&#x27;,&#x27;no&#x27;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| yes                  |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-CASE"><a href="#4-2-CASE" class="headerlink" title="4.2 CASE"></a>4.2 CASE</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select case when 100&gt;102 then &#x27;yes&#x27; when 100&gt;101 then &quot;100&gt;101&quot; else &quot;no&quot; end;</span><br><span class="line">+------------------------------------------------------------------------+</span><br><span class="line">| case when 100&gt;102 then &#x27;yes&#x27; when 100&gt;101 then &quot;100&gt;101&quot; else &quot;no&quot; end |</span><br><span class="line">+------------------------------------------------------------------------+</span><br><span class="line">| no                                                                     |</span><br><span class="line">+------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2020/03/07/368/">docker-compose选择启动容器</a>
-            </div>
-            <p class="sub">Mar 07 2020</p>
-            <div class="post-content">
-                
-                    <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">比如生产环境和测试环境都有mysql，但两个环境mysql的端口不同，又需要同一套docker-compose来部署，应该怎么做？</span><br></pre></td></tr></table></figure>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --no-deps -d 容器名</span><br></pre></td></tr></table></figure>
-
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2020/02/18/367/">Springboot集成ElasticSearch7.4</a>
-            </div>
-            <p class="sub">Feb 18 2020</p>
-            <div class="post-content">
-                
-                    <h2 id="1-各系统版本"><a href="#1-各系统版本" class="headerlink" title="1.各系统版本"></a>1.各系统版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ElasticSearch:7.4.0</span><br><span class="line">SpringBoot:2.2.0.RELEASE</span><br><span class="line">spring-boot-starter-data-elasticsearch:2.2.0.RELEASE</span><br><span class="line">SpringCloud:Hoxton.SR1</span><br></pre></td></tr></table></figure>
-<p>#####特记：<br>如果要使用<code>spring-data-elasticsearch</code>目前只能使用<code>ElasticSearch:6.7.2</code>以下版本,所以现在只能用<code>spring-boot-starter-data-elasticsearch</code>连接ES7.4.0版本。</p>
-<p><code>springboot</code>对应的<code>springcloud</code>也是有版本对应。要不然会报<code>Error creating bean with name &#39;traceFilterRegistration&#39; defined in class path resource</code>的错误，而这个导致这个错误的原因是<code>springboot</code>和<code>spingclould</code>版本不匹配导致，<code>parent</code>采用了一个版本，内部又重新采用了另一个版本。<br>下面是版本对应：<br>官方网址：<a target="_blank" rel="noopener" href="https://start.spring.io/actuator/info">https://start.spring.io/actuator/info</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&quot;spring-cloud&quot;: &#123;</span><br><span class="line">      &quot;Finchley.M2&quot;: &quot;Spring Boot &gt;=2.0.0.M3 and &lt;2.0.0.M5&quot;,</span><br><span class="line">      &quot;Finchley.M3&quot;: &quot;Spring Boot &gt;=2.0.0.M5 and &lt;=2.0.0.M5&quot;,</span><br><span class="line">      &quot;Finchley.M4&quot;: &quot;Spring Boot &gt;=2.0.0.M6 and &lt;=2.0.0.M6&quot;,</span><br><span class="line">      &quot;Finchley.M5&quot;: &quot;Spring Boot &gt;=2.0.0.M7 and &lt;=2.0.0.M7&quot;,</span><br><span class="line">      &quot;Finchley.M6&quot;: &quot;Spring Boot &gt;=2.0.0.RC1 and &lt;=2.0.0.RC1&quot;,</span><br><span class="line">      &quot;Finchley.M7&quot;: &quot;Spring Boot &gt;=2.0.0.RC2 and &lt;=2.0.0.RC2&quot;,</span><br><span class="line">      &quot;Finchley.M9&quot;: &quot;Spring Boot &gt;=2.0.0.RELEASE and &lt;=2.0.0.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.RC1&quot;: &quot;Spring Boot &gt;=2.0.1.RELEASE and &lt;2.0.2.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.RC2&quot;: &quot;Spring Boot &gt;=2.0.2.RELEASE and &lt;2.0.3.RELEASE&quot;,</span><br><span class="line">      &quot;Finchley.SR4&quot;: &quot;Spring Boot &gt;=2.0.3.RELEASE and &lt;2.0.999.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Finchley.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.0.999.BUILD-SNAPSHOT and &lt;2.1.0.M3&quot;,</span><br><span class="line">      &quot;Greenwich.M1&quot;: &quot;Spring Boot &gt;=2.1.0.M3 and &lt;2.1.0.RELEASE&quot;,</span><br><span class="line">      &quot;Greenwich.SR4&quot;: &quot;Spring Boot &gt;=2.1.0.RELEASE and &lt;2.1.12.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Greenwich.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.1.12.BUILD-SNAPSHOT and &lt;2.2.0.M4&quot;,</span><br><span class="line">      &quot;Hoxton.SR1&quot;: &quot;Spring Boot &gt;=2.2.0.M4 and &lt;2.2.3.BUILD-SNAPSHOT&quot;,</span><br><span class="line">      &quot;Hoxton.BUILD-SNAPSHOT&quot;: &quot;Spring Boot &gt;=2.2.3.BUILD-SNAPSHOT&quot;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2-项目结构"><a href="#2-项目结构" class="headerlink" title="2.项目结构"></a>2.项目结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">├─swj-parent</span><br><span class="line">│  ├─swj-common</span><br><span class="line">│  ├─swj-common-db</span><br><span class="line">│  ├─swj-eureka</span><br><span class="line">│  ├─swj-service</span><br><span class="line">│  │  ├─swj-service-crawler</span><br><span class="line">│  │  ├─swj-service-goods</span><br><span class="line">│  │  └─swj-service-search</span><br><span class="line">│      ├─src</span><br><span class="line">│      │  ├─main</span><br><span class="line">│      │  │  ├─java</span><br><span class="line">│      │  │  │  └─com</span><br><span class="line">│      │  │  │      └─swj</span><br><span class="line">│      │  │  │          └─search</span><br><span class="line">│      │  │  │              ├─controller</span><br><span class="line">│      │  │  │              ├─mapper</span><br><span class="line">│      │  │  │              │   └─ESManagerMapper.java</span><br><span class="line">│      │  │  │              └─service</span><br><span class="line">│      │  │  │              │   └─impl</span><br><span class="line">│      │  │  │              │      ├─ESManagerServiceImpl.java</span><br><span class="line">│      │  │  │              │      └─SearchServiceImpl.java</span><br><span class="line">│      │  │  │              │   ├─ESManagerService.java</span><br><span class="line">│      │  │  │              │   └─SearchService.java</span><br><span class="line">│  └─swj-service-api</span><br><span class="line">│  │    ├─swj-crawler-api</span><br><span class="line">│  │    └─swj-service-search-api</span><br><span class="line">│  │        ├─src</span><br><span class="line">│  │        │  ├─main</span><br><span class="line">│  │        │  │  ├─java</span><br><span class="line">│  │        │  │  │  └─com</span><br><span class="line">│  │        │  │  │      └─swj</span><br><span class="line">│  │        │  │  │          └─search</span><br><span class="line">│  │        │  │  │              ├─fegin</span><br><span class="line">│  │        │  │  │              └─model</span><br><span class="line">│  │        │  │  │                 └─SkuInfo.java</span><br><span class="line">│  │        │  │  └─resources</span><br><span class="line">│─pom.xml    </span><br></pre></td></tr></table></figure>
-<h2 id="3-具体文件（这里只给出关键文件）"><a href="#3-具体文件（这里只给出关键文件）" class="headerlink" title="3.具体文件（这里只给出关键文件）"></a>3.具体文件（这里只给出关键文件）</h2><h3 id="3-1-parent-pom文件"><a href="#3-1-parent-pom文件" class="headerlink" title="3.1 parent pom文件"></a>3.1 parent pom文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.swj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swj-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>swj-eureka<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>swj-service<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>swj-common<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>swj-common-db<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>swj-service-api<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">skipTests</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skipTests</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--依赖包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--测试包--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>Hoxton.SR1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-2-SkuInfo-java文件"><a href="#3-2-SkuInfo-java文件" class="headerlink" title="3.2 SkuInfo.java文件"></a>3.2 SkuInfo.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.Document;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.Field;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.FieldType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.Id;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Document(indexName = &quot;skuinfo&quot;, type = &quot;docs&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SkuInfo</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="comment">//商品id，同时也是商品编号</span></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Keyword)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//SKU名称</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Text, analyzer = &quot;ik_smart&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//商品价格，单位为：元</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Double)</span></span><br><span class="line">    <span class="keyword">private</span> Long price;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//库存数量</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Integer)</span></span><br><span class="line">    <span class="keyword">private</span> Integer num;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//商品图片</span></span><br><span class="line">    <span class="meta">@Field(index = false, store = true, type = FieldType.Text)</span></span><br><span class="line">    <span class="keyword">private</span> String image;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//商品状态，1-正常，2-下架，3-删除</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Keyword)</span></span><br><span class="line">    <span class="keyword">private</span> String status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建时间</span></span><br><span class="line">    <span class="keyword">private</span> Date createTime;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//更新时间</span></span><br><span class="line">    <span class="keyword">private</span> Date updateTime;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//是否默认</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Keyword)</span></span><br><span class="line">    <span class="keyword">private</span> String isDefault;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//SPUID</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Long)</span></span><br><span class="line">    <span class="keyword">private</span> Long spuId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//类目ID</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Long)</span></span><br><span class="line">    <span class="keyword">private</span> Long categoryId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//类目名称</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Keyword)</span></span><br><span class="line">    <span class="keyword">private</span> String categoryName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//品牌名称</span></span><br><span class="line">    <span class="meta">@Field(index = true, store = true, type = FieldType.Keyword)</span></span><br><span class="line">    <span class="keyword">private</span> String brandName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//规格</span></span><br><span class="line">    <span class="keyword">private</span> String spec;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//规格参数</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Object&gt; specMap;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getPrice</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setPrice</span><span class="params">(Long price)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getNum</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setNum</span><span class="params">(Integer num)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.num = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getImage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setImage</span><span class="params">(String image)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.image = image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getStatus</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setStatus</span><span class="params">(String status)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.status = status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Date <span class="title function_">getCreateTime</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCreateTime</span><span class="params">(Date createTime)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.createTime = createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Date <span class="title function_">getUpdateTime</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> updateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUpdateTime</span><span class="params">(Date updateTime)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.updateTime = updateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getIsDefault</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> isDefault;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setIsDefault</span><span class="params">(String isDefault)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.isDefault = isDefault;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getSpuId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> spuId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSpuId</span><span class="params">(Long spuId)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.spuId = spuId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getCategoryId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> categoryId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCategoryId</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.categoryId = categoryId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getCategoryName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> categoryName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCategoryName</span><span class="params">(String categoryName)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.categoryName = categoryName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getBrandName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> brandName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBrandName</span><span class="params">(String brandName)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.brandName = brandName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getSpec</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> spec;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSpec</span><span class="params">(String spec)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.spec = spec;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">getSpecMap</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> specMap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSpecMap</span><span class="params">(Map&lt;String, Object&gt; specMap)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.specMap = specMap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-ESManagerMapper-java文件"><a href="#3-3-ESManagerMapper-java文件" class="headerlink" title="3.3 ESManagerMapper.java文件"></a>3.3 ESManagerMapper.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.repository.ElasticsearchRepository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ESManagerMapper</span> <span class="keyword">extends</span> <span class="title class_">ElasticsearchRepository</span>&lt;SkuInfo,Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-4-ESManagerServiceImpl-java文件"><a href="#3-4-ESManagerServiceImpl-java文件" class="headerlink" title="3.4 ESManagerServiceImpl.java文件"></a>3.4 ESManagerServiceImpl.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.swj.crawler.fegin.SKUFegin;</span><br><span class="line"><span class="keyword">import</span> com.swj.crawler.model.TbSku;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.mapper.ESManagerMapper;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.service.ESManagerService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.ElasticsearchTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ESManagerServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ESManagerService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ElasticsearchTemplate elasticsearchTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> SKUFegin skuFegin;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ESManagerMapper esManagerMapper;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建索引库结构</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createMappingAndIndex</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 创建索引</span></span><br><span class="line">    elasticsearchTemplate.createIndex(SkuInfo.class);</span><br><span class="line">    <span class="comment">// 创建映射</span></span><br><span class="line">    elasticsearchTemplate.putMapping(SkuInfo.class);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">importAll</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 查询sku集合</span></span><br><span class="line">    List&lt;TbSku&gt; tbSkus = skuFegin.selectAll();</span><br><span class="line">    <span class="type">String</span> <span class="variable">jsonTbSkus</span> <span class="operator">=</span> JSON.toJSONString(tbSkus);</span><br><span class="line">    List&lt;SkuInfo&gt; skuInfos = JSON.parseArray(jsonTbSkus, SkuInfo.class);</span><br><span class="line">    <span class="keyword">for</span> (SkuInfo skuInfo : skuInfos) &#123;</span><br><span class="line">      <span class="type">Map</span> <span class="variable">spaceMap</span> <span class="operator">=</span> JSON.parseObject(skuInfo.getSpec(), Map.class);</span><br><span class="line">      skuInfo.setSpecMap(spaceMap);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 导入索引库</span></span><br><span class="line">    esManagerMapper.saveAll(skuInfos);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">importDataBySpuId</span><span class="params">(String spuId)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delDataBySpuId</span><span class="params">(String spuId)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-4-SearchServiceImpl-java文件"><a href="#3-4-SearchServiceImpl-java文件" class="headerlink" title="3.4 SearchServiceImpl.java文件"></a>3.4 SearchServiceImpl.java文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.swj.search.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.model.SkuInfo;</span><br><span class="line"><span class="keyword">import</span> com.swj.search.service.SearchService;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.search.SearchResponse;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.BoolQueryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.Operator;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.index.query.QueryBuilders;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.SearchHit;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.SearchHits;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.search.fetch.subphase.highlight.HighlightField;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.domain.Pageable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.ElasticsearchTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.SearchResultMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SearchServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">SearchService</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span> <span class="keyword">private</span> ElasticsearchTemplate elasticsearchTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Map <span class="title function_">search</span><span class="params">(Map&lt;String, String&gt; searchMap)</span> &#123;</span><br><span class="line">    Map&lt;String, Object&gt; resultMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">if</span> (searchMap != <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// 构建查询条件</span></span><br><span class="line">      <span class="type">NativeSearchQueryBuilder</span> <span class="variable">nativeSearchQueryBuilder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NativeSearchQueryBuilder</span>();</span><br><span class="line">      <span class="type">BoolQueryBuilder</span> <span class="variable">boolQuery</span> <span class="operator">=</span> QueryBuilders.boolQuery();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 按照关键字查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;keywords&quot;</span>))) &#123;</span><br><span class="line">        boolQuery.must(</span><br><span class="line">            QueryBuilders.matchQuery(<span class="string">&quot;name&quot;</span>, searchMap.get(<span class="string">&quot;keywords&quot;</span>)).operator(Operator.AND));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 按照品牌进行过滤查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;brand&quot;</span>))) &#123;</span><br><span class="line">        boolQuery.filter(QueryBuilders.termQuery(<span class="string">&quot;brandName&quot;</span>, searchMap.get(<span class="string">&quot;brand&quot;</span>)));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 范围查询</span></span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isNotEmpty(searchMap.get(<span class="string">&quot;price&quot;</span>))) &#123;</span><br><span class="line">        String[] prices = searchMap.get(<span class="string">&quot;price&quot;</span>).split(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (prices.length == <span class="number">2</span>) &#123;</span><br><span class="line">          boolQuery.filter(QueryBuilders.rangeQuery(<span class="string">&quot;price&quot;</span>).lte(prices[<span class="number">0</span>]));</span><br><span class="line">        &#125;</span><br><span class="line">        boolQuery.filter(QueryBuilders.rangeQuery(<span class="string">&quot;price&quot;</span>).gte(prices[<span class="number">1</span>]));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      nativeSearchQueryBuilder.withQuery(boolQuery);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 开启查询</span></span><br><span class="line">      <span class="comment">/** 第一个参数: 条件构建对象 第二个参数: 查询操作实体类 第三个参数: 查询结果操作对象 */</span></span><br><span class="line">      <span class="comment">// 封装查询结果</span></span><br><span class="line">      AggregatedPage&lt;SkuInfo&gt; aggregatedPage =</span><br><span class="line">          elasticsearchTemplate.queryForPage(</span><br><span class="line">              nativeSearchQueryBuilder.build(),</span><br><span class="line">              SkuInfo.class,</span><br><span class="line">              <span class="keyword">new</span> <span class="title class_">SearchResultMapper</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> &lt;T&gt; AggregatedPage&lt;T&gt; <span class="title function_">mapResults</span><span class="params">(</span></span><br><span class="line"><span class="params">                    SearchResponse searchResponse, Class&lt;T&gt; aClass, Pageable pageable)</span> &#123;</span><br><span class="line"></span><br><span class="line">                  <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">                  <span class="comment">// 获取查询结果集</span></span><br><span class="line">                  <span class="type">SearchHits</span> <span class="variable">searchHits</span> <span class="operator">=</span> searchResponse.getHits();</span><br><span class="line">                  <span class="keyword">for</span> (SearchHit searchHit : searchHits) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (searchHit != <span class="literal">null</span>) &#123;</span><br><span class="line">                      <span class="type">SkuInfo</span> <span class="variable">skuInfo</span> <span class="operator">=</span> JSON.parseObject(searchHit.toString(), SkuInfo.class);</span><br><span class="line">                      Map&lt;String, HighlightField&gt; highlightFields = searchHit.getHighlightFields();</span><br><span class="line">                      <span class="keyword">if</span> (highlightFields != <span class="literal">null</span> &amp;&amp; highlightFields.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="comment">// 替换数据</span></span><br><span class="line">                        skuInfo.setName(highlightFields.get(<span class="string">&quot;name&quot;</span>).getFragments()[<span class="number">0</span>].toString());</span><br><span class="line">                      &#125;</span><br><span class="line"></span><br><span class="line">                      list.add((T) skuInfo);</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line"></span><br><span class="line">                  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AggregatedPageImpl</span>&lt;T&gt;(</span><br><span class="line">                      list, pageable, searchHits.getTotalHits(), searchResponse.getAggregations());</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Nullable</span></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> &lt;T&gt; T <span class="title function_">mapSearchHit</span><span class="params">(SearchHit searchHit, Class&lt;T&gt; aClass)</span> &#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;);</span><br><span class="line"></span><br><span class="line">      resultMap.put(<span class="string">&quot;rows&quot;</span>, aggregatedPage.getContent());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2020/02/10/366/">Docker安装ElasticSearch</a>
-            </div>
-            <p class="sub">Feb 10 2020</p>
-            <div class="post-content">
-                
-                    <h2 id="1-安装ElasticSearch"><a href="#1-安装ElasticSearch" class="headerlink" title="1.安装ElasticSearch"></a>1.安装ElasticSearch</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ElasticSearch:7.4.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-启动ElasticSearch"><a href="#2-启动ElasticSearch" class="headerlink" title="2.启动ElasticSearch"></a>2.启动ElasticSearch</h2><p>这里因为我的阿里云内存比较小，所以只设置256m的JVM内存空间。<br>官网标准的建议是把 50％ 的可用内存作为<code> Elasticsearch</code>的堆内存</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker network create mynetwork --driver=bridge</span><br><span class="line">docker run -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&quot; -e &quot;http.host=0.0.0.0&quot; -e &quot;transport.host=0.0.0.0&quot; -e &quot;xpack.security.enabled=false&quot; -d --name ES -d --network mynetwork elasticsearch:7.4.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-1-修改elasticsearch-yml"><a href="#2-1-修改elasticsearch-yml" class="headerlink" title="2.1 修改elasticsearch.yml"></a>2.1 修改elasticsearch.yml</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network.host:</span> <span class="number">47.98</span><span class="number">.131</span><span class="number">.180</span></span><br><span class="line"><span class="string">重启ES</span></span><br></pre></td></tr></table></figure>
-<h2 id="3-安装IK分词器"><a href="#3-安装IK分词器" class="headerlink" title="3.安装IK分词器"></a>3.安装IK分词器</h2><p>IK所有版本下载（找到自己ElasticSearch对应的版本，比如我这里用的是7.4.0，所以IK分词器版本也要是7.4.0，要不然会报错）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/medcl/elasticsearch-analysis-ik/releases</span><br></pre></td></tr></table></figure>
-<h3 id="3-1-在线安装"><a href="#3-1-在线安装" class="headerlink" title="3.1 在线安装"></a>3.1 在线安装</h3><h4 id="3-1-1-进入容器"><a href="#3-1-1-进入容器" class="headerlink" title="3.1.1 进入容器"></a>3.1.1 进入容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ES /bin/bash</span><br></pre></td></tr></table></figure>
-<h4 id="3-1-2-在线下载并安装"><a href="#3-1-2-在线下载并安装" class="headerlink" title="3.1.2 在线下载并安装"></a>3.1.2 在线下载并安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.4.0/elasticsearch-analysis-ik-6.5.4.zip</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-离线安装"><a href="#3-2-离线安装" class="headerlink" title="3.2 离线安装"></a>3.2 离线安装</h3><h4 id="3-2-1-将压缩包移动到容器中"><a href="#3-2-1-将压缩包移动到容器中" class="headerlink" title="3.2.1 将压缩包移动到容器中"></a>3.2.1 将压缩包移动到容器中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /tmp/elasticsearch-analysis-ik-7.4.0.zip elasticsearch:/usr/share/elasticsearch/plugins</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-2-进入容器"><a href="#3-2-2-进入容器" class="headerlink" title="3.2.2 进入容器"></a>3.2.2 进入容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ES /bin/bash</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-3-创建目录"><a href="#3-2-3-创建目录" class="headerlink" title="3.2.3 创建目录"></a>3.2.3 创建目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-4-将文件压缩包移动到ik中"><a href="#3-2-4-将文件压缩包移动到ik中" class="headerlink" title="3.2.4 将文件压缩包移动到ik中"></a>3.2.4 将文件压缩包移动到ik中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.4.0.zip /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-5-进入目录"><a href="#3-2-5-进入目录" class="headerlink" title="3.2.5 进入目录"></a>3.2.5 进入目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
-<h4 id="3-2-6-解压并删除压缩包"><a href="#3-2-6-解压并删除压缩包" class="headerlink" title="3.2.6 解压并删除压缩包"></a>3.2.6 解压并删除压缩包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unzip elasticsearch-analysis-ik-7.4.0.zip</span><br><span class="line"></span><br><span class="line">rm -rf elasticsearch-analysis-ik-7.4.0.zip</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-退出并重启镜像"><a href="#3-3-退出并重启镜像" class="headerlink" title="3.3 退出并重启镜像"></a>3.3 退出并重启镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br><span class="line">docker restart elasticsearch</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-安装kibana"><a href="#4-安装kibana" class="headerlink" title="4.安装kibana"></a>4.安装kibana</h2><p>这里要选择和elasticsearch同一版本的kibana</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:7.4.0</span><br></pre></td></tr></table></figure>
-<h3 id="4-1-启动kibana"><a href="#4-1-启动kibana" class="headerlink" title="4.1 启动kibana"></a>4.1 启动kibana</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kibana -e ELASTICSEARCH_URL=http://47.98.131.180:9200 -p 5601:5601 -d kibana:7.4.0</span><br></pre></td></tr></table></figure>
-<p>但是我这里出现了错误<code>Kibana server is not ready yet</code><br><strong>解决方法：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改kibana容器中的kibana.yml</span><br><span class="line">修改elasticsearch.url为elasticsearch的地址</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-设置中文"><a href="#4-2-设置中文" class="headerlink" title="4.2  设置中文"></a>4.2  设置中文</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改kibana容器中的kibana.yml</span><br><span class="line">修改i18n.locale: &quot;zh-CN&quot;</span><br><span class="line">重启即可</span><br></pre></td></tr></table></figure>
-<h4 id="测试kibana"><a href="#测试kibana" class="headerlink" title="测试kibana"></a>测试kibana</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">浏览器访问http://47.98.131.180:5601/即可</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/12/17/363/">移除List中所有某个值</a>
-            </div>
-            <p class="sub">Dec 17 2019</p>
-            <div class="post-content">
-                
-                    <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="例：删除list-test中的null值"><a href="#例：删除list-test中的null值" class="headerlink" title="例：删除list test中的null值"></a>例：删除list test中的null值</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; test = new ArrayList&lt;&gt;();</span><br><span class="line">    test.removeAll(Collections.singleton(null));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <meta name="author" content="shang wj">
 
 
 
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/12/17/362/">java.lang.UnsupportedOperationException解决方法</a>
-            </div>
-            <p class="sub">Dec 17 2019</p>
-            <div class="post-content">
-                
-                    <h1 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">调用Arrays.asList()生产的List的add、remove、removeAll方法时报异常。</span><br><span class="line">这是因为Arrays.asList() 返回的是Arrays的内部类ArrayList， 而不是java.util.ArrayList。</span><br><span class="line">所以没有remove、add、rmoveAll方法，所以报错。</span><br></pre></td></tr></table></figure>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="当Arrays-asList-生成list时，需要重新用一个new-ArrayList-来接受"><a href="#当Arrays-asList-生成list时，需要重新用一个new-ArrayList-来接受" class="headerlink" title="当Arrays.asList()生成list时，需要重新用一个new ArrayList()来接受"></a>当Arrays.asList()生成list时，需要重新用一个new ArrayList()来接受</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    String[] array = &#123;&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;&#125;;</span><br><span class="line">List&lt;String&gt; list = Arrays.asList(array);</span><br><span class="line">List arrList = new ArrayList(list);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/10/14/359/">BootStrap Table 解决固定表头表头不对应</a>
-            </div>
-            <p class="sub">Oct 14 2019</p>
-            <div class="post-content">
-                
-                    <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="1-定义每一个表头的固定宽度"><a href="#1-定义每一个表头的固定宽度" class="headerlink" title="1. 定义每一个表头的固定宽度"></a>1. 定义每一个表头的固定宽度</h2><h2 id="2-在onPostBody中添加次代码"><a href="#2-在onPostBody中添加次代码" class="headerlink" title="2. 在onPostBody中添加次代码"></a>2. 在onPostBody中添加次代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$(&#x27;#dataGrid&#x27;).bootstrapTable(&#123; </span><br><span class="line"> ···</span><br><span class="line"> ···</span><br><span class="line"> onPostBody:function()</span><br><span class="line"> &#123;</span><br><span class="line">	$.each($(&#x27;.fixed-table-header tr:not(:first-child) .fht-cell&#x27;),function(index,obj)&#123;</span><br><span class="line">	var a=$(obj).parent().attr(&quot;style&quot;);</span><br><span class="line">	var oWidth=a.substring(a.indexOf(&#x27;width:&#x27;)+6,a.lastIndexOf(&#x27;;&#x27;));</span><br><span class="line">	$(obj).width(oWidth);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	$.each($(&#x27;.fixed-table-body tr:not(:first-child) .fht-cell&#x27;),function(index,obj)&#123;</span><br><span class="line">	var a=$(obj).parent().attr(&quot;style&quot;);</span><br><span class="line">	var oWidth=a.substring(a.indexOf(&#x27;width:&#x27;)+6,a.lastIndexOf(&#x27;;&#x27;));</span><br><span class="line">	$(obj).width(oWidth);</span><br><span class="line">	&#125;);</span><br><span class="line"> &#125;</span><br><span class="line"> ···</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$.each($(&#x27;.fixed-table-header tr:not(:first-child) .fht-cell&#x27;),function(index,obj)&#123;</span><br><span class="line">	var a=$(obj).parent().attr(&quot;style&quot;);</span><br><span class="line">	var oWidth=a.substring(a.indexOf(&#x27;width:&#x27;)+6,a.lastIndexOf(&#x27;;&#x27;));</span><br><span class="line">	$(obj).width(oWidth);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	$.each($(&#x27;.fixed-table-body tr:not(:first-child) .fht-cell&#x27;),function(index,obj)&#123;</span><br><span class="line">	var a=$(obj).parent().attr(&quot;style&quot;);</span><br><span class="line">	var oWidth=a.substring(a.indexOf(&#x27;width:&#x27;)+6,a.lastIndexOf(&#x27;;&#x27;));</span><br><span class="line">	$(obj).width(oWidth);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/10/14/360/">Spring Mybatis拦截sql语句</a>
-            </div>
-            <p class="sub">Oct 14 2019</p>
-            <div class="post-content">
-                
-                    <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"><a href="#主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中" class="headerlink" title="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"></a>主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.tre.common.confg;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.executor.statement.StatementHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.BoundSql;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.MappedStatement;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.plugin.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.MetaObject;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.SystemMetaObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Intercepts(&#123;</span></span><br><span class="line"><span class="meta">  @Signature(</span></span><br><span class="line"><span class="meta">      type = StatementHandler.class,</span></span><br><span class="line"><span class="meta">      method = &quot;prepare&quot;,</span></span><br><span class="line"><span class="meta">      args = &#123;Connection.class, Integer.class&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">mybatisfilter</span> <span class="keyword">implements</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">StatementHandler</span> <span class="variable">statementHandler</span> <span class="operator">=</span> (StatementHandler) invocation.getTarget();</span><br><span class="line"></span><br><span class="line">    <span class="type">MetaObject</span> <span class="variable">metaObject</span> <span class="operator">=</span> SystemMetaObject.forObject(statementHandler);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;h&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;h&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;target&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;target&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">MappedStatement</span> <span class="variable">mappedStatement</span> <span class="operator">=</span></span><br><span class="line">        (MappedStatement) metaObject.getValue(<span class="string">&quot;delegate.mappedStatement&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sql语句类型 select、delete、insert、update</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sqlCommandType</span> <span class="operator">=</span> mappedStatement.getSqlCommandType().toString();</span><br><span class="line">    <span class="keyword">if</span> (sqlCommandType.equals(<span class="string">&quot;INSERT&quot;</span>) || sqlCommandType.equals(<span class="string">&quot;UPDATE&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="type">BoundSql</span> <span class="variable">boundSql</span> <span class="operator">=</span> statementHandler.getBoundSql();</span><br><span class="line">      <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> boundSql.getSql();</span><br><span class="line"></span><br><span class="line">      <span class="type">RequestAttributes</span> <span class="variable">requestAttributes</span> <span class="operator">=</span> RequestContextHolder.getRequestAttributes();</span><br><span class="line">      <span class="keyword">if</span> (requestAttributes != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes) requestAttributes).getRequest();</span><br><span class="line">        request.getSession().setAttribute(<span class="string">&quot;sql&quot;</span>, sql);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">plugin</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Plugin.wrap(o, <span class="built_in">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setProperties</span><span class="params">(Properties properties)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
 
 
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/10/14/361/">git强制覆盖本地代码（与git远程仓库保持一致）</a>
-            </div>
-            <p class="sub">Oct 14 2019</p>
-            <div class="post-content">
-                
-                    <h1 id="git强制覆盖："><a href="#git强制覆盖：" class="headerlink" title="git强制覆盖："></a>git强制覆盖：</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    git fetch --all</span><br><span class="line">    git reset --hard origin/master</span><br><span class="line">    git pull</span><br></pre></td></tr></table></figure>
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
 
-<h1 id="git强制覆盖本地命令（单条执行）："><a href="#git强制覆盖本地命令（单条执行）：" class="headerlink" title="git强制覆盖本地命令（单条执行）："></a>git强制覆盖本地命令（单条执行）：</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    git fetch --all &amp;&amp; git reset --hard origin/master &amp;&amp; git pull</span><br></pre></td></tr></table></figure>
-
-
-
-                
-            </div>
-        </article>
-    
-</div>
-<div class="side-bar">
-
-
-    <div class="avator" id="avator">
-    <div class="title">
-        <a href="#" class="text-underline">About Me</a>
-    </div>
-        <img src="avator.jpg" class="ava-img">
-        <h3 class="author">shang wj</h3>
-        <div class="icon-list">
-        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
-        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
-        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
-        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
-        </div>
-    <div class="tags">
-    <h3 class="tags-title">Tags</h3>
-    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
-</div>
-    </div>
-</div>
-
-</section>
-
-    <nav class="page-nav">
-    
-        <a class="prev" href="/page/4/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text">Prev</span>
-        </a>
-    
-    
-        <a class="next" href="/page/6/">
-            <span class="next-text">Next</span>
-            <i class="iconfont icon-right"></i>
-        </a>
-    
-    </nav>
-
-
-
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
-
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
-
-    
-<script src="/js/back-to-top.js"></script>
-
-    
-<script src="/js/scroll.js"></script>
-
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
         }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="wrapper">
+    <div class="author">
+        <div class="author-avatar-wrapper">
+          <img
+            class="author-avatar"
+            src="https://cdn.jsdelivr.net/gh/dewjohn/CDN@latest/images/avatar.webp"
+            alt="avatar"
+            loading="lazy"
+          />
+      </div>
+      <h2 class="author-name">shang wj</h2>
+      <p class="author-bio">I just want something simpler...</p>
+    </div>
+    <main aria-label="Content">
+      
 
+    <h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2020-04-07T14:42:22.000Z">Apr 07, 2020</span>
+        <h4 class="post-item-title">
+          <a href="/2020/04/07/370/">MySql 索引(index)</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2020-04-04T07:42:22.000Z">Apr 04, 2020</span>
+        <h4 class="post-item-title">
+          <a href="/2020/04/04/369/">MySql常用函数</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2020-03-07T07:42:22.000Z">Mar 07, 2020</span>
+        <h4 class="post-item-title">
+          <a href="/2020/03/07/368/">docker-compose选择启动容器</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2020-02-18T15:42:22.000Z">Feb 18, 2020</span>
+        <h4 class="post-item-title">
+          <a href="/2020/02/18/367/">Springboot集成ElasticSearch7.4</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2020-02-10T15:42:22.000Z">Feb 10, 2020</span>
+        <h4 class="post-item-title">
+          <a href="/2020/02/10/366/">Docker安装ElasticSearch</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-12-17T07:22:22.000Z">Dec 17, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/12/17/363/">移除List中所有某个值</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-12-17T06:22:22.000Z">Dec 17, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/12/17/362/">java.lang.UnsupportedOperationException解决方法</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-10-14T06:22:22.000Z">Oct 14, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/10/14/359/">BootStrap Table 解决固定表头表头不对应</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-10-14T06:22:22.000Z">Oct 14, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/10/14/360/">Spring Mybatis拦截sql语句</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-10-14T06:22:22.000Z">Oct 14, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/10/14/361/">git强制覆盖本地代码（与git远程仓库保持一致）</a>
+        </h4>
+      </article>
+    
+
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>

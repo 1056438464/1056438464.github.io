@@ -1,321 +1,369 @@
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="en">
+<head>
+  
 
 
-<title>shang wj</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
 
 
-<link rel="stylesheet" href="/styles/main.css">
-
-
-    <meta name="generator" content="Hexo 7.3.0"></head>
-    <body>
-        <div class="container">
-            <header>
-<div class="main">
-<div class="title">
-    <a href="#" class="logo">shang wj</a>
-</div>
-<div class="site-nav">
-    <ul id="menu" class="menu">
-    
-        <li class="menu-item text-underline">
-            <a href="/">Home</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/archives">Archives</a>
-        </li>
-    
-        <li class="menu-item text-underline">
-            <a href="/about/">About</a>
-        </li>
-            
-    </ul>
-</div>
-</div>
-</header>
-            <main class="main">
-                <section class="posts clearfix">
-    <div class="posts-wrapper">
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/30/304/">delete 多表删除的使用（连表删除）</a>
-            </div>
-            <p class="sub">Jan 30 2019</p>
-            <div class="post-content">
-                
-                    <p>1、从数据表t1中把那些id值在数据表t2里有匹配的记录全删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id </span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1 <span class="keyword">USING</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id </span><br></pre></td></tr></table></figure>
-
-
-<p>2、从数据表t1里在数据表t2里没有匹配的记录查找出来并删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1,<span class="keyword">USING</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br></pre></td></tr></table></figure>
-
-
-<p>3、从两个表中找出相同记录的数据并把两个表中的数据都删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1,t2 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> t2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t1.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
-
-<p>注意此处的delete t1,t2 from 中的t1,t2不能是别名</p>
-<p>如：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> t1,t2 <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
-
-<p>在数据里面执行是错误的（MYSQL 版本不小于5.0在5.0中是可以的）</p>
-<p>上述语句改写成</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> table_name,table2_name <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
-
-<p>在数据里面执行是错误的（MYSQL 版本小于5.0在5.0中是可以的）</p>
-<h2 id="附：上述语句运行的环境-MYSQL-4-0-2以上"><a href="#附：上述语句运行的环境-MYSQL-4-0-2以上" class="headerlink" title="附：上述语句运行的环境 MYSQL 4.0.2以上"></a>附：上述语句运行的环境 MYSQL 4.0.2以上</h2><p>联表删除：</p>
-<p>1、从数据表t1 中把那些id值在数据表t2 里有匹配的记录全删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id    或<span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1 <span class="keyword">USING</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id</span><br></pre></td></tr></table></figure>
-
-<p>2、从数据表t1里在数据表t2里没有匹配的记录查找出来并删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br><span class="line">或</span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1,<span class="keyword">USING</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
-
-<p>3、从两个表中找出相同记录的数据并把两个表中的数据都删除掉</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1,t2 <span class="keyword">from</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> t2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t1.id<span class="operator">=</span><span class="number">25</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>注意此处的delete t1,t2 from 中的t1,t2不能是别名</p>
-<p>如：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> t1,t2 <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> 在数据里面执行是错误的（MYSQL 版本不小于<span class="number">5.0</span>在<span class="number">5.0</span>中是可以的）</span><br></pre></td></tr></table></figure>
-
-<p>上述语句改写成</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> table_name,table2_name <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> 在数据里面执行是错误的（MYSQL 版本小于<span class="number">5.0</span>在<span class="number">5.0</span>中是可以的）</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/29/303/">后台接受post请求参数乱码问题</a>
-            </div>
-            <p class="sub">Jan 29 2019</p>
-            <div class="post-content">
-                
-                    <p>只需在后台获得request后，设置<code>request.setCharacterEncoding(&quot;UTF-8&quot;);</code>，即可解决乱码问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> HttpServletRequest <span class="title function_">getRequest</span><span class="params">()</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">		<span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())</span><br><span class="line">				.getRequest();</span><br><span class="line">		request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> request;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/21/300/">java二进制转换</a>
-            </div>
-            <p class="sub">Jan 21 2019</p>
-            <div class="post-content">
-                
-                    <h3 id="十转二进制"><a href="#十转二进制" class="headerlink" title="十转二进制"></a>十转二进制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">binaryStr</span> <span class="operator">=</span> java.lang.Integer.toBinaryString(data);</span><br></pre></td></tr></table></figure>
-<h3 id="二进制转十进制"><a href="#二进制转十进制" class="headerlink" title="二进制转十进制"></a>二进制转十进制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">&quot;0100&quot;</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> Integer.parseInt(a, <span class="number">2</span>); <span class="comment">// 2进制</span></span><br><span class="line"><span class="type">int</span> <span class="variable">o</span> <span class="operator">=</span> Integer.parseInt(a, <span class="number">8</span>); <span class="comment">// 8进制</span></span><br><span class="line">System.out.println(d);</span><br><span class="line">System.out.println(o);</span><br></pre></td></tr></table></figure>
-<h3 id="10进制变为3进制（n进制）字符串"><a href="#10进制变为3进制（n进制）字符串" class="headerlink" title="10进制变为3进制（n进制）字符串"></a>10进制变为3进制（n进制）字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">threeForm</span> <span class="operator">=</span> Integer.toString(<span class="number">5</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/18/299/">List集合内的元素进行顺序、倒序、随机排序</a>
-            </div>
-            <p class="sub">Jan 18 2019</p>
-            <div class="post-content">
-                
-                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(list); <span class="comment">// 顺序排列 </span></span><br><span class="line">Collections.shuffle(list); <span class="comment">// 混乱的意思 </span></span><br><span class="line">Collections.reverse(list); <span class="comment">// 倒序排列 </span></span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/18/298/">int数组转化成List&lt;Integer&gt;简便的方法</a>
-            </div>
-            <p class="sub">Jan 18 2019</p>
-            <div class="post-content">
-                
-                    <h3 id="int数组转化成List-Integer-简便的方法"><a href="#int数组转化成List-Integer-简便的方法" class="headerlink" title="int数组转化成List&lt; Integer&gt;简便的方法"></a>int数组转化成List&lt; Integer&gt;简便的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] src = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">List&lt;Integer&gt; list = Arrays.stream( src ).boxed().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<h3 id="String数组和list相互转换"><a href="#String数组和list相互转换" class="headerlink" title="String数组和list相互转换"></a>String数组和list相互转换</h3><p>List转换为Array可以这样处理：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list=<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">String[] strings = <span class="keyword">new</span> <span class="title class_">String</span>[list.size()];</span><br><span class="line"></span><br><span class="line">list.toArray(strings);</span><br></pre></td></tr></table></figure>
-
-<p>反过来，如果要将数组转成List怎么办呢？如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] s = &#123;<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>&#125;;</span><br><span class="line"><span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> java.util.Arrays.asList(s);</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/18/297/">Arraylist中set（index，object）与add（index，object）方法的区别</a>
-            </div>
-            <p class="sub">Jan 18 2019</p>
-            <div class="post-content">
-                
-                    <h3 id="set：将原来index位置上的object的替换掉"><a href="#set：将原来index位置上的object的替换掉" class="headerlink" title="set：将原来index位置上的object的替换掉"></a>set：将原来index位置上的object的替换掉</h3><h3 id="add：将原来index位置上的向后移动"><a href="#add：将原来index位置上的向后移动" class="headerlink" title="add：将原来index位置上的向后移动"></a>add：将原来index位置上的向后移动</h3>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/17/296/">linux的rz安装</a>
-            </div>
-            <p class="sub">Jan 17 2019</p>
-            <div class="post-content">
-                
-                    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install lrzsz</span><br></pre></td></tr></table></figure>
-<p>rz：从本地上传文件至服务器<br>sz filename：从服务器下载文件至本地</p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/16/295/">同时使用ORDER BY 和GROUP BY</a>
-            </div>
-            <p class="sub">Jan 16 2019</p>
-            <div class="post-content">
-                
-                    <p><code>注：GROUP BY 子句使用时必须放在 WHERE 子句中的条件之后，必须放在 ORDER BY 子句之前。</code></p>
-<h3 id="附：SQL执行顺序进行解读："><a href="#附：SQL执行顺序进行解读：" class="headerlink" title="附：SQL执行顺序进行解读："></a>附：SQL执行顺序进行解读：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">　　(1)from </span><br><span class="line">　　(2) join</span><br><span class="line">　　(3) on </span><br><span class="line">　　(4) where </span><br><span class="line">　　(5)group by</span><br><span class="line">　　(6) avg,sum.... （组函数）</span><br><span class="line">　　(7)having </span><br><span class="line">　　(8) select </span><br><span class="line">　　(9) distinct </span><br><span class="line">　　(10) order by 　</span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/14/294/">Java StringBuffer insert()方法</a>
-            </div>
-            <p class="sub">Jan 14 2019</p>
-            <div class="post-content">
-                
-                    <p>例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">      <span class="type">StringBuffer</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>(<span class="string">&quot;abcdefghijk&quot;</span>);</span><br><span class="line">      sb.insert(<span class="number">3</span>,<span class="string">&quot;123&quot;</span>);</span><br><span class="line">      System.out.println(sb); </span><br><span class="line">   &#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p>这将产生以下结果：<br><code>abc123defghijk</code></p>
-
-                
-            </div>
-        </article>
-    
-        <article class="post article-entry">
-            <div class="post-title">
-                <a class="post-title-link text-underline" href="/2019/01/11/293/">Java 实例 - 查找 List 中的最大最小值</a>
-            </div>
-            <p class="sub">Jan 11 2019</p>
-            <div class="post-content">
-                
-                    <p>以下实例演示了如何使用 Collections 类的 max() 和 min() 方法来获取List中最大最小值：</p>
-<h3 id="例1："><a href="#例1：" class="headerlink" title="例1："></a>例1：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> author by w3cschool.cc</span></span><br><span class="line"><span class="comment"> Main.java</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(<span class="string">&quot;one Two three Four five six one three Four&quot;</span>.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line">      System.out.println(list);</span><br><span class="line">      System.out.println(<span class="string">&quot;最大值: &quot;</span> + Collections.max(list));</span><br><span class="line">      System.out.println(<span class="string">&quot;最小值: &quot;</span> + Collections.min(list));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以上代码运行输出结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[one, Two, three, Four, five, six, one, three, Four]</span><br><span class="line">最大值: three</span><br><span class="line">最小值: Four</span><br></pre></td></tr></table></figure>
-<h3 id="例2："><a href="#例2：" class="headerlink" title="例2："></a>例2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Double&gt; input = new ArrayList&lt;Double&gt;();</span><br><span class="line">input.add(2.3);</span><br><span class="line">input.add(3.3);</span><br><span class="line">input.add(4.3);</span><br><span class="line">input.add(5.3);</span><br><span class="line">input.add(6.3);</span><br><span class="line">input.add(7.3);</span><br><span class="line">input.add(8.3);</span><br><span class="line">input.add(9.3);</span><br><span class="line">input.add(1.3);		</span><br><span class="line">System.out.println(input);</span><br><span class="line">System.out.println(&quot;最大值: &quot; + Collections.max(input));</span><br><span class="line">System.out.println(&quot;最小值: &quot; + Collections.min(input));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以上代码运行输出结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[2.3, 3.3, 4.3, 5.3, 6.3, 7.3, 8.3, 9.3, 1.3]</span><br><span class="line">最大值: 9.3</span><br><span class="line">最小值: 1.3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-                
-            </div>
-        </article>
-    
-</div>
-<div class="side-bar">
-
-
-    <div class="avator" id="avator">
-    <div class="title">
-        <a href="#" class="text-underline">About Me</a>
-    </div>
-        <img src="avator.jpg" class="ava-img">
-        <h3 class="author">shang wj</h3>
-        <div class="icon-list">
-        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
-        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
-        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
-        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
-        </div>
-    <div class="tags">
-    <h3 class="tags-title">Tags</h3>
-    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
-</div>
-    </div>
-</div>
-
-</section>
-
-    <nav class="page-nav">
-    
-        <a class="prev" href="/page/10/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text">Prev</span>
-        </a>
-    
-    
-        <a class="next" href="/page/12/">
-            <span class="next-text">Next</span>
-            <i class="iconfont icon-right"></i>
-        </a>
-    
-    </nav>
+    <meta name="author" content="shang wj">
 
 
 
-            </main>
-            <div class="copyright">
-  <div class="text">Powered By
-    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
-  </div>
-</div>
 
-        </div>
-    <div class="back-to-top" id="back-to-top">
-            <i class="iconfont icon-up"></i>
-    </div>
-        
-    </body>
-    
-<script src="/js/jquery-3.3.1.min.js"></script>
 
-    
-<script src="/js/back-to-top.js"></script>
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
 
-    
-<script src="/js/scroll.js"></script>
 
-    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": { 
-        preferredFont: "TeX", 
-        availableFonts: ["STIX","TeX"], 
-        linebreaks: { automatic:true }, 
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
-    },
-    tex2jax: { 
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
-        processEscapes: true, 
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {  
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
-        Macros: { href: "{}" } 
-    },
-    messageStyle: "none"
-    }); 
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
         }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="wrapper">
+    <div class="author">
+        <div class="author-avatar-wrapper">
+          <img
+            class="author-avatar"
+            src="https://cdn.jsdelivr.net/gh/dewjohn/CDN@latest/images/avatar.webp"
+            alt="avatar"
+            loading="lazy"
+          />
+      </div>
+      <h2 class="author-name">shang wj</h2>
+      <p class="author-bio">I just want something simpler...</p>
+    </div>
+    <main aria-label="Content">
+      
 
+    <h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-29T19:26:00.000Z">Jan 30, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/30/304/">delete 多表删除的使用（连表删除）</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-28T21:45:39.000Z">Jan 29, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/29/303/">后台接受post请求参数乱码问题</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-20T17:52:00.000Z">Jan 21, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/21/300/">java二进制转换</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-17T22:16:52.000Z">Jan 18, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/18/299/">List集合内的元素进行顺序、倒序、随机排序</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-17T21:51:16.000Z">Jan 18, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/18/298/">int数组转化成List&lt;Integer&gt;简便的方法</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-17T21:22:51.000Z">Jan 18, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/18/297/">Arraylist中set（index，object）与add（index，object）方法的区别</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-17T06:28:08.000Z">Jan 17, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/17/296/">linux的rz安装</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-16T01:09:18.000Z">Jan 16, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/16/295/">同时使用ORDER BY 和GROUP BY</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-13T18:05:39.000Z">Jan 14, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/14/294/">Java StringBuffer insert()方法</a>
+        </h4>
+      </article>
+    
+      <article class="post-item">
+        <span class="post-item-date" datetime="2019-01-10T17:31:26.000Z">Jan 11, 2019</span>
+        <h4 class="post-item-title">
+          <a href="/2019/01/11/293/">Java 实例 - 查找 List 中的最大最小值</a>
+        </h4>
+      </article>
+    
+
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
 </html>
