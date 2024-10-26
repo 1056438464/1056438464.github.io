@@ -1,315 +1,128 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>接口的参数进行验签处理 [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>接口的参数进行验签处理 | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper post">
-  <main class="page-content" aria-label="Content">
-      <header class="header">
-        
-          <div class="tags">
-            <a href="/tags/Java/" class="tag"># Java</a>
-          </div>
-        
-        <h1 class="header-title" itemprop="headline">接口的参数进行验签处理</h1>
-          <div class="post-meta">
-            <time>May 11, 2023</time>
-            <span itemprop="author">
-              <span itemprop="name">shang wj</span>
-            </span>
-          </div>
-        </header>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <article class="post">
+  <h3 class="date">
+  <time datetime="2023-05-11T14:42:22.000Z">
+    May 11, 2023
+  </time>
+</h3>
+  <h1>接口的参数进行验签处理</h1>
+  <p class="post-info">
+  
+  
+  <a href="/2023/05/11/393/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/05/11/393/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/05/11/393/">获取中...</span>
+  
+</p>
+  
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
-          <div class="page-content"><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>需要与第三方对接接口。在对方的接口中存在几个异步通知，为了接口的安全性，需要对接口的参数进行验签处理。<br>为了方便大家对异步通知返回参数的处理，要将该验签功能进行统一封装，到时候大家只需要关注自己的业务逻辑即可。</p>
+  
+  <article>
+    <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>需要与第三方对接接口。在对方的接口中存在几个异步通知，为了接口的安全性，需要对接口的参数进行验签处理。<br>为了方便大家对异步通知返回参数的处理，要将该验签功能进行统一封装，到时候大家只需要关注自己的业务逻辑即可。</p>
 <h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">定义业务接口类</span><br><span class="line">业务接口类包含两个方法：具体业务处理的类型；业务的具体处理方法。</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">INotifyService</span> &#123;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 处理类型</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">public</span> String <span class="title function_">handleType</span><span class="params">()</span>;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 处理具体业务</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> Integer <span class="title function_">handle</span><span class="params">(String notifyBody)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">异步通知统一入口</span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/notify&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NotifyController</span> &#123;</span><br><span class="line"> <span class="keyword">private</span> IService service;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(value = &quot;/receive&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">receive</span><span class="params">(<span class="meta">@RequestBody</span> String body)</span> &#123;</span><br><span class="line">        <span class="comment">//处理通知</span></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">status</span> <span class="operator">=</span> service.handle(body);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">在 Iservice 中做两个步骤：</span><br><span class="line"></span><br><span class="line">在 spring 启动之后，收集所有的类型为 INotifyService的类并放入map中;</span><br><span class="line">将参数进行处理转化，并验签处理；</span><br><span class="line"><span class="keyword">private</span> ApplicationContext applicationContext;</span><br><span class="line"><span class="keyword">private</span> Map&lt;String,INotifyService&gt; notifyServiceMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 启动加载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostConstruct</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line"> Map&lt;String,INotifyService&gt; map = applicationContext.getBeansOfType(INotifyService.class);</span><br><span class="line"> Collection&lt;INotifyService&gt; services = map.values();</span><br><span class="line"> <span class="keyword">if</span>(CollectionUtils.isEmpty(services))&#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> notifyServiceMap = services.stream().collect(Collectors.toMap(INotifyService::handleType, x -&gt; x));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Map&lt;String, INotifyService&gt; <span class="title function_">getNotifyServiceMap</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> notifyServiceMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Integer <span class="title function_">handle</span><span class="params">(String body)</span> &#123;</span><br><span class="line"> <span class="comment">//参数处理+验签逻辑</span></span><br><span class="line">    ......</span><br><span class="line">        </span><br><span class="line"> <span class="comment">//获取具体的业务实现类</span></span><br><span class="line"> INotifyService notifyService=notifyServiceMap.get(notifyType);</span><br><span class="line"> Integer status=<span class="literal">null</span>;</span><br><span class="line"> <span class="keyword">if</span>(Objects.nonNull(notifyService)) &#123;</span><br><span class="line">  <span class="comment">//执行具体业务</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">   status=notifyService.handle(JSON.toJSONString(requestParameter));</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">   e.printStackTrace();</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//后续逻辑处理</span></span><br><span class="line">    ......</span><br><span class="line">        </span><br><span class="line"> <span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br><span class="line">业务具体实现</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NotifySignServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">INotifyService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">handleType</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;type_sign&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">handle</span><span class="params">(String notifyBody)</span> &#123;</span><br><span class="line">        <span class="comment">//具体的业务处理</span></span><br><span class="line">        ......</span><br><span class="line">    ｝</span><br><span class="line">｝</span><br></pre></td></tr></table></figure>
 <p>小结<br>此方案提供统一的异步通知入口，把公共的参数处理和验签逻辑与业务逻辑剥离。<br>利用 java 动态加载类的特性，将实现类通过类型进行收集。<br>利用 java 多态的特性，通过不同的实现类来处理不同的业务逻辑。</p>
-</div>
-          <nav class="post-nav">
-    
-    <a class="post-nav-item post-nav-prev" href="/2023/06/19/394/">
-      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
-      <span class="post-title">Consumer 接口</span>
-    </a>
-    
-    
-    <a class="post-nav-item post-nav-next" href="/2023/03/21/392/">
-      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
-      <span class="post-title">利用语法糖用枚举实现“状态”转换限制</span>
-    </a>
-    
-  </nav>
 
-   </main>
-</div>
+  </article>
+  
+  <hr>
+  <blockquote>
+    <p>
+      本文由 <a href="">shang wj</a> 创作，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0</a> 国际许可协议。
+    </p>
+    <p>
+      本站文章除注明转载/出处外，均为本站原创或翻译，转载请务必署名。
+    </p>
+  </blockquote>
+  
+</article>
 
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+
+<div id="waline"></div>
+
+    </div>
+  </div>
+  <footer>
   
   
-
-    
-      <script src="/js/main.js"></script>
-    
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>

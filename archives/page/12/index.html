@@ -1,393 +1,316 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Archives  [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>Archives | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-
-
-  <div class="wrapper">
-    <main class="page-content">
-    <header class="header">
-      <h1 class="header-title center">Archives</h1>
-    </header>
-      
-      
-        
-        
-        <h2 class="list-year">2019<svg xml="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon"><path d="M558 775q-7 17-4 28 3 12 15 13 9 2 19-8 10-11 14-28 4-18-6-36-9 0-25 12-9 10-13 19zm358-229q-4-7-8-10-2-2-6-5-2-2-6 0t-6 2q-2 1-4 4-1 2-4 7-1 1-1 3t2 6q2 3 9-1 10-4 10 7-1 14-13 16h-3q-3-20-38-48-53-44-153-46H562q-1 2-3 4t-3 11-4 16q-3 6 2 17t8 15q19 21 35 55 16 33 15 66v71q0 11 1 32 1 20 4 29 4 10 7 12l2 2 10 5q4 1 11-1t15-8q7-7 15-25t16-43q18 1 55 3v7q0 4 1 17 1 12 5 19t10 15q6 9 17 5 15-2 18-14t0-25q-3-14 1-28 5-13 9 11 1 10 3 31 1 9 2 11 1 6 8 9t18-1q10-4 13-14 4-8 4-27 0-18 5-43 5-24 22-50 8-10 9-39 1-28-4-35l18-9q14-8 13-21 0-7-4-15zM593 688q6-30 3-55-3-24-13-44-11-19-19-31-8-13-17-19-3-2-7-7-3-36-11-63-7-28-17-43-10-16-17-24-8-8-15-11l-6-3q8-53-18-58h-3q-3 0-7 1-5 2-10 5-5 4-9 9t-9 10-7 8-7 9q-35 0-141-2-3-11-8-18t-10-6q-2-1-4-1-7-1-12 1t-8 8-4 11-1 13q0 9 1 12t1 10q0 1 1 3h1v9q0 6 3 11-10 13-16 32-6 20-9 38-3 19-4 38-1 20-6 32-4 12-9 18-2 3-19 20-10 9-29 27-11 12-19 29-8 16-8 28v3q8 51 57 80 49 45 142 60 32 5 60 5 52 0 90-17 121-36 140-128zm-163 9q-2 0-3-1t-2-1-3-2-3-1q-5-10-2-30 3-19 15-14 13 4 19 9 5 5 3 11t-5 12q-4 5-11 10t-8 7zm-7-243q10 0 16 25-5 25-19 25-7-1-12-13v-1q-1-2-2-8-2-6 0-12 1-7 5-11t12-5zm-116-3q9 3 9 30-17 50-32 7-1-17 7-29 8-11 16-8zm-51 260q-5-10-8-23-3-14 2-24t19-9q15 1 20 10t1 18l-3 9h1q-15 21-32 19z"/>" class="icon"></svg></h2>
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2019/01/10/292/">
-              正则表达式——过滤非字母字符
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2019/01/09/291/">
-              git回退到某个历史版本
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <h2 class="list-year">2018<svg xml="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon"><path d="M346 553q-4 17-17 70 38-1 66-9 13-4 27-10 16-8 34-21 31-22 91-68 32-25 53-59 22-33 31-65t12-58q3-25 3-44 0-5-1-15 10-3 20-8 9-5 15-9 4-3 11-9 3-2 10-9-24-24-47-34-22-9-37-4-14 5-26 13-12 7-18 17-1 3-5 8h-20q-24-13-63-16t-64 0q-9 1-26 3-4-25-17-35t-29-8q-15 2-30 7-14 5-25 11-4 3-10 7 2 24 43 24-8 97-58 133-8-1-24-2-13-1-18-3h-6q-4-12-9-21-5-10-11-13-4-1-12-5-5-2-8-1h-3q-17 1-26 23-10 21-11 51v5q0 27 10 55 10 31 27 54 39 45 168 45zm99-222q1-11 6-16 4-5 11-8h2l1 1q5 3 8 11t3 16v8q-3 11-19 17-13-6-12-29zm-95-12q10-7 18-2 7 5 8 31 0 15-22 23h-5q-1-3-4-14-2-7-2-15 0-9 1-14t6-9zm-33 252q-17-1-68-5-24 34-25 53 0 3-1 8-1 6 0 11 1 4-1 9t1 10 3 8 5 8q6 6 8 4 2-1 12 0 10 2 15-3 25-9 37-34 12-26 13-48 1-7 1-21zm276-74l-9 12q-6 7-26 26-19 20-43 37-23 17-58 37-35 19-74 32-61 142-77 181-8 21-12 34-4 12-9 33-5 22-3 35 2 14 11 23 18 15 61-47 43-63 68-121l15 9q-7 12-16 31-9 18-24 56-14 38-10 54 8 35 29 36 33 1 67-92 7-18 21-55 0 2 2 7 1 4 6 18 5 15 12 26t22 26q14 14 33 23 1-5 4-16 2-9 6-18 4-8 10-18t13-20q8-9 17-17t21-11q13-3 27-4t32 6q-4 0-12 1t-25 6q-18 5-31 15-13 11-25 33-11 23-9 50h-3q-2 1-8 2l-12 4q-4 1-14 4-8 2-15 5t-14 5-12 6q-4 4-9 7t-3 7q0 6 1 10 1 5 6 9t16 8q10 4 29 5 20 1 47 1 28 0 70-5t97-10q36-5 44-45 9-40-4-82-12-42-27-68-5-8-23-30-17-21-38-45-20-23-44-54-23-31-43-57-19-27-36-57-16-29-19-48zm312 184q-8 9-23 19-16 10-30 18-10 6-29 17-14 8-23 10-3 2-8 5 11 4 20 22 9 17 10 29 1 13 3 15 8 2 13 2t7-1q1-1 3-1 60-27 60-98 0-9-1-19 0-6-2-18z"/>" class="icon"></svg></h2>
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/28/289/">
-              redis主从复制
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/25/288/">
-              JS 计算一个对象/Object的长度
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/24/285/">
-              JS编码问题
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/20/284/">
-              java项目中的properties 注释并显示中文
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/19/283/">
-              JS 正则去除所有空格
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/14/281/">
-              Bootstrap表格内容垂直水平居中
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/12/07/280/">
-              js获取一个对象的长度
-            </a>
-          </h3>
-        </article>
-      
-        
-        
-        <article class="post-item">
-          <h3 class="post-item-title">
-            <a href="/2018/11/29/279/">
-              append()与prepend()的区别
-            </a>
-          </h3>
-        </article>
-      
-    </main>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <ul class="archive">
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2019-01-09T18:36:45.000Z">
+    Jan 10, 2019
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2019/01/10/292/">正则表达式——过滤非字母字符</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2019/01/10/292/#waline" class="post-info-item comment-count waline-comment-count" id="/2019/01/10/292/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2019/01/10/292/">获取中...</span>
+  
+</p>
+    
   </div>
-
-
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2019-01-08T18:53:48.000Z">
+    Jan 9, 2019
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2019/01/09/291/">git回退到某个历史版本</a>
+    </h2>
+    <p class="post-info">
   
   
-
+  <a href="/2019/01/09/291/#waline" class="post-info-item comment-count waline-comment-count" id="/2019/01/09/291/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2019/01/09/291/">获取中...</span>
+  
+</p>
     
-      <script src="/js/main.js"></script>
-    
+  </div>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-28T06:11:00.000Z">
+    Dec 28, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/28/289/">redis主从复制</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/28/289/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/28/289/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/28/289/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-24T22:36:25.000Z">
+    Dec 25, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/25/288/">JS 计算一个对象/Object的长度</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/25/288/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/25/288/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/25/288/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-24T00:36:00.000Z">
+    Dec 24, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/24/285/">JS编码问题</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/24/285/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/24/285/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/24/285/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-19T17:21:05.000Z">
+    Dec 20, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/20/284/">java项目中的properties 注释并显示中文</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/20/284/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/20/284/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/20/284/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-18T22:19:00.000Z">
+    Dec 19, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/19/283/">JS 正则去除所有空格</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/19/283/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/19/283/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/19/283/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-13T17:35:00.000Z">
+    Dec 14, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/14/281/">Bootstrap表格内容垂直水平居中</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/14/281/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/14/281/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/14/281/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-12-06T18:46:00.000Z">
+    Dec 7, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/12/07/280/">js获取一个对象的长度</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/12/07/280/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/12/07/280/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/12/07/280/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2018-11-28T21:37:00.000Z">
+    Nov 29, 2018
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2018/11/29/279/">append()与prepend()的区别</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2018/11/29/279/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/11/29/279/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/11/29/279/">获取中...</span>
+  
+</p>
+    
+  </div>
+  
+</li>
+  
+  
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/archives/page/11/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/10/">10</a><a class="page-number" href="/archives/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/archives/page/13/">13</a><a class="page-number" href="/archives/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/20/">20</a><a class="extend next" rel="next" href="/archives/page/13/">&gt;</a>
+  </nav>
+  
+</ul>
+    </div>
+  </div>
+  <footer>
+  
+  
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
+  
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>

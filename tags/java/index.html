@@ -1,415 +1,358 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tag: Java [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>tag: Java | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper">
-  <div class="page-content">
-      <header class="header">
-        <h1 class="header-title center">Java</h1>
-      </header>
-      
-      
-        
-        
-        <h2 class="list-year">2024<svg xml="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon"><path d="M673 556q-10 0-31 7-20 7-39 14-18 7-30 5-5 0-11-3t-9-9-9-13q-6-8-8-15-2-4-6-13 8 0 20-2t16-2h13q4 2 13 9t14 12q3 3 9 10 5 1 17 2t22-11q11-11 3-30-8-23-2-38l15 15q2-5 8-19 10 3 42 12-1-4-5-17 5 0 8-2t4-6l12 6q0-22-21-39 20-4 23-9 3-4 4-9t-1-11-14-8q4-2 7-5t7-5q2-2 5-7 2 1 5 1t7-2 4-6q5-14-20-22 11-14 31-41 11-19 11-26 0-3-2-4t-6-2-17 5-26 22q-1 0-2-1t-4-1h-9q-4 0-4 2-19 15-26 35-10-2-31-8 2-1 6-6 3-4 12-14t14-20q5-9 13-18 7-9 5-13 0-13-14-13-23-1-46 35-7 0-9-14t-13 6q-1 2-2 5-4-15-11-28-6-12-14-21t-16-16q-8-8-18-14-9-6-17-8t-16-6q-9-4-14-3t-8-1q-1-1-3-1 4 14 15 57-12 1-49 2 1 2 1 6t3 14q3 9 4 18t1 15q0 7-1 10t-53 7q-22 2-4 7 2 1 7 2 14 4 28 14 13 11 18 18 2 2 6 7 5 15 2 28-3 12-18 22t-33 19q-17 8-43 12-25 4-48 9-22 5-48 5t-44 7q-19 7-25 16-6 8-11 16-3 5-3 9 0 2 1 3 0 2 1 6 5 0 22-2 3 7 12 27 4-5 15-21 6 5 22 21 2-5 7-11 3-4 9-11 4-6 10-10t9-8q0-1 2-2 3 7 13 22 10 14 19 23 3 4 9 10 2 25 12 47 10 23 20 36 11 14 23 26t18 15q3 2 8 5-4 2-8 9-4 6-6 13t-3 15-3 16q-2 7-1 14t-1 9v3q-68 36-49 80 1 3 5 8-4-10 3-24t16 2q7 10 12 12t7 2q1-1 3-2 5-12 8-16t5-3q3 1 8 5 7 4 14 6 12 3 15-12 3-16 0-29-1-6-2-16-2-15 12-33 15-19 33-26t37 16q28 31 1 75t-99 78q-92 44-29 75-15 19-21 33-5 13-4 19t9 6q7 0 14-1t16-5q7-3 20-9 6 25 18 25 15 0 39-37 11-19 11-20 10 14 18 19 8 4 16-5 8-8 13-15 6-7 11-22 2-7 6-20 0-2 2-8 28 15 33-33 3-23 1-50 36-20 45-77 9-56 2-103-4-23 0-38t9-22q2-1 6-5 9 5 36 21v-33q8 3 33 12l-8-40q6-2 25-11-37-28-59-18-23 9-32 23-9 15-10 20zm-7-155h-1q13-6 23 3-3 2-9 7h-11q-13-3-2-10zm-49-13q8 0 12 3t5 8q-2 1-6 4-3 2-7 3-5 1-5 0t-2-5q0-8 3-13z"/>" class="icon"></svg></h2>
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2024/06/19/409/">
-            Java循环：for、foreach与stream性能对比
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2024/05/21/407/">
-            Java中“100=100”为true，而&#34;1000=1000&#34;为false？
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2024/02/24/403/">
-            微服务开发时，接口不能对外暴
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2024/02/23/402/">
-            Spring File Storag简单使用
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2024/01/19/401/">
-            高并发系统设计
-          </a>
-        </div>
-      
-        
-        
-        <h2 class="list-year">2023<svg xml="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon"><path d="M655 927q1-3 11-8 9-5 18-15t8-27q1-34-53-30-2 1-5 1-13-24 4-41 8 4 19 7 12 3 20 6 3 0 8 1 21-7 2-52-18-45-36-58-4-2-9-6-3-2-9-7-4-3-7-8t-6-7q-4-2-7-7-1-2-5-6 30-13 44-38 15-24 15-49 0-24-5-47-6-22-11-37-2-4-7-13 22-45 37-84t19-66q3-16 8-49 3-22-1-35-5-14-6-24t-6-12q-1-2-3-4-32 7-59 35-28 29-44 64-17 35-28 69-11 33-17 57-2 7-5 22h-35q1-3 4-15 18-42 29-80 10-38 12-61 2-24-1-45-3-22-9-32-7-10-12-21-5-10-10-10-2-1-5-3-39 28-65 67-25 39-34 75-10 37-13 69t0 53q3 22 5 23t3 5q0 2 2 7 1 3 1 7t1 7v3q-24 19-35 39-11 21-11 38 0 18 7 33t14 27q7 11 17 19 11 8 10 11 4 6 1 16h-1q-10 4-38 16-62 29-72 71-8 27 12 37 11 4 24-2 49-20 51-10-2 19-7 55-80-21-83 16-2 23 22 42 5 3 10 5 28 14 6 19-90 6-89 33v2q2 10 10 17 27 6 52 8 26 2 45 2 20 0 37-2 18-2 31-6 8-2 25-7 11-3 18-8 7-6 12-8t7-6q1-1 2-3-16-20-14-31 2-10 10-14 9-4 15-1 34 13 43 27 3 4-2 5-7 2-21 5-7 2-9 5t-3 6 4 7 16 9q77 29 202-10l9-3q-16-39-84-40zM457 581v-1q-4-7 4-23l9-3q5 0 7 3t2 7-1 9-2 6q-2 4-6 10-10-2-13-8zm86-24q1-2 5-4t6-2q7 2 11 10-4 23-16 21-3-1-4-4-1-2-2-6-1-3-1-7t1-6v-2zm-13 76q-1 7-4 11t-6 7h-31q-14 0-13-8 1-7 21-14h2q24-7 31 4z"/>" class="icon"></svg></h2>
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2023/11/09/400/">
-            CountDownLatch详解
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2023/06/23/395/">
-            try-catch-finally
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2023/06/19/394/">
-            Consumer 接口
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2023/05/11/393/">
-            接口的参数进行验签处理
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2023/03/21/392/">
-            利用语法糖用枚举实现“状态”转换限制
-          </a>
-        </div>
-      
-    </div>
-</div>
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <ul class="archive">
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2024-06-19T14:42:22.000Z">
+    Jun 19, 2024
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2024/06/19/409/">Java循环：for、foreach与stream性能对比</a>
+    </h2>
+    <p class="post-info">
   
   
+  <a href="/2024/06/19/409/#waline" class="post-info-item comment-count waline-comment-count" id="/2024/06/19/409/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2024/06/19/409/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2024-05-21T14:42:22.000Z">
+    May 21, 2024
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2024/05/21/407/">Java中“100=100”为true，而"1000=1000"为false？</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2024/05/21/407/#waline" class="post-info-item comment-count waline-comment-count" id="/2024/05/21/407/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2024/05/21/407/">获取中...</span>
+  
+</p>
     
-      <script src="/js/main.js"></script>
-    
-  
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
-</body>
-</html>
-0 0 1024 1024" class="icon"><path d="M346 553q-4 17-17 70 38-1 66-9 13-4 27-10 16-8 34-21 31-22 91-68 32-25 53-59 22-33 31-65t12-58q3-25 3-44 0-5-1-15 10-3 20-8 9-5 15-9 4-3 11-9 3-2 10-9-24-24-47-34-22-9-37-4-14 5-26 13-12 7-18 17-1 3-5 8h-20q-24-13-63-16t-64 0q-9 1-26 3-4-25-17-35t-29-8q-15 2-30 7-14 5-25 11-4 3-10 7 2 24 43 24-8 97-58 133-8-1-24-2-13-1-18-3h-6q-4-12-9-21-5-10-11-13-4-1-12-5-5-2-8-1h-3q-17 1-26 23-10 21-11 51v5q0 27 10 55 10 31 27 54 39 45 168 45zm99-222q1-11 6-16 4-5 11-8h2l1 1q5 3 8 11t3 16v8q-3 11-19 17-13-6-12-29zm-95-12q10-7 18-2 7 5 8 31 0 15-22 23h-5q-1-3-4-14-2-7-2-15 0-9 1-14t6-9zm-33 252q-17-1-68-5-24 34-25 53 0 3-1 8-1 6 0 11 1 4-1 9t1 10 3 8 5 8q6 6 8 4 2-1 12 0 10 2 15-3 25-9 37-34 12-26 13-48 1-7 1-21zm276-74l-9 12q-6 7-26 26-19 20-43 37-23 17-58 37-35 19-74 32-61 142-77 181-8 21-12 34-4 12-9 33-5 22-3 35 2 14 11 23 18 15 61-47 43-63 68-121l15 9q-7 12-16 31-9 18-24 56-14 38-10 54 8 35 29 36 33 1 67-92 7-18 21-55 0 2 2 7 1 4 6 18 5 15 12 26t22 26q14 14 33 23 1-5 4-16 2-9 6-18 4-8 10-18t13-20q8-9 17-17t21-11q13-3 27-4t32 6q-4 0-12 1t-25 6q-18 5-31 15-13 11-25 33-11 23-9 50h-3q-2 1-8 2l-12 4q-4 1-14 4-8 2-15 5t-14 5-12 6q-4 4-9 7t-3 7q0 6 1 10 1 5 6 9t16 8q10 4 29 5 20 1 47 1 28 0 70-5t97-10q36-5 44-45 9-40-4-82-12-42-27-68-5-8-23-30-17-21-38-45-20-23-44-54-23-31-43-57-19-27-36-57-16-29-19-48zm312 184q-8 9-23 19-16 10-30 18-10 6-29 17-14 8-23 10-3 2-8 5 11 4 20 22 9 17 10 29 1 13 3 15 8 2 13 2t7-1q1-1 3-1 60-27 60-98 0-9-1-19 0-6-2-18z"/>" class="icon"></svg></h2>
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2018/05/09/64/">
-            百度语音demo
-          </a>
-        </div>
-      
-        
-        
-        <div class="post-item">
-          <a class="post-item-title"  href="/2018/04/23/43/">
-            CentSO 7.4 下安装jdk1.8、mysql、php服务
-          </a>
-        </div>
-      
-    </div>
-</div>
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
-  
-  
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
-    
-      <script src="/js/main.js"></script>
-    
+  </div>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2024-02-24T14:42:22.000Z">
+    Feb 24, 2024
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2024/02/24/403/">微服务开发时，接口不能对外暴</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2024/02/24/403/#waline" class="post-info-item comment-count waline-comment-count" id="/2024/02/24/403/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2024/02/24/403/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2024-02-23T14:42:22.000Z">
+    Feb 23, 2024
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2024/02/23/402/">Spring File Storag简单使用</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2024/02/23/402/#waline" class="post-info-item comment-count waline-comment-count" id="/2024/02/23/402/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2024/02/23/402/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2024-01-19T14:42:22.000Z">
+    Jan 19, 2024
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2024/01/19/401/">高并发系统设计</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2024/01/19/401/#waline" class="post-info-item comment-count waline-comment-count" id="/2024/01/19/401/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2024/01/19/401/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2023-11-09T14:42:22.000Z">
+    Nov 9, 2023
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2023/11/09/400/">CountDownLatch详解</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2023/11/09/400/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/11/09/400/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/11/09/400/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2023-06-23T14:42:22.000Z">
+    Jun 23, 2023
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2023/06/23/395/">try-catch-finally</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2023/06/23/395/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/06/23/395/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/06/23/395/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2023-06-19T14:42:22.000Z">
+    Jun 19, 2023
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2023/06/19/394/">Consumer 接口</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2023/06/19/394/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/06/19/394/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/06/19/394/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2023-05-11T14:42:22.000Z">
+    May 11, 2023
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2023/05/11/393/">接口的参数进行验签处理</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2023/05/11/393/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/05/11/393/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/05/11/393/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  <li class="archive-item">
+  <h3 class="date">
+  <time datetime="2023-03-21T14:42:22.000Z">
+    Mar 21, 2023
+  </time>
+</h3>
+  <div class="info">
+    <h2>
+      <a href="/2023/03/21/392/">利用语法糖用枚举实现“状态”转换限制</a>
+    </h2>
+    <p class="post-info">
+  
+  
+  <a href="/2023/03/21/392/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/03/21/392/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/03/21/392/">获取中...</span>
+  
+</p>
+    
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+  </div>
+  
+</li>
+  
+  
+</ul>
+    </div>
+  </div>
+  <footer>
+  
+  
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
+  
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
+</html>rget="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
+</body>
+
 </html>

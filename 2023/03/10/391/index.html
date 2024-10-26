@@ -1,269 +1,74 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security+JWT实战 [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>Security+JWT实战 | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper post">
-  <main class="page-content" aria-label="Content">
-      <header class="header">
-        
-          <div class="tags">
-            <a href="/tags/Security/" class="tag"># Security</a>
-          </div>
-        
-        <h1 class="header-title" itemprop="headline">Security+JWT实战</h1>
-          <div class="post-meta">
-            <time>Mar 10, 2023</time>
-            <span itemprop="author">
-              <span itemprop="name">shang wj</span>
-            </span>
-          </div>
-        </header>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <article class="post">
+  <h3 class="date">
+  <time datetime="2023-03-10T14:42:22.000Z">
+    Mar 10, 2023
+  </time>
+</h3>
+  <h1>Security+JWT实战</h1>
+  <p class="post-info">
+  
+  
+  <a href="/2023/03/10/391/#waline" class="post-info-item comment-count waline-comment-count" id="/2023/03/10/391/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2023/03/10/391/">获取中...</span>
+  
+</p>
+  
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Security/" rel="tag">Security</a></li></ul>
 
-          <div class="page-content"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>身份认证和用户授权：</p>
+  
+  <article>
+    <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>身份认证和用户授权：</p>
 <p>用户认证（Authentication）：系统通过校验用户提供的用户名和密码来验证该用户是否为系统中的合法主体，即是否可以访问该系统；<br>用户授权（Authorization）：系统为用户分配不同的角色，以获取对应的权限，即验证该用户是否有权限执行该操作；<br>Web应用的安全性包括用户认证和用户授权两个部分，而Spring Security（以下简称Security）基于Spring框架，正好可以完整解决该问题。</p>
 <p>它的真正强大之处在于它可以轻松扩展以满足自定义要求。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Security可以看做是由一组filter过滤器链组成的权限认证。它的整个工作流程如下所示：图片图中绿色认证方式是可以配置的，橘黄色和蓝色的位置不可更改：</p>
@@ -280,50 +85,58 @@
 <p>引入之后启动项目，会有如图所示：图片其中用户名为user</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">SecurityConfig类</span><br><span class="line"><span class="comment">//开启全局方法安全性</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled=true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//认证失败处理类</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AuthenticationEntryPointImpl unauthorizedHandler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//提供公钥私钥的配置类</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RsaKeyProperties prop;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserInfoService userInfoService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurity httpSecurity)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        httpSecurity</span><br><span class="line">                <span class="comment">// CSRF禁用，因为不使用session</span></span><br><span class="line">                .csrf().disable()</span><br><span class="line">                <span class="comment">// 认证失败处理类</span></span><br><span class="line">                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()</span><br><span class="line">                <span class="comment">// 基于token，所以不需要session</span></span><br><span class="line">                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()</span><br><span class="line">                <span class="comment">// 过滤请求</span></span><br><span class="line">                .authorizeRequests()</span><br><span class="line">                .antMatchers(</span><br><span class="line">                        HttpMethod.GET,</span><br><span class="line">                        <span class="string">&quot;/*.html&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/**/*.html&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/**/*.css&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/**/*.js&quot;</span></span><br><span class="line">                ).permitAll()</span><br><span class="line">                <span class="comment">// 除上面外的所有请求全部需要鉴权认证</span></span><br><span class="line">                .anyRequest().authenticated()</span><br><span class="line">                .and()</span><br><span class="line">                .headers().frameOptions().disable();</span><br><span class="line">        <span class="comment">// 添加JWT filter</span></span><br><span class="line">        httpSecurity.addFilter(<span class="keyword">new</span> <span class="title class_">TokenLoginFilter</span>(<span class="built_in">super</span>.authenticationManager(), prop))</span><br><span class="line">                .addFilter(<span class="keyword">new</span> <span class="title class_">TokenVerifyFilter</span>(<span class="built_in">super</span>.authenticationManager(), prop));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定认证对象的来源</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        </span><br><span class="line">        auth.userDetailsService(userInfoService)</span><br><span class="line">        <span class="comment">//从前端传递过来的密码就会被加密，所以从数据库</span></span><br><span class="line">        <span class="comment">//查询到的密码必须是经过加密的，而这个过程都是</span></span><br><span class="line">        <span class="comment">//在用户注册的时候进行加密的。</span></span><br><span class="line">        .passwordEncoder(passwordEncoder());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//密码加密</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> BCryptPasswordEncoder <span class="title function_">passwordEncoder</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">BCryptPasswordEncoder</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">「拦截规则」</span><br></pre></td></tr></table></figure>
 <p>anyRequest：匹配所有请求路径<br>access：SpringEl表达式结果为true时可以访问<br>anonymous：匿名可以访问<br>&#96;denyAll：用户不能访问<br>fullyAuthenticated：用户完全认证可以访问（非remember-me下自动登录）<br>hasAnyAuthority：如果有参数，参数表示权限，则其中任何一个权限可以访问<br>hasAnyRole：如果有参数，参数表示角色，则其中任何一个角色可以访问<br>hasAuthority：如果有参数，参数表示权限，则其权限可以访问<br>hasIpAddress：如果有参数，参数表示IP地址，如果用户IP和参数匹配，则可以访问<br>hasRole：如果有参数，参数表示角色，则其角色可以访问<br>permitAll：用户可以任意访问<br>rememberMe：允许通过remember-me登录的用户访问<br>authenticated：用户登录后可访问<br>认证失败处理类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  返回未授权</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthenticationEntryPointImpl</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationEntryPoint</span>, Serializable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> -<span class="number">8970718410437077606L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">commence</span><span class="params">(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)</span></span><br><span class="line">            <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">code</span> <span class="operator">=</span> HttpStatus.UNAUTHORIZED;</span><br><span class="line">        <span class="type">String</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="string">&quot;认证失败，无法访问系统资源，请先登陆&quot;</span>;</span><br><span class="line">        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(code, msg)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">认证流程</span><br><span class="line">自定义认证过滤器</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenLoginFilter</span> <span class="keyword">extends</span> <span class="title class_">UsernamePasswordAuthenticationFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RsaKeyProperties prop;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TokenLoginFilter</span><span class="params">(AuthenticationManager authenticationManager, RsaKeyProperties prop)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.authenticationManager = authenticationManager;</span><br><span class="line">        <span class="built_in">this</span>.prop = prop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description</span> 登陆验证</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> 2021/6/28 16:17</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [request, response]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> org.springframework.security.core.Authentication</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="keyword">public</span> Authentication <span class="title function_">attemptAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">UserPojo</span> <span class="variable">sysUser</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().readValue(request.getInputStream(), UserPojo.class);</span><br><span class="line">            <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(sysUser.getUsername(), sysUser.getPassword());</span><br><span class="line">            <span class="keyword">return</span> authenticationManager.authenticate(authRequest);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">                <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">                <span class="type">Map</span> <span class="variable">resultMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">                resultMap.put(<span class="string">&quot;code&quot;</span>, HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">                resultMap.put(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;用户名或密码错误！&quot;</span>);</span><br><span class="line">                out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(resultMap));</span><br><span class="line">                out.flush();</span><br><span class="line">                out.close();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception outEx)&#123;</span><br><span class="line">                outEx.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description</span> 登陆成功回调</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> 2021/6/28 16:17</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [request, response, chain, authResult]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">successfulAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserPojo</span>();</span><br><span class="line">        user.setUsername(authResult.getName());</span><br><span class="line">        user.setRoles((List&lt;RolePojo&gt;)authResult.getAuthorities());</span><br><span class="line">        <span class="comment">//通过私钥进行加密：token有效期一天</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> JwtUtils.generateTokenExpireInMinutes(user, prop.getPrivateKey(), <span class="number">24</span> * <span class="number">60</span>);</span><br><span class="line">        response.addHeader(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer &quot;</span>+token);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">            response.setStatus(HttpServletResponse.SC_OK);</span><br><span class="line">            <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">            <span class="type">Map</span> <span class="variable">resultMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">            resultMap.put(<span class="string">&quot;code&quot;</span>, HttpServletResponse.SC_OK);</span><br><span class="line">            resultMap.put(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;认证通过！&quot;</span>);</span><br><span class="line">            resultMap.put(<span class="string">&quot;token&quot;</span>, token);</span><br><span class="line">            out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(resultMap));</span><br><span class="line">            out.flush();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception outEx)&#123;</span><br><span class="line">            outEx.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Security默认登录路径为/login，当我们调用该接口时，它会调用上边的attemptAuthentication方法；要自定义UserInfoService继承UserDetailsService实现loadUserByUsername方法；</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserInfoService</span> <span class="keyword">extends</span> <span class="title class_">UserDetailsService</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfoServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserInfoService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SysUserInfoMapper userInfoMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException &#123;</span><br><span class="line">        <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> userInfoMapper.queryByUserName(username);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">其中的loadUserByUsername返回的是UserDetails类型，所以UserPojo继承UserDetails类</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserPojo</span> <span class="keyword">implements</span> <span class="title class_">UserDetails</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer status;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;RolePojo&gt; roles;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;</span><br><span class="line">        <span class="comment">//理想型返回 admin 权限，可自已处理这块</span></span><br><span class="line">        List&lt;SimpleGrantedAuthority&gt; auth = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        auth.add(<span class="keyword">new</span> <span class="title class_">SimpleGrantedAuthority</span>(<span class="string">&quot;ADMIN&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> auth;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 账户是否过期</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isAccountNonExpired</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否禁用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isAccountNonLocked</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 密码是否过期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isCredentialsNonExpired</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否启用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEnabled</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">当认证通过之后会在SecurityContext中设置Authentication对象，回调调用successfulAuthentication方法返回token信息</span><br><span class="line"></span><br><span class="line">自定义token过滤器</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenVerifyFilter</span> <span class="keyword">extends</span> <span class="title class_">BasicAuthenticationFilter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> RsaKeyProperties prop;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TokenVerifyFilter</span><span class="params">(AuthenticationManager authenticationManager, RsaKeyProperties prop)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(authenticationManager);</span><br><span class="line">        <span class="built_in">this</span>.prop = prop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilterInternal</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">header</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;Authorization&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (header == <span class="literal">null</span> || !header.startsWith(<span class="string">&quot;Bearer &quot;</span>)) &#123;</span><br><span class="line">            <span class="comment">//如果携带错误的token，则给用户提示请登录！</span></span><br><span class="line">            chain.doFilter(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果携带了正确格式的token要先得到token</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> header.replace(<span class="string">&quot;Bearer &quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">            <span class="comment">//通过公钥进行解密：验证tken是否正确</span></span><br><span class="line">            Payload&lt;UserPojo&gt; payload = JwtUtils.getInfoFromToken(token, prop.getPublicKey(), UserPojo.class);</span><br><span class="line">            <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> payload.getUserInfo();</span><br><span class="line">            <span class="keyword">if</span>(user!=<span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authResult</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(user.getUsername(), <span class="literal">null</span>, user.getAuthorities());</span><br><span class="line">                <span class="comment">//将认证信息存到安全上下文中</span></span><br><span class="line">                SecurityContextHolder.getContext().setAuthentication(authResult);</span><br><span class="line">                chain.doFilter(request, response);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-          <nav class="post-nav">
-    
-    <a class="post-nav-item post-nav-prev" href="/2023/03/21/392/">
-      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
-      <span class="post-title">利用语法糖用枚举实现“状态”转换限制</span>
-    </a>
-    
-    
-    <a class="post-nav-item post-nav-next" href="/2023/01/21/389/">
-      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
-      <span class="post-title">InnoDB解决幻读的方案--LBCC&amp;MVCC</span>
-    </a>
-    
-  </nav>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  返回未授权</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthenticationEntryPointImpl</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationEntryPoint</span>, Serializable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> -<span class="number">8970718410437077606L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">commence</span><span class="params">(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)</span></span><br><span class="line">            <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">code</span> <span class="operator">=</span> HttpStatus.UNAUTHORIZED;</span><br><span class="line">        <span class="type">String</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="string">&quot;认证失败，无法访问系统资源，请先登陆&quot;</span>;</span><br><span class="line">        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(code, msg)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">认证流程</span><br><span class="line">自定义认证过滤器</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenLoginFilter</span> <span class="keyword">extends</span> <span class="title class_">UsernamePasswordAuthenticationFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RsaKeyProperties prop;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TokenLoginFilter</span><span class="params">(AuthenticationManager authenticationManager, RsaKeyProperties prop)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.authenticationManager = authenticationManager;</span><br><span class="line">        <span class="built_in">this</span>.prop = prop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description</span> 登陆验证</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> 2021/6/28 16:17</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [request, response]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> org.springframework.security.core.Authentication</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="keyword">public</span> Authentication <span class="title function_">attemptAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">UserPojo</span> <span class="variable">sysUser</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().readValue(request.getInputStream(), UserPojo.class);</span><br><span class="line">            <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(sysUser.getUsername(), sysUser.getPassword());</span><br><span class="line">            <span class="keyword">return</span> authenticationManager.authenticate(authRequest);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">                <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">                <span class="type">Map</span> <span class="variable">resultMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">                resultMap.put(<span class="string">&quot;code&quot;</span>, HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">                resultMap.put(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;用户名或密码错误！&quot;</span>);</span><br><span class="line">                out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(resultMap));</span><br><span class="line">                out.flush();</span><br><span class="line">                out.close();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception outEx)&#123;</span><br><span class="line">                outEx.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@description</span> 登陆成功回调</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> 2021/6/28 16:17</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> [request, response, chain, authResult]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">successfulAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserPojo</span>();</span><br><span class="line">        user.setUsername(authResult.getName());</span><br><span class="line">        user.setRoles((List&lt;RolePojo&gt;)authResult.getAuthorities());</span><br><span class="line">        <span class="comment">//通过私钥进行加密：token有效期一天</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> JwtUtils.generateTokenExpireInMinutes(user, prop.getPrivateKey(), <span class="number">24</span> * <span class="number">60</span>);</span><br><span class="line">        response.addHeader(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer &quot;</span>+token);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">            response.setStatus(HttpServletResponse.SC_OK);</span><br><span class="line">            <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">            <span class="type">Map</span> <span class="variable">resultMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">            resultMap.put(<span class="string">&quot;code&quot;</span>, HttpServletResponse.SC_OK);</span><br><span class="line">            resultMap.put(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;认证通过！&quot;</span>);</span><br><span class="line">            resultMap.put(<span class="string">&quot;token&quot;</span>, token);</span><br><span class="line">            out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(resultMap));</span><br><span class="line">            out.flush();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception outEx)&#123;</span><br><span class="line">            outEx.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Security默认登录路径为/login，当我们调用该接口时，它会调用上边的attemptAuthentication方法；要自定义UserInfoService继承UserDetailsService实现loadUserByUsername方法；</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserInfoService</span> <span class="keyword">extends</span> <span class="title class_">UserDetailsService</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfoServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserInfoService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SysUserInfoMapper userInfoMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException &#123;</span><br><span class="line">        <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> userInfoMapper.queryByUserName(username);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">其中的loadUserByUsername返回的是UserDetails类型，所以UserPojo继承UserDetails类</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserPojo</span> <span class="keyword">implements</span> <span class="title class_">UserDetails</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer status;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;RolePojo&gt; roles;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;</span><br><span class="line">        <span class="comment">//理想型返回 admin 权限，可自已处理这块</span></span><br><span class="line">        List&lt;SimpleGrantedAuthority&gt; auth = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        auth.add(<span class="keyword">new</span> <span class="title class_">SimpleGrantedAuthority</span>(<span class="string">&quot;ADMIN&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> auth;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 账户是否过期</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isAccountNonExpired</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否禁用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isAccountNonLocked</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 密码是否过期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isCredentialsNonExpired</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否启用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEnabled</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">当认证通过之后会在SecurityContext中设置Authentication对象，回调调用successfulAuthentication方法返回token信息</span><br><span class="line"></span><br><span class="line">自定义token过滤器</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenVerifyFilter</span> <span class="keyword">extends</span> <span class="title class_">BasicAuthenticationFilter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> RsaKeyProperties prop;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TokenVerifyFilter</span><span class="params">(AuthenticationManager authenticationManager, RsaKeyProperties prop)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(authenticationManager);</span><br><span class="line">        <span class="built_in">this</span>.prop = prop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilterInternal</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">header</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;Authorization&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (header == <span class="literal">null</span> || !header.startsWith(<span class="string">&quot;Bearer &quot;</span>)) &#123;</span><br><span class="line">            <span class="comment">//如果携带错误的token，则给用户提示请登录！</span></span><br><span class="line">            chain.doFilter(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果携带了正确格式的token要先得到token</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> header.replace(<span class="string">&quot;Bearer &quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">            <span class="comment">//通过公钥进行解密：验证tken是否正确</span></span><br><span class="line">            Payload&lt;UserPojo&gt; payload = JwtUtils.getInfoFromToken(token, prop.getPublicKey(), UserPojo.class);</span><br><span class="line">            <span class="type">UserPojo</span> <span class="variable">user</span> <span class="operator">=</span> payload.getUserInfo();</span><br><span class="line">            <span class="keyword">if</span>(user!=<span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authResult</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(user.getUsername(), <span class="literal">null</span>, user.getAuthorities());</span><br><span class="line">                <span class="comment">//将认证信息存到安全上下文中</span></span><br><span class="line">                SecurityContextHolder.getContext().setAuthentication(authResult);</span><br><span class="line">                chain.doFilter(request, response);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </article>
+  
+  <hr>
+  <blockquote>
+    <p>
+      本文由 <a href="">shang wj</a> 创作，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0</a> 国际许可协议。
+    </p>
+    <p>
+      本站文章除注明转载/出处外，均为本站原创或翻译，转载请务必署名。
+    </p>
+  </blockquote>
+  
+</article>
 
-   </main>
-</div>
 
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+<div id="waline"></div>
+
+    </div>
+  </div>
+  <footer>
   
   
-
-    
-      <script src="/js/main.js"></script>
-    
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>

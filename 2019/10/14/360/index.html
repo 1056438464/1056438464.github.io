@@ -1,314 +1,127 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spring Mybatis拦截sql语句 [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>Spring Mybatis拦截sql语句 | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper post">
-  <main class="page-content" aria-label="Content">
-      <header class="header">
-        
-          <div class="tags">
-            <a href="/tags/Spring/" class="tag"># Spring</a>
-          </div>
-        
-        <h1 class="header-title" itemprop="headline">Spring Mybatis拦截sql语句</h1>
-          <div class="post-meta">
-            <time>Oct 14, 2019</time>
-            <span itemprop="author">
-              <span itemprop="name">shang wj</span>
-            </span>
-          </div>
-        </header>
-
-          <div class="page-content"><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"><a href="#主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中" class="headerlink" title="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"></a>主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.tre.common.confg;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.executor.statement.StatementHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.BoundSql;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.MappedStatement;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.plugin.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.MetaObject;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.SystemMetaObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Intercepts(&#123;</span></span><br><span class="line"><span class="meta">  @Signature(</span></span><br><span class="line"><span class="meta">      type = StatementHandler.class,</span></span><br><span class="line"><span class="meta">      method = &quot;prepare&quot;,</span></span><br><span class="line"><span class="meta">      args = &#123;Connection.class, Integer.class&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">mybatisfilter</span> <span class="keyword">implements</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">StatementHandler</span> <span class="variable">statementHandler</span> <span class="operator">=</span> (StatementHandler) invocation.getTarget();</span><br><span class="line"></span><br><span class="line">    <span class="type">MetaObject</span> <span class="variable">metaObject</span> <span class="operator">=</span> SystemMetaObject.forObject(statementHandler);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;h&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;h&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;target&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;target&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">MappedStatement</span> <span class="variable">mappedStatement</span> <span class="operator">=</span></span><br><span class="line">        (MappedStatement) metaObject.getValue(<span class="string">&quot;delegate.mappedStatement&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sql语句类型 select、delete、insert、update</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sqlCommandType</span> <span class="operator">=</span> mappedStatement.getSqlCommandType().toString();</span><br><span class="line">    <span class="keyword">if</span> (sqlCommandType.equals(<span class="string">&quot;INSERT&quot;</span>) || sqlCommandType.equals(<span class="string">&quot;UPDATE&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="type">BoundSql</span> <span class="variable">boundSql</span> <span class="operator">=</span> statementHandler.getBoundSql();</span><br><span class="line">      <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> boundSql.getSql();</span><br><span class="line"></span><br><span class="line">      <span class="type">RequestAttributes</span> <span class="variable">requestAttributes</span> <span class="operator">=</span> RequestContextHolder.getRequestAttributes();</span><br><span class="line">      <span class="keyword">if</span> (requestAttributes != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes) requestAttributes).getRequest();</span><br><span class="line">        request.getSession().setAttribute(<span class="string">&quot;sql&quot;</span>, sql);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">plugin</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Plugin.wrap(o, <span class="built_in">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setProperties</span><span class="params">(Properties properties)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</div>
-          <nav class="post-nav">
+  
+  <p class="links">
     
-    <a class="post-nav-item post-nav-prev" href="/2019/10/14/359/">
-      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
-      <span class="post-title">BootStrap Table 解决固定表头表头不对应</span>
+    <a href="">
+      <img src="/images/links/" alt="">
     </a>
     
-    
-    <a class="post-nav-item post-nav-next" href="/2019/10/14/361/">
-      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
-      <span class="post-title">git强制覆盖本地代码（与git远程仓库保持一致）</span>
-    </a>
-    
-  </nav>
-
-   </main>
-</div>
-
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+  </p>
+  
+</header>
+    <div id="main">
+      <article class="post">
+  <h3 class="date">
+  <time datetime="2019-10-14T06:22:22.000Z">
+    Oct 14, 2019
+  </time>
+</h3>
+  <h1>Spring Mybatis拦截sql语句</h1>
+  <p class="post-info">
   
   
-
-    
-      <script src="/js/main.js"></script>
-    
+  <a href="/2019/10/14/360/#waline" class="post-info-item comment-count waline-comment-count" id="/2019/10/14/360/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2019/10/14/360/">获取中...</span>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+</p>
+  
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+
+  
+  <article>
+    <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"><a href="#主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中" class="headerlink" title="主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中"></a>主要思路还是通过mybatis拦截器拦截sql，并把sql放到session中</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.tre.common.confg;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.executor.statement.StatementHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.BoundSql;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.MappedStatement;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.plugin.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.MetaObject;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.SystemMetaObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Intercepts(&#123;</span></span><br><span class="line"><span class="meta">  @Signature(</span></span><br><span class="line"><span class="meta">      type = StatementHandler.class,</span></span><br><span class="line"><span class="meta">      method = &quot;prepare&quot;,</span></span><br><span class="line"><span class="meta">      args = &#123;Connection.class, Integer.class&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">mybatisfilter</span> <span class="keyword">implements</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">StatementHandler</span> <span class="variable">statementHandler</span> <span class="operator">=</span> (StatementHandler) invocation.getTarget();</span><br><span class="line"></span><br><span class="line">    <span class="type">MetaObject</span> <span class="variable">metaObject</span> <span class="operator">=</span> SystemMetaObject.forObject(statementHandler);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;h&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;h&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (metaObject.hasGetter(<span class="string">&quot;target&quot;</span>)) &#123;</span><br><span class="line">      <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> metaObject.getValue(<span class="string">&quot;target&quot;</span>);</span><br><span class="line">      metaObject = SystemMetaObject.forObject(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">MappedStatement</span> <span class="variable">mappedStatement</span> <span class="operator">=</span></span><br><span class="line">        (MappedStatement) metaObject.getValue(<span class="string">&quot;delegate.mappedStatement&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sql语句类型 select、delete、insert、update</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sqlCommandType</span> <span class="operator">=</span> mappedStatement.getSqlCommandType().toString();</span><br><span class="line">    <span class="keyword">if</span> (sqlCommandType.equals(<span class="string">&quot;INSERT&quot;</span>) || sqlCommandType.equals(<span class="string">&quot;UPDATE&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="type">BoundSql</span> <span class="variable">boundSql</span> <span class="operator">=</span> statementHandler.getBoundSql();</span><br><span class="line">      <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> boundSql.getSql();</span><br><span class="line"></span><br><span class="line">      <span class="type">RequestAttributes</span> <span class="variable">requestAttributes</span> <span class="operator">=</span> RequestContextHolder.getRequestAttributes();</span><br><span class="line">      <span class="keyword">if</span> (requestAttributes != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes) requestAttributes).getRequest();</span><br><span class="line">        request.getSession().setAttribute(<span class="string">&quot;sql&quot;</span>, sql);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">plugin</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Plugin.wrap(o, <span class="built_in">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setProperties</span><span class="params">(Properties properties)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+  </article>
+  
+  <hr>
+  <blockquote>
+    <p>
+      本文由 <a href="">shang wj</a> 创作，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0</a> 国际许可协议。
+    </p>
+    <p>
+      本站文章除注明转载/出处外，均为本站原创或翻译，转载请务必署名。
+    </p>
+  </blockquote>
+  
+</article>
+
+
+<div id="waline"></div>
+
+    </div>
+  </div>
+  <footer>
+  
+  
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
+  
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>

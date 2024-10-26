@@ -1,313 +1,128 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> 二次请求的错误 [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title> 二次请求的错误 | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper post">
-  <main class="page-content" aria-label="Content">
-      <header class="header">
-        
-        <h1 class="header-title" itemprop="headline"> 二次请求的错误</h1>
-          <div class="post-meta">
-            <time>Jun 11, 2018</time>
-            <span itemprop="author">
-              <span itemprop="name">shang wj</span>
-            </span>
-          </div>
-        </header>
-
-          <div class="page-content"><p>  第一次html请求是get请求 所以会直接执行 include $this-&gt;template()。这样就会直接执行 <strong>2html <strong>页面。但是 <strong>2html</strong> 的<code>&lt;input type=&#39;hidden&#39; name=&#39;id&#39; value=&#39;&#123;$id&#125;&#39; /&gt;</code>并没有获得id值。</strong>因为第一次html请求的值并没有包含进去</strong>，需要定义一个<code> $id = $_GPC[&#39;id&#39;];</code>。这样就和 <strong>2html</strong>的<code> value=&#39;&#123;$id&#125;&#39;</code>就会获得值。当 <strong>2html</strong> 进行** post请求**时，后台php就会更新。从而更新数据库。</p>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <article class="post">
+  <h3 class="date">
+  <time datetime="2018-06-11T03:05:00.000Z">
+    Jun 11, 2018
+  </time>
+</h3>
+  <h1> 二次请求的错误</h1>
+  <p class="post-info">
+  
+  
+  <a href="/2018/06/11/121/#waline" class="post-info-item comment-count waline-comment-count" id="/2018/06/11/121/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2018/06/11/121/">获取中...</span>
+  
+</p>
+  
+  
+  <article>
+    <p>  第一次html请求是get请求 所以会直接执行 include $this-&gt;template()。这样就会直接执行 <strong>2html <strong>页面。但是 <strong>2html</strong> 的<code>&lt;input type=&#39;hidden&#39; name=&#39;id&#39; value=&#39;&#123;$id&#125;&#39; /&gt;</code>并没有获得id值。</strong>因为第一次html请求的值并没有包含进去</strong>，需要定义一个<code> $id = $_GPC[&#39;id&#39;];</code>。这样就和 <strong>2html</strong>的<code> value=&#39;&#123;$id&#125;&#39;</code>就会获得值。当 <strong>2html</strong> 进行** post请求**时，后台php就会更新。从而更新数据库。</p>
 <p>而我第一次写的时候，并没有定义<code> $id = $_GPC[&#39;id&#39;];</code> 。这样就导致了 2html 中的<code> value=&#39;&#123;$id&#125;&#39;</code>，取不到值，当 <strong>2html</strong> 进行** post请求<strong>时php后台也去不到</strong>id**的值，这样虽然页面刷新，但数据没有更新。</p>
 <h3 id="1html"><a href="#1html" class="headerlink" title="1html"></a>1html</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a  class=&#x27;btn btn-default btn-sm&#x27;  data-toggle=&quot;ajaxModal&quot;  href=&quot;&#123;php echo webUrl(&#x27;share/exchangelist/remarksaler&#x27;, array(&#x27;id&#x27; =&gt; $item[&#x27;id&#x27;]))&#125;&quot; title=&quot;不通过申请&quot;&gt;&lt;i class=&#x27;fa fa-remove&#x27;&gt;&lt;/i&gt; &lt;/a&gt;</span><br><span class="line"></span><br><span class="line">请求url 把id传到后台php</span><br></pre></td></tr></table></figure>
 <h3 id="后台php"><a href="#后台php" class="headerlink" title="后台php"></a>后台php</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public function remarksaler() </span><br><span class="line">	&#123;</span><br><span class="line">		global $_W;</span><br><span class="line">		global $_GPC;</span><br><span class="line"></span><br><span class="line">                $id = $_GPC[&#x27;id&#x27;];</span><br><span class="line">                $item = pdo_fetch(&#x27;select * from &#x27;.tablename(&#x27;weikang_deposit_refund&#x27;).&#x27; where uniacid =:uniacid and id =:id &#x27;,array(&#x27;id&#x27; =&gt; $_GPC[&#x27;id&#x27;], &#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;]));</span><br><span class="line">		if ($_W[&#x27;ispost&#x27;]) </span><br><span class="line">		&#123;       </span><br><span class="line">			pdo_update(&#x27;weikang_deposit_refund&#x27;, array(&#x27;fail_message&#x27; =&gt; $_GPC[&#x27;remark&#x27;],&#x27;draw_status&#x27; =&gt; 2), array(&#x27;id&#x27; =&gt; $_GPC[&#x27;id&#x27;], &#x27;uniacid&#x27; =&gt; $_W[&#x27;uniacid&#x27;]));</span><br><span class="line">	show_json(1,array(&quot;url&quot;=&gt;webUrl(&#x27;share/exchangelist&#x27;)));</span><br><span class="line">		&#125;</span><br><span class="line">		include $this-&gt;template();</span><br><span class="line">               </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="2html"><a href="#2html" class="headerlink" title="2html"></a>2html</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;form class=&quot;form-horizontal form-validate&quot; action=&quot;&#123;php echo webUrl(&#x27;share/exchangelist/remarksaler&#x27;)&#125;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">	&lt;input type=&#x27;hidden&#x27; name=&#x27;id&#x27; value=&#x27;&#123;$id&#125;&#x27; /&gt;</span><br><span class="line"></span><br><span class="line">	&lt;div class=&quot;modal-dialog&quot;&gt;</span><br><span class="line">           &lt;div class=&quot;modal-content&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;modal-header&quot;&gt;</span><br><span class="line">                &lt;button data-dismiss=&quot;modal&quot; class=&quot;close&quot; type=&quot;button&quot;&gt;×&lt;/button&gt;</span><br><span class="line">                &lt;h4 class=&quot;modal-title&quot;&gt;失败原因&lt;/h4&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;modal-body&quot;&gt;</span><br><span class="line">                    &lt;textarea style=&quot;height:150px;&quot; class=&quot;form-control&quot; name=&quot;remark&quot;  placeholder=&quot;失败原因&quot; &gt;&#123;$item[&#x27;fail_message&#x27;]&#125;&lt;/textarea&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;modal-footer&quot;&gt;</span><br><span class="line">                &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">                &lt;button data-dismiss=&quot;modal&quot; class=&quot;btn btn-default&quot; type=&quot;button&quot;&gt;取消&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-</div>
-          <nav class="post-nav">
-    
-    <a class="post-nav-item post-nav-prev" href="/2018/06/13/123/">
-      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
-      <span class="post-title">log4j基础知识</span>
-    </a>
-    
-    
-    <a class="post-nav-item post-nav-next" href="/2018/06/08/119/">
-      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
-      <span class="post-title">php 中empty和isset的区别</span>
-    </a>
-    
-  </nav>
 
-   </main>
-</div>
+  </article>
+  
+  <hr>
+  <blockquote>
+    <p>
+      本文由 <a href="">shang wj</a> 创作，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0</a> 国际许可协议。
+    </p>
+    <p>
+      本站文章除注明转载/出处外，均为本站原创或翻译，转载请务必署名。
+    </p>
+  </blockquote>
+  
+</article>
 
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+
+<div id="waline"></div>
+
+    </div>
+  </div>
+  <footer>
   
   
-
-    
-      <script src="/js/main.js"></script>
-    
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>

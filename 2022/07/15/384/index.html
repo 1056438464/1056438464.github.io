@@ -1,319 +1,132 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JWT实战 [ shang wj ]</title>
-
-  <link rel="icon" href="/img/favicon.ico">
-
-
-    <meta name="author" content="shang wj">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
-
-
+  <title>JWT实战 | shang wj</title>
+  <meta name="google-site-verification" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta itemprop="name" content="shang wj" />
+  <meta itemprop="description" content="" />
+  <meta itemprop="image" content="" />
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <!-- keywords and description -->
   
-    <link rel="stylesheet" href="/css/main.css">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js" integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
 <meta name="generator" content="Hexo 7.3.0"></head>
-  <body data-theme="light" class="notransition">
-    <script>
-      const body = document.body;
-      const data = body.getAttribute("data-theme");
-      const initTheme = (state) => {
-        if (state === "dark") {
-          body.setAttribute("data-theme", "dark");
-        } else if (state === "light") {
-          body.removeAttribute("data-theme");
-        } else {
-          localStorage.setItem("theme", data);
-        }
-      };
-   
-      initTheme(localStorage.getItem("theme"));
-      
-      setTimeout(() => body.classList.remove("notransition"), 75);
-    </script>
-  <div class="navbar" role="navigation">
-    <nav class="menu">
-      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
-      <label for="menu-trigger">
-        <span class="menu-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
-            />
-          </svg>
-        </span>
-      </label>
-      <a id="mode">
-        <svg
-          class="mode-sunny"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>LIGHT</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-        <svg
-          class="mode-moon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
-          <title>DARK</title>
-          <line
-            x1="256"
-            y1="48"
-            x2="256"
-            y2="96"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="256"
-            y1="416"
-            x2="256"
-            y2="464"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="108.92"
-            x2="369.14"
-            y2="142.86"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="369.14"
-            x2="108.92"
-            y2="403.08"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="464"
-            y1="256"
-            x2="416"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="96"
-            y1="256"
-            x2="48"
-            y2="256"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="403.08"
-            y1="403.08"
-            x2="369.14"
-            y2="369.14"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <line
-            x1="142.86"
-            y1="142.86"
-            x2="108.92"
-            y2="108.92"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-          <circle
-            cx="256"
-            cy="256"
-            r="80"
-            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
-          />
-        </svg>
-      </a>
-      <div class="trigger">
-        <div class="trigger-container">
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/"> Home</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/about/"> About</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/archives/"> Archives</a>
-          
-            
-            
-            
-            
-            
-            
-            <a class="menu-link " href="/tags/"> Tags</a>
-          
-        </div>
-      </div>
-    </nav>
+
+
+<body>
+  <div id="container">
+    <header>
+  <div class="site-title">
+    <a href="/">
+      shang wj
+    </a>
   </div>
   
-<div class="wrapper post">
-  <main class="page-content" aria-label="Content">
-      <header class="header">
-        
-          <div class="tags">
-            <a href="/tags/JWT/" class="tag"># JWT</a>
-          </div>
-        
-        <h1 class="header-title" itemprop="headline">JWT实战</h1>
-          <div class="post-meta">
-            <time>Jul 15, 2022</time>
-            <span itemprop="author">
-              <span itemprop="name">shang wj</span>
-            </span>
-          </div>
-        </header>
+  
+  <p class="links">
+    
+    <a href="">
+      <img src="/images/links/" alt="">
+    </a>
+    
+  </p>
+  
+</header>
+    <div id="main">
+      <article class="post">
+  <h3 class="date">
+  <time datetime="2022-07-15T14:42:22.000Z">
+    Jul 15, 2022
+  </time>
+</h3>
+  <h1>JWT实战</h1>
+  <p class="post-info">
+  
+  
+  <a href="/2022/07/15/384/#waline" class="post-info-item comment-count waline-comment-count" id="/2022/07/15/384/">获取中...</a>
+  <span class="post-info-item view-count waline-visitor-count" id="/2022/07/15/384/">获取中...</span>
+  
+</p>
+  
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li></ul>
 
-          <div class="page-content"><h3 id="一、在pom文件中引入jwt的依赖包"><a href="#一、在pom文件中引入jwt的依赖包" class="headerlink" title="一、在pom文件中引入jwt的依赖包"></a>一、在pom文件中引入jwt的依赖包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;com.auth0&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;java-jwt&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+  
+  <article>
+    <h3 id="一、在pom文件中引入jwt的依赖包"><a href="#一、在pom文件中引入jwt的依赖包" class="headerlink" title="一、在pom文件中引入jwt的依赖包"></a>一、在pom文件中引入jwt的依赖包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;com.auth0&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;java-jwt&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="二、写一个工具类用于生成签名和验证签名"><a href="#二、写一个工具类用于生成签名和验证签名" class="headerlink" title="二、写一个工具类用于生成签名和验证签名"></a>二、写一个工具类用于生成签名和验证签名</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//JWT-account</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">ACCOUNT</span> <span class="operator">=</span> <span class="string">&quot;username&quot;</span>;</span><br><span class="line">   <span class="comment">//JWT-currentTimeMillis</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">CURRENT_TIME_MILLIS</span> <span class="operator">=</span> <span class="string">&quot;currentTimeMillis&quot;</span>;</span><br><span class="line">   <span class="comment">//有效期时间2小时</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">EXPIRE_TIME</span> <span class="operator">=</span> <span class="number">2</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000L</span>;</span><br><span class="line">   <span class="comment">//秘钥</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">SECRET_KEY</span> <span class="operator">=</span> <span class="string">&quot;shirokey&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 生成签名返回token</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> currentTimeMillis</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">sign</span><span class="params">(String account, String currentTimeMillis)</span> &#123;</span><br><span class="line">       <span class="comment">// 帐号加JWT私钥加密</span></span><br><span class="line">       <span class="type">String</span> <span class="variable">secret</span> <span class="operator">=</span> account + SECRET_KEY;</span><br><span class="line">       <span class="comment">// 此处过期时间，单位：毫秒，在当前时间到后边的20分钟内都是有效的</span></span><br><span class="line">       <span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + EXPIRE_TIME);</span><br><span class="line">       <span class="comment">//采用HMAC256加密</span></span><br><span class="line">       <span class="type">Algorithm</span> <span class="variable">algorithm</span> <span class="operator">=</span> Algorithm.HMAC256(secret);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> JWT.create()</span><br><span class="line">              .withClaim(ACCOUNT, account)</span><br><span class="line">              .withClaim(CURRENT_TIME_MILLIS, currentTimeMillis)</span><br><span class="line">              .withExpiresAt(date)</span><br><span class="line">               <span class="comment">//创建一个新的JWT，并使用给定的算法进行标记</span></span><br><span class="line">              .sign(algorithm);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 校验token是否正确</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">verify</span><span class="params">(String token)</span> &#123;</span><br><span class="line">       <span class="type">String</span> <span class="variable">secret</span> <span class="operator">=</span> getClaim(token, ACCOUNT) + SECRET_KEY;</span><br><span class="line">       <span class="type">Algorithm</span> <span class="variable">algorithm</span> <span class="operator">=</span> Algorithm.HMAC256(secret);</span><br><span class="line">       <span class="type">JWTVerifier</span> <span class="variable">verifier</span> <span class="operator">=</span> JWT.require(algorithm)</span><br><span class="line">              .build();</span><br><span class="line">       verifier.verify(token);</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 获得Token中的信息无需secret解密也能获得</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> claim</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getClaim</span><span class="params">(String token, String claim)</span> &#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="type">DecodedJWT</span> <span class="variable">jwt</span> <span class="operator">=</span> JWT.decode(token);</span><br><span class="line">           <span class="keyword">return</span> jwt.getClaim(claim).asString();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (JWTDecodeException e) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="三、封装自己的token，用于后边校验token类型"><a href="#三、封装自己的token，用于后边校验token类型" class="headerlink" title="三、封装自己的token，用于后边校验token类型"></a>三、封装自己的token，用于后边校验token类型</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtToken</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationToken</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> String token;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="title function_">JwtToken</span><span class="params">(String token)</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.token = token;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> Object <span class="title function_">getPrincipal</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> token;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> Object <span class="title function_">getCredentials</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> token;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <h3 id="四、我们需要在登陆时创建token"><a href="#四、我们需要在登陆时创建token" class="headerlink" title="四、我们需要在登陆时创建token"></a>四、我们需要在登陆时创建token</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//service中的登录处理</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> UserTokenDTO <span class="title function_">login</span><span class="params">(UserTokenDTO userInfo)</span> &#123;</span><br><span class="line">   <span class="comment">// 从数据库获取对应用户名密码的用户</span></span><br><span class="line">   <span class="type">SysUserInfo</span> <span class="variable">uInfo</span> <span class="operator">=</span> userInfoMapper.getUserByLogin(userInfo.getName());</span><br><span class="line">   <span class="keyword">if</span> (<span class="literal">null</span> == uInfo) &#123;</span><br><span class="line">       <span class="comment">//用户信息不存在</span></span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(CommonResultStatus.USERNAME_ERROR);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!userInfo.getPassword().equals(uInfo.getPassword())) &#123;</span><br><span class="line">       <span class="comment">//密码错误</span></span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(CommonResultStatus.PASSWORD_ERROR);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="comment">//生成jwtToken</span></span><br><span class="line">   userInfo.setToken(JwtUtil.sign(userInfo.getName(),String.valueOf(System.currentTimeMillis())));</span><br><span class="line">   <span class="keyword">return</span> userInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="五、在其他需要登录后才能访问的请求中解析token，所以我们要自定义过滤器"><a href="#五、在其他需要登录后才能访问的请求中解析token，所以我们要自定义过滤器" class="headerlink" title="五、在其他需要登录后才能访问的请求中解析token，所以我们要自定义过滤器"></a>五、在其他需要登录后才能访问的请求中解析token，所以我们要自定义过滤器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtFilter</span> <span class="keyword">extends</span> <span class="title class_">AccessControlFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//设置请求头中需要传递的字段名</span></span><br><span class="line">   <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">AUTHORIZATION_HEADER</span> <span class="operator">=</span> <span class="string">&quot;Access-Token&quot;</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 表示是否允许访问，mappedValue就是[urls]配置中拦截器参数部分，</span></span><br><span class="line"><span class="comment">    * 如果允许访问返回true，否则false</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/24</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> request:</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response:</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> mappedValue:</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: boolean</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 表示当访问拒绝时是否已经处理了，</span></span><br><span class="line"><span class="comment">    * 如果返回true表示需要继续处理，</span></span><br><span class="line"><span class="comment">    * 如果返回false表示该拦截器实例已经处理了，将直接返回即可</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/24</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> request:</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response:</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: boolean</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">onAccessDenied</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) request;</span><br><span class="line">       <span class="comment">// 解决跨域问题</span></span><br><span class="line">       <span class="keyword">if</span>(HttpMethod.OPTIONS.toString().matches(req.getMethod())) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="keyword">if</span> (isLoginAttempt(request, response)) &#123;</span><br><span class="line">           <span class="comment">//生成jwt token</span></span><br><span class="line">           <span class="type">JwtToken</span> <span class="variable">token</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtToken</span>(req.getHeader(AUTHORIZATION_HEADER));</span><br><span class="line">           <span class="comment">//委托给Realm进行验证</span></span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="comment">//调用登陆会走Realm中的身份验证方法</span></span><br><span class="line">               getSubject(request, response).login(token);</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">          &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(CommonResultStatus.LOGIN_ERROR);</span><br><span class="line">      &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 判断是否有头部参数</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/24</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> request:</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response:</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: boolean</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">isLoginAttempt</span><span class="params">(ServletRequest request, ServletResponse response)</span> &#123;</span><br><span class="line">       <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) request;</span><br><span class="line">       <span class="type">String</span> <span class="variable">authorization</span> <span class="operator">=</span> req.getHeader(AUTHORIZATION_HEADER);</span><br><span class="line">       <span class="keyword">return</span> authorization != <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="六、当滤器中调用subject-login-token-方法时，会走自定义Realm中的doGetAuthenticationInfo-AuthenticationToken-token-方法来验证身份"><a href="#六、当滤器中调用subject-login-token-方法时，会走自定义Realm中的doGetAuthenticationInfo-AuthenticationToken-token-方法来验证身份" class="headerlink" title="六、当滤器中调用subject.login(token)方法时，会走自定义Realm中的doGetAuthenticationInfo(AuthenticationToken token)方法来验证身份"></a>六、当滤器中调用subject.login(token)方法时，会走自定义Realm中的doGetAuthenticationInfo(AuthenticationToken token)方法来验证身份</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtRealm</span> <span class="keyword">extends</span> <span class="title class_">AuthorizingRealm</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> UserInfoService userService;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//验证是不是自己的token类型</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(AuthenticationToken token)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> token <span class="keyword">instanceof</span> JwtToken;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 身份验证</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/25</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> token:</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: org.apache.shiro.authc.AuthenticationInfo</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">protected</span> AuthenticationInfo <span class="title function_">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">       <span class="type">String</span> <span class="variable">credentials</span> <span class="operator">=</span> (String) token.getCredentials();</span><br><span class="line">       <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//jwt验证token</span></span><br><span class="line">           <span class="type">boolean</span> <span class="variable">verify</span> <span class="operator">=</span> JwtUtil.verify(credentials);</span><br><span class="line">           <span class="keyword">if</span> (!verify) &#123;</span><br><span class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AuthenticationException</span>(<span class="string">&quot;Token校验不正确&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">           username = JwtUtil.getClaim(credentials, JwtUtil.ACCOUNT);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(CommonResultStatus.TOKEN_CHECK_ERROR,e.getMessage());</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，不设置则使用默认的SimpleCredentialsMatcher</span></span><br><span class="line">       <span class="type">SimpleAuthenticationInfo</span> <span class="variable">authenticationInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleAuthenticationInfo</span>(</span><br><span class="line">               username, <span class="comment">//用户名</span></span><br><span class="line">               credentials, <span class="comment">//凭证</span></span><br><span class="line">               getName()  <span class="comment">//realm name</span></span><br><span class="line">      );</span><br><span class="line">       <span class="keyword">return</span> authenticationInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 权限校验（次数不做过多讲解）</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/25</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> principals:</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: org.apache.shiro.authz.AuthorizationInfo</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">protected</span> AuthorizationInfo <span class="title function_">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span> &#123;</span><br><span class="line"><span class="comment">//       String username = principals.toString();</span></span><br><span class="line">       <span class="type">SimpleAuthorizationInfo</span> <span class="variable">authorizationInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleAuthorizationInfo</span>();</span><br><span class="line">       <span class="comment">//角色权限暂时不加</span></span><br><span class="line"><span class="comment">//       authorizationInfo.setRoles(userService.getRoles(username));</span></span><br><span class="line"><span class="comment">//       authorizationInfo.setStringPermissions(userService.queryPermissions(username));</span></span><br><span class="line">       <span class="keyword">return</span> authorizationInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理"><a href="#七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理" class="headerlink" title="七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理"></a>七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">此类较长，只展示部分重要代码，其余代码可在公众号“阿Q说”中回复&quot;jwt&quot;获取源码</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShiroConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 创建ShiroFilterFactoryBean</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/21</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: org.apache.shiro.spring.web.ShiroFilterFactoryBean</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> ShiroFilterFactoryBean <span class="title function_">shiroFilter</span><span class="params">(SecurityManager securityManager)</span>&#123;</span><br><span class="line">       <span class="type">ShiroFilterFactoryBean</span> <span class="variable">shiroFilterFactoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShiroFilterFactoryBean</span>();</span><br><span class="line">       <span class="comment">// 必须设置 SecurityManager</span></span><br><span class="line">       shiroFilterFactoryBean.setSecurityManager(securityManager);</span><br><span class="line">       <span class="comment">//设置shiro内置过滤器</span></span><br><span class="line">       Map&lt;String, Filter&gt; filters = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="comment">//添加自定义过滤器：只对需要登陆的接口进行过滤</span></span><br><span class="line">       filters.put(<span class="string">&quot;authc&quot;</span>, <span class="keyword">new</span> <span class="title class_">JwtFilter</span>());</span><br><span class="line">       <span class="comment">//添加自定义过滤器：对权限进行验证</span></span><br><span class="line"><span class="comment">//       filters.put(&quot;roles&quot;, new CustomRolesOrAuthorizationFilter());</span></span><br><span class="line">       shiroFilterFactoryBean.setFilters(filters);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的&quot;/login.jsp&quot;页面 或 &quot;/login&quot; 映射</span></span><br><span class="line">       shiroFilterFactoryBean.setLoginUrl(<span class="string">&quot;/adminLogin/login&quot;</span>);</span><br><span class="line">       <span class="comment">// 设置无权限时跳转的 url;</span></span><br><span class="line">       shiroFilterFactoryBean.setUnauthorizedUrl(<span class="string">&quot;/notAuth&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 设置拦截器</span></span><br><span class="line">       Map&lt;String, String&gt; filterChainDefinitionMap = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="comment">//游客，开发权限</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/guest/**&quot;</span>, <span class="string">&quot;anon&quot;</span>);</span><br><span class="line">       <span class="comment">//用户，需要角色权限 “user”</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/user/**&quot;</span>, <span class="string">&quot;roles[user]&quot;</span>);</span><br><span class="line"><span class="comment">//       filterChainDefinitionMap.put(&quot;/productInfo/**&quot;, &quot;roles[user]&quot;);</span></span><br><span class="line">       <span class="comment">//管理员，需要角色权限 “admin”</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/admin/**&quot;</span>, <span class="string">&quot;roles[admin]&quot;</span>);</span><br><span class="line">       <span class="comment">//开放登陆接口</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/adminLogin/login&quot;</span>, <span class="string">&quot;anon&quot;</span>);</span><br><span class="line">       <span class="comment">//其余接口一律拦截</span></span><br><span class="line">       <span class="comment">//主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/**&quot;</span>, <span class="string">&quot;authc&quot;</span>);</span><br><span class="line"></span><br><span class="line">       shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);</span><br><span class="line">       log.info(<span class="string">&quot;-------Shiro拦截器工厂类注入成功-----------&quot;</span>);</span><br><span class="line">       <span class="keyword">return</span> shiroFilterFactoryBean;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 注入安全管理器</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/21</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: java.lang.SecurityManager</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> DefaultWebSecurityManager <span class="title function_">securityManager</span><span class="params">(JwtRealm jwtRealm, SubjectFactory subjectFactory,</span></span><br><span class="line"><span class="params">                                                    SessionManager sessionManager,</span></span><br><span class="line"><span class="params">                                                    CacheManager cacheManager)</span> &#123;</span><br><span class="line">       <span class="type">DefaultWebSecurityManager</span> <span class="variable">securityManager</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultWebSecurityManager</span>();</span><br><span class="line">       securityManager.setRealm(jwtRealm);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//关闭shiro自带的session</span></span><br><span class="line">       <span class="type">DefaultSubjectDAO</span> <span class="variable">subjectDAO</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultSubjectDAO</span>();</span><br><span class="line">       <span class="type">DefaultSessionStorageEvaluator</span> <span class="variable">defaultSessionStorageEvaluator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultSessionStorageEvaluator</span>();</span><br><span class="line">       defaultSessionStorageEvaluator.setSessionStorageEnabled(<span class="literal">false</span>);</span><br><span class="line">       subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);</span><br><span class="line">       securityManager.setSubjectDAO(subjectDAO);</span><br><span class="line">       securityManager.setSubjectFactory(subjectFactory);</span><br><span class="line">       securityManager.setSessionManager(sessionManager);</span><br><span class="line">       securityManager.setCacheManager(cacheManager);</span><br><span class="line">       <span class="keyword">return</span> securityManager;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * jwt身份认证和权限校验</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/24</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: com.cheetah.shiroandjwt.jwt.JwtRealm</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> JwtRealm <span class="title function_">jwtRealm</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="type">JwtRealm</span> <span class="variable">jwtRealm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtRealm</span>();</span><br><span class="line">       jwtRealm.setAuthenticationCachingEnabled(<span class="literal">true</span>);</span><br><span class="line">       jwtRealm.setAuthorizationCachingEnabled(<span class="literal">true</span>);</span><br><span class="line">       <span class="keyword">return</span> jwtRealm;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-          <nav class="post-nav">
-    
-    <a class="post-nav-item post-nav-prev" href="/2022/08/27/385/">
-      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
-      <span class="post-title">Redis实现限流</span>
-    </a>
-    
-    
-    <a class="post-nav-item post-nav-next" href="/2022/04/15/383/">
-      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
-      <span class="post-title">Shiro简介</span>
-    </a>
-    
-  </nav>
+<h3 id="七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理"><a href="#七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理" class="headerlink" title="七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理"></a>七、接下来我们需要修改ShiroConfig文件，将自定义的Filter和Realm交由SecurityManager进行管理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">此类较长，只展示部分重要代码，其余代码可在公众号“阿Q说”中回复&quot;jwt&quot;获取源码</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShiroConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 创建ShiroFilterFactoryBean</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/21</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: org.apache.shiro.spring.web.ShiroFilterFactoryBean</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> ShiroFilterFactoryBean <span class="title function_">shiroFilter</span><span class="params">(SecurityManager securityManager)</span>&#123;</span><br><span class="line">       <span class="type">ShiroFilterFactoryBean</span> <span class="variable">shiroFilterFactoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShiroFilterFactoryBean</span>();</span><br><span class="line">       <span class="comment">// 必须设置 SecurityManager</span></span><br><span class="line">       shiroFilterFactoryBean.setSecurityManager(securityManager);</span><br><span class="line">       <span class="comment">//设置shiro内置过滤器</span></span><br><span class="line">       Map&lt;String, Filter&gt; filters = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="comment">//添加自定义过滤器：只对需要登陆的接口进行过滤</span></span><br><span class="line">       filters.put(<span class="string">&quot;authc&quot;</span>, <span class="keyword">new</span> <span class="title class_">JwtFilter</span>());</span><br><span class="line">       <span class="comment">//添加自定义过滤器：对权限进行验证</span></span><br><span class="line"><span class="comment">//       filters.put(&quot;roles&quot;, new CustomRolesOrAuthorizationFilter());</span></span><br><span class="line">       shiroFilterFactoryBean.setFilters(filters);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的&quot;/login.jsp&quot;页面 或 &quot;/login&quot; 映射</span></span><br><span class="line">       shiroFilterFactoryBean.setLoginUrl(<span class="string">&quot;/adminLogin/login&quot;</span>);</span><br><span class="line">       <span class="comment">// 设置无权限时跳转的 url;</span></span><br><span class="line">       shiroFilterFactoryBean.setUnauthorizedUrl(<span class="string">&quot;/notAuth&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 设置拦截器</span></span><br><span class="line">       Map&lt;String, String&gt; filterChainDefinitionMap = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="comment">//游客，开发权限</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/guest/**&quot;</span>, <span class="string">&quot;anon&quot;</span>);</span><br><span class="line">       <span class="comment">//用户，需要角色权限 “user”</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/user/**&quot;</span>, <span class="string">&quot;roles[user]&quot;</span>);</span><br><span class="line"><span class="comment">//       filterChainDefinitionMap.put(&quot;/productInfo/**&quot;, &quot;roles[user]&quot;);</span></span><br><span class="line">       <span class="comment">//管理员，需要角色权限 “admin”</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/admin/**&quot;</span>, <span class="string">&quot;roles[admin]&quot;</span>);</span><br><span class="line">       <span class="comment">//开放登陆接口</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/adminLogin/login&quot;</span>, <span class="string">&quot;anon&quot;</span>);</span><br><span class="line">       <span class="comment">//其余接口一律拦截</span></span><br><span class="line">       <span class="comment">//主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截</span></span><br><span class="line">       filterChainDefinitionMap.put(<span class="string">&quot;/**&quot;</span>, <span class="string">&quot;authc&quot;</span>);</span><br><span class="line"></span><br><span class="line">       shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);</span><br><span class="line">       log.info(<span class="string">&quot;-------Shiro拦截器工厂类注入成功-----------&quot;</span>);</span><br><span class="line">       <span class="keyword">return</span> shiroFilterFactoryBean;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 注入安全管理器</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/21</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: java.lang.SecurityManager</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> DefaultWebSecurityManager <span class="title function_">securityManager</span><span class="params">(JwtRealm jwtRealm, SubjectFactory subjectFactory,</span></span><br><span class="line"><span class="params">                                                    SessionManager sessionManager,</span></span><br><span class="line"><span class="params">                                                    CacheManager cacheManager)</span> &#123;</span><br><span class="line">       <span class="type">DefaultWebSecurityManager</span> <span class="variable">securityManager</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultWebSecurityManager</span>();</span><br><span class="line">       securityManager.setRealm(jwtRealm);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//关闭shiro自带的session</span></span><br><span class="line">       <span class="type">DefaultSubjectDAO</span> <span class="variable">subjectDAO</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultSubjectDAO</span>();</span><br><span class="line">       <span class="type">DefaultSessionStorageEvaluator</span> <span class="variable">defaultSessionStorageEvaluator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultSessionStorageEvaluator</span>();</span><br><span class="line">       defaultSessionStorageEvaluator.setSessionStorageEnabled(<span class="literal">false</span>);</span><br><span class="line">       subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);</span><br><span class="line">       securityManager.setSubjectDAO(subjectDAO);</span><br><span class="line">       securityManager.setSubjectFactory(subjectFactory);</span><br><span class="line">       securityManager.setSessionManager(sessionManager);</span><br><span class="line">       securityManager.setCacheManager(cacheManager);</span><br><span class="line">       <span class="keyword">return</span> securityManager;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * jwt身份认证和权限校验</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@author</span> cheetah</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@date</span> 2020/11/24</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>: com.cheetah.shiroandjwt.jwt.JwtRealm</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> JwtRealm <span class="title function_">jwtRealm</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="type">JwtRealm</span> <span class="variable">jwtRealm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtRealm</span>();</span><br><span class="line">       jwtRealm.setAuthenticationCachingEnabled(<span class="literal">true</span>);</span><br><span class="line">       jwtRealm.setAuthorizationCachingEnabled(<span class="literal">true</span>);</span><br><span class="line">       <span class="keyword">return</span> jwtRealm;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </article>
+  
+  <hr>
+  <blockquote>
+    <p>
+      本文由 <a href="">shang wj</a> 创作，采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0</a> 国际许可协议。
+    </p>
+    <p>
+      本站文章除注明转载/出处外，均为本站原创或翻译，转载请务必署名。
+    </p>
+  </blockquote>
+  
+</article>
 
-   </main>
-</div>
 
-  <footer class="footer">
-    <small class="footer_copyright">
-      <div id="bottom-inner">
-        © 2021 Site by shang wj using
-        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
-        <br>
-        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
-      </div>
-    </small>
-  </footer>
+<div id="waline"></div>
+
+    </div>
+  </div>
+  <footer>
   
   
-
-    
-      <script src="/js/main.js"></script>
-    
+  <p id="busuanzi_container_site_pv">
+    本站访问量 <span id="busuanzi_value_site_pv">获取中...</span>
+  </p>
   
-  <script>
-    window.FPConfig = {
-      delay: 0,
-      ignoreKeywords: [],
-      maxRPS: 3,
-      hoverDelay: 50,
-    };
+  <p>
+    Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/syy11cn/hexo-theme-linear">Linear</a> from <a target="_blank" rel="noopener" href="https://syy11.cn">Yiyang Sun</a>
+  </p>
+</footer>
+  
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
-  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    Waline({
+      el: '#waline',
+      placeholder: '',
+      avatar: 'retro',
+      visitor: true,
+      requiredFields: ['nick', 'mail'],
+      serverURL: '',
+      emoji: [
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+      ]
+    });
+  </script>
 </body>
+
 </html>
