@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/28/316/">String.format详解</a>
+            </div>
+            <p class="sub">Feb 28 2019</p>
+            <div class="post-content">
+                
+                    <p>原谅我的懒惰<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fsjohnhuang/p/4094777.html#a4">https://www.cnblogs.com/fsjohnhuang/p/4094777.html#a4</a><br>一、前言</p>
+<p>   <code>String.format </code>作为文本处理工具，为我们提供强大而丰富的字符串格式化功能，为了不止步于简单调用 <code>String.format(&quot;Hello %s&quot;, &quot;John&quot;);</code>，下面将笔记整理并记录下来。</p>
+<p>二、重载方法</p>
+<p>&#x2F;&#x2F; 使用当前本地区域对象（Locale.getDefault()）格式化字符串<br>String String.format(String fmt, Object… args);</p>
+<p>&#x2F;&#x2F; 自定义本地区域对象格式化字符串<br>String String.format(Locale locale, String fmt, Object… args);</p>
+<p>三、占位符　　　　　　　　　　　　　　　　　　　　　　　            </p>
+<p>  占位符完整格式为： %[index$][标识]*[最小宽度][.精度]转换符 。</p>
+<p>  针对不同数据类型的格式化，占位符的格式将有所裁剪。</p>
+<p>  % ，占位符的其实字符，若要在占位符内部使用%，则需要写成 %% 。</p>
+<p>  [index$] ，位置索引从1开始计算，用于指定对索引相应的实参进行格式化并替换掉该占位符。</p>
+<p>  [标识] ，用于增强格式化能力，可同时使用多个 [标识] ，但某些标识是不能同时使用的。</p>
+<p>  [最小宽度] ，用于设置格式化后的字符串最小长度，若使用 [最小宽度] 而无设置 [标识] ，那么当字符串长度小于最小宽度时，则以左边补空格的方式凑够最小宽度。</p>
+<p>  [.精度] ，对于浮点数类型格式化使用，设置保留小数点后多少位。</p>
+<p>  转换符 ，用于指定格式化的样式，和限制对应入参的数据类型。</p>
+<p>四、对字符、字符串进行格式化　　　　　　　　　　　　　　　　　　　　</p>
+<p>  占位符格式为： %[index$][标识][最小宽度]转换符 </p>
+<p>  示例——将”hello”格式化为”  hello”</p>
+<p>String raw &#x3D; “hello”;<br>String str &#x3D; String.format(“%1$7s”, raw);<br>&#x2F;&#x2F; 简化<br>&#x2F;&#x2F;String str &#x3D; String.format(“%7s”, raw);<br>  示例——将”hello”格式化为”hello  “</p>
+<p>String raw &#x3D; “hello”;<br>String str &#x3D; String.format(“%1$-7s”, raw);<br>&#x2F;&#x2F; 简化<br>&#x2F;&#x2F;String str &#x3D; String.format(“%-7s”, raw);<br>可用标识：</p>
+<p>   -，在最小宽度内左对齐，右边用空格补上。</p>
+<p>可用转换符：</p>
+<p>   s，字符串类型。</p>
+<p>   c，字符类型，实参必须为char或int、short等可转换为char类型的数据类型，否则抛IllegalFormatConversionException异常。</p>
+<p>   b，布尔类型，只要实参为非false的布尔类型，均格式化为字符串true，否则为字符串false。</p>
+<p>   n，平台独立的换行符（与通过 System.getProperty(“line.separator”) 是一样的）</p>
+<p>五、对整数进行格式化　　　　　　　　　　　　　　　　　　　　　　 </p>
+<p>  占位符格式为： %[index$][标识]*[最小宽度]转换符 </p>
+<p>  示例——将1显示为0001</p>
+<p>int num &#x3D; 1;<br>String str &#x3D; String.format(“%04d”, num)<br>  示例——将-1000显示为(1,000)</p>
+<p>int num &#x3D; -1000;<br>String str &#x3D; String.format(“%(,d”, num)<br>可用标识：</p>
+<p>复制代码<br>-，在最小宽度内左对齐,不可以与0标识一起使用。<br>0，若内容长度不足最小宽度，则在左边用0来填充。<br>#，对8进制和16进制，8进制前添加一个0,16进制前添加0x。<br>+，结果总包含一个+或-号。<br>空格，正数前加空格，负数前加-号。<br>,，只用与十进制，每3位数字间用,分隔。<br>(，若结果为负数，则用括号括住，且不显示符号。<br>复制代码<br>可用转换符：</p>
+<p>b，布尔类型，只要实参为非false的布尔类型，均格式化为字符串true，否则为字符串false。<br>d，整数类型（十进制）。<br>x，整数类型（十六进制）。<br>o，整数类型（八进制）<br>n，平台独立的换行符, 也可通过System.getProperty(“line.separator”)获取</p>
+<p>六、对浮点数进行格式化　　　　　　　　　　　　　　　　　　　　　　　　</p>
+<p>   占位符格式为： %[index$][标识]*[最小宽度][.精度]转换符 </p>
+<p>   示例：</p>
+<p>double num &#x3D; 123.4567899;<br>System.out.print(String.format(“%f %n”, num)); &#x2F;&#x2F; 123.456790<br>System.out.print(String.format(“%a %n”, num)); &#x2F;&#x2F; 0x1.edd3c0bb46929p6<br>System.out.print(String.format(“%g %n”, num)); &#x2F;&#x2F; 123.457<br>可用标识：</p>
+<p>复制代码<br>-，在最小宽度内左对齐,不可以与0标识一起使用。<br>0，若内容长度不足最小宽度，则在左边用0来填充。<br>#，对8进制和16进制，8进制前添加一个0,16进制前添加0x。<br>+，结果总包含一个+或-号。<br>空格，正数前加空格，负数前加-号。<br>,，只用与十进制，每3位数字间用,分隔。<br>(，若结果为负数，则用括号括住，且不显示符号。<br>复制代码<br>可用转换符：</p>
+<p>复制代码<br>b，布尔类型，只要实参为非false的布尔类型，均格式化为字符串true，否则为字符串false。<br>n，平台独立的换行符, 也可通过System.getProperty(“line.separator”)获取。<br>f，浮点数型（十进制）。显示9位有效数字，且会进行四舍五入。如99.99。<br>a，浮点数型（十六进制）。<br>e，指数类型。如9.38e+5。<br>g，浮点数型（比%f，%a长度短些，显示6位有效数字，且会进行四舍五入）<br>复制代码</p>
+<p>七、对日期时间进行格式化　　　　　　　　　　　　　　　　　　　　　　</p>
+<p>   占位符格式为： %[index$]t转换符 </p>
+<p>   示例：</p>
+<p>Date now &#x3D; new Date();<br>String str &#x3D; String.format(“%tF”, now); &#x2F;&#x2F; 2014-10-12<br>可用转换符</p>
+<ol>
+<li>日期的转换符</li>
+</ol>
+<p>复制代码<br>c，星期六 十月 27 14:21:20 CST 2007<br>F，2007-10-27<br>D，10&#x2F;27&#x2F;07<br>r，02:25:51 下午<br>T，14:28:16<br>R，14:28<br>b, 月份简称<br>B, 月份全称<br>a, 星期简称<br>A, 星期全称<br>C, 年前两位（不足两位补零）<br>y, 年后两位（不足两位补零）<br>j, 当年的第几天<br>m, 月份（不足两位补零）<br>d, 日期（不足两位补零）<br>e, 日期（不足两位不补零）<br>复制代码<br>  2. 时间的转换符</p>
+<p>复制代码<br>H, 24小时制的小时（不足两位补零）<br>k, 24小时制的小时（不足两位不补零）<br>I, 12小时制的小时（不足两位补零）<br>i, 12小时制的小时（不足两位不补零）<br>M, 分钟（不足两位补零）<br>S, 秒（不足两位补零）<br>L, 毫秒（不足三位补零）<br>N, 毫秒（不足9位补零）<br>p, 小写字母的上午或下午标记，如中文为“下午”，英文为pm<br>z, 相对于GMT的时区偏移量，如+0800<br>Z, 时区缩写，如CST<br>s, 自1970-1-1 00:00:00起经过的秒数<br>Q, 自1970-1-1 00:00:00起经过的豪秒<br>复制代码</p>
+<p>八、其他转换符　　　　　　　　　　　　　　　　　　　　　　　　　　</p>
+<p> &lt;，用于格式化前一个转换符所描述的参数。</p>
+<p> 示例：</p>
+<p>int num &#x3D; 1000;<br>String str &#x3D; String.format(“%d %&lt;,d”, num);<br>&#x2F;&#x2F; 结果”1000 1,000</p>
+<p>九、总结　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</p>
+<p>  暂时写到这里吧，以后用到其他的再补充上去！</p>
+<p>  尊重原创，转载请注明来自：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/fsjohnhuang/p/4094777.html">http://www.cnblogs.com/fsjohnhuang/p/4094777.html</a> ^_^肥仔John</p>
+<p>参考　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/lonely_fireworks/article/details/7962171">http://blog.csdn.net/lonely_fireworks/article/details/7962171</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/xytop/articles/1277125.html">http://www.cnblogs.com/xytop/articles/1277125.html</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/28/314/">java时间格式化任意格式</a>
+            </div>
+            <p class="sub">Feb 28 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 将String型格式化,比如想要将2011-11-11格式化成2011年11月11日,就StringPattern(&quot;2011-11-11&quot;,</span></span><br><span class="line"><span class="comment">	 * &quot;yyyy-MM-dd&quot;,&quot;yyyy年MM月dd日&quot;).</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> date</span></span><br><span class="line"><span class="comment">	 *            String 想要格式化的日期</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> oldPattern</span></span><br><span class="line"><span class="comment">	 *            String 想要格式化的日期的现有格式</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> newPattern</span></span><br><span class="line"><span class="comment">	 *            String 想要格式化成什么格式</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> String</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">StringPattern</span><span class="params">(String date, String oldPattern, String newPattern)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (date == <span class="literal">null</span> || oldPattern == <span class="literal">null</span> || newPattern == <span class="literal">null</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="type">SimpleDateFormat</span> <span class="variable">sdf1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(oldPattern); <span class="comment">// 实例化模板对象</span></span><br><span class="line">		<span class="type">SimpleDateFormat</span> <span class="variable">sdf2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(newPattern); <span class="comment">// 实例化模板对象</span></span><br><span class="line">		<span class="type">Date</span> <span class="variable">d</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			d = sdf1.parse(date); <span class="comment">// 将给定的字符串中的日期提取出来</span></span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">// 如果提供的字符串格式有错误，则进行异常处理</span></span><br><span class="line">			e.printStackTrace(); <span class="comment">// 打印异常信息</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> sdf2.format(d);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/28/313/">mybatis配置log4j控制台打印SQL语句</a>
+            </div>
+            <p class="sub">Feb 28 2019</p>
+            <div class="post-content">
+                
+                    <p>log4j配置文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">strong</span>&gt;</span>#########################################################################  </span><br><span class="line">#Root Logger  </span><br><span class="line">#log4j.rootLogger = [ level ] , appenderName, appenderName,  </span><br><span class="line">#ConversionPattern:%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n    </span><br><span class="line">#FilePath =  /opt/uploads/maven_logs/maven_web.log  </span><br><span class="line">#########################################################################  </span><br><span class="line">#将Mybatis log4j运行级别调到DEBUG可以在控制台打印出Mybatis运行的sql语句  </span><br><span class="line">log4j.rootLogger=DEBUG,Console,File  </span><br><span class="line">### 把日志信息输出到控制台 ###  </span><br><span class="line">log4j.appender.Console=org.apache.log4j.ConsoleAppender  </span><br><span class="line">log4j.appender.Console.Target=System.out  </span><br><span class="line">log4j.appender.Console.layout = org.apache.log4j.PatternLayout  </span><br><span class="line">log4j.appender.Console.layout.ConversionPattern=%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n   </span><br><span class="line">### 把日志信息输出到文件：/opt/uploads/maven_logs/maven_web.log ###  </span><br><span class="line">log4j.appender.File = org.apache.log4j.DailyRollingFileAppender  </span><br><span class="line">log4j.appender.File.File = /opt/uploads/maven_logs/maven_web.log  </span><br><span class="line">log4j.appender.File.Threshold = DEBUG  </span><br><span class="line">log4j.appender.File.layout = org.apache.log4j.PatternLayout  </span><br><span class="line">log4j.appender.File.layout.ConversionPattern =%d&#123;yyyy-MM-dd-HH\:mm\:ss,SSS&#125; [%t]  [%c] [%p] - %m%n   </span><br><span class="line">  </span><br><span class="line">###显示SQL语句部分  </span><br><span class="line">log4j.logger.com.mybatis=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.common.jdbc.SimpleDataSource=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.common.jdbc.ScriptRunner=DEBUG  </span><br><span class="line">log4j.logger.com.mybatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG  </span><br><span class="line">log4j.logger.java.sql.Connection=DEBUG  </span><br><span class="line">log4j.logger.java.sql.Statement=DEBUG  </span><br><span class="line">log4j.logger.java.sql.PreparedStatement=DEBUG<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
+<p>mybatis配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span>    </span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span>  </span></span><br><span class="line"><span class="meta"><span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dialect&quot;</span> <span class="attr">value</span>=<span class="string">&quot;mysql&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">settings</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;LOG4J&quot;</span> /&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span>   </span><br></pre></td></tr></table></figure>
+<p>maven配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.bgee.log4jdbc-log4j2<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4jdbc-log4j2-jdbc4.1<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/18/311/">java压缩文件夹并发送给前端</a>
+            </div>
+            <p class="sub">Feb 18 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p><code>ServletOutputStream.getOutputStream()</code><br>获得字节流，通过该字节流的write(byte[] bytes)可以向response缓冲区中写入字节，再由Tomcat服务器将字节内容组成Http响应返回给浏览器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/FileComponent&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileComponentController</span> <span class="keyword">extends</span> <span class="title class_">BaseController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span>  </span><br><span class="line">	<span class="keyword">private</span>  HttpServletResponse  response;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> zipUtil ziputil;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(value =&quot;/getZipFile&quot;)</span></span><br><span class="line">	<span class="meta">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">getZipFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			</span><br><span class="line">			List&lt;String&gt; fileinfo = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">			fileinfo = fileBuild.creatTxtFile(<span class="string">&quot;111&quot;</span>, <span class="string">&quot;ziptest.txt&quot;</span>, <span class="string">&quot;192310&quot;</span>);</span><br><span class="line">				System.out.println(fileinfo.get(<span class="number">1</span>));</span><br><span class="line">				response.setContentType(<span class="string">&quot;application/zip&quot;</span>);</span><br><span class="line">				response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;attachment; filename=excel.zip&quot;</span>);  </span><br><span class="line">			 ziputil.toZip(fileinfo.get(<span class="number">1</span>), response.getOutputStream(),<span class="literal">false</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			System.out.println(e.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="zipUtil"><a href="#zipUtil" class="headerlink" title="zipUtil"></a>zipUtil</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">zipUtil</span> &#123;</span><br><span class="line">	 <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span>  <span class="variable">BUFFER_SIZE</span> <span class="operator">=</span> <span class="number">2</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">	     <span class="comment">/**</span></span><br><span class="line"><span class="comment">	      * 压缩成ZIP 方法</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> srcDir 压缩文件夹路径 </span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> out    压缩文件输出流</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@param</span> KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; </span></span><br><span class="line"><span class="comment">	      *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)</span></span><br><span class="line"><span class="comment">	      * <span class="doctag">@throws</span> RuntimeException 压缩失败会抛出运行时异常</span></span><br><span class="line"><span class="comment">	      */</span></span><br><span class="line">	     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">toZip</span><span class="params">(String srcDir, OutputStream out, <span class="type">boolean</span> KeepDirStructure)</span><span class="keyword">throws</span> RuntimeException&#123;</span><br><span class="line"></span><br><span class="line">	         <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">	         <span class="type">ZipOutputStream</span> <span class="variable">zos</span> <span class="operator">=</span> <span class="literal">null</span> ;</span><br><span class="line"></span><br><span class="line">	         <span class="keyword">try</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	             zos = <span class="keyword">new</span> <span class="title class_">ZipOutputStream</span>(out);</span><br><span class="line">	             <span class="type">File</span> <span class="variable">sourceFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(srcDir);</span><br><span class="line">	             compress(sourceFile,zos,sourceFile.getName(),KeepDirStructure);</span><br><span class="line">	 </span><br><span class="line">	         &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;zip error from ZipUtils&quot;</span>,e);</span><br><span class="line">	         &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">	             <span class="keyword">if</span>(zos != <span class="literal">null</span>)&#123;</span><br><span class="line">	                 <span class="keyword">try</span> &#123;</span><br><span class="line">	                     zos.close();</span><br><span class="line">	                 &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	                     e.printStackTrace();</span><br><span class="line">	                 &#125;</span><br><span class="line">	 </span><br><span class="line">	             &#125;</span><br><span class="line">	 </span><br><span class="line">	         &#125;</span><br><span class="line">	</span><br><span class="line">	     &#125;</span><br><span class="line">	     </span><br><span class="line">	     </span><br><span class="line">	     <span class="comment">/**</span></span><br><span class="line"><span class="comment">	          * 递归压缩方法</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> sourceFile 源文件</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> zos        zip输出流</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> name       压缩后的名称</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@param</span> KeepDirStructure  是否保留原来的目录结构,true:保留目录结构; </span></span><br><span class="line"><span class="comment">	          *                          false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)</span></span><br><span class="line"><span class="comment">	          * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	          */</span></span><br><span class="line"></span><br><span class="line">	         <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">compress</span><span class="params">(File sourceFile, ZipOutputStream zos, String name,<span class="type">boolean</span> KeepDirStructure)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">	     </span><br><span class="line">	             <span class="type">byte</span>[] buf = <span class="keyword">new</span> <span class="title class_">byte</span>[BUFFER_SIZE];</span><br><span class="line">	     </span><br><span class="line">	             <span class="keyword">if</span>(sourceFile.isFile())&#123;</span><br><span class="line">	    </span><br><span class="line">	                 <span class="comment">// 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字	 </span></span><br><span class="line">	                 zos.putNextEntry(<span class="keyword">new</span> <span class="title class_">ZipEntry</span>(name));	     </span><br><span class="line">	                 <span class="comment">// copy文件到zip输出流中	     </span></span><br><span class="line">	                 <span class="type">int</span> len;	     </span><br><span class="line">	                 <span class="type">FileInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(sourceFile);</span><br><span class="line">	     </span><br><span class="line">	                 <span class="keyword">while</span> ((len = in.read(buf)) != -<span class="number">1</span>)&#123;</span><br><span class="line">	     </span><br><span class="line">	                     zos.write(buf, <span class="number">0</span>, len);</span><br><span class="line">	     </span><br><span class="line">	                 &#125;</span><br><span class="line">	     </span><br><span class="line">	                <span class="comment">// Complete the entry</span></span><br><span class="line">	                 zos.closeEntry();</span><br><span class="line">	                 in.close();</span><br><span class="line">	     </span><br><span class="line">	             &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                 File[] listFiles = sourceFile.listFiles();</span><br><span class="line">	     </span><br><span class="line">	                 <span class="keyword">if</span>(listFiles == <span class="literal">null</span> || listFiles.length == <span class="number">0</span>)&#123;</span><br><span class="line">	     </span><br><span class="line">	                     <span class="comment">// 需要保留原来的文件结构时,需要对空文件夹进行处理</span></span><br><span class="line">	                     <span class="keyword">if</span>(KeepDirStructure)&#123;</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 空文件夹的处理</span></span><br><span class="line">	                         zos.putNextEntry(<span class="keyword">new</span> <span class="title class_">ZipEntry</span>(name + <span class="string">&quot;/&quot;</span>));</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 没有文件，不需要文件的copy</span></span><br><span class="line">	                        zos.closeEntry();</span><br><span class="line">	     </span><br><span class="line">	                     &#125;</span><br><span class="line"></span><br><span class="line">	                 &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                     <span class="keyword">for</span> (File file : listFiles) &#123;</span><br><span class="line">	     </span><br><span class="line">	                         <span class="comment">// 判断是否需要保留原来的文件结构	     </span></span><br><span class="line">	                         <span class="keyword">if</span> (KeepDirStructure) &#123;</span><br><span class="line">	     </span><br><span class="line">	                             <span class="comment">// 注意：file.getName()前面需要带上父文件夹的名字加一斜杠,	     </span></span><br><span class="line">	                             <span class="comment">// 不然最后压缩包中就不能保留原来的文件结构,即：所有文件都跑到压缩包根目录下了	     </span></span><br><span class="line">	                             compress(file, zos, name + <span class="string">&quot;/&quot;</span> + file.getName(),KeepDirStructure);</span><br><span class="line">	     </span><br><span class="line">	                         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	     </span><br><span class="line">	                             compress(file, zos, file.getName(),KeepDirStructure);</span><br><span class="line">	     </span><br><span class="line">	                         &#125;</span><br><span class="line"></span><br><span class="line">	                     &#125;</span><br><span class="line">	     </span><br><span class="line">	                 &#125;</span><br><span class="line">	     </span><br><span class="line">	             &#125;</span><br><span class="line">	     </span><br><span class="line">	         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fileUtil</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">fileBuild</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title function_">creatTxtFile</span><span class="params">(String info,String filename , String storecd)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">		List&lt;String&gt; fileinfo = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">		<span class="type">DateFormat</span> <span class="variable">df</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyyMMddHHmm&quot;</span>);</span><br><span class="line">		<span class="type">Calendar</span> <span class="variable">calendar</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line">		<span class="type">String</span> <span class="variable">dateName</span> <span class="operator">=</span> df.format(calendar.getTime());</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> storecd+dateName+<span class="string">&quot;/&quot;</span>;</span><br><span class="line">		<span class="comment">//String path = &quot;/src/main/webapp/WEB-INF/&quot;+name;</span></span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">textpath</span> <span class="operator">=</span> fileBuild.class.getResource(<span class="string">&quot;/&quot;</span>).getPath()+name;</span><br><span class="line">		<span class="type">File</span> <span class="variable">filepath</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(textpath);</span><br><span class="line">		filepath.mkdir();</span><br><span class="line">		<span class="type">String</span> <span class="variable">nowfilepath</span> <span class="operator">=</span> (fileBuild.class.getResource(<span class="string">&quot;/&quot;</span>).getPath()+name+filename);</span><br><span class="line">		nowfilepath = nowfilepath.substring(<span class="number">1</span>,nowfilepath.length());</span><br><span class="line">		fileinfo.add(filename);</span><br><span class="line">		fileinfo.add(textpath);   </span><br><span class="line">		<span class="type">File</span> <span class="variable">file1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(nowfilepath);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (!file1.exists()) &#123;</span><br><span class="line">			file1.createNewFile();</span><br><span class="line">			  		</span><br><span class="line">			<span class="type">BufferedWriter</span> <span class="variable">fileWriter</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(<span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file1),<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">			<span class="comment">//FileWriter fileWriter = new FileWriter(filename);  </span></span><br><span class="line">			fileWriter.write(info);  </span><br><span class="line">			fileWriter.flush();</span><br><span class="line">			fileWriter.close(); </span><br><span class="line">		</span><br><span class="line">			<span class="keyword">return</span> fileinfo;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">		 </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考博客<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/csdn_kenneth/article/details/78725607">https://blog.csdn.net/csdn_kenneth/article/details/78725607</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zeng1994/p/7862288.html">https://www.cnblogs.com/zeng1994/p/7862288.html</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/11/310/">情景linux--一张图搞懂head -n和tail -n</a>
+            </div>
+            <p class="sub">Feb 11 2019</p>
+            <div class="post-content">
+                
+                    <p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/signjing/article/details/69357769">https://blog.csdn.net/signjing/article/details/69357769</a></p>
+<p>举例<br>创建一个文件，文件共10行，每行的内容依次为1-10数字，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> testfile</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> testfile | <span class="built_in">wc</span> -l </span><br><span class="line">10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当k&#x3D;3时，分别执行上述命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">head</span> -n 3 testfile </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">head</span> -n +3 testfile</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>由此可见，head -n k和head -n +k意义相同；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">head</span> -n -3 testfile </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+<p>-k的意义是除了最后k行的所有行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">tail</span> -n 3 testfile </span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">tail</span> -n -3 testfile </span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<p>由此可见，tail -n k和tail -n -k意义相同；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">tail</span> -n +3 testfile </span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<p>+k的意义是从第k行开始，输出所有行；<br>总结</p>
+<ol>
+<li><p><code>head -n k=head -n +k，tail -n k=tail -n -k</code>，可以简单记忆为<code>头正尾负</code>；</p>
+</li>
+<li><p>无论k前面的符号怎样，tail都是输出尾部内容，head都是输出头部内容的；</p>
+</li>
+<li><p>特别注意tail -n +k，这里的k表示从第K行开始；（因此上例中，head -n -3输出7行，而tail -n +3输出8行。）</p>
+</li>
+</ol>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/11/309/">int数组转化成List</a>
+            </div>
+            <p class="sub">Feb 11 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] src = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">List&lt;Integer&gt; list = Arrays.stream( src ).boxed().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/31/308/">java生成txt文件乱码</a>
+            </div>
+            <p class="sub">Jan 31 2019</p>
+            <div class="post-content">
+                
+                    <p>设置编码为<code>Unicode</code>。网上好多方法说设置<code>UTF-8</code>，但是打开还是乱码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		String encoding=<span class="string">&quot;Unicode&quot;</span>; <span class="comment">//字符编码</span></span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			File readFile=<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;studentInfo.txt.txt&quot;</span>),</span><br><span class="line">					writeFile=<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;studentName.txt&quot;</span>);<span class="comment">//studentInfo.txt.txt初始编码为Unicode</span></span><br><span class="line">			<span class="comment">//if(readFile.isFile()&amp;&amp;readFile.exists())  </span></span><br><span class="line">			<span class="comment">//&#123;       </span></span><br><span class="line">			<span class="comment">//读取txt文件时的txt的原始编码格式</span></span><br><span class="line">			<span class="type">InputStreamReader</span> <span class="variable">inOne</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(readFile),encoding);</span><br><span class="line">			BufferedReader inTwo=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(inOne);</span><br><span class="line">			<span class="comment">//BufferedReader inTwo=new BufferedReader(new InputStreamReader(new FileInputStream(readFile),encoding));</span></span><br><span class="line">			<span class="comment">//FileWriter tofile=new FileWriter(&quot;studentName.txt&quot;);</span></span><br><span class="line">			<span class="type">OutputStreamWriter</span> <span class="variable">tofile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(writeFile),<span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">			 BufferedWriter out=<span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(tofile);          </span><br><span class="line">			<span class="comment">//BufferedWriter out =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(writeFile),encoding));</span></span><br><span class="line">			String s;</span><br><span class="line">			<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>((s=inTwo.readLine())!=<span class="literal">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;</span><br><span class="line">				out.write(<span class="string">&quot;(&quot;</span>+i+<span class="string">&quot;)&quot;</span>+<span class="string">&quot;&quot;</span>+s);</span><br><span class="line">				out.newLine();</span><br><span class="line">			&#125;</span><br><span class="line">			out.flush();</span><br><span class="line">			out.close();</span><br><span class="line">			inTwo.close();</span><br><span class="line">			<span class="comment">//tofile.close();</span></span><br><span class="line">			inTwo=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;studentName.txt&quot;</span>));</span><br><span class="line">			<span class="keyword">while</span>((s=inTwo.readLine())!=<span class="literal">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				System.out.println(s);</span><br><span class="line">			&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="comment">//&#125;</span></span><br><span class="line">		<span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">			 e.printStackTrace();		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/31/307/">properties文件的属性值需要换行</a>
+            </div>
+            <p class="sub">Jan 31 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="1-属性值过长时-要完整的显示：解决这个问题可以用”-这个符号来分割。"><a href="#1-属性值过长时-要完整的显示：解决这个问题可以用”-这个符号来分割。" class="headerlink" title="1 属性值过长时,要完整的显示：解决这个问题可以用”&quot;这个符号来分割。"></a>1 属性值过长时,要完整的显示：解决这个问题可以用”&quot;这个符号来分割。</h3><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">about_home=Intelligent locker management system\</span><br><span class="line">Software version:\</span><br></pre></td></tr></table></figure>
+<p>打印输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">about_home=Intelligent locker management systemSoftware version:</span><br></pre></td></tr></table></figure>
+<h3 id="2-需要换行显示：解决这个问题可以用”-n”这个符号来分割。"><a href="#2-需要换行显示：解决这个问题可以用”-n”这个符号来分割。" class="headerlink" title="2 需要换行显示：解决这个问题可以用”\n”这个符号来分割。"></a>2 需要换行显示：解决这个问题可以用”\n”这个符号来分割。</h3><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">about_home=Intelligent locker management system\nSoftware version:\n</span><br></pre></td></tr></table></figure>
+<p>打印输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">about_home=Intelligent locker management system</span><br><span class="line">Software version:</span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/30/306/">项目的相对位置部署到tomcat发生改变（获得项目路径）</a>
+            </div>
+            <p class="sub">Jan 30 2019</p>
+            <div class="post-content">
+                
+                    <pre><code>在java web开发中，经常会涉及到文件的读写问题，而由于部署在tomcat上之后，文件的目录结构会发生一些变化，因此常规的获取相对或绝对路径的方式用在此处会导致获取不到文件的尴尬局面，下面便介绍一下在servlet中如何读取WEB-INF下的txt文件。
+</code></pre>
+<p>这个实质是获取web-inf文件路径。。。<br>使用getServletContext(). 方式不好，因为只能在web服务器启动的情况下使用。Thread.currentThread().getContextClassLoader(). 也不好，，因为ClassLoader是可以被框架或者服务器动态改变的。。有些情况下路径就不对了</p>
+<p>我总结的较好的方法<br>主要思路如下：<br>1.得到CLASS路径值。。<br>2.得到其父路径，即WEB-INF的路径值。<br>3.得到完整的WEB-INF\WEB.XML的路径值<br>这样在不启动web服务器的情况下，main函数也可以读取到web-inf下的配置</p>
+<p>示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">        <span class="type">Properties</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> Test.class.getClass().getResource(<span class="string">&quot;/&quot;</span>).getPath();</span><br><span class="line">            path = path.substring(<span class="number">1</span>, path.indexOf(<span class="string">&quot;classes&quot;</span>));</span><br><span class="line">            p.load(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(path + <span class="string">&quot;parameter.properties&quot;</span>));</span><br><span class="line">            <span class="comment">//读出具体的参数</span></span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_url=&quot;</span>+p.get(<span class="string">&quot;mysql_url&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_user=&quot;</span>+p.get(<span class="string">&quot;mysql_user&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_password=&quot;</span>+p.get(<span class="string">&quot;mysql_password&quot;</span>));</span><br><span class="line">             </span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>详情参照：<br><a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/390533227/">https://bbs.csdn.net/topics/390533227/</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32623363/article/details/79948936">https://blog.csdn.net/qq_32623363/article/details/79948936</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/30/305/">SQL中using的使用</a>
+            </div>
+            <p class="sub">Jan 30 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="using只是on的一种特殊情况（同名列相等）"><a href="#using只是on的一种特殊情况（同名列相等）" class="headerlink" title="using只是on的一种特殊情况（同名列相等）"></a>using只是on的一种特殊情况（同名列相等）</h3><p>例：<br>1.常用的表关联</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students s</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> teacher t <span class="keyword">on</span> t.linkUUID <span class="operator">=</span> s.linkUUID;</span><br></pre></td></tr></table></figure>
+<p>2.使用using()前提是（students和teacher）两个表关联字段必须是一样的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> teacher <span class="keyword">using</span>(linkUUID)</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/9/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/11/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

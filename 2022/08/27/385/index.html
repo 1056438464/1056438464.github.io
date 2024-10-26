@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Redis实现限流 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Redis实现限流
+    </div>
+    <p class="sub">Aug 27 2022</p>
+    <div class="post-content">
+        <h3 id="1、引入依赖"><a href="#1、引入依赖" class="headerlink" title="1、引入依赖"></a>1、引入依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- redis依赖commons-pool 这个依赖一定要添加 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2、application-yml配置"><a href="#2、application-yml配置" class="headerlink" title="2、application.yml配置"></a>2、application.yml配置</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">8181</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">  <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">lettuce:</span></span><br><span class="line">    <span class="attr">pool:</span></span><br><span class="line">    <span class="comment"># 连接池中的最小空闲连接 默认0</span></span><br><span class="line">      <span class="attr">min-idle:</span> <span class="number">0</span></span><br><span class="line">      <span class="comment"># 连接池中的最大空闲连接 默认8</span></span><br><span class="line">      <span class="attr">max-idle:</span> <span class="number">8</span></span><br><span class="line">      <span class="comment"># 连接池最大连接数 默认8 ，负数表示没有限制</span></span><br><span class="line">      <span class="attr">max-active:</span> <span class="number">8</span></span><br><span class="line">      <span class="comment"># 连接池最大阻塞等待时间（使用负值表示没有限制） 默认-1</span></span><br><span class="line">      <span class="attr">max-wait:</span> <span class="string">-1ms</span></span><br><span class="line">  <span class="comment">#选择哪个库存储，默认是0</span></span><br><span class="line">  <span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">  <span class="attr">password:</span> <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<h3 id="3、创建redisConfig，引入redisTemplate"><a href="#3、创建redisConfig，引入redisTemplate" class="headerlink" title="3、创建redisConfig，引入redisTemplate"></a>3、创建redisConfig，引入redisTemplate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedisConfig</span> &#123;</span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; <span class="title function_">redisTemplate</span><span class="params">(LettuceConnectionFactory redisConnectionFactory)</span> &#123;</span><br><span class="line">       RedisTemplate&lt;String, Object&gt; redisTemplate = <span class="keyword">new</span> <span class="title class_">RedisTemplate</span>&lt;String, Object&gt;();</span><br><span class="line">       redisTemplate.setKeySerializer(<span class="keyword">new</span> <span class="title class_">StringRedisSerializer</span>());</span><br><span class="line">       redisTemplate.setValueSerializer(<span class="keyword">new</span> <span class="title class_">GenericJackson2JsonRedisSerializer</span>());</span><br><span class="line">       redisTemplate.setHashKeySerializer(<span class="keyword">new</span> <span class="title class_">StringRedisSerializer</span>());</span><br><span class="line">       redisTemplate.setHashValueSerializer(<span class="keyword">new</span> <span class="title class_">GenericJackson2JsonRedisSerializer</span>());</span><br><span class="line">       redisTemplate.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> redisTemplate;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、写自定义注解和拦截器"><a href="#4、写自定义注解和拦截器" class="headerlink" title="4、写自定义注解和拦截器"></a>4、写自定义注解和拦截器</h3><p>1、自定义注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AccessLimit &#123;</span><br><span class="line">   <span class="type">int</span> <span class="title function_">seconds</span><span class="params">()</span>; <span class="comment">//秒数</span></span><br><span class="line">   <span class="type">int</span> <span class="title function_">maxCount</span><span class="params">()</span>; <span class="comment">//最大访问次数</span></span><br><span class="line">   <span class="type">boolean</span> <span class="title function_">needLogin</span><span class="params">()</span><span class="keyword">default</span> <span class="literal">true</span>;<span class="comment">//是否需要登录</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、创建拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FangshuaInterceptor</span> <span class="keyword">extends</span> <span class="title class_">HandlerInterceptorAdapter</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       <span class="comment">//判断请求是否属于方法的请求</span></span><br><span class="line">       <span class="keyword">if</span>(handler <span class="keyword">instanceof</span> HandlerMethod)&#123;</span><br><span class="line">           <span class="type">HandlerMethod</span> <span class="variable">hm</span> <span class="operator">=</span> (HandlerMethod) handler;</span><br><span class="line">           <span class="comment">//获取方法中的注解,看是否有该注解</span></span><br><span class="line">           <span class="type">AccessLimit</span> <span class="variable">accessLimit</span> <span class="operator">=</span> hm.getMethodAnnotation(AccessLimit.class);</span><br><span class="line">           <span class="keyword">if</span>(accessLimit == <span class="literal">null</span>)&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">          &#125;</span><br><span class="line">           <span class="type">int</span> <span class="variable">seconds</span> <span class="operator">=</span> accessLimit.seconds();</span><br><span class="line">           <span class="type">int</span> <span class="variable">maxCount</span> <span class="operator">=</span> accessLimit.maxCount();</span><br><span class="line">           <span class="type">boolean</span> <span class="variable">login</span> <span class="operator">=</span> accessLimit.needLogin();</span><br><span class="line">           <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> request.getRequestURI();</span><br><span class="line">           <span class="comment">//如果需要登录</span></span><br><span class="line">           <span class="keyword">if</span>(login)&#123;</span><br><span class="line">               <span class="comment">//获取登录的session进行判断，此处只是例子，不写具体的业务</span></span><br><span class="line">               <span class="comment">//.....</span></span><br><span class="line">               key+=<span class="string">&quot;&quot;</span>+<span class="string">&quot;1&quot;</span>;  <span class="comment">//这里假设用户是1,项目中是动态获取的userId</span></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">           <span class="comment">//从redis中获取用户访问的次数</span></span><br><span class="line">           Integer count;</span><br><span class="line">           <span class="keyword">if</span>(Objects.isNull(redisTemplate.opsForValue().get(key)))&#123;</span><br><span class="line">               count = <span class="number">0</span>;</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               count = (Integer) redisTemplate.opsForValue().get(key);</span><br><span class="line">          &#125;</span><br><span class="line">           <span class="keyword">if</span>(count == <span class="number">0</span>)&#123;</span><br><span class="line">               redisTemplate.opsForValue().set(key,<span class="number">1</span>,seconds, TimeUnit.SECONDS);</span><br><span class="line">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(count&lt;maxCount)&#123;</span><br><span class="line">               <span class="comment">//key的值加1</span></span><br><span class="line">               redisTemplate.opsForValue().increment(key);</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               <span class="comment">//超出访问次数</span></span><br><span class="line">               Map&lt;String,Object&gt; errMap=<span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">               errMap.put(<span class="string">&quot;code&quot;</span>,<span class="number">400</span>);</span><br><span class="line">               errMap.put(<span class="string">&quot;msg&quot;</span>,<span class="string">&quot;请求超时，请稍后再试&quot;</span>);</span><br><span class="line">               render(response,errMap); <span class="comment">//这里的CodeMsg是一个返回参数</span></span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">render</span><span class="params">(HttpServletResponse response, Map&lt;String,Object&gt; errMap)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       response.setContentType(<span class="string">&quot;application/json;charset=UTF-8&quot;</span>);</span><br><span class="line">       <span class="type">OutputStream</span> <span class="variable">out</span> <span class="operator">=</span> response.getOutputStream();</span><br><span class="line">       <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> JSON.toJSONString(errMap);</span><br><span class="line">       out.write(str.getBytes(<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">       out.flush();</span><br><span class="line">       out.close();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3、将自定义拦截器加入到拦截器列表中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurerAdapter</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> FangshuaInterceptor interceptor;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">       registry.addInterceptor(interceptor);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//每三十秒最多可以请求三次，不需要登录</span></span><br><span class="line">   <span class="meta">@AccessLimit(seconds=30, maxCount=3, needLogin=false)</span></span><br><span class="line">   <span class="meta">@PostMapping(&quot;/fangshua&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">fangshua</span><span class="params">()</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;成功&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-text">1、引入依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81application-yml%E9%85%8D%E7%BD%AE"><span class="toc-text">2、application.yml配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%88%9B%E5%BB%BAredisConfig%EF%BC%8C%E5%BC%95%E5%85%A5redisTemplate"><span class="toc-text">3、创建redisConfig，引入redisTemplate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%92%8C%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-text">4、写自定义注解和拦截器</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Redis/">Redis</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2022/11/23/386/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">点赞功能demo实现</span>
+            </a>
+        
+        
+            <a class="next" href="/2022/07/15/384/">
+                
+                <span class="prev-text">JWT实战</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

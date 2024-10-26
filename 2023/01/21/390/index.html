@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>面试必备常见存储引擎与锁的分类 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        面试必备常见存储引擎与锁的分类
+    </div>
+    <p class="sub">Jan 21 2023</p>
+    <div class="post-content">
+        <h1 id="常见存储引擎与锁的分类"><a href="#常见存储引擎与锁的分类" class="headerlink" title="常见存储引擎与锁的分类"></a>常见存储引擎与锁的分类</h1><p>在 MySQL 中，不同的存储引擎具有不同的锁机制。以下是几种常见存储引擎及其锁的分类。</p>
+<h2 id="1-MyISAM-引擎"><a href="#1-MyISAM-引擎" class="headerlink" title="1. MyISAM 引擎"></a>1. MyISAM 引擎</h2><ul>
+<li><strong>锁类型：表锁</strong><ul>
+<li>MyISAM 使用<strong>表级锁（Table Lock）</strong>，即对整个表加锁。</li>
+<li>每次查询需要先对表加锁，再进行读写操作，锁的粒度较大。</li>
+<li>优点：锁管理简单，适用于读多写少的场景。</li>
+<li>缺点：并发性能差，当写操作频繁时，其他读写操作都会被阻塞。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-InnoDB-引擎"><a href="#2-InnoDB-引擎" class="headerlink" title="2. InnoDB 引擎"></a>2. InnoDB 引擎</h2><ul>
+<li><p><strong>锁类型：行锁 &amp; 表锁</strong></p>
+<ul>
+<li>InnoDB 支持<strong>行级锁（Row Lock）</strong>，即对记录级别进行加锁，锁的粒度更小。</li>
+<li>InnoDB 还支持表锁，但通常使用行锁来实现更高的并发性。</li>
+</ul>
+</li>
+<li><p><strong>锁实现：</strong></p>
+<ul>
+<li><strong>共享锁（S 锁）：</strong> 允许多个事务对同一行读取。</li>
+<li><strong>排他锁（X 锁）：</strong> 一个事务获得排他锁后，其他事务无法对该行进行操作。</li>
+<li><strong>间隙锁（Gap Lock）：</strong> 锁住一个范围之间的间隙，防止其他事务在此范围内插入数据。</li>
+<li><strong>下一键锁（Next-Key Lock）：</strong> 结合行锁和间隙锁，锁住一行及其前后的间隙，用于防止幻读。</li>
+</ul>
+</li>
+<li><p><strong>应用场景：</strong> 适用于事务性应用，保证更高的并发性和数据一致性。</p>
+</li>
+</ul>
+<h2 id="3-Memory-引擎"><a href="#3-Memory-引擎" class="headerlink" title="3. Memory 引擎"></a>3. Memory 引擎</h2><ul>
+<li><strong>锁类型：表锁</strong><ul>
+<li>Memory 存储引擎使用表锁，即每次查询会锁住整个表。</li>
+<li>Memory 表将数据存储在内存中，访问速度非常快，但一旦数据库重启，数据将丢失。</li>
+<li><strong>应用场景：</strong> 常用于临时表或会话数据的缓存，不适合长时间保存数据的应用场景。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-NDB-Cluster-引擎"><a href="#4-NDB-Cluster-引擎" class="headerlink" title="4. NDB Cluster 引擎"></a>4. NDB Cluster 引擎</h2><ul>
+<li><strong>锁类型：行锁</strong><ul>
+<li>NDB Cluster 是一种分布式存储引擎，主要用于 MySQL Cluster 集群。</li>
+<li>NDB Cluster 支持行级锁，锁的粒度较小，可以适应高并发应用。</li>
+<li><strong>应用场景：</strong> 用于分布式系统和高可用场景，适合数据分片和水平扩展。</li>
+</ul>
+</li>
+</ul>
+<h2 id="锁的分类总结"><a href="#锁的分类总结" class="headerlink" title="锁的分类总结"></a>锁的分类总结</h2><table>
+<thead>
+<tr>
+<th>锁类型</th>
+<th>描述</th>
+<th>适用引擎</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>表锁（Table Lock）</td>
+<td>锁住整个表，锁粒度大，适合读多写少的应用</td>
+<td>MyISAM、Memory</td>
+</tr>
+<tr>
+<td>行锁（Row Lock）</td>
+<td>锁住特定行，锁粒度小，适合高并发</td>
+<td>InnoDB、NDB Cluster</td>
+</tr>
+<tr>
+<td>间隙锁（Gap Lock）</td>
+<td>锁住行之间的间隙，防止插入，避免幻读</td>
+<td>InnoDB</td>
+</tr>
+<tr>
+<td>下一键锁（Next-Key Lock）</td>
+<td>行锁与间隙锁结合，避免幻读问题</td>
+<td>InnoDB</td>
+</tr>
+</tbody></table>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B8%8E%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">常见存储引擎与锁的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-MyISAM-%E5%BC%95%E6%93%8E"><span class="toc-text">1. MyISAM 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-InnoDB-%E5%BC%95%E6%93%8E"><span class="toc-text">2. InnoDB 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Memory-%E5%BC%95%E6%93%8E"><span class="toc-text">3. Memory 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-NDB-Cluster-%E5%BC%95%E6%93%8E"><span class="toc-text">4. NDB Cluster 引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB%E6%80%BB%E7%BB%93"><span class="toc-text">锁的分类总结</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Mysql/">Mysql</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2023/01/21/389/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">InnoDB解决幻读的方案--LBCC&amp;MVCC</span>
+            </a>
+        
+        
+            <a class="next" href="/2022/12/21/388/">
+                
+                <span class="prev-text">PageHelper</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

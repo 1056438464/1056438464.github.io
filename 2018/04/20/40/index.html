@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>阿里云服务器下(centOS)中安装ftp | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        阿里云服务器下(centOS)中安装ftp
+    </div>
+    <p class="sub">Apr 20 2018</p>
+    <div class="post-content">
+        <h1 id="1-安装常用工具和依赖库"><a href="#1-安装常用工具和依赖库" class="headerlink" title="1.安装常用工具和依赖库"></a>1.安装常用工具和依赖库</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install wget axel unzip gcc bison git autoconf nfs-utils pcre-devel zlib-devel bzip2-devel cmake gcc-c++ ncurses-devel perl-Data-Dumper libicu-devel libquadmath-devel python-devel libxml2-devel openssl-devel libcurl-devel libpng-devel freetype-devel freetype-devel gd-devel libmcrypt-devel libxslt-devel libevent-devel systemd-devel make gtk+-devel openssl keyutils patch perl</span><br></pre></td></tr></table></figure>
+<h1 id="2-获取PHP"><a href="#2-获取PHP" class="headerlink" title="2.获取PHP"></a>2.获取PHP</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://cn2.php.net/distributions/php-7.1.9.tar.gz</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h1 id="3-安装PHP"><a href="#3-安装PHP" class="headerlink" title="3.安装PHP"></a>3.安装PHP</h1><h2 id="3-1编译安装"><a href="#3-1编译安装" class="headerlink" title="3.1编译安装"></a>3.1编译安装</h2><p>在PHP的下载目录，解压后，运行.&#x2F;configure生成Makefile。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/php7 --with-config-file-path=/opt/php7/lib/ --with-fpm-systemd --with-curl --with-freetype-dir --with-gd --with-gettext --with-iconv-dir --with-kerberos --with-libdir=lib64 --with-libxml-dir --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-mcrypt --with-pdo-sqlite --with-pear --with-png-dir --with-xmlrpc --with-xsl --with-zlib --with-jpeg-dir --enable-fpm --enable-bcmath --enable-libxml --enable-inline-optimization --enable-gd-native-ttf --enable-mbregex --enable-mbstring --enable-opcache --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvsem --enable-xml --enable-zip --enable-ftp</span><br></pre></td></tr></table></figure>
+<p>编译安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>所有PHP文件将安装到&#x2F;opt&#x2F;php7目录下。<br>#4、配置vsftp</p>
+<h2 id="4-1-配置vsftp"><a href="#4-1-配置vsftp" class="headerlink" title="4.1 配置vsftp"></a>4.1 配置vsftp</h2><h3 id="4-1-1-安装"><a href="#4-1-1-安装" class="headerlink" title="4.1.1 安装"></a>4.1.1 安装</h3><p>以root账户登录服务器，使用yum命令安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install vsftpd -y</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-配置ftp服务器文件存储路径"><a href="#4-2-配置ftp服务器文件存储路径" class="headerlink" title="4.2 配置ftp服务器文件存储路径"></a>4.2 配置ftp服务器文件存储路径</h2><p>新增ftpservice账户：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd ftpservice</span><br></pre></td></tr></table></figure>
+
+<p>为ftpservice这个用户添加密码，会提示输入两次密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$passwd ftpservice</span><br></pre></td></tr></table></figure>
+
+<p>新建文件存储路径cdpt_front,并</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$cd /home/ftpservice </span><br><span class="line">$mkdir cdpt_front</span><br><span class="line">$ chmod -R 777 /home/ftpservice/cdpt_front</span><br><span class="line">$chown ftpservice.ftpservice /home/ftpservice/cdpt_front/    修改用户组</span><br></pre></td></tr></table></figure>
+
+<p>然后我们将ftpservice这个用户加入到FTP用户表user_list里，将里面其它初始用户全部删除，加入刚刚我们新建的ftpservice用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$vim /etc/vsftpd/user_list</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-配置vsftpd"><a href="#4-3-配置vsftpd" class="headerlink" title="4.3 配置vsftpd"></a>4.3 配置vsftpd</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$vim /etc/vsftpd/vsftpd.conf</span><br><span class="line">以下是要更改的选项</span><br><span class="line">anonymous_enable=NO  #禁止匿名访问</span><br><span class="line">ascii_upload_enable #允许使用ascii码上传</span><br><span class="line">ascii_download_enable #允许使用ascii码下载</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">userlist_deny=NO #（这条需手动添加到最后）使用FTP用户表，表里没有的用户需要添加才能登录</span><br><span class="line">local_root=/home/ftpservice#（这条需手动添加到最后）</span><br><span class="line">#pei zhi pasv (需手动添加到最后)</span><br><span class="line">pasv_enable=yes(开启被动模式，即pasv模式，默认开启)</span><br><span class="line">pasv_min_port=50000</span><br><span class="line">pasv_max_port=51000（设定在PASV模式下，建立数据传输所可以使用port范围的下界和上界，0 表示任意。默认值为0。把端口范围设在比较高的一段范围内，比如50000-60000，将有助于安全性的提高）</span><br></pre></td></tr></table></figure>
+<h1 id="阿里云服务器需要在服务器实例中开通50000-51000的安全规则"><a href="#阿里云服务器需要在服务器实例中开通50000-51000的安全规则" class="headerlink" title="阿里云服务器需要在服务器实例中开通50000-51000的安全规则"></a><strong>阿里云服务器需要在服务器实例中开通50000-51000的安全规则</strong></h1><p>ftp主动模式与被动模式介绍：<br>FTP协议有两种工作方式：PORT方式和PASV方式，中文意思为主动式和被动式<br>PORT（主动）方式的连接过程是：客户端向服务器的FTP端口（默认是21）发送连接请求，服务器接受连接，建立一条命令链路当需要传送数据时，客户端在命令链路上用PORT命令告诉服务器：我打开了XXXX端口，你过来连接我于是服务器从20端口向客户端的XXXX端口发送连接请求，建立一条数据链路来传送数据<br>PASV（被动）方式的连接过程是：客户端向服务器的FTP端口（默认是21）发送连接请求，服务器接受连接，建立一条命令链路当需要传送数据时，服务器在命令链路上用PASV命令告诉客户端：我打开了XXXX端口，你过来连接我于是客户端向服务器的XXXX端口发送连接请求，建立一条数据链路来传送数据<br>概括：<br>主动模式：服务器向客户端敲门，然后客户端开门<br>被动模式：客户端向服务器敲门，然后服务器开门<br>所以，如果你是如果通过代理上网的话，就不能用主动模式，因为服务器敲的是上网代理服务器的门，而不是敲客户端的门，而且有时候，客户端也不是轻易就开门的，因为有防火墙阻挡，除非客户端开放大于1024的高端端口<br><strong>初次搭建ftp服务时，需要手动在&#x2F;home&#x2F;ftpservice&#x2F;cdpt_front，即文件储存路径中新建public&#x2F;upload&#x2F;一系列文件夹</strong></p>
+<h3 id="4-3-1开放端口"><a href="#4-3-1开放端口" class="headerlink" title="4.3.1开放端口"></a>4.3.1开放端口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=50000-51000/tcp –permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=20/tcp –permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=21/tcp –permanent</span><br><span class="line">重启防火墙</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>开通服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/bin/systemctl start  vsftpd.service 开启服务</span><br><span class="line">/bin/systemctl status  vsftpd.service 查看状态</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在即可用ftp://usenmae:password@ip:端口号</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%92%8C%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-text">1.安装常用工具和依赖库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96PHP"><span class="toc-text">2.获取PHP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85PHP"><span class="toc-text">3.安装PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85"><span class="toc-text">3.1编译安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E9%85%8D%E7%BD%AEvsftp"><span class="toc-text">4.1 配置vsftp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-%E5%AE%89%E8%A3%85"><span class="toc-text">4.1.1 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E9%85%8D%E7%BD%AEftp%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84"><span class="toc-text">4.2 配置ftp服务器文件存储路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E9%85%8D%E7%BD%AEvsftpd"><span class="toc-text">4.3 配置vsftpd</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9C%80%E8%A6%81%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E4%BE%8B%E4%B8%AD%E5%BC%80%E9%80%9A50000-51000%E7%9A%84%E5%AE%89%E5%85%A8%E8%A7%84%E5%88%99"><span class="toc-text">阿里云服务器需要在服务器实例中开通50000-51000的安全规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-text">4.3.1开放端口</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/systemctl/">systemctl</a>
+                
+                    <a href="/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+                
+                    <a href="/tags/tcp/">tcp</a>
+                
+                    <a href="/tags/permanent/">permanent</a>
+                
+                    <a href="/tags/zone/">zone</a>
+                
+                    <a href="/tags/%E6%96%87%E4%BB%B6/">文件</a>
+                
+                    <a href="/tags/yes/">yes</a>
+                
+                    <a href="/tags/ftpservice/">ftpservice</a>
+                
+                    <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+                
+                    <a href="/tags/ftp/">ftp</a>
+                
+                    <a href="/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+                
+                    <a href="/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/04/23/43/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">CentSO 7.4 下安装jdk1.8、mysql、php服务</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/04/20/38/">
+                
+                <span class="prev-text">centOS 用rpm查看已经安装的程序</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Git-设置SSH Key | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Git-设置SSH Key
+    </div>
+    <p class="sub">Nov 06 2018</p>
+    <div class="post-content">
+        <p>GitHub上连接已有仓库时的认证，是通过使用SSH的公开密钥认证方式进行的。我们首先来创建SSH key，并将其添加到GitHub上。</p>
+<h3 id="前提是要初始化设置姓名和邮箱地址"><a href="#前提是要初始化设置姓名和邮箱地址" class="headerlink" title="前提是要初始化设置姓名和邮箱地址"></a>前提是要初始化设置姓名和邮箱地址</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --global user.name <span class="string">&quot;GraceSi&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --global user.email <span class="string">&quot;your_email@163.com&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="1、创建SSH-Key"><a href="#1、创建SSH-Key" class="headerlink" title="1、创建SSH Key"></a>1、创建SSH Key</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;your_email@163.com&quot;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/c/Users/zhangsisi/.ssh/id_rsa): 按回车键</span><br><span class="line">/c/Users/zhangsisi/.ssh/id_rsa already exists.</span><br><span class="line">Overwrite (y/n)? y</span><br><span class="line">Enter passphrase (empty for no passphrase): 输入密码</span><br><span class="line">Enter same passphrase again:再次输入密码 </span><br></pre></td></tr></table></figure>
+<h3 id="输入密码后结果："><a href="#输入密码后结果：" class="headerlink" title="输入密码后结果："></a>输入密码后结果：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved in /c/Users/zhangsisi/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /c/Users/zhangsisi/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">fingerprint值 your_email@163.com</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|       ....o   +.|</span><br><span class="line">|    . .   . + = o|</span><br><span class="line">|     o o   o = + |</span><br><span class="line">|    o =    .+ * +|</span><br><span class="line">|   o B .S .+.+ =.|</span><br><span class="line">|    o = ....*o+  |</span><br><span class="line">|     o o o.. +oE |</span><br><span class="line">|      * .     .+ |</span><br><span class="line">|    .+        ..o|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id_rsa 文件时私有密钥   id_rsa.pub是公有密钥</span><br></pre></td></tr></table></figure>
+<h3 id="2、获取公有密钥"><a href="#2、获取公有密钥" class="headerlink" title="2、获取公有密钥"></a>2、获取公有密钥</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span></span><br><span class="line"></span><br><span class="line">ssh-rsa 公开密钥内容 zhangsisi3034@163.com</span><br></pre></td></tr></table></figure>
+<h3 id="3、GitHub添加公开密钥"><a href="#3、GitHub添加公开密钥" class="headerlink" title="3、GitHub添加公开密钥"></a>3、GitHub添加公开密钥</h3><p>点击GitHub有上角账户设置按钮（Setting），选择SSH and GPG keys，点击add ssh Key，出现如下内容。</p>
+<p><img src="https://www.swj233.top/usr/uploads/2018/11/1860545703.png"></p>
+<h3 id="4、测试认证成功"><a href="#4、测试认证成功" class="headerlink" title="4、测试认证成功"></a>4、测试认证成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh -T git@github.com</span></span><br><span class="line">//成功实例</span><br><span class="line">The authenticity of host &#x27;github.com (52.74.223.119)&#x27; can&#x27;t be established.</span><br><span class="line">RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br><span class="line">Warning: Permanently added &#x27;github.com,52.74.223.119&#x27; (RSA) to the list of known   hosts.</span><br><span class="line">Enter passphrase for key &#x27;/c/Users/zhangsisi/.ssh/id_rsa&#x27;:</span><br></pre></td></tr></table></figure>
+<h3 id="出现下面结果证明成功"><a href="#出现下面结果证明成功" class="headerlink" title="出现下面结果证明成功"></a>出现下面结果证明成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi GraceSi! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangsify/article/details/80488809">https://blog.csdn.net/zhangsify/article/details/80488809</a></p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%98%AF%E8%A6%81%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AE%E5%A7%93%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80"><span class="toc-text">前提是要初始化设置姓名和邮箱地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BASSH-Key"><span class="toc-text">1、创建SSH Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E5%90%8E%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-text">输入密码后结果：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%8E%B7%E5%8F%96%E5%85%AC%E6%9C%89%E5%AF%86%E9%92%A5"><span class="toc-text">2、获取公有密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81GitHub%E6%B7%BB%E5%8A%A0%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5"><span class="toc-text">3、GitHub添加公开密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%B5%8B%E8%AF%95%E8%AE%A4%E8%AF%81%E6%88%90%E5%8A%9F"><span class="toc-text">4、测试认证成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E4%B8%8B%E9%9D%A2%E7%BB%93%E6%9E%9C%E8%AF%81%E6%98%8E%E6%88%90%E5%8A%9F"><span class="toc-text">出现下面结果证明成功</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/11/15/278/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Tomcat启动失败 提示Server Tomcat v7.0 Server at localhost failed to start.</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/10/10/271/">
+                
+                <span class="prev-text">开发中常遇到到的问题:java.lang.ArrayIndexOutOfBoundsException</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

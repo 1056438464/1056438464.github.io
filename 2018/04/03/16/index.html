@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>在linux中查看mysql数据库中表 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        在linux中查看mysql数据库中表
+    </div>
+    <p class="sub">Apr 03 2018</p>
+    <div class="post-content">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p //进入数据库</span><br><span class="line"></span><br><span class="line">show databases; //查看musql中数据库列表</span><br><span class="line"></span><br><span class="line">use dataname; //选择数据库名</span><br><span class="line"></span><br><span class="line">show tables; // 查看数据库中的所有表</span><br><span class="line"></span><br><span class="line">describe tablename; //查看表结构</span><br><span class="line"></span><br><span class="line">最后对表进行sql语句操作</span><br></pre></td></tr></table></figure>
+
+
+<span id="more"></span>
+
+
+<p>过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">| typecho            |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; use typecho;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">MariaDB [typecho]&gt; show tables;</span><br><span class="line">+-----------------------+</span><br><span class="line">| Tables_in_typecho     |</span><br><span class="line">+-----------------------+</span><br><span class="line">| typecho_comments      |</span><br><span class="line">| typecho_contents      |</span><br><span class="line">| typecho_fields        |</span><br><span class="line">| typecho_metas         |</span><br><span class="line">| typecho_options       |</span><br><span class="line">| typecho_relationships |</span><br><span class="line">| typecho_users         |</span><br><span class="line">+-----------------------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [typecho]&gt; describe typecho_users;</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">| Field      | Type             | Null | Key | Default | Extra          |</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">| uid        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name       | varchar(32)      | YES  | UNI | NULL    |                |</span><br><span class="line">| password   | varchar(64)      | YES  |     | NULL    |                |</span><br><span class="line">| mail       | varchar(200)     | YES  | UNI | NULL    |                |</span><br><span class="line">| url        | varchar(200)     | YES  |     | NULL    |                |</span><br><span class="line">| screenName | varchar(32)      | YES  |     | NULL    |                |</span><br><span class="line">| created    | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| activated  | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| logged     | int(10) unsigned | YES  |     | 0       |                |</span><br><span class="line">| group      | varchar(16)      | YES  |     | visitor |                |</span><br><span class="line">| authCode   | varchar(64)      | YES  |     | NULL    |                |</span><br><span class="line">+------------+------------------+------+-----+---------+----------------+</span><br><span class="line">11 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/04/09/25/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">linux设置开机启动 systemctl enable</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/04/03/11/">
+                
+                <span class="prev-text">一小步</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>基于 Docker 安装 Zookeeper | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        基于 Docker 安装 Zookeeper
+    </div>
+    <p class="sub">Jun 16 2019</p>
+    <div class="post-content">
+        <p>概述<br>Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用 Docker 的方式部署</p>
+<p>注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。</p>
+<h1 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h1><h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">    zoo1:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        hostname: zoo1</span><br><span class="line">        ports:</span><br><span class="line">            - 2181:2181</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 1</span><br><span class="line">            ZOO_SERVERS: server.1=zoo1:2888:3888</span><br></pre></td></tr></table></figure>
+
+<h1 id="验证是否安装成功"><a href="#验证是否安装成功" class="headerlink" title="验证是否安装成功"></a>验证是否安装成功</h1><p>以交互的方式进入容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it zookeeper_zoo1_1 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>使用客户端连接到服务端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3# ./bin/zkCli.sh -server 192.168.75.130:2181</span><br><span class="line">Connecting to 192.168.75.130:2181</span><br><span class="line">2017-11-09 07:45:58,365 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT</span><br><span class="line">2017-11-09 07:45:58,374 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=zoo1</span><br><span class="line">2017-11-09 07:45:58,374 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_131</span><br><span class="line">2017-11-09 07:45:58,380 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/usr/lib/jvm/java-1.8-openjdk/jre</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/zookeeper-3.4.10/bin/../build/classes:/zookeeper-3.4.10/bin/../build/lib/*.jar:/zookeeper-3.4.10/bin/../lib/slf4j-log4j12-1.6.1.jar:/zookeeper-3.4.10/bin/../lib/slf4j-api-1.6.1.jar:/zookeeper-3.4.10/bin/../lib/netty-3.10.5.Final.jar:/zookeeper-3.4.10/bin/../lib/log4j-1.2.16.jar:/zookeeper-3.4.10/bin/../lib/jline-0.9.94.jar:/zookeeper-3.4.10/bin/../zookeeper-3.4.10.jar:/zookeeper-3.4.10/bin/../src/java/lib/*.jar:/conf:</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64:/usr/lib/jvm/java-1.8-openjdk/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;</span><br><span class="line">2017-11-09 07:45:58,381 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux</span><br><span class="line">2017-11-09 07:45:58,382 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64</span><br><span class="line">2017-11-09 07:45:58,382 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=4.4.0-98-generic</span><br><span class="line">2017-11-09 07:45:58,386 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=root</span><br><span class="line">2017-11-09 07:45:58,386 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/root</span><br><span class="line">2017-11-09 07:45:58,386 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/zookeeper-3.4.10</span><br><span class="line">2017-11-09 07:45:58,389 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=192.168.75.130:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@3eb07fd3</span><br><span class="line">2017-11-09 07:45:58,428 [myid:] - INFO  [main-SendThread(192.168.75.130:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server 192.168.75.130/192.168.75.130:2181. Will not attempt to authenticate using SASL (unknown error)</span><br><span class="line">Welcome to ZooKeeper!</span><br><span class="line">JLine support is enabled</span><br><span class="line">2017-11-09 07:45:58,529 [myid:] - INFO  [main-SendThread(192.168.75.130:2181):ClientCnxn$SendThread@876] - Socket connection established to 192.168.75.130/192.168.75.130:2181, initiating session</span><br><span class="line">[zk: 192.168.75.130:2181(CONNECTING) 0] 2017-11-09 07:45:58,573 [myid:] - INFO  [main-SendThread(192.168.75.130:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server 192.168.75.130/192.168.75.130:2181, sessionid = 0x15f9fbc12ec0000, negotiated timeout = 30000</span><br><span class="line"></span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:None path:null</span><br></pre></td></tr></table></figure>
+
+<p>使用服务端工具检查服务器状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: standalone</span><br></pre></td></tr></table></figure>
+
+<h1 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h1><p>准备 3 台 Ubuntu Server 系统，并分别配置 Zookeeper</p>
+<h2 id="第一台主机"><a href="#第一台主机" class="headerlink" title="第一台主机"></a>第一台主机</h2><h3 id="docker-compose-yml-1"><a href="#docker-compose-yml-1" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">    zoo1:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 1</span><br><span class="line">            ZOO_SERVERS: server.1=192.168.75.130:2888:3888 server.2=192.168.75.134:2888:3888 server.3=192.168.75.135:2888:3888</span><br><span class="line">        network_mode: host</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证测试"><a href="#验证测试" class="headerlink" title="验证测试"></a>验证测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo1_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: leader</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二台主机"><a href="#第二台主机" class="headerlink" title="第二台主机"></a>第二台主机</h2><h3 id="docker-compose-yml-2"><a href="#docker-compose-yml-2" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">    zoo2:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 2</span><br><span class="line">            ZOO_SERVERS: server.1=192.168.75.130:2888:3888 server.2=192.168.75.134:2888:3888 server.3=192.168.75.135:2888:3888</span><br><span class="line">        network_mode: host</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证测试-1"><a href="#验证测试-1" class="headerlink" title="验证测试"></a>验证测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo2_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三台主机"><a href="#第三台主机" class="headerlink" title="第三台主机"></a>第三台主机</h2><h3 id="docker-compose-yml-3"><a href="#docker-compose-yml-3" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">    zoo3:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 3</span><br><span class="line">            ZOO_SERVERS: server.1=192.168.75.130:2888:3888 server.2=192.168.75.134:2888:3888 server.3=192.168.75.135:2888:3888</span><br><span class="line">        network_mode: host</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证测试-2"><a href="#验证测试-2" class="headerlink" title="验证测试"></a>验证测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo3_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br></pre></td></tr></table></figure>
+
+<h1 id="伪集群模式"><a href="#伪集群模式" class="headerlink" title="伪集群模式"></a>伪集群模式</h1><h2 id="docker-compose-yml-4"><a href="#docker-compose-yml-4" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">    zoo1:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        hostname: zoo1</span><br><span class="line">        ports:</span><br><span class="line">            - 2181:2181</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 1</span><br><span class="line">            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888</span><br><span class="line"></span><br><span class="line">    zoo2:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        hostname: zoo2</span><br><span class="line">        ports:</span><br><span class="line">            - 2182:2181</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 2</span><br><span class="line">            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888</span><br><span class="line"></span><br><span class="line">    zoo3:</span><br><span class="line">        image: zookeeper</span><br><span class="line">        restart: always</span><br><span class="line">        hostname: zoo3</span><br><span class="line">        ports:</span><br><span class="line">            - 2183:2181</span><br><span class="line">        environment:</span><br><span class="line">            ZOO_MY_ID: 3</span><br><span class="line">            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888</span><br></pre></td></tr></table></figure>
+
+<h1 id="验证是否安装成功-1"><a href="#验证是否安装成功-1" class="headerlink" title="验证是否安装成功"></a>验证是否安装成功</h1><p>分别以交互方式进入容器查看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it zookeeper_zoo1_1 /bin/bash</span><br><span class="line">docker exec -it zookeeper_zoo2_1 /bin/bash</span><br><span class="line">docker exec -it zookeeper_zoo3_1 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>使用服务端工具检查服务器状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo1_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo2_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br><span class="line">root@UbuntuBase:/usr/local/docker/zookeeper# docker exec -it zookeeper_zoo3_1 /bin/bash</span><br><span class="line">bash-4.3# ./bin/zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /conf/zoo.cfg</span><br><span class="line">Mode: leader</span><br></pre></td></tr></table></figure>
+<p>从上面的验证结果可以看出：zoo1 为跟随者，zoo2 为跟随者，zoo3 为领导者</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E6%9C%BA%E6%A8%A1%E5%BC%8F"><span class="toc-text">单机模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose-yml"><span class="toc-text">docker-compose.yml</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="toc-text">验证是否安装成功</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">集群模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%8F%B0%E4%B8%BB%E6%9C%BA"><span class="toc-text">第一台主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml-1"><span class="toc-text">docker-compose.yml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-text">验证测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%8F%B0%E4%B8%BB%E6%9C%BA"><span class="toc-text">第二台主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml-2"><span class="toc-text">docker-compose.yml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95-1"><span class="toc-text">验证测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%8F%B0%E4%B8%BB%E6%9C%BA"><span class="toc-text">第三台主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml-3"><span class="toc-text">docker-compose.yml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95-2"><span class="toc-text">验证测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%AA%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">伪集群模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose-yml-4"><span class="toc-text">docker-compose.yml</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F-1"><span class="toc-text">验证是否安装成功</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Linux-Zookeeper/">Linux Zookeeper</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/06/24/347/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Maven错误：Maven：Could not resolve dependencies for project</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/06/13/344/">
+                
+                <span class="prev-text">Centos7下docker安装fastdfs</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

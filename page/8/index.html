@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/05/364/">Docker Demo</a>
+            </div>
+            <p class="sub">May 05 2019</p>
+            <div class="post-content">
+                
+                    <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">利用docker运行两个服务，并用nginx负载均衡</span><br></pre></td></tr></table></figure>
+<h2 id="1-利用DockerFile创建两个镜像"><a href="#1-利用DockerFile创建两个镜像" class="headerlink" title="1.利用DockerFile创建两个镜像"></a>1.利用DockerFile创建两个镜像</h2><h3 id="创建blog-jar镜像"><a href="#创建blog-jar镜像" class="headerlink" title="创建blog-jar镜像"></a>创建blog-jar镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM java</span><br><span class="line"></span><br><span class="line">COPY ./blog-0.0.1-SNAPSHOT.jar blog-0.0.1-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line">CMD java -jar blog-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建blog-war镜像"><a href="#创建blog-war镜像" class="headerlink" title="创建blog-war镜像"></a>创建blog-war镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/webapps/</span><br><span class="line"></span><br><span class="line">COPY ./blog-0.0.1-SNAPSHOT.war .</span><br><span class="line"></span><br><span class="line">RUN unzip blog-0.0.1-SNAPSHOT.war</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="nginx配置文件"><a href="#nginx配置文件" class="headerlink" title="nginx配置文件"></a>nginx配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">user  nginx;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    upstream hashserver&#123;</span><br><span class="line">        ip_hash;</span><br><span class="line">        server 47.98.131.180:8090;</span><br><span class="line">        server 47.98.131.180:9090;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  47.98.131.180;</span><br><span class="line">        location /TestWeb &#123;</span><br><span class="line">          root  /usr/share/nginx/wwwroot/;</span><br><span class="line">          index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        location /blog-0.0.1-SNAPSHOT &#123;</span><br><span class="line">          proxy_pass http://hashserver;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-利用docker-compose打包运行镜像"><a href="#2-利用docker-compose打包运行镜像" class="headerlink" title="2.利用docker-compose打包运行镜像"></a>2.利用docker-compose打包运行镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">  blogwar:</span><br><span class="line">    image: &quot;blog-war&quot;</span><br><span class="line">    container_name: blog-war</span><br><span class="line">    build:</span><br><span class="line">      context: .</span><br><span class="line">      dockerfile: DockerfileWar</span><br><span class="line">    ports:</span><br><span class="line">      - 8090:8080</span><br><span class="line"></span><br><span class="line">  blogjar:</span><br><span class="line">    image: &quot;blog-jar&quot;</span><br><span class="line">    container_name: blog-jar</span><br><span class="line">    build:</span><br><span class="line">      context: .</span><br><span class="line">      dockerfile: DockerfileJar</span><br><span class="line">    ports:</span><br><span class="line">      - 9090:8080</span><br><span class="line"></span><br><span class="line">  nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    image: nginx</span><br><span class="line">    container_name: nginx</span><br><span class="line">    ports:</span><br><span class="line">      - 81:80</span><br><span class="line">    volumes:</span><br><span class="line">      - ../nginx/conf/nginx.conf:/etc/nginx/nginx.conf</span><br><span class="line">	  - ../nginx/wwwroot:/usr/share/nginx/wwwroot</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-使用docker-compose运行容器"><a href="#3-使用docker-compose运行容器" class="headerlink" title="3.使用docker-compose运行容器"></a>3.使用docker-compose运行容器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d //守护态运行</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/04/337/">Docker日志</a>
+            </div>
+            <p class="sub">May 04 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f 容器名/容器id</span><br></pre></td></tr></table></figure>
+
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/04/338/">Docker Compose</a>
+            </div>
+            <p class="sub">May 04 2019</p>
+            <div class="post-content">
+                
+                    <p>先创建 <code>/usr/local/bin</code> 这个目录</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>直接删除即可</p>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>进入<code>/usr/local/docker/tomcat</code></p>
+<p><strong>缩进符必须是空格</strong></p>
+<p>编写 <code>docker-compose.yml</code> 文件，这个是 <code>Compose</code> 使用的主模板文件。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">tomcat:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8090</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">	  <span class="bullet">-</span> [<span class="string">宿主机目录</span>]<span class="string">:[容器目录]</span> </span><br></pre></td></tr></table></figure>
+
+<p>运行 compose 项目</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up </span><br><span class="line"></span><br><span class="line">//守护态运行</span><br><span class="line">docker-compose up  -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose logs -f 容器name</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/04/339/">Docker 保存和加载镜像</a>
+            </div>
+            <p class="sub">May 04 2019</p>
+            <div class="post-content">
+                
+                    <h2 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save [imagename] &gt; imagename.tar</span><br></pre></td></tr></table></figure>
+<h2 id="加载镜像"><a href="#加载镜像" class="headerlink" title="加载镜像"></a>加载镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i imagename.tar</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/04/336/">Docker数据卷部署数据库</a>
+            </div>
+            <p class="sub">May 04 2019</p>
+            <div class="post-content">
+                
+                    <h2 id="例部署mysql数据库"><a href="#例部署mysql数据库" class="headerlink" title="例部署mysql数据库"></a>例部署mysql数据库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name Mymysql \</span><br><span class="line">-v /usr/local/docker/mysql/conf:/etc/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/logs:/var/log/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">-d mysql:5.7.22</span><br></pre></td></tr></table></figure>
+
+<p><code>-e</code> 是直接设置mysql的环境变量。这里是设置mysql初始密码是123456</p>
+<p>这时可能会出现一下错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: IPv4 forwarding is disabled. Networking will not work.</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysctl.conf</span><br><span class="line">或者</span><br><span class="line"># vi /usr/lib/sysctl.d/00-system.conf</span><br><span class="line">添加如下代码：</span><br><span class="line">    net.ipv4.ip_forward=1</span><br><span class="line"></span><br><span class="line">重启network服务</span><br><span class="line"># systemctl restart network</span><br><span class="line"></span><br><span class="line">查看是否修改成功</span><br><span class="line"># sysctl net.ipv4.ip_forward</span><br><span class="line"></span><br><span class="line">如果返回为“net.ipv4.ip_forward = 1”则表示成功了</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改mysql初始时可接受数据大小"><a href="#修改mysql初始时可接受数据大小" class="headerlink" title="修改mysql初始时可接受数据大小"></a>修改mysql初始时可接受数据大小</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//启动一个mysql容器 </span><br><span class="line">docker run -p 3306:3306 --name Mymysql \</span><br><span class="line">-v /usr/local/docker/mysql/logs:/var/log/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">-d mysql:5.7.22</span><br><span class="line"></span><br><span class="line">//进入宿主机docker文件夹下</span><br><span class="line">cd /usr/local/docker/mysql/conf</span><br><span class="line"></span><br><span class="line">//拷贝容器文件</span><br><span class="line">docker cp Mymysql:/etc/mysql .</span><br><span class="line"></span><br><span class="line">//进入拷贝后的文件.复制问及那。修改配置文件</span><br><span class="line">cd ./mysql/</span><br><span class="line">mv *.* ..</span><br><span class="line">rm -rf ./mysql</span><br><span class="line"></span><br><span class="line">cd ./mysql.conf.d</span><br><span class="line">//&quot;max_allowed_packet      = 128M&quot; 是在conf.d/mysqldump.cnf 文件下，复制即可</span><br><span class="line">echo &quot;max_allowed_packet      = 128M&quot; &gt;&gt; mysqld.cnf </span><br></pre></td></tr></table></figure>
+
+<p>关闭容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm  -f Mymysql</span><br></pre></td></tr></table></figure>
+
+<p>使用上面的数据卷命令重新启动一个新的数据库容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name Mymysql \</span><br><span class="line">-v /usr/local/docker/mysql/conf:/etc/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/logs:/var/log/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">-d mysql:5.7.22</span><br></pre></td></tr></table></figure>
+
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/04/335/">Docker数据卷 数据持久化</a>
+            </div>
+            <p class="sub">May 04 2019</p>
+            <div class="post-content">
+                
+                    <p><code>数据卷 </code>是一个可供一个或多个容器使用的特殊目录，它绕过<code>UFS</code>直接对文件进行操作，可以提供很多有用的特性：</p>
+<ul>
+<li>数据卷 可以在容器之间共享和重用</li>
+<li>对 数据卷 的修改会立马生效</li>
+<li>对 数据卷 的更新，不会影响镜像</li>
+<li>数据卷 默认会一直存在，即使容器被删除</li>
+</ul>
+<h2 id="启动一个挂载数据卷的容器"><a href="#启动一个挂载数据卷的容器" class="headerlink" title="启动一个挂载数据卷的容器"></a>启动一个挂载数据卷的容器</h2><p>下面创建一个名为<code> web</code> 的容器，并加载一个 <code>数据卷 </code>到容器的指定目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 --name mytomcat -d -v [宿主机目录]:[容器目录] tomcat</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-v</code> 即开启数据卷</li>
+</ul>
+<h2 id="查看数据卷的具体信息"><a href="#查看数据卷的具体信息" class="headerlink" title="查看数据卷的具体信息"></a>查看数据卷的具体信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect web</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除数据卷"><a href="#删除数据卷" class="headerlink" title="删除数据卷"></a>删除数据卷</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume rm my-vol</span><br></pre></td></tr></table></figure>
+<p>数据卷 是被设计用来持久化数据的，它的生命周期独立于容器，Docker 不会在容器被删除后自动删除 数据卷，并且也不存在垃圾回收这样的机制来处理没有任何容器引用的 数据卷。如果需要在删除容器的同时移除数据卷。可以在删除容器的时候使用 docker rm -v 这个命令。</p>
+<p>无主的数据卷可能会占据很多空间，要清理请使用以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/05/01/334/">Docker File</a>
+            </div>
+            <p class="sub">May 01 2019</p>
+            <div class="post-content">
+                
+                    <p><code>Dockerfile</code> 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
+<p>还以之前定制 <code>tomcat</code> 镜像为例，这次我们使用 Dockerfile 来定制。</p>
+<p>在<code>/usr/local/docker</code>目录中，建立一个文本文件，并命名为 <code>Dockerfile</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> tomcat`</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tomcat</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">touch</span> Dockerfile</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="其内容"><a href="#其内容" class="headerlink" title="其内容"></a>其内容</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/webapps/ROOT</span><br><span class="line"></span><br><span class="line">RUN rm -rf *</span><br><span class="line"></span><br><span class="line">COPY ./FHM.war .</span><br><span class="line"></span><br><span class="line">RUN unzip  FHM.war</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+
+<h2 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM 指定基础镜像"></a>FROM 指定基础镜像</h2><h2 id="RUN-执行命令"><a href="#RUN-执行命令" class="headerlink" title="RUN 执行命令"></a>RUN 执行命令</h2><h2 id="COPY-复制文件"><a href="#COPY-复制文件" class="headerlink" title="COPY 复制文件"></a>COPY 复制文件</h2><p>格式：</p>
+<ul>
+<li>COPY &lt;源路径&gt;… &lt;目标路径&gt;</li>
+<li>COPY [“&lt;源路径1&gt;”,… “&lt;目标路径&gt;”]</li>
+</ul>
+<p>和 RUN 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。<br>COPY 指令将从构建上下文目录中 &lt;源路径&gt; 的文件&#x2F;目录复制到新的一层的镜像内的 &lt;目标路径&gt; 位置。</p>
+<h2 id="WORKDIR-指定工作目录"><a href="#WORKDIR-指定工作目录" class="headerlink" title="WORKDIR 指定工作目录"></a>WORKDIR 指定工作目录</h2><p>格式为<code> WORKDIR &lt;工作目录路径&gt;</code>。<br>使用 <code>WORKDIR </code>指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，<code>WORKDIR</code> 会帮你建立目录。</p>
+<h2 id="EXPOSE-暴露端口"><a href="#EXPOSE-暴露端口" class="headerlink" title="EXPOSE 暴露端口"></a>EXPOSE 暴露端口</h2><p>docker容器暴露端口给宿主机。</p>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 </span><br><span class="line">//制定宿主机80端口访问容器的暴露端口</span><br><span class="line">docker run -p 80:8080 tomcat</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/dockerps.jpg"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2 </span><br><span class="line">//随机端口访问容器的暴露端口</span><br><span class="line">docker run -P tomcat</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><p>在DockerFile文件下运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t 镜像名 .</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.</code>。这个点是<code>上下文路径</code>。</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/04/28/330/">Tomcat内存溢出问腿解决</a>
+            </div>
+            <p class="sub">Apr 28 2019</p>
+            <div class="post-content">
+                
+                    <p><img src="http://pqiuhq1tw.bkt.clouddn.com/20190428170936.png"><br>###解决方法1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开catalina.sh文件，添加</span><br><span class="line">JAVA_OPTS=&quot;-server -Xms1024m -Xmx1024m -XX:PermSize=512M -XX:MaxPermSize=1024m&quot;</span><br></pre></td></tr></table></figure>
+<p>###解决方法2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">可能是因为tomcat进程没有完全关闭，需要手动关闭</span><br><span class="line"></span><br><span class="line">//查看tomcat进程</span><br><span class="line">ps aux | grep tomcat</span><br><span class="line"></span><br><span class="line">//根据PID关闭tomcat进程</span><br><span class="line">kill -9 </span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/04/05/333/">Docker容器</a>
+            </div>
+            <p class="sub">Apr 05 2019</p>
+            <div class="post-content">
+                
+                    <h2 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//查看当前运行的容器</span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line">//查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="交互的方式进入容器"><a href="#交互的方式进入容器" class="headerlink" title="交互的方式进入容器"></a>交互的方式进入容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 容器ID</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 </span><br><span class="line">//制定宿主机80端口访问容器的暴露端口</span><br><span class="line">docker run -p 80:8080 tomcat</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/dockerps.jpg"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2 </span><br><span class="line">//随机端口访问容器的暴露端口</span><br><span class="line">docker run -P tomcat</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置容器name并运行"><a href="#设置容器name并运行" class="headerlink" title="设置容器name并运行"></a>设置容器name并运行</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:8080 --name 容器name 镜像name</span><br></pre></td></tr></table></figure>
+
+<h2 id="守护态运行-后台运行"><a href="#守护态运行-后台运行" class="headerlink" title="守护态运行(后台运行)"></a>守护态运行(后台运行)</h2><p>启动多个tomcat，可作用于负载均衡</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:8080 --name 容器name -d 镜像name</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm 容器ID</span><br></pre></td></tr></table></figure>
+<h2 id="删除所有处于终止状态的容器"><a href="#删除所有处于终止状态的容器" class="headerlink" title="删除所有处于终止状态的容器"></a>删除所有处于终止状态的容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart 容器ID /容器name</span><br></pre></td></tr></table></figure>
+
+<p>##设置容器name并运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:8080 --name 容器name 镜像name</span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/04/02/332/">Docker镜像</a>
+            </div>
+            <p class="sub">Apr 02 2019</p>
+            <div class="post-content">
+                
+                    <p> <a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a>上有大量的高质量的镜像可以用。<br>从 Docker 镜像仓库获取镜像的命令是<code>docker pull</code>。其命令格式为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Docker 镜像仓库地址：地址的格式一般是<code> &lt;域名/IP&gt;[:端口号]</code>。默认地址是 Docker Hub。</li>
+<li>仓库名：如之前所说，这里的仓库名是两段式名称，即 <code>&lt;用户名&gt;/&lt;软件名&gt;</code>。对于 Docker Hub，如果不给出用户名，则默认为 library，也就是官方镜像。</li>
+</ul>
+<h3 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull tomcat:7</span><br><span class="line">7: Pulling from library/tomcat</span><br><span class="line">bf295113f40d: Pull complete </span><br><span class="line">62fe5b9a5ae4: Pull complete </span><br><span class="line">92748c09714e: Pull complete </span><br><span class="line">062f1282bf9c: Pull complete </span><br><span class="line">f94f42f0e754: Pull complete </span><br><span class="line">a9b21701c8fc: Pull complete </span><br><span class="line">6cddbbe29e3b: Pull complete </span><br><span class="line">f46707e83dca: Pull complete </span><br><span class="line">209068622688: Pull complete </span><br><span class="line">1a8d5d06dfdb: Pull complete </span><br><span class="line">26492e091bed: Pull complete </span><br><span class="line">Digest: sha256:00c3657a2be73a4fa56702c8bab2ece820dac640180b4755052a36e908683134</span><br><span class="line">Status: Downloaded newer image for tomcat:7</span><br></pre></td></tr></table></figure>
+
+<h3 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull ubuntu:16.04</span><br><span class="line">16.04: Pulling from library/ubuntu</span><br><span class="line">bf5d46315322: Pull complete</span><br><span class="line">9f13e0ac480c: Pull complete</span><br><span class="line">e8988b5b3097: Pull complete</span><br><span class="line">40af181810e7: Pull complete</span><br><span class="line">e6f7c7e5c03e: Pull complete</span><br><span class="line">Digest: sha256:147913621d9cdea08853f6ba9116c2e27a3ceffecf3b492983ae97c3d643fbbe</span><br><span class="line">Status: Downloaded newer image for ubuntu:16.04</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h2><p>有了镜像后，我们就能够以这个镜像为基础启动并运行一个容器。以上面的 <code>ubuntu:16.04</code> 为例，如果我们打算启动里面的<code>bash</code>并且进行交互式操作的话，可以执行下面的命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run -it --rm \</span><br><span class="line">    ubuntu:16.04 \</span><br><span class="line">    bash</span><br><span class="line"></span><br><span class="line">[root@e7009c6ce357]:/# cat /etc/os-release</span><br><span class="line">NAME=&quot;Ubuntu&quot;</span><br><span class="line">VERSION=&quot;16.04.4 LTS, Trusty Tahr&quot;</span><br><span class="line">ID=ubuntu</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">PRETTY_NAME=&quot;Ubuntu 16.04.4 LTS&quot;</span><br><span class="line">VERSION_ID=&quot;16.04&quot;</span><br><span class="line">HOME_URL=&quot;http://www.ubuntu.com/&quot;</span><br><span class="line">SUPPORT_URL=&quot;http://help.ubuntu.com/&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;http://bugs.launchpad.net/ubuntu/&quot;</span><br></pre></td></tr></table></figure>
+<p><code>docker run</code>是运行容器的命令.new一个容器运行</p>
+<ul>
+<li>-it：这是两个参数，一个是 -i：交互式操作，一个是 -t 终端。我们这里打算进入 bash 执行一些命令并查看返回结果，因此我们需要交互式终端。</li>
+<li>–rm：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 docker rm。我们这里只是随便执行个命令，看看结果，不需要排障和保留结果，因此使用 –rm 可以避免浪费空间。</li>
+<li>ubuntu:16.04：这是指用 ubuntu:16.04 镜像为基础来启动容器。<br>bash：放在镜像名后的是<code>命令</code>，这里我们希望有个交互式 Shell，因此用的是 bash。<br>进入容器后，我们可以在 Shell 下操作，执行任何所需的命令。这里，我们执行了 cat &#x2F;etc&#x2F;os-release，这是 Linux 常用的查看当前系统版本的命令，从返回的结果可以看到容器内是 Ubuntu 16.04.4 LTS 系统。</li>
+</ul>
+<p>最后我们通过<code>exit(ctrl+d)</code>退出了这个容器。</p>
+<h2 id="镜像列表"><a href="#镜像列表" class="headerlink" title="镜像列表"></a>镜像列表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">或</span><br><span class="line">docker image ls</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除虚悬镜像"><a href="#删除虚悬镜像" class="headerlink" title="删除虚悬镜像"></a>删除虚悬镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除本地镜像"><a href="#删除本地镜像" class="headerlink" title="删除本地镜像"></a>删除本地镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker image rm [选项] &lt;镜像1&gt; [&lt;镜像2&gt; ...]</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">docker rmi</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>&lt;镜像&gt;</code> 可以是 <code>镜像短 ID、镜像长 ID、镜像名 或者 镜像摘要</code></p>
+
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/7/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/9/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

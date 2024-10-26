@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Spring中事务失效的8中场景 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Spring中事务失效的8中场景
+    </div>
+    <p class="sub">Mar 18 2024</p>
+    <div class="post-content">
+        <h3 id="1-数据库引擎不支持事务"><a href="#1-数据库引擎不支持事务" class="headerlink" title="1. 数据库引擎不支持事务"></a>1. 数据库引擎不支持事务</h3><h3 id="2-没有被-Spring-管理"><a href="#2-没有被-Spring-管理" class="headerlink" title="2.没有被 Spring 管理"></a>2.没有被 Spring 管理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span>&#123;</span><br><span class="line">  <span class="meta">@Transactional</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateOrder</span><span class="params">(Order order)</span>&#123;</span><br><span class="line">    <span class="comment">//update order</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果此时把@Service注解注释掉，那么这个类就不会被加载成一个Bean，这个类就不会Spring管理了，事务自然就失效了。</p>
+<h3 id="3-方法不是-public-的"><a href="#3-方法不是-public-的" class="headerlink" title="3. 方法不是 public 的"></a>3. 方法不是 public 的</h3><p>@Transactional注解只能用干public 的方法上，否则事多不会生效，如果要用在非public的方法上，则可以开启基于 AspcetJ 框架的静态代理模式。</p>
+<h3 id="4-发生自身调用"><a href="#4-发生自身调用" class="headerlink" title="4.发生自身调用"></a>4.发生自身调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    updateOrder(order);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateOrder</span><span class="params">(0rder order)</span> &#123;</span><br><span class="line">    <span class="comment">// update order</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>update 方法上面没有加 @Transactional 注解，如果调用有 @Transactional 注解的updateOrder 方法，那么 updateOrder 方法上的事务还可以生效吗?   这里大家可以先想一想，后面会揭晓答案。</p>
+<h3 id="5-没有配置事务管理器"><a href="#5-没有配置事务管理器" class="headerlink" title="5.没有配置事务管理器"></a>5.没有配置事务管理器</h3><p>如果没有配置以下DataSourceTransactionManager数据源事务管理器，那么事务也不会生效 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public PlatformTransactionManager transactionManager(DataSource dataSource) &#123;</span><br><span class="line">  return new DataSourceTransactionManager(dataSource);</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h3 id="6-设置了不支持事务"><a href="#6-设置了不支持事务" class="headerlink" title="6. 设置了不支持事务"></a>6. 设置了不支持事务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="meta">@Transactional</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    updateOrder(order);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Transactional(propagation = Propagation.NOT_SUPPORTED)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateOrder</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    <span class="comment">//update order</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">这里的Propagation.NOT_SUPPORTED表示当前方法不以事务方式运行，当前若存在事务则挂起，这就是主动不支持以事务方式运行了。</span><br></pre></td></tr></table></figure>
+<h3 id="7-异常没有被抛出"><a href="#7-异常没有被抛出" class="headerlink" title="7. 异常没有被抛出"></a>7. 异常没有被抛出</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="meta">@Transactional</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="comment">// update order</span></span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-异常类型不匹配"><a href="#8-异常类型不匹配" class="headerlink" title="8. 异常类型不匹配"></a>8. 异常类型不匹配</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="meta">@Transactional</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="comment">// update order</span></span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;更新失败&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为 Spring 默认回滚的是 RuntimeException 异常，和程序抛出的 Exception 异常不匹配，所以事务也是不生效的。如果要触发默认 RuntimeException之外异常的回滚，则需要在 @Transactiona事务注解上指定异常类，示例如下:<br>@Transactional(rollbackFor &#x3D; Exception.class)</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E%E4%B8%8D%E6%94%AF%E6%8C%81%E4%BA%8B%E5%8A%A1"><span class="toc-text">1. 数据库引擎不支持事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B2%A1%E6%9C%89%E8%A2%AB-Spring-%E7%AE%A1%E7%90%86"><span class="toc-text">2.没有被 Spring 管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%B9%E6%B3%95%E4%B8%8D%E6%98%AF-public-%E7%9A%84"><span class="toc-text">3. 方法不是 public 的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8F%91%E7%94%9F%E8%87%AA%E8%BA%AB%E8%B0%83%E7%94%A8"><span class="toc-text">4.发生自身调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%B2%A1%E6%9C%89%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">5.没有配置事务管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%AE%BE%E7%BD%AE%E4%BA%86%E4%B8%8D%E6%94%AF%E6%8C%81%E4%BA%8B%E5%8A%A1"><span class="toc-text">6. 设置了不支持事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%BC%82%E5%B8%B8%E6%B2%A1%E6%9C%89%E8%A2%AB%E6%8A%9B%E5%87%BA"><span class="toc-text">7. 异常没有被抛出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D"><span class="toc-text">8. 异常类型不匹配</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Spring/">Spring</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2024/03/20/405/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">大事务优化</span>
+            </a>
+        
+        
+            <a class="next" href="/2024/02/24/403/">
+                
+                <span class="prev-text">微服务开发时，接口不能对外暴</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

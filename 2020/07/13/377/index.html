@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>golang WaitGroup实现原理 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        golang WaitGroup实现原理
+    </div>
+    <p class="sub">Jul 13 2020</p>
+    <div class="post-content">
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><p>WaitGroup是Golang应用开发过程中经常使用的并发控制技术。</p>
+<p>WaitGroup，可理解为Wait-Goroutine-Group，即等待一组goroutine结束。比如某个goroutine需要等待其他几个goroutine全部完成，那么使用WaitGroup可以轻松实现。</p>
+<p>下面程序展示了一个goroutine等待另外两个goroutine结束的例子：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">    wg.Add(<span class="number">2</span>) <span class="comment">//设置计数器，数值即为goroutine的个数</span></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">//Do some work</span></span><br><span class="line">        time.Sleep(<span class="number">1</span>*time.Second)</span><br><span class="line"></span><br><span class="line">        fmt.Println(<span class="string">&quot;Goroutine 1 finished!&quot;</span>)</span><br><span class="line">        wg.Done() <span class="comment">//goroutine执行结束后将计数器减1</span></span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">//Do some work</span></span><br><span class="line">        time.Sleep(<span class="number">2</span>*time.Second)</span><br><span class="line"></span><br><span class="line">        fmt.Println(<span class="string">&quot;Goroutine 2 finished!&quot;</span>)</span><br><span class="line">        wg.Done() <span class="comment">//goroutine执行结束后将计数器减1</span></span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    wg.Wait() <span class="comment">//主goroutine阻塞等待计数器变为0</span></span><br><span class="line">    fmt.Printf(<span class="string">&quot;All Goroutine finished!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单的说，上面程序中wg内部维护了一个计数器：</p>
+<ol>
+<li>启动goroutine前将计数器通过Add(2)将计数器设置为待启动的goroutine个数。</li>
+<li>启动goroutine后，使用Wait()方法阻塞自己，等待计数器变为0。</li>
+<li>每个goroutine执行结束通过Done()方法将计数器减1。</li>
+<li>计数器变为0后，阻塞的goroutine被唤醒。</li>
+</ol>
+<p>其实WaitGroup也可以实现一组goroutine等待另一组goroutine，这有点像玩杂技，很容出错，如果不了解其实现原理更是如此。实际上，WaitGroup的实现源码非常简单。</p>
+<h2 id="2-基础知识"><a href="#2-基础知识" class="headerlink" title="2 基础知识"></a>2 基础知识</h2><h3 id="2-1-信号量"><a href="#2-1-信号量" class="headerlink" title="2.1 信号量"></a>2.1 信号量</h3><p>信号量是Unix系统提供的一种保护共享资源的机制，用于防止多个线程同时访问某个资源。</p>
+<p>可简单理解为信号量为一个数值：</p>
+<ul>
+<li>当信号量&gt;0时，表示资源可用，获取信号量时系统自动将信号量减1；</li>
+<li>当信号量&#x3D;&#x3D;0时，表示资源暂不可用，获取信号量时，当前线程会进入睡眠，当信号量为正时被唤醒；</li>
+</ul>
+<p>由于WaitGroup实现中也使用了信号量，在此做个简单介绍。</p>
+<h2 id="3-WaitGroup"><a href="#3-WaitGroup" class="headerlink" title="3 WaitGroup"></a>3 WaitGroup</h2><h3 id="3-1-数据结构"><a href="#3-1-数据结构" class="headerlink" title="3.1 数据结构"></a>3.1 数据结构</h3><p>源码包中src&#x2F;sync&#x2F;waitgroup.go:WaitGroup定义了其数据结构：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> WaitGroup <span class="keyword">struct</span> &#123;</span><br><span class="line">	state1 [<span class="number">3</span>]<span class="type">uint32</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>state1是个长度为3的数组，其中包含了state和一个信号量，而state实际上是两个计数器：</p>
+<ul>
+<li>counter： 当前还未执行结束的goroutine计数器</li>
+<li>waiter count: 等待goroutine-group结束的goroutine数量，即有多少个等候者</li>
+<li>semaphore: 信号量</li>
+</ul>
+<p>考虑到字节是否对齐，三者出现的位置不同，为简单起见，依照字节已对齐情况下，三者在内存中的位置如下所示：</p>
+<p><img src="/../images/waitgroup.webp" alt="avatar"></p>
+<p>WaitGroup对外提供三个接口：</p>
+<ul>
+<li>Add(delta int): 将delta值加到counter中</li>
+<li>Wait()： waiter递增1，并阻塞等待信号量semaphore</li>
+<li>Done()： counter递减1，按照waiter数值释放相应次数信号量</li>
+</ul>
+<p>下面分别介绍这三个函数的实现细节。</p>
+<h3 id="3-2-Add-delta-int"><a href="#3-2-Add-delta-int" class="headerlink" title="3.2 Add(delta int)"></a>3.2 Add(delta int)</h3><p>Add()做了两件事，一是把delta值累加到counter中，因为delta可以为负值，也就是说counter有可能变成0或负值，所以第二件事就是当counter值变为0时，跟据waiter数值释放等量的信号量，把等待的goroutine全部唤醒，如果counter变为负值，则panic.</p>
+<p>Add()伪代码如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wg *WaitGroup)</span></span> Add(delta <span class="type">int</span>) &#123;</span><br><span class="line">    statep, semap := wg.state() <span class="comment">//获取state和semaphore地址指针</span></span><br><span class="line">    </span><br><span class="line">    state := atomic.AddUint64(statep, <span class="type">uint64</span>(delta)&lt;&lt;<span class="number">32</span>) <span class="comment">//把delta左移32位累加到state，即累加到counter中</span></span><br><span class="line">    v := <span class="type">int32</span>(state &gt;&gt; <span class="number">32</span>) <span class="comment">//获取counter值</span></span><br><span class="line">    w := <span class="type">uint32</span>(state)      <span class="comment">//获取waiter值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> v &lt; <span class="number">0</span> &#123;              <span class="comment">//经过累加后counter值变为负值，panic</span></span><br><span class="line">        <span class="built_in">panic</span>(<span class="string">&quot;sync: negative WaitGroup counter&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//经过累加后，此时，counter &gt;= 0</span></span><br><span class="line">    <span class="comment">//如果counter为正，说明不需要释放信号量，直接退出</span></span><br><span class="line">    <span class="comment">//如果waiter为零，说明没有等待者，也不需要释放信号量，直接退出</span></span><br><span class="line">    <span class="keyword">if</span> v &gt; <span class="number">0</span> || w == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//此时，counter一定等于0，而waiter一定大于0（内部维护waiter，不会出现小于0的情况），</span></span><br><span class="line">    <span class="comment">//先把counter置为0，再释放waiter个数的信号量</span></span><br><span class="line">    *statep = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ; w != <span class="number">0</span>; w-- &#123;</span><br><span class="line">        runtime_Semrelease(semap, <span class="literal">false</span>) <span class="comment">//释放信号量，执行一次释放一个，唤醒一个等待者</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-Wait"><a href="#3-3-Wait" class="headerlink" title="3.3 Wait()"></a>3.3 Wait()</h3><p>Wait()方法也做了两件事，一是累加waiter, 二是阻塞等待信号量</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wg *WaitGroup)</span></span> Wait() &#123;</span><br><span class="line">    statep, semap := wg.state() <span class="comment">//获取state和semaphore地址指针</span></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        state := atomic.LoadUint64(statep) <span class="comment">//获取state值</span></span><br><span class="line">        v := <span class="type">int32</span>(state &gt;&gt; <span class="number">32</span>)            <span class="comment">//获取counter值</span></span><br><span class="line">        w := <span class="type">uint32</span>(state)                 <span class="comment">//获取waiter值</span></span><br><span class="line">        <span class="keyword">if</span> v == <span class="number">0</span> &#123;                        <span class="comment">//如果counter值为0，说明所有goroutine都退出了，不需要待待，直接返回</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用CAS（比较交换算法）累加waiter，累加可能会失败，失败后通过for loop下次重试</span></span><br><span class="line">        <span class="keyword">if</span> atomic.CompareAndSwapUint64(statep, state, state+<span class="number">1</span>) &#123;</span><br><span class="line">            runtime_Semacquire(semap) <span class="comment">//累加成功后，等待信号量唤醒自己</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里用到了CAS算法保证有多个goroutine同时执行Wait()时也能正确累加waiter。</p>
+<h3 id="3-4-Done"><a href="#3-4-Done" class="headerlink" title="3.4 Done()"></a>3.4 Done()</h3><p>Done()只做一件事，即把counter减1，我们知道Add()可以接受负值，所以Done实际上只是调用了Add(-1)。</p>
+<p>源码如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wg *WaitGroup)</span></span> Done() &#123;</span><br><span class="line">	wg.Add(<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Done()的执行逻辑就转到了Add()，实际上也正是最后一个完成的goroutine把等待者唤醒的。</p>
+<h2 id="4-编程Tips"><a href="#4-编程Tips" class="headerlink" title="4 编程Tips"></a>4 编程Tips</h2><p>Add()操作必须早于Wait(), 否则会panic<br>Add()设置的值必须与实际等待的goroutine个数一致，否则会panic</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%89%8D%E8%A8%80"><span class="toc-text">1 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">2 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-text">2.1 信号量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-WaitGroup"><span class="toc-text">3 WaitGroup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Add-delta-int"><span class="toc-text">3.2 Add(delta int)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Wait"><span class="toc-text">3.3 Wait()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Done"><span class="toc-text">3.4 Done()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%96%E7%A8%8BTips"><span class="toc-text">4 编程Tips</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/golang/">golang</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2020/07/14/378/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">golang 并发控制context实现原理剖析</span>
+            </a>
+        
+        
+            <a class="next" href="/2020/07/10/376/">
+                
+                <span class="prev-text">golang 使用channel控制并发</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

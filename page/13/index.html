@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/11/15/278/">Tomcat启动失败 提示Server Tomcat v7.0 Server at localhost failed to start.</a>
+            </div>
+            <p class="sub">Nov 15 2018</p>
+            <div class="post-content">
+                
+                    <p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/1383574424.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">重大: A child container failed during start</span><br><span class="line">java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/FreshEducationInspection]]</span><br><span class="line">	at java.util.concurrent.FutureTask.report(Unknown Source)</span><br><span class="line">	at java.util.concurrent.FutureTask.get(Unknown Source)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1119)</span><br><span class="line">	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:819)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:145)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1571)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1561)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(Unknown Source)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)</span><br><span class="line">	at java.lang.Thread.run(Unknown Source)</span><br><span class="line">Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/FreshEducationInspection]]</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:162)</span><br><span class="line">	... 6 more</span><br><span class="line">Caused by: java.lang.IllegalArgumentException: 在手印映射中无效 &lt;url-pattern&gt; TabService/* </span><br><span class="line">	at org.apache.catalina.core.StandardContext.addServletMapping(StandardContext.java:3429)</span><br><span class="line">	at org.apache.catalina.core.StandardContext.addServletMapping(StandardContext.java:3404)</span><br><span class="line">	at org.apache.catalina.deploy.WebXml.configureContext(WebXml.java:1438)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.webConfig(ContextConfig.java:1359)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.configureStart(ContextConfig.java:888)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.lifecycleEvent(ContextConfig.java:388)</span><br><span class="line">	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)</span><br><span class="line">	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5522)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:145)</span><br><span class="line">	... 6 more</span><br></pre></td></tr></table></figure>
+
+<p>仔细看错误报告已经知道了在<code>Caused by: java.lang.IllegalArgumentException: 在手印映射中无效 &lt;url-pattern&gt; TabService/* </code>中说明了**TabService&#x2F;***路径不对。</p>
+<p>仔细检查代码发现少写了一个‘&#x2F;’，如下：<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/2859082135.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1.这个问题一般是由过滤器引起的。检查web.xml中的servlet映射里面的<url-pattern>，看<url-pattern></url-pattern>中配置的内容<code>是否缺少“/”</code> ,”&#x2F;“表示当前web应用。</p>
+<p>2.不同的servlet使用了相同的@WebServlet标注。在Servlet上设置@WebServlet标注，容器就会自动读取当中的信息。</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/11/06/274/">Git-设置SSH Key</a>
+            </div>
+            <p class="sub">Nov 06 2018</p>
+            <div class="post-content">
+                
+                    <p>GitHub上连接已有仓库时的认证，是通过使用SSH的公开密钥认证方式进行的。我们首先来创建SSH key，并将其添加到GitHub上。</p>
+<h3 id="前提是要初始化设置姓名和邮箱地址"><a href="#前提是要初始化设置姓名和邮箱地址" class="headerlink" title="前提是要初始化设置姓名和邮箱地址"></a>前提是要初始化设置姓名和邮箱地址</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --global user.name <span class="string">&quot;GraceSi&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git config --global user.email <span class="string">&quot;your_email@163.com&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="1、创建SSH-Key"><a href="#1、创建SSH-Key" class="headerlink" title="1、创建SSH Key"></a>1、创建SSH Key</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;your_email@163.com&quot;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/c/Users/zhangsisi/.ssh/id_rsa): 按回车键</span><br><span class="line">/c/Users/zhangsisi/.ssh/id_rsa already exists.</span><br><span class="line">Overwrite (y/n)? y</span><br><span class="line">Enter passphrase (empty for no passphrase): 输入密码</span><br><span class="line">Enter same passphrase again:再次输入密码 </span><br></pre></td></tr></table></figure>
+<h3 id="输入密码后结果："><a href="#输入密码后结果：" class="headerlink" title="输入密码后结果："></a>输入密码后结果：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved in /c/Users/zhangsisi/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /c/Users/zhangsisi/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">fingerprint值 your_email@163.com</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|       ....o   +.|</span><br><span class="line">|    . .   . + = o|</span><br><span class="line">|     o o   o = + |</span><br><span class="line">|    o =    .+ * +|</span><br><span class="line">|   o B .S .+.+ =.|</span><br><span class="line">|    o = ....*o+  |</span><br><span class="line">|     o o o.. +oE |</span><br><span class="line">|      * .     .+ |</span><br><span class="line">|    .+        ..o|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id_rsa 文件时私有密钥   id_rsa.pub是公有密钥</span><br></pre></td></tr></table></figure>
+<h3 id="2、获取公有密钥"><a href="#2、获取公有密钥" class="headerlink" title="2、获取公有密钥"></a>2、获取公有密钥</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span></span><br><span class="line"></span><br><span class="line">ssh-rsa 公开密钥内容 zhangsisi3034@163.com</span><br></pre></td></tr></table></figure>
+<h3 id="3、GitHub添加公开密钥"><a href="#3、GitHub添加公开密钥" class="headerlink" title="3、GitHub添加公开密钥"></a>3、GitHub添加公开密钥</h3><p>点击GitHub有上角账户设置按钮（Setting），选择SSH and GPG keys，点击add ssh Key，出现如下内容。</p>
+<p><img src="https://www.swj233.top/usr/uploads/2018/11/1860545703.png"></p>
+<h3 id="4、测试认证成功"><a href="#4、测试认证成功" class="headerlink" title="4、测试认证成功"></a>4、测试认证成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh -T git@github.com</span></span><br><span class="line">//成功实例</span><br><span class="line">The authenticity of host &#x27;github.com (52.74.223.119)&#x27; can&#x27;t be established.</span><br><span class="line">RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br><span class="line">Warning: Permanently added &#x27;github.com,52.74.223.119&#x27; (RSA) to the list of known   hosts.</span><br><span class="line">Enter passphrase for key &#x27;/c/Users/zhangsisi/.ssh/id_rsa&#x27;:</span><br></pre></td></tr></table></figure>
+<h3 id="出现下面结果证明成功"><a href="#出现下面结果证明成功" class="headerlink" title="出现下面结果证明成功"></a>出现下面结果证明成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi GraceSi! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangsify/article/details/80488809">https://blog.csdn.net/zhangsify/article/details/80488809</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/10/10/271/">开发中常遇到到的问题:java.lang.ArrayIndexOutOfBoundsException</a>
+            </div>
+            <p class="sub">Oct 10 2018</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayIndexOutOfBoundsExceptionextends</span> IndexOutOfBoundsException</span><br></pre></td></tr></table></figure>
+
+<p><code>用非法索引访问数组时抛出的异常</code>。如果索引为负或大于等于数组大小，则该索引为非法索引。 </p>
+<p>也就是说角标异常！可能的原因是使用的角标大于等于数组的长度或为负数！</p>
+<h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><p>检查数组取值是不是超出了数组长度</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/10/10/270/">String字符串与字符(char类型)数组互相转换</a>
+            </div>
+            <p class="sub">Oct 10 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="1-String类的toCharArray-方法，将字符串转为字符-char-数组"><a href="#1-String类的toCharArray-方法，将字符串转为字符-char-数组" class="headerlink" title="1.String类的toCharArray()方法，将字符串转为字符(char)数组"></a>1.String类的toCharArray()方法，将字符串转为字符(char)数组</h3>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String ss=”abc”; </span><br><span class="line">  <span class="type">char</span>[] cc; </span><br><span class="line">  cc=ss.toCharArray(); </span><br><span class="line">  <span class="comment">//这时cc=&#123;‘a’,’b’,’c’&#125;；</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-String类的valueOf-方法，将字符-char-数组转换为字符串"><a href="#2-String类的valueOf-方法，将字符-char-数组转换为字符串" class="headerlink" title="2.String类的valueOf()方法，将字符(char)数组转换为字符串"></a>2.String类的valueOf()方法，将字符(char)数组转换为字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>[] cc=&#123;‘a’,’b’,’c’&#125;; </span><br><span class="line">ss=String.valueOf(cc); </span><br><span class="line"><span class="comment">//这时ss=“abc”；</span></span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/10/10/269/">Java数据类型中String、Integer、int相互间的转换</a>
+            </div>
+            <p class="sub">Oct 10 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="1-Integer转换成int的方法"><a href="#1-Integer转换成int的方法" class="headerlink" title="1.Integer转换成int的方法"></a>1.Integer转换成int的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer i; </span><br><span class="line"><span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> i.intValue();</span><br><span class="line">即Integer.intValue();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-int转换成Integer"><a href="#2-int转换成Integer" class="headerlink" title="2.int转换成Integer"></a>2.int转换成Integer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">it</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(i);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-String转换成int的方法"><a href="#3-String转换成int的方法" class="headerlink" title="3.String转换成int的方法"></a>3.String转换成int的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;10&quot;</span>;  </span><br><span class="line"><span class="type">Integer</span> <span class="variable">it</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Interger</span>(str);  </span><br><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> it.intValue();  </span><br><span class="line">即：<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> Integer.intValue(string);</span><br></pre></td></tr></table></figure>
+<h3 id="4-int转换成String"><a href="#4-int转换成String" class="headerlink" title="4.int转换成String"></a>4.int转换成String</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line">(<span class="number">1</span>)<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> String.valueOf(i);</span><br><span class="line">(<span class="number">2</span>)<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> Ingeger.toString(i);</span><br><span class="line">(<span class="number">3</span>)<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span> + i;</span><br></pre></td></tr></table></figure>
+<h3 id="5-String转换成Integer"><a href="#5-String转换成Integer" class="headerlink" title="5.String转换成Integer"></a>5.String转换成Integer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;10&quot;</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">it</span> <span class="operator">=</span> Integer.valueOf(str);</span><br></pre></td></tr></table></figure>
+<h3 id="6-Integer转换成String"><a href="#6-Integer转换成String" class="headerlink" title="6.Integer转换成String"></a>6.Integer转换成String</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer it;</span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> it.toString();</span><br></pre></td></tr></table></figure>
+<h4 id="7-String转换成BigDecimal"><a href="#7-String转换成BigDecimal" class="headerlink" title="7.String转换成BigDecimal"></a>7.String转换成BigDecimal</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">bd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(str);</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/10/10/268/">关于Java中length、length()、size()的区别</a>
+            </div>
+            <p class="sub">Oct 10 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="length不是方法，是属性，数组的属性；"><a href="#length不是方法，是属性，数组的属性；" class="headerlink" title="length不是方法，是属性，数组的属性；"></a>length不是方法，是属性，数组的属性；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">&quot;这个数组的长度为：&quot;</span> + intArray.length);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="length-是字符串String的一个方法；"><a href="#length-是字符串String的一个方法；" class="headerlink" title="length()是字符串String的一个方法；"></a>length()是字符串String的一个方法；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;HelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">&quot;这个字符串的长度为：&quot;</span> + str.length());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="size-方法，是List集合的一个方法；"><a href="#size-方法，是List集合的一个方法；" class="headerlink" title="size()方法，是List集合的一个方法；"></a>size()方法，是List集合的一个方法；</h3><pre><code class="java">public static void main(String[] args) &#123;
+
+    List&lt;String&gt; list = new ArrayList&lt;String&gt;();
+
+    list.add(&quot;a&quot;);
+
+    list.add(&quot;b&quot;);
+
+    list.add(&quot;c&quot;);
+
+    System.out.println(&quot;这个list的长度为：&quot; + list.size());
+</code></pre>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/09/29/266/">Oracle中date错误，ORA-01830: date format picture ends before converting entire input string</a>
+            </div>
+            <p class="sub">Sep 29 2018</p>
+            <div class="post-content">
+                
+                    <p><img src="http://pqiuhq1tw.bkt.clouddn.com/2252438278.png"></p>
+<h3 id="错误原因："><a href="#错误原因：" class="headerlink" title="错误原因："></a>错误原因：</h3><p><img src="http://pqiuhq1tw.bkt.clouddn.com/222729823.png"><br><strong>错误产生原因:date类型不能包含秒以后的精度</strong></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>删除秒精度后面的数字即可</strong></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/09/28/263/">Git解决冲突</a>
+            </div>
+            <p class="sub">Sep 28 2018</p>
+            <div class="post-content">
+                
+                    <p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/1320276222.png"></p>
+<h3 id="关键字-CONFLICT-content"><a href="#关键字-CONFLICT-content" class="headerlink" title="关键字 CONFLICT (content)"></a>关键字 <code>CONFLICT (content)</code></h3><h3 id="总结：自己太菜了"><a href="#总结：自己太菜了" class="headerlink" title="总结：自己太菜了"></a>总结：自己太菜了</h3>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/09/14/260/">Java中的Double类型计算</a>
+            </div>
+            <p class="sub">Sep 14 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="一、问题的提出："><a href="#一、问题的提出：" class="headerlink" title="一、问题的提出："></a>一、问题的提出：</h3><p>如果我们编译运行下面这个程序会看到什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span>&#123;</span><br><span class="line">        System.out.println(<span class="number">0.05</span>+<span class="number">0.01</span>);</span><br><span class="line">        System.out.println(<span class="number">1.0</span>-<span class="number">0.42</span>);</span><br><span class="line">        System.out.println(<span class="number">4.015</span>*<span class="number">100</span>);</span><br><span class="line">        System.out.println(<span class="number">123.3</span>/<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>你没有看错！结果确实是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.060000000000000005</span><br><span class="line">0.5800000000000001</span><br><span class="line">401.49999999999994</span><br><span class="line">1.2329999999999999</span><br></pre></td></tr></table></figure>
+<p>Java中的简单浮点数类型float和double不能够进行运算。不光是Java，在其它很多编程语言中也有这样的问题。在大多数情况下，计算的结果是准确的，但是多试几次（可以做一个循环）就可以试出类似上面的错误。现在终于理解为什么要有BCD码了。<br>这个问题相当严重，如果你有9.999999999999元，你的计算机是不会认为你可以购买10元的商品的。<br>在有的编程语言中提供了专门的货币类型来处理这种情况，但是Java没有。现在让我们看看如何解决这个问题。</p>
+<p><strong>四舍五入</strong><br>我们的第一个反应是做四舍五入。Math类中的round方法不能设置保留几位小数，我们只能象这样（保留两位）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">double</span> <span class="title function_">round</span><span class="params">(<span class="type">double</span> value)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Math.round(value*<span class="number">100</span>)/<span class="number">100.0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>非常不幸，上面的代码并不能正常工作，给这个方法传入4.015它将返回4.01而不是4.02，如我们在上面看到的<br>4.015*100&#x3D;401.49999999999994<br>因此如果我们要做到精确的四舍五入，不能利用简单类型做任何运算</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.text.DecimalFormat也不能解决这个问题：</span><br><span class="line">System.out.println(<span class="keyword">new</span> <span class="title class_">java</span>.text.DecimalFormat(<span class="string">&quot;0.00&quot;</span>).format(<span class="number">4.025</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>输出是4.02</strong></p>
+<h3 id="二、精确计算"><a href="#二、精确计算" class="headerlink" title="二、精确计算"></a>二、精确计算</h3><p>在《Effective Java》这本书中也提到这个原则，<code>float和double只能用来做科学计算或者是工程计算，在商业计算中我们要用 java.math.BigDecimal</code></p>
+<p>我们如果需要精确计算，非要用String来够造BigDecimal不可！在《Effective Java》一书中的例子是用String来够造BigDecimal的</p>
+<p>下面提供计算的代码：</p>
+<p>（注意：divide方法中推荐使用枚举RoundingMode.HALF_UP）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wetalk.wbs.bas.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.math.RoundingMode;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * double的计算不精确，会有类似0.0000000000000002的误差，正确的方法是使用BigDecimal或者用整型</span></span><br><span class="line"><span class="comment"> * 整型地方法适合于货币精度已知的情况，比如12.11+1.10转成1211+110计算，最后再/100即可</span></span><br><span class="line"><span class="comment"> * 以下是摘抄的BigDecimal方法:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DoubleUtil</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> -<span class="number">3345205828566485102L</span>;</span><br><span class="line">    <span class="comment">// 默认除法运算精度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Integer</span> <span class="variable">DEF_DIV_SCALE</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供精确的加法运算。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value1 被加数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value2 加数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 两个参数的和</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Double <span class="title function_">add</span><span class="params">(Double value1, Double value2)</span> &#123;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value1));</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value2));</span><br><span class="line">        <span class="keyword">return</span> b1.add(b2).doubleValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供精确的减法运算。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value1 被减数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value2 减数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 两个参数的差</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">sub</span><span class="params">(Double value1, Double value2)</span> &#123;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value1));</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value2));</span><br><span class="line">        <span class="keyword">return</span> b1.subtract(b2).doubleValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供精确的乘法运算。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value1 被乘数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value2 乘数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 两个参数的积</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Double <span class="title function_">mul</span><span class="params">(Double value1, Double value2)</span> &#123;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value1));</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value2));</span><br><span class="line">        <span class="keyword">return</span> b1.multiply(b2).doubleValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供（相对）精确的除法运算，当发生除不尽的情况时， 精确到小数点以后10位，以后的数字四舍五入。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dividend 被除数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> divisor  除数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 两个参数的商</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Double <span class="title function_">divide</span><span class="params">(Double dividend, Double divisor)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> divide(dividend, divisor, DEF_DIV_SCALE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供（相对）精确的除法运算。 当发生除不尽的情况时，由scale参数指定精度，以后的数字四舍五入。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dividend 被除数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> divisor  除数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> scale    表示表示需要精确到小数点以后几位。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 两个参数的商</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Double <span class="title function_">divide</span><span class="params">(Double dividend, Double divisor, Integer scale)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (scale &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The scale must be a positive integer or zero&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(dividend));</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(divisor));</span><br><span class="line">        <span class="keyword">return</span> b1.divide(b2, scale,RoundingMode.HALF_UP).doubleValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提供指定数值的（精确）小数位四舍五入处理。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value 需要四舍五入的数字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> scale 小数点后保留几位</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 四舍五入后的结果</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">round</span><span class="params">(<span class="type">double</span> value,<span class="type">int</span> scale)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(scale&lt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The scale must be a positive integer or zero&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(Double.toString(value));</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> b.divide(one,scale, RoundingMode.HALF_UP).doubleValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/09/12/259/">httpd启动错误和php项目访问空白页</a>
+            </div>
+            <p class="sub">Sep 12 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="错误1："><a href="#错误1：" class="headerlink" title="错误1："></a>错误1：</h3><p>php项目部署成功后，在浏览器上输入地址显示<strong>空白页面</strong></p>
+<h4 id="httpd的错误日志："><a href="#httpd的错误日志：" class="headerlink" title="httpd的错误日志："></a>httpd的错误日志：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Wed Sep 12 22:01:33.752236 2018] [mpm_prefork:notice] [pid 1575] AH00170: caught SIGWINCH, shutting down gracefully</span><br><span class="line">[Wed Sep 12 22:01:34.794920 2018] [core:notice] [pid 1597] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0</span><br><span class="line">[Wed Sep 12 22:01:34.795422 2018] [suexec:notice] [pid 1597] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)</span><br><span class="line">[Wed Sep 12 22:01:34.810608 2018] [auth_digest:notice] [pid 1597] AH01757: generating secret for digest authentication ...</span><br><span class="line">[Wed Sep 12 22:01:34.811109 2018] [lbmethod_heartbeat:notice] [pid 1597] AH02282: No slotmem from mod_heartmonitor</span><br><span class="line">[Wed Sep 12 22:01:34.824423 2018] [mpm_prefork:notice] [pid 1597] AH00163: Apache/2.4.6 (CentOS) PHP/5.4.16 configured -- resuming normal operations</span><br><span class="line">[Wed Sep 12 22:01:34.824446 2018] [core:notice] [pid 1597] AH00094: Command line: &#x27;/usr/sbin/httpd -D FOREGROUND&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<h4 id="关闭SELinux"><a href="#关闭SELinux" class="headerlink" title="关闭SELinux"></a>关闭SELinux</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@centos ~]# vi /etc/selinux/config   #将enforcing改为disabled</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file controls the state of SELinux on the system.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SELINUX= can take one of these three values:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    enforcing - SELinux security policy is enforced.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    permissive - SELinux prints warnings instead of enforcing.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    disabled - No SELinux policy is loaded.</span></span><br><span class="line">SELINUX=disabled</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SELINUXTYPE= can take one of these two values:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    targeted - Targeted processes are protected,</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    mls - Multi Level Security protection.</span></span><br><span class="line">SELINUXTYPE=targeted</span><br></pre></td></tr></table></figure>
+<h3 id="错误2"><a href="#错误2" class="headerlink" title="错误2"></a>错误2</h3><p><code>httpd: Could not reliably determine the server&#39;s fully qualified domain name</code></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1）进入apache的安装目录：(视个人安装情况而不同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/httpd/conf/</span><br></pre></td></tr></table></figure>
+
+<p>2）编辑httpd.conf文件，搜索”#ServerName”，修<code>改ServerName localhost:80</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@server conf]# ls</span><br><span class="line">extra  httpd.conf  magic  mime.types  original</span><br><span class="line">[root@server conf]# vi httpd.conf</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">ServerName www.example.com:80</span></span><br><span class="line">ServerName localhost:80</span><br></pre></td></tr></table></figure>
+
+<p>3）再重新启动apache 即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/12/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/14/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Redis缓存过期机制和内存淘汰管理机制 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Redis缓存过期机制和内存淘汰管理机制
+    </div>
+    <p class="sub">Jan 14 2021</p>
+    <div class="post-content">
+        <h3 id="1-缓存过期机制"><a href="#1-缓存过期机制" class="headerlink" title="1. 缓存过期机制"></a>1. 缓存过期机制</h3><p>Redis可以通过设置一个过期时间expire来处理缓存，其中处理方式有两种：</p>
+<ul>
+<li><strong>（主动）定期删除：</strong> Redis会抽查随机的key，默认1秒十次，一旦抽查的key过期了，就会给删除，配置的属性在redis.conf中，hz等于10，表示1秒抽查10次</li>
+</ul>
+<p><code>hz 10</code></p>
+<ul>
+<li><strong>（被动）惰性删除：</strong> key到期后不去主动检测，而是请求访问到这个key之后，会检查下是否过期，这样就不会太消耗CPU资源，缺点是一直占用着内存</li>
+</ul>
+<h3 id="2-内存淘汰管理机制"><a href="#2-内存淘汰管理机制" class="headerlink" title="2. 内存淘汰管理机制"></a>2. 内存淘汰管理机制</h3><p>因为计算机的内存是有限的，在部署Redis的同时，也可能部署其他的中间件如RabbitMQ、Kafka等等，为了给其他中间件预留内存空间，Redis服务启动可以设置一个最大内存maxmemory，到达阈值后，Redis会清理在内存里永久存在的没有过期时间的key，处理机制如下：<br><code>maxmemory ：当内存已使用率到达，则开始清理缓存</code></p>
+<ul>
+<li>noeviction：旧缓存永不过期，新缓存设置不了，返回错误</li>
+<li>allkeys-lru：清除最少用的旧缓存，然后保存新的缓存（推荐使用）</li>
+<li>allkeys-random：在所有的缓存中随机删除（不推荐）</li>
+<li>volatile-lru：在那些设置了expire过期时间的缓存中，清除最少用的旧缓存，然后保存新的缓存</li>
+<li>volatile-random：在那些设置了expire过期时间的缓存中，随机删除缓存</li>
+<li>volatile-ttl：在那些设置了expire过期时间的缓存中，删除即将过期的</li>
+</ul>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BC%93%E5%AD%98%E8%BF%87%E6%9C%9F%E6%9C%BA%E5%88%B6"><span class="toc-text">1. 缓存过期机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-text">2. 内存淘汰管理机制</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Redis/">Redis</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2021/04/14/380/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">http和rpc的区别</span>
+            </a>
+        
+        
+            <a class="next" href="/2020/07/14/378/">
+                
+                <span class="prev-text">golang 并发控制context实现原理剖析</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

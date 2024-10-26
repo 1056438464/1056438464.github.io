@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>httpd启动错误和php项目访问空白页 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        httpd启动错误和php项目访问空白页
+    </div>
+    <p class="sub">Sep 12 2018</p>
+    <div class="post-content">
+        <h3 id="错误1："><a href="#错误1：" class="headerlink" title="错误1："></a>错误1：</h3><p>php项目部署成功后，在浏览器上输入地址显示<strong>空白页面</strong></p>
+<h4 id="httpd的错误日志："><a href="#httpd的错误日志：" class="headerlink" title="httpd的错误日志："></a>httpd的错误日志：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Wed Sep 12 22:01:33.752236 2018] [mpm_prefork:notice] [pid 1575] AH00170: caught SIGWINCH, shutting down gracefully</span><br><span class="line">[Wed Sep 12 22:01:34.794920 2018] [core:notice] [pid 1597] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0</span><br><span class="line">[Wed Sep 12 22:01:34.795422 2018] [suexec:notice] [pid 1597] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)</span><br><span class="line">[Wed Sep 12 22:01:34.810608 2018] [auth_digest:notice] [pid 1597] AH01757: generating secret for digest authentication ...</span><br><span class="line">[Wed Sep 12 22:01:34.811109 2018] [lbmethod_heartbeat:notice] [pid 1597] AH02282: No slotmem from mod_heartmonitor</span><br><span class="line">[Wed Sep 12 22:01:34.824423 2018] [mpm_prefork:notice] [pid 1597] AH00163: Apache/2.4.6 (CentOS) PHP/5.4.16 configured -- resuming normal operations</span><br><span class="line">[Wed Sep 12 22:01:34.824446 2018] [core:notice] [pid 1597] AH00094: Command line: &#x27;/usr/sbin/httpd -D FOREGROUND&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<h4 id="关闭SELinux"><a href="#关闭SELinux" class="headerlink" title="关闭SELinux"></a>关闭SELinux</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@centos ~]# vi /etc/selinux/config   #将enforcing改为disabled</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file controls the state of SELinux on the system.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SELINUX= can take one of these three values:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    enforcing - SELinux security policy is enforced.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    permissive - SELinux prints warnings instead of enforcing.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    disabled - No SELinux policy is loaded.</span></span><br><span class="line">SELINUX=disabled</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SELINUXTYPE= can take one of these two values:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    targeted - Targeted processes are protected,</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    mls - Multi Level Security protection.</span></span><br><span class="line">SELINUXTYPE=targeted</span><br></pre></td></tr></table></figure>
+<h3 id="错误2"><a href="#错误2" class="headerlink" title="错误2"></a>错误2</h3><p><code>httpd: Could not reliably determine the server&#39;s fully qualified domain name</code></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1）进入apache的安装目录：(视个人安装情况而不同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/httpd/conf/</span><br></pre></td></tr></table></figure>
+
+<p>2）编辑httpd.conf文件，搜索”#ServerName”，修<code>改ServerName localhost:80</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@server conf]# ls</span><br><span class="line">extra  httpd.conf  magic  mime.types  original</span><br><span class="line">[root@server conf]# vi httpd.conf</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">ServerName www.example.com:80</span></span><br><span class="line">ServerName localhost:80</span><br></pre></td></tr></table></figure>
+
+<p>3）再重新启动apache 即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A"><span class="toc-text">错误1：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#httpd%E7%9A%84%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%EF%BC%9A"><span class="toc-text">httpd的错误日志：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">解决方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-text">关闭防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%ADSELinux"><span class="toc-text">关闭SELinux</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF2"><span class="toc-text">错误2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-text">解决方法</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/09/14/260/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Java中的Double类型计算</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/09/07/258/">
+                
+                <span class="prev-text">错误：java.sql.SQLException: The Network Adapter could not establish the connection</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

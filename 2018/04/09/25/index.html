@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>linux设置开机启动 systemctl enable | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        linux设置开机启动 systemctl enable
+    </div>
+    <p class="sub">Apr 09 2018</p>
+    <div class="post-content">
+        <h1 id="是超级用户权限下"><a href="#是超级用户权限下" class="headerlink" title="是超级用户权限下"></a>是超级用户权限下</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl enable //这句话的意思就是将那个服务设置开机启动</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl enable httpd //设置开机启动httpd服务</span><br><span class="line"># systemctl enable php-fpm //设置php开机启动</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h1 id="不是超级用户权限下"><a href="#不是超级用户权限下" class="headerlink" title="不是超级用户权限下"></a>不是超级用户权限下</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">需要在命令前添加  sudo 指令</span><br><span class="line">例：</span><br><span class="line">sudo systemctl enable</span><br></pre></td></tr></table></figure>
+<h1 id="添加成功会显示"><a href="#添加成功会显示" class="headerlink" title="添加成功会显示"></a>添加成功会显示</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">created symlink from ...</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/3941865595.png" alt="symlink.png"></p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%98%AF%E8%B6%85%E7%BA%A7%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8B"><span class="toc-text">是超级用户权限下</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8D%E6%98%AF%E8%B6%85%E7%BA%A7%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8B"><span class="toc-text">不是超级用户权限下</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%88%90%E5%8A%9F%E4%BC%9A%E6%98%BE%E7%A4%BA"><span class="toc-text">添加成功会显示</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/enable/">enable</a>
+                
+                    <a href="/tags/systemctl/">systemctl</a>
+                
+                    <a href="/tags/%E5%BC%80%E6%9C%BA/">开机</a>
+                
+                    <a href="/tags/php-fpm/">php-fpm</a>
+                
+                    <a href="/tags/php/">php</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/04/13/30/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">ssm框架中dao层如何调用数据库中数据spring配置——个人小总结</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/04/03/16/">
+                
+                <span class="prev-text">在linux中查看mysql数据库中表</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

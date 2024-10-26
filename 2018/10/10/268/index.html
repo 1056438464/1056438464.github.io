@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>关于Java中length、length()、size()的区别 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        关于Java中length、length()、size()的区别
+    </div>
+    <p class="sub">Oct 10 2018</p>
+    <div class="post-content">
+        <h3 id="length不是方法，是属性，数组的属性；"><a href="#length不是方法，是属性，数组的属性；" class="headerlink" title="length不是方法，是属性，数组的属性；"></a>length不是方法，是属性，数组的属性；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">&quot;这个数组的长度为：&quot;</span> + intArray.length);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="length-是字符串String的一个方法；"><a href="#length-是字符串String的一个方法；" class="headerlink" title="length()是字符串String的一个方法；"></a>length()是字符串String的一个方法；</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;HelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">&quot;这个字符串的长度为：&quot;</span> + str.length());</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="size-方法，是List集合的一个方法；"><a href="#size-方法，是List集合的一个方法；" class="headerlink" title="size()方法，是List集合的一个方法；"></a>size()方法，是List集合的一个方法；</h3><pre><code class="java">public static void main(String[] args) &#123;
+
+    List&lt;String&gt; list = new ArrayList&lt;String&gt;();
+
+    list.add(&quot;a&quot;);
+
+    list.add(&quot;b&quot;);
+
+    list.add(&quot;c&quot;);
+
+    System.out.println(&quot;这个list的长度为：&quot; + list.size());
+</code></pre>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#length%E4%B8%8D%E6%98%AF%E6%96%B9%E6%B3%95%EF%BC%8C%E6%98%AF%E5%B1%9E%E6%80%A7%EF%BC%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%B1%9E%E6%80%A7%EF%BC%9B"><span class="toc-text">length不是方法，是属性，数组的属性；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#length-%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2String%E7%9A%84%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%9B"><span class="toc-text">length()是字符串String的一个方法；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#size-%E6%96%B9%E6%B3%95%EF%BC%8C%E6%98%AFList%E9%9B%86%E5%90%88%E7%9A%84%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%9B"><span class="toc-text">size()方法，是List集合的一个方法；</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/10/10/269/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Java数据类型中String、Integer、int相互间的转换</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/09/29/266/">
+                
+                <span class="prev-text">Oracle中date错误，ORA-01830: date format picture ends before converting entire input string</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

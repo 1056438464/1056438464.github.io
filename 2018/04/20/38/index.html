@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>centOS 用rpm查看已经安装的程序 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        centOS 用rpm查看已经安装的程序
+    </div>
+    <p class="sub">Apr 20 2018</p>
+    <div class="post-content">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep xxxx</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-a：查询所有套件；</span><br><span class="line">-q：使用询问模式，当遇到任何问题时，rpm指令会先询问用户；</span><br></pre></td></tr></table></figure>
+<h1 id="所有参数："><a href="#所有参数：" class="headerlink" title="所有参数："></a>所有参数：</h1><span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-a：查询所有套件；</span><br><span class="line">-b&lt;完成阶段&gt;&lt;套件档&gt;+或-t &lt;完成阶段&gt;&lt;套件档&gt;+：设置包装套件的完成阶段，并指定套件档的文件名称；</span><br><span class="line">-c：只列出组态配置文件，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-d：只列出文本文件，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-e&lt;套件档&gt;或--erase&lt;套件档&gt;：删除指定的套件；</span><br><span class="line">-f&lt;文件&gt;+：查询拥有指定文件的套件；</span><br><span class="line">-h或--hash：套件安装时列出标记；</span><br><span class="line">-i：显示套件的相关信息；</span><br><span class="line">-i&lt;套件档&gt;或--install&lt;套件档&gt;：安装指定的套件档；</span><br><span class="line">-l：显示套件的文件列表；</span><br><span class="line">-p&lt;套件档&gt;+：查询指定的RPM套件档；</span><br><span class="line">-q：使用询问模式，当遇到任何问题时，rpm指令会先询问用户；</span><br><span class="line">-R：显示套件的关联性信息；</span><br><span class="line">-s：显示文件状态，本参数需配合&quot;-l&quot;参数使用；</span><br><span class="line">-U&lt;套件档&gt;或--upgrade&lt;套件档&gt;：升级指定的套件档；</span><br><span class="line">-v：显示指令执行过程；</span><br><span class="line">-vv：详细显示指令执行过程，便于排错。</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%EF%BC%9A"><span class="toc-text">所有参数：</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/grep/">grep</a>
+                
+                    <a href="/tags/p/">p</a>
+                
+                    <a href="/tags/%E5%A5%97%E4%BB%B6/">套件</a>
+                
+                    <a href="/tags/%E5%8F%82%E6%95%B0/">参数</a>
+                
+                    <a href="/tags/%E6%8C%87%E5%AE%9A/">指定</a>
+                
+                    <a href="/tags/%E6%96%87%E4%BB%B6/">文件</a>
+                
+                    <a href="/tags/%E6%8C%87%E4%BB%A4/">指令</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/04/20/40/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">阿里云服务器下(centOS)中安装ftp</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/04/19/35/">
+                
+                <span class="prev-text">centOS 7 下firewalld防火墙基本命令的使用</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

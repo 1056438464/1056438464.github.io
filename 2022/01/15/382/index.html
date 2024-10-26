@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Redis使用场景 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Redis使用场景
+    </div>
+    <p class="sub">Jan 15 2022</p>
+    <div class="post-content">
+        <h3 id="1、缓存"><a href="#1、缓存" class="headerlink" title="1、缓存"></a>1、缓存</h3><p>String类型<br>例如：热点数据缓存（例如报表、明星出轨），对象缓存、全页缓存、可以提升热点数据的访问数据。</p>
+<h3 id="2、数据共享分布式"><a href="#2、数据共享分布式" class="headerlink" title="2、数据共享分布式"></a>2、数据共享分布式</h3><p>String 类型，因为 Redis 是分布式的独立服务，可以在多个应用之间共享<br>例如：分布式Session</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">&lt;groupId&gt;org.springframework.session&lt;/groupId&gt; </span><br><span class="line">&lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt; </span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3、分布式锁"><a href="#3、分布式锁" class="headerlink" title="3、分布式锁"></a>3、分布式锁</h3><p>String 类型setnx方法，只有不存在时才能添加成功，返回true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">getLock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">    <span class="type">Long</span> <span class="variable">flag</span> <span class="operator">=</span> jedis.setnx(key, <span class="string">&quot;1&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123;</span><br><span class="line">        jedis.expire(key, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> flag == <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">releaseLock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">    jedis.del(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4、全局ID"><a href="#4、全局ID" class="headerlink" title="4、全局ID"></a>4、全局ID</h3><p>int类型，incrby，利用原子性<br>incrby userid 1000<br>分库分表的场景，一次性拿一段</p>
+<h3 id="5、计数器"><a href="#5、计数器" class="headerlink" title="5、计数器"></a>5、计数器</h3><p>int类型，incr方法<br>例如：文章的阅读量、微博点赞数、允许一定的延迟，先写入Redis再定时同步到数据库</p>
+<h3 id="6、限流"><a href="#6、限流" class="headerlink" title="6、限流"></a>6、限流</h3><p>int类型，incr方法<br>以访问者的ip和其他信息作为key，访问一次增加一次计数，超过次数则返回false</p>
+<h3 id="7、位统计"><a href="#7、位统计" class="headerlink" title="7、位统计"></a>7、位统计</h3><p>String类型的bitcount（1.6.6的bitmap数据结构介绍）<br>字符是以8位二进制存储的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set k1 a</span><br><span class="line">setbit k1 6 1</span><br><span class="line">setbit k1 7 0</span><br><span class="line">get k1 </span><br><span class="line">/* 6 7 代表的a的二进制位的修改</span><br><span class="line">a 对应的ASCII码是97，转换为二进制数据是01100001</span><br><span class="line">b 对应的ASCII码是98，转换为二进制数据是01100010</span><br></pre></td></tr></table></figure>
+<p>因为bit非常节省空间（1 MB&#x3D;8388608 bit），可以用来做大数据量的统计。<br>例如：在线用户统计，留存用户统计</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setbit onlineusers 01 </span><br><span class="line">setbit onlineusers 11 </span><br><span class="line">setbit onlineusers 20</span><br></pre></td></tr></table></figure>
+<p>支持按位与、按位或等等操作<br>BITOPANDdestkeykey[key…] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。<br>BITOPORdestkeykey[key…] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。<br>BITOPXORdestkeykey[key…] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。<br>BITOPNOTdestkeykey ，对给定 key 求逻辑非，并将结果保存到 destkey 。<br>计算出7天都在线的用户<br>BITOP “AND” “7_days_both_online_users” “day_1_online_users” “day_2_online_users” …  “day_7_online_users”</p>
+<h3 id="8、购物车"><a href="#8、购物车" class="headerlink" title="8、购物车"></a>8、购物车</h3><p>String 或hash。所有String可以做的hash都可以做<br>HSET key field value [field value …]<br>key：用户id；field：商品id；value：商品数量。<br>+1：hincr。-1：hdecr。删除：hdel。全选：hgetall。商品数：hlen。</p>
+<h3 id="9、用户消息时间线"><a href="#9、用户消息时间线" class="headerlink" title="9、用户消息时间线"></a>9、用户消息时间线</h3><p>list，双向链表，直接作为timeline就好了。插入有序</p>
+<h3 id="10、消息队列"><a href="#10、消息队列" class="headerlink" title="10、消息队列"></a>10、消息队列</h3><p>List提供了两个阻塞的弹出操作：blpop&#x2F;brpop，可以设置超时时间<br>blpop：blpop key1 timeout 移除并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。<br>brpop：brpop key1 timeout 移除并获取列表的最后一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。<br>上面的操作。其实就是java的阻塞队列。学习的东西越多。学习成本越低<br>队列：先进先除：rpush blpop，左头右尾，右边进入队列，左边出队列<br>栈：先进后出：rpush brpop</p>
+<h3 id="11、抽奖"><a href="#11、抽奖" class="headerlink" title="11、抽奖"></a>11、抽奖</h3><p>自带一个随机获得值<br>spop myset</p>
+<h3 id="12、点赞、签到、打卡"><a href="#12、点赞、签到、打卡" class="headerlink" title="12、点赞、签到、打卡"></a>12、点赞、签到、打卡</h3><p>假如上面的微博ID是t1001，用户ID是u3001<br>用 like:t1001 来维护 t1001 这条微博的所有点赞用户<br>点赞了这条微博：sadd like:t1001 u3001<br>取消点赞：srem like:t1001 u3001<br>是否点赞：sismember like:t1001 u3001<br>点赞的所有用户：smembers like:t1001<br>点赞数：scard like:t1001<br>​ 是不是比数据库简单多了。哈哈</p>
+<h3 id="13、商品标签"><a href="#13、商品标签" class="headerlink" title="13、商品标签"></a>13、商品标签</h3><p>老规矩，用 tags:i5001 来维护商品所有的标签。<br>sadd tags:i5001 画面清晰细腻<br>sadd tags:i5001 真彩清晰显示屏<br>sadd tags:i5001 流程至极</p>
+<h3 id="14、商品筛选"><a href="#14、商品筛选" class="headerlink" title="14、商品筛选"></a>14、商品筛选</h3><p>获取差集<br>sdiff set1 set2<br>获取交集（intersection ）<br>sinter set1 set2<br>获取并集<br>sunion set1 set2<br>假如：iPhone11 上市了<br>sadd brand:apple iPhone11<br>sadd brand:ios iPhone11<br>sad screensize:6.0-6.24 iPhone11<br>sad screentype:lcd iPhone 11<br>赛选商品，苹果的、ios的、屏幕在6.0-6.24之间的，屏幕材质是LCD屏幕<br>sinter brand:apple brand:ios screensize:6.0-6.24 screentype:lcd</p>
+<h3 id="15、用户关注、推荐模型"><a href="#15、用户关注、推荐模型" class="headerlink" title="15、用户关注、推荐模型"></a>15、用户关注、推荐模型</h3><p>follow 关注 fans 粉丝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">相互关注：</span><br><span class="line">        sadd 1:follow 2</span><br><span class="line">        sadd 2:fans 1</span><br><span class="line">        sadd 1:fans 2</span><br><span class="line">        sadd 2:follow 1</span><br></pre></td></tr></table></figure>
+<p>我关注的人也关注了他(取交集)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">        sinter 1:follow 2:fans</span><br></pre></td></tr></table></figure>
+<p>可能认识的人：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">        用户1可能认识的人(差集)：sdiff 2:follow 1:follow</span><br><span class="line">        用户2可能认识的人：sdiff 1:follow 2:follow</span><br></pre></td></tr></table></figure>
+<h3 id="16、排行榜"><a href="#16、排行榜" class="headerlink" title="16、排行榜"></a>16、排行榜</h3><p>id 为6001 的新闻点击数加1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zincrby hotNews:20190926 1 n6001</span><br></pre></td></tr></table></figure>
+<p>获取今天点击最多的15条：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zrevrange hotNews:20190926 0 15 withscores</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%BC%93%E5%AD%98"><span class="toc-text">1、缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB%E5%88%86%E5%B8%83%E5%BC%8F"><span class="toc-text">2、数据共享分布式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-text">3、分布式锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%85%A8%E5%B1%80ID"><span class="toc-text">4、全局ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="toc-text">5、计数器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E9%99%90%E6%B5%81"><span class="toc-text">6、限流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E4%BD%8D%E7%BB%9F%E8%AE%A1"><span class="toc-text">7、位统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-text">8、购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%E3%80%81%E7%94%A8%E6%88%B7%E6%B6%88%E6%81%AF%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-text">9、用户消息时间线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%E3%80%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="toc-text">10、消息队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%E3%80%81%E6%8A%BD%E5%A5%96"><span class="toc-text">11、抽奖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12%E3%80%81%E7%82%B9%E8%B5%9E%E3%80%81%E7%AD%BE%E5%88%B0%E3%80%81%E6%89%93%E5%8D%A1"><span class="toc-text">12、点赞、签到、打卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13%E3%80%81%E5%95%86%E5%93%81%E6%A0%87%E7%AD%BE"><span class="toc-text">13、商品标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14%E3%80%81%E5%95%86%E5%93%81%E7%AD%9B%E9%80%89"><span class="toc-text">14、商品筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15%E3%80%81%E7%94%A8%E6%88%B7%E5%85%B3%E6%B3%A8%E3%80%81%E6%8E%A8%E8%8D%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">15、用户关注、推荐模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16%E3%80%81%E6%8E%92%E8%A1%8C%E6%A6%9C"><span class="toc-text">16、排行榜</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Redis/">Redis</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2022/04/15/383/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Shiro简介</span>
+            </a>
+        
+        
+            <a class="next" href="/2021/04/15/381/">
+                
+                <span class="prev-text">https过程</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

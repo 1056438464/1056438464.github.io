@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Tomcat启动失败 提示Server Tomcat v7.0 Server at localhost failed to start. | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Tomcat启动失败 提示Server Tomcat v7.0 Server at localhost failed to start.
+    </div>
+    <p class="sub">Nov 15 2018</p>
+    <div class="post-content">
+        <p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/1383574424.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">重大: A child container failed during start</span><br><span class="line">java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/FreshEducationInspection]]</span><br><span class="line">	at java.util.concurrent.FutureTask.report(Unknown Source)</span><br><span class="line">	at java.util.concurrent.FutureTask.get(Unknown Source)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:1119)</span><br><span class="line">	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:819)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:145)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1571)</span><br><span class="line">	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1561)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(Unknown Source)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)</span><br><span class="line">	at java.lang.Thread.run(Unknown Source)</span><br><span class="line">Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/FreshEducationInspection]]</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:162)</span><br><span class="line">	... 6 more</span><br><span class="line">Caused by: java.lang.IllegalArgumentException: 在手印映射中无效 &lt;url-pattern&gt; TabService/* </span><br><span class="line">	at org.apache.catalina.core.StandardContext.addServletMapping(StandardContext.java:3429)</span><br><span class="line">	at org.apache.catalina.core.StandardContext.addServletMapping(StandardContext.java:3404)</span><br><span class="line">	at org.apache.catalina.deploy.WebXml.configureContext(WebXml.java:1438)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.webConfig(ContextConfig.java:1359)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.configureStart(ContextConfig.java:888)</span><br><span class="line">	at org.apache.catalina.startup.ContextConfig.lifecycleEvent(ContextConfig.java:388)</span><br><span class="line">	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)</span><br><span class="line">	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5522)</span><br><span class="line">	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:145)</span><br><span class="line">	... 6 more</span><br></pre></td></tr></table></figure>
+
+<p>仔细看错误报告已经知道了在<code>Caused by: java.lang.IllegalArgumentException: 在手印映射中无效 &lt;url-pattern&gt; TabService/* </code>中说明了**TabService&#x2F;***路径不对。</p>
+<p>仔细检查代码发现少写了一个‘&#x2F;’，如下：<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/2859082135.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1.这个问题一般是由过滤器引起的。检查web.xml中的servlet映射里面的<url-pattern>，看<url-pattern></url-pattern>中配置的内容<code>是否缺少“/”</code> ,”&#x2F;“表示当前web应用。</p>
+<p>2.不同的servlet使用了相同的@WebServlet标注。在Servlet上设置@WebServlet标注，容器就会自动读取当中的信息。</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-text">解决方法</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/11/29/279/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">append()与prepend()的区别</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/11/06/274/">
+                
+                <span class="prev-text">Git-设置SSH Key</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

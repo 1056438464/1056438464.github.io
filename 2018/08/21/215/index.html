@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Linux查找某个目录下包含某个字段的文件 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Linux查找某个目录下包含某个字段的文件
+    </div>
+    <p class="sub">Aug 21 2018</p>
+    <div class="post-content">
+        <h3 id="1-查找当前目录中所有含某一字段的文件（包含文件夹）"><a href="#1-查找当前目录中所有含某一字段的文件（包含文件夹）" class="headerlink" title="1.查找当前目录中所有含某一字段的文件（包含文件夹）"></a>1.查找当前目录中所有含某一字段的文件（包含文件夹）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | xargs grep &quot;custom&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"><a href="#2-查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件" class="headerlink" title="2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件"></a>2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f | xargs grep &quot;custom&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称"><a href="#3-列出文件名，-不需要查看内容呢。grep-提供了-l来只显示文件名称" class="headerlink" title="3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称"></a>3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f | xargs grep &quot;custom&#x27; -l</span><br></pre></td></tr></table></figure>
+<p>###4.滤掉某些文件夹，不去这些文件夹下查看呢, 使用-purn。例如不看.git文件下的文件<br>（具体使用方法查看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011517841/article/details/53204524">https://blog.csdn.net/u011517841/article/details/53204524</a> ）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -path ./.git -prune -o -type f | xargs grep &quot;custom&quot; -l</span><br></pre></td></tr></table></figure>
+<p>###5. 当然查看某个目录下含有某个字段也可以直接使用grep</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r &quot;custom&quot; -l</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5%E6%89%BE%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%89%80%E6%9C%89%E5%90%AB%E6%9F%90%E4%B8%80%E5%AD%97%E6%AE%B5%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%88%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%89"><span class="toc-text">1.查找当前目录中所有含某一字段的文件（包含文件夹）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9F%A5%E6%89%BE%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%89%80%E6%9C%89%E5%90%AB%E6%9F%90%E4%B8%80%E5%AD%97%E6%AE%B5%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%88%E4%B8%8D%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%89%EF%BC%8C%E5%8F%AA%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6"><span class="toc-text">2.查找当前目录中所有含某一字段的文件（不包含文件夹），只查看文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%97%E5%87%BA%E6%96%87%E4%BB%B6%E5%90%8D%EF%BC%8C-%E4%B8%8D%E9%9C%80%E8%A6%81%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AE%B9%E5%91%A2%E3%80%82grep-%E6%8F%90%E4%BE%9B%E4%BA%86-l%E6%9D%A5%E5%8F%AA%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0"><span class="toc-text">3.列出文件名， 不需要查看内容呢。grep 提供了-l来只显示文件名称</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/08/25/220/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Spring框架——IOC</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/08/19/206/">
+                
+                <span class="prev-text">使用Mybatis时，在插入一条数据记录返回主键id值</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

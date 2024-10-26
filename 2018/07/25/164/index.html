@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>jQuery 属性操作 - attr() 方法 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        jQuery 属性操作 - attr() 方法
+    </div>
+    <p class="sub">Jul 25 2018</p>
+    <div class="post-content">
+        <p>项目代码,需要点击图片后，弹出dailog窗口，显示完整图片</p>
+<p>html部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot; user_upload_images&quot;&gt;</span><br><span class="line">	&lt;img src=&quot;&#123;php echo tomedia($item[&#x27;content_image&#x27;])&#125;&quot; class=&quot;imgg&quot; style=&quot;width:40px;height:40px;padding:1px;border:1px solid #ccc;&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//dialog提示框</span><br><span class="line">&lt;div id=&quot;dialog&quot; style=&quot;text-align: center;&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;&quot; id=&quot;show_big_image&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">//使用jqueryUi</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css&quot;&gt;</span><br><span class="line">  &lt;script src=&quot;//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script src=&quot;//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>js部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">       $(&quot;#dialog&quot;).dialog(&#123;</span><br><span class="line">           autoOpen: false,</span><br><span class="line">           show: &#123;</span><br><span class="line">         </span><br><span class="line">           &#125;,</span><br><span class="line">           hide: &#123;</span><br><span class="line">           </span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">	</span><br><span class="line">       $(&quot;.imgg&quot;).click(function () &#123;</span><br><span class="line">           $(&quot;#dialog&quot;).dialog(&quot;open&quot;);</span><br><span class="line"></span><br><span class="line">		//当点击 class=imgg 的标签时，将id=show_big_image标签中的src属性赋值成 class=imgg 的标签中的src属性的值</span><br><span class="line">		$(&quot;#show_big_image&quot;).attr(&quot;src&quot;,$(this).attr(&quot;src&quot;));</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>偷懒贴张手册里的图:laughing:<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/3565076444.png"></p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/07/26/171/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">php未序列化无法插入数据库</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/07/23/159/">
+                
+                <span class="prev-text">mybatis中的事务管理器 TransactionManager基础知识</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

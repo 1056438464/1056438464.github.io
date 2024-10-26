@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>高并发系统设计 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        高并发系统设计
+    </div>
+    <p class="sub">Jan 19 2024</p>
+    <div class="post-content">
+        <h3 id="如何理解高并发系统"><a href="#如何理解高并发系统" class="headerlink" title="如何理解高并发系统"></a>如何理解高并发系统</h3><p>所谓设计高并发系统，就是设计一个系统，保证它整体可用的同时，能够处理很高的并发用户请求，能够承受很大的流量冲击。</p>
+<h3 id="1-分而治之，横向扩展"><a href="#1-分而治之，横向扩展" class="headerlink" title="1. 分而治之，横向扩展"></a>1. 分而治之，横向扩展</h3><p>如果你只部署一个应用，只部署一台服务器，那抗住的流量请求是非常有限的。并且，单体的应用，有单点的风险，如果它挂了，那服务就不可用了。<br>因此，设计一个高并发系统，我们可以分而治之，横向扩展。也就是说，采用分布式部署的方式，部署多台服务器，把流量分流开，让每个服务器都承担一部分的并发和流量，提升整体系统的并发能力。</p>
+<h3 id="2-微服务拆分（系统拆分）"><a href="#2-微服务拆分（系统拆分）" class="headerlink" title="2. 微服务拆分（系统拆分）"></a>2. 微服务拆分（系统拆分）</h3><p>要提高系统的吞吐，提高系统的处理并发请求的能力。除了采用分布式部署的方式外，还可以做微服务拆分，这样就可以达到分摊请求流量的目的，提高了并发能力。<br>所谓的微服务拆分，其实就是把一个单体的应用，按功能单一性，拆分为多个服务模块。比如一个电商系统，拆分为用户系统、订单系统、商品系统等等。</p>
+<h3 id="3-分库分表"><a href="#3-分库分表" class="headerlink" title="3. 分库分表"></a>3. 分库分表</h3><p>当业务量暴增的话，MySQL单机磁盘容量会撑爆。并且，我们知道数据库连接数是有限的。在高并发的场景下，大量请求访问数据库，MySQL单机是扛不住的！高并发场景下，会出现too many connections报错。<br>所以高并发的系统，需要考虑拆分为多个数据库，来抗住高并发的毒打。而假如你的单表数据量非常大，存储和查询的性能就会遇到瓶颈了，如果你做了很多优化之后还是无法提升效率的时候，就需要考虑做分表了。一般千万级别数据量，就需要分表，每个表的数据量少一点，提升SQL查询性能。</p>
+<h3 id="4-池化技术"><a href="#4-池化技术" class="headerlink" title="4. 池化技术"></a>4. 池化技术</h3><p>在高并发的场景下，数据库连接数可能成为瓶颈，因为连接数是有限的。<br>我们的请求调用数据库时，都会先获取数据库的连接，然后依靠这个连接来查询数据，搞完收工，最后关闭连接，释放资源。如果我们不用数据库连接池的话，每次执行SQL，都要创建连接和销毁连接，这就会导致每个查询请求都变得更慢了，相应的，系统处理用户请求的能力就降低了。<br>因此，需要使用池化技术，即数据库连接池、HTTP 连接池、Redis 连接池等等。使用数据库连接池，可以避免每次查询都新建连接，减少不必要的资源开销，通过复用连接池，提高系统处理高并发请求的能力。<br>同理，我们使用线程池，也能让任务并行处理，更高效地完成任务。大家可以看下我之前线程池的这篇文章，到时候面试官问到这块时，刚好可以扩展开来讲</p>
+<h3 id="5-主从分离"><a href="#5-主从分离" class="headerlink" title="5. 主从分离"></a>5. 主从分离</h3><p>通常来说，一台单机的MySQL服务器，可以支持500左右的TPS和10000左右的QPS，即单机支撑的请求访问是有限的。因此你做了分布式部署，部署了多台机器，部署了主数据库、从数据库。<br>但是，如果双十一搞活动，流量肯定会猛增的。如果所有的查询请求，都走主库的话，主库肯定扛不住，因为查询请求量是非常非常大的。因此一般都要求做主从分离，然后实时性要求不高的读请求，都去读从库，写的请求或者实时性要求高的请求，才走主库。这样就很好保护了主库，也提高了系统的吞吐。</p>
+<h3 id="6-使用缓存"><a href="#6-使用缓存" class="headerlink" title="6. 使用缓存"></a>6. 使用缓存</h3><p>无论是操作系统，浏览器，还是一些复杂的中间件，你都可以看到缓存的影子。我们使用缓存，主要是提升系统接口的性能，这样高并发场景，你的系统就可以支持更多的用户同时访问。<br>常用的缓存包括：Redis缓存，JVM本地缓存，memcached等等。就拿Redis来说，它单机就能轻轻松松应对几万的并发，你读场景的业务，可以用缓存来抗高并发。</p>
+<h3 id="7-CDN，加速静态资源访问"><a href="#7-CDN，加速静态资源访问" class="headerlink" title="7. CDN，加速静态资源访问"></a>7. CDN，加速静态资源访问</h3><p>商品图片，icon等等静态资源，可以对页面做静态化处理，减少访问服务端的请求。如果用户分布在全国各地，有的在上海，有的在深圳，地域相差很远，网速也各不相同。为了让用户最快访问到页面，可以使用CDN。CDN可以让用户就近获取所需内容。</p>
+<p>什么是CDN？<br>Content Delivery Network&#x2F;Content Distribution Network,翻译过来就是内容分发网络，它表示将静态资源分发到位于多个地理位置机房的服务器，可以做到数据就近访问，加速了静态资源的访问速度，因此让系统更好处理正常别的动态请求。</p>
+<h3 id="8-消息队列，削锋"><a href="#8-消息队列，削锋" class="headerlink" title="8. 消息队列，削锋"></a>8. 消息队列，削锋</h3><p>我们搞一些双十一、双十二等运营活动时，需要避免流量暴涨，打垮应用系统的风险。因此一般会引入消息队列，来应对高并发的场景。</p>
+<p>假设你的应用系统每秒最多可以处理2k个请求，每秒却有5k的请求过来，可以引入消息队列，应用系统每秒从消息队列拉2k请求处理得了。</p>
+<h3 id="9-ElasticSearch"><a href="#9-ElasticSearch" class="headerlink" title="9. ElasticSearch"></a>9. ElasticSearch</h3><p>Elasticsearch，大家都使用得比较多了吧，一般搜索功能都会用到它。它是一个分布式、高扩展、高实时的搜索与数据分析引擎，简称为ES。<br>我们在聊高并发，为啥聊到ES呢？因为ES可以扩容方便，天然支撑高并发。当数据量大的时候，不用动不动就加机器扩容，分库等等，可以考虑用ES来支持简单的查询搜索、统计类的操作。</p>
+<h3 id="10-降级熔断"><a href="#10-降级熔断" class="headerlink" title="10. 降级熔断"></a>10. 降级熔断</h3><p>熔断降级是保护系统的一种手段。当前互联网系统一般都是分布式部署的。而分布式系统中偶尔会出现某个基础服务不可用，最终导致整个系统不可用的情况, 这种现象被称为服务雪崩效应。<br>为了应对服务雪崩, 常见的做法是熔断和降级。最简单是加开关控制，当下游系统出问题时，开关打开降级，不再调用下游系统。还可以选用开源组件Hystrix来支持。<br>你要保证设计的系统能应对高并发场景，那肯定要考虑熔断降级逻辑进来。</p>
+<h3 id="11-限流"><a href="#11-限流" class="headerlink" title="11.  限流"></a>11.  限流</h3><p>限流也是我们应对高并发的一种方案。我们当然希望，在高并发大流量过来时，系统能全部请求都正常处理。但是有时候没办法，系统的CPU、网络带宽、内存、线程等资源都是有限的。因此，我们要考虑限流。<br>如果你的系统每秒扛住的请求是一千，如果一秒钟来了十万请求呢？换个角度就是说，高并发的时候，流量洪峰来了，超过系统的承载能力，怎么办呢？<br>这时候，我们可以采取限流方案。就是为了保护系统，多余的请求，直接丢弃。<br>什么是限流：在计算机网络中，限流就是控制网络接口发送或接收请求的速率，它可防止DoS攻击和限制Web爬虫。限流，也称流量控制。是指系统在面临高并发，或者大流量请求的情况下，限制新的请求对系统的访问，从而保证系统的稳定性。<br>可以使用Guava的RateLimiter单机版限流，也可以使用Redis分布式限流，还可以使用阿里开源组件sentinel限流。<br>面试的时候，你说到限流这块的话？面试官很大概率会问你限流的算法，因此，大家在准备面试的时候，需要复习一下这几种经典的限流算法哈，可以看下我之前的这篇文章，面试必备：4种经典限流算法讲解</p>
+<h3 id="12-异步"><a href="#12-异步" class="headerlink" title="12. 异步"></a>12. 异步</h3><p>回忆一下什么是同步，什么是异步呢？以方法调用为例，它代表调用方要阻塞等待被调用方法中的逻辑执行完成。这种方式下，当被调用方法响应时间较长时，会造成调用方长久的阻塞，在高并发下会造成整体系统性能下降甚至发生雪崩。异步调用恰恰相反，调用方不需要等待方法逻辑执行完成就可以返回执行其他的逻辑，在被调用方法执行完毕后再通过回调、事件通知等方式将结果反馈给调用方。<br>因此，设计一个高并发的系统，需要在恰当的场景使用异步。如何使用异步呢？后端可以借用消息队列实现。比如在海量秒杀请求过来时，先放到消息队列中，快速响应用户，告诉用户请求正在处理中，这样就可以释放资源来处理更多的请求。秒杀请求处理完后，通知用户秒杀抢购成功或者失败。</p>
+<h3 id="13-接口的常规优化"><a href="#13-接口的常规优化" class="headerlink" title="13. 接口的常规优化"></a>13. 接口的常规优化</h3><p>设计一个高并发的系统，需要设计接口的性能足够好，这样系统在相同时间，就可以处理更多的请求。</p>
+<h3 id="14-压力测试确定系统瓶颈"><a href="#14-压力测试确定系统瓶颈" class="headerlink" title="14. 压力测试确定系统瓶颈"></a>14. 压力测试确定系统瓶颈</h3><p>设计高并发系统，离不开最重要的一环，就是压力测试。就是在系统上线前，需要对系统进行压力测试，测清楚你的系统支撑的最大并发是多少，确定系统的瓶颈点，让自己心里有底，最好预防措施。<br>压测完要分析整个调用链路，性能可能出现问题是网络层（如带宽）、Nginx层、服务层、还是数据路缓存等中间件等等。<br><code>loadrunner</code>是一款不错的压力测试工具，jmeter则是接口性能测试工具，都可以来做下压测。</p>
+<h3 id="15-应对突发流量峰值：扩容-切流量"><a href="#15-应对突发流量峰值：扩容-切流量" class="headerlink" title="15. 应对突发流量峰值：扩容+切流量"></a>15. 应对突发流量峰值：扩容+切流量</h3><p>如果是突发的流量高峰，除了降级、限流保证系统不跨，我们可以采用这两种方案，保证系统尽可能服务用户请求：<br>扩容：比如增加从库、提升配置的方式，提升系统&#x2F;组件的流量承载能力。比如增加MySQL、Redis从库来处理查询请求。<br>切流量：服务多机房部署，如果高并发流量来了，把流量从一个机房切换到另一个机房。</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E7%BB%9F"><span class="toc-text">如何理解高并发系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B%EF%BC%8C%E6%A8%AA%E5%90%91%E6%89%A9%E5%B1%95"><span class="toc-text">1. 分而治之，横向扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%EF%BC%88%E7%B3%BB%E7%BB%9F%E6%8B%86%E5%88%86%EF%BC%89"><span class="toc-text">2. 微服务拆分（系统拆分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8"><span class="toc-text">3. 分库分表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%B1%A0%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="toc-text">4. 池化技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%B8%BB%E4%BB%8E%E5%88%86%E7%A6%BB"><span class="toc-text">5. 主从分离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-text">6. 使用缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-CDN%EF%BC%8C%E5%8A%A0%E9%80%9F%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE"><span class="toc-text">7. CDN，加速静态资源访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%8C%E5%89%8A%E9%94%8B"><span class="toc-text">8. 消息队列，削锋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-ElasticSearch"><span class="toc-text">9. ElasticSearch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E9%99%8D%E7%BA%A7%E7%86%94%E6%96%AD"><span class="toc-text">10. 降级熔断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E9%99%90%E6%B5%81"><span class="toc-text">11.  限流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%BC%82%E6%AD%A5"><span class="toc-text">12. 异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%B8%B8%E8%A7%84%E4%BC%98%E5%8C%96"><span class="toc-text">13. 接口的常规优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E7%A1%AE%E5%AE%9A%E7%B3%BB%E7%BB%9F%E7%93%B6%E9%A2%88"><span class="toc-text">14. 压力测试确定系统瓶颈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E5%BA%94%E5%AF%B9%E7%AA%81%E5%8F%91%E6%B5%81%E9%87%8F%E5%B3%B0%E5%80%BC%EF%BC%9A%E6%89%A9%E5%AE%B9-%E5%88%87%E6%B5%81%E9%87%8F"><span class="toc-text">15. 应对突发流量峰值：扩容+切流量</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Java/">Java</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2024/02/23/402/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Spring File Storag简单使用</span>
+            </a>
+        
+        
+            <a class="next" href="/2023/11/09/400/">
+                
+                <span class="prev-text">CountDownLatch详解</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

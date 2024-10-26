@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/04/01/331/">Docker镜像加速</a>
+            </div>
+            <p class="sub">Apr 01 2019</p>
+            <div class="post-content">
+                
+                    <p>在 &#x2F;etc&#x2F;docker&#x2F;daemon.json 中写入如下内容（如果文件不存在请新建该文件）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://registry.docker-cn.com&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意，一定要保证该文件符合 json 规范，否则 Docker 将不能启动。<br>之后重新启动服务。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl daemon-reload</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl restart docker</span></span><br></pre></td></tr></table></figure>
+
+<p>但是在’docker pull tomcat’时出现了错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error response from daemon: Get https://registry-1.docker.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)</span><br></pre></td></tr></table></figure>
+
+<p>解决办法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.查看自己的的网卡配置文件(网关和ip是否在一个地址段)是否正确</span><br><span class="line">vim  /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line">2.设置DNS解析，直接在网卡配置文件中添加`DNS1=8.8.8.8`</span><br></pre></td></tr></table></figure>
+<p>参考文章<br><a target="_blank" rel="noopener" href="https://sheng.iteye.com/blog/2305464">https://sheng.iteye.com/blog/2305464</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xxb249/article/details/79469534?utm_source=blogxgwz8">https://blog.csdn.net/xxb249/article/details/79469534?utm_source=blogxgwz8</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuwt0911/articles/5803801.html">https://www.cnblogs.com/liuwt0911/articles/5803801.html</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/29/329/">List取最大，最小值，删除元素</a>
+            </div>
+            <p class="sub">Mar 29 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">List</span> <span class="variable">tempList</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"><span class="comment">//最大值</span></span><br><span class="line"><span class="type">int</span> <span class="variable">maxVal</span> <span class="operator">=</span> Collections.max();</span><br><span class="line"><span class="comment">//最小值</span></span><br><span class="line"><span class="type">int</span> <span class="variable">minVal</span> <span class="operator">=</span> Collections.min();</span><br><span class="line"><span class="comment">//删除数据</span></span><br><span class="line">Collections.remove(maxVal)</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/27/328/">mybatis foreach list中的map</a>
+            </div>
+            <p class="sub">Mar 27 2019</p>
+            <div class="post-content">
+                
+                    <p>例1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertPlanProdsInfo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.ArrayList&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        INSERT INTO PointPlan.dbo.T_D_PlanProdsInfo</span><br><span class="line">        (</span><br><span class="line">        GroupCD,</span><br><span class="line">        StoreMode,</span><br><span class="line">        PromotionCD,</span><br><span class="line">        ProductCD,</span><br><span class="line">        point</span><br><span class="line">        )</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">item</span>=<span class="string">&quot;info&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;union all&quot;</span>&gt;</span></span><br><span class="line">            (</span><br><span class="line">            SELECT GroupCD</span><br><span class="line">            ,0</span><br><span class="line">            ,1</span><br><span class="line">            ,#&#123;info.ProductCD&#125;</span><br><span class="line">            ,#&#123;info.Point&#125;</span><br><span class="line">            FROM PointPlan.dbo.T_D_PlanInfo</span><br><span class="line">            WHERE ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">            AND SubID=#&#123;info.SubID&#125;</span><br><span class="line"></span><br><span class="line">            )</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>例2</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertRewardMaster&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span>  <span class="attr">item</span>=<span class="string">&quot;info&quot;</span>   <span class="attr">separator</span>=<span class="string">&quot;;&quot;</span>&gt;</span></span><br><span class="line">       INSERT INTO PMCreator.dbo.R_RewardMaster</span><br><span class="line">       (</span><br><span class="line">         MasterStoreCode,</span><br><span class="line">         MaintenanceStoreMode,</span><br><span class="line">         PromotionCode,</span><br><span class="line">         Code,</span><br><span class="line">         OfferLevel,</span><br><span class="line">         RewardType,</span><br><span class="line">         RewardValue,</span><br><span class="line">         RewardLevelType,</span><br><span class="line">         ItemCode,</span><br><span class="line">         Department,</span><br><span class="line">         Tender_ID</span><br><span class="line">       )</span><br><span class="line"></span><br><span class="line">           (</span><br><span class="line">           SELECT m.MasterStoreCode,</span><br><span class="line">           0,</span><br><span class="line">           1,</span><br><span class="line">           MAX(Code)+1,</span><br><span class="line">           0,</span><br><span class="line">           6,</span><br><span class="line">           #&#123;info.Point&#125;,</span><br><span class="line">           1,</span><br><span class="line">           #&#123;info.ProductCD&#125;,</span><br><span class="line">           0,</span><br><span class="line">           0</span><br><span class="line">           FROM PMCreator.dbo.R_RewardMaster m</span><br><span class="line">           INNER JOIN PointPlan.dbo.T_D_PlanInfo p</span><br><span class="line">           ON m.MasterStoreCode=p.GroupCD</span><br><span class="line">           WHERE p.ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">           AND p.SubID=#&#123;info.subID&#125;</span><br><span class="line">           GROUP BY m.MasterStoreCode</span><br><span class="line">           )</span><br><span class="line"></span><br><span class="line">       <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/27/325/">mybatis 一次执行多条SQL MySql+Mybatis+Druid之SqlException：sql injection violation, multi-statement not allow</a>
+            </div>
+            <p class="sub">Mar 27 2019</p>
+            <div class="post-content">
+                
+                    <p>解决方法：<br>修改<code>Druid</code>配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">在spring-dao.xml文件中修改</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">abstract</span>=<span class="string">&quot;true&quot;</span> <span class="attr">id</span>=<span class="string">&quot;parentDatasource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span>  &gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 数据库基本信息配置 --&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- 最大并发连接数 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxActive&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1000&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 初始化连接数量 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;initialSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 配置获取连接等待超时的时间 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxWait&quot;</span> <span class="attr">value</span>=<span class="string">&quot;60000&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 最小空闲连接数 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;minIdle&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;timeBetweenEvictionRunsMillis&quot;</span> <span class="attr">value</span>=<span class="string">&quot;60000&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- 配置一个连接在池中最小生存的时间，单位是毫秒 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;minEvictableIdleTimeMillis&quot;</span> <span class="attr">value</span>=<span class="string">&quot;60000&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;validationQuery&quot;</span> <span class="attr">value</span>=<span class="string">&quot;SELECT 1 &quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;testWhileIdle&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;testOnBorrow&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;testOnReturn&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 打开removeAbandoned功能 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;removeAbandoned&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 1800秒，也就是30分钟 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;removeAbandonedTimeout&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1800&quot;</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 关闭abanded连接时输出错误日志 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;logAbandoned&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!--添加--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;proxyFilters&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">&quot;stat-filter&quot;</span>/&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">&quot;wall-filter&quot;</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;filters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;stat,log4j,wall&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stat-filter&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.filter.stat.StatFilter&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;slowSqlMillis&quot;</span> <span class="attr">value</span>=<span class="string">&quot;30000&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;logSlowSql&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mergeSql&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;wall-filter&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.wall.WallFilter&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dbType&quot;</span> <span class="attr">value</span>=<span class="string">&quot;sqlserver&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;config&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;wall-config&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;wall-config&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.wall.WallConfig&quot;</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 批量sql --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;multiStatementAllow&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果jdbc是mysql需要在jdbcurl中加<br><code>allowmultiqueries=true</code><br>例：<br><code>url=&quot;jdbc:mysql://localhost:3306/fivecrowdsourcing?allowMultiQueries=true&quot;</code></p>
+<p>详情：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36345950/article/details/83628775">https://blog.csdn.net/qq_36345950/article/details/83628775</a></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/26/324/">解决error: failed to push some refs to &#39;xxx(远程库)&#39;</a>
+            </div>
+            <p class="sub">Mar 26 2019</p>
+            <div class="post-content">
+                
+                    <p><img src="http://pqiuhq1tw.bkt.clouddn.com/1035491337.png"></p>
+<p>此时很多人会尝试下面的命令把当前分支代码上传到master分支上。<br><code>$ git push -u origin master</code><br>但依然没能解决问题，出现错误的<strong>主要原因</strong>是oschina中的<strong>README.md</strong>文件不在本地代码目录中。<br>可以通过如下命令进行代码合并【注：pull&#x3D;fetch+merge]<br><code>git pull --rebase origin master</code><br>然后再push即可</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/26/322/">you are not allowed to push code to protected branches on this project</a>
+            </div>
+            <p class="sub">Mar 26 2019</p>
+            <div class="post-content">
+                
+                    <p><code>you are not allowed to push code to protected branches on this project</code><br>受保护的分支。<br>解决方法：<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">新装的gitlab。GitLab一些分支默认被保护，仅仅拥有master级别的用户才能提交到保护分支，而且master分支默认是保护分支，其他用户需要通过合并issue请求来提交上去</span><br><span class="line"> </span><br><span class="line">Project: &quot;Settings&quot; -&gt; &quot;Repository&quot; -&gt; scroll down to &quot;Protected branches&quot;.</span><br></pre></td></tr></table></figure><br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/3076568899.png"></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/11/320/">char数组转list</a>
+            </div>
+            <p class="sub">Mar 11 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myString.chars().mapToObj(c -&gt; (<span class="type">char</span>) c).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;asdasdasda&quot;</span>;</span><br><span class="line"><span class="type">char</span>[] chars = s.toCharArray();</span><br><span class="line">List&lt;<span class="type">char</span>[]&gt; asList = Arrays.asList(chars);</span><br><span class="line"></span><br><span class="line">    List&lt;Character&gt; listC = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Character&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">char</span> c : chars) &#123;</span><br><span class="line">        listC.add(c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/08/318/">java获取当前月和下个月的第一天和最后一天</a>
+            </div>
+            <p class="sub">Mar 08 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Calendar</span> <span class="variable">cale</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">format</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyyMMdd&quot;</span>);</span><br><span class="line">String firstday, lastday;</span><br><span class="line"><span class="comment">// 获取前月的第一天</span></span><br><span class="line">cale = Calendar.getInstance();</span><br><span class="line">cale.add(Calendar.MONTH, <span class="number">0</span>);</span><br><span class="line">cale.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">firstday = format.format(cale.getTime());</span><br><span class="line"><span class="comment">// 获取前月的最后一天</span></span><br><span class="line">cale = Calendar.getInstance();</span><br><span class="line">cale.add(Calendar.MONTH, <span class="number">1</span>);</span><br><span class="line">cale.set(Calendar.DAY_OF_MONTH, <span class="number">0</span>);</span><br><span class="line">lastday = format.format(cale.getTime());</span><br><span class="line"></span><br><span class="line"><span class="comment">//下个月的第一天和最后一天</span></span><br><span class="line">String nextFirstday, nextLastday;</span><br><span class="line"><span class="type">Calendar</span> <span class="variable">nextCale</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line"></span><br><span class="line">nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">nextCale.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">nextFirstday = format.format(nextCale.getTime());</span><br><span class="line"></span><br><span class="line">nextCale.set(Calendar.MONTH, nextCale.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">nextCale.set(Calendar.DAY_OF_MONTH, <span class="number">0</span>);</span><br><span class="line">nextLastday = format.format(nextCale.getTime());</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/03/04/317/">List转int数组</a>
+            </div>
+            <p class="sub">Mar 04 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">result.stream().mapToInt(Integer::valueOf).toArray();</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/02/28/315/">java获取当前项目路径</a>
+            </div>
+            <p class="sub">Feb 28 2019</p>
+            <div class="post-content">
+                
+                    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">classpath</span> <span class="operator">=</span> <span class="built_in">this</span>.getClass().getResource(<span class="string">&quot;/&quot;</span>).getPath();</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/10/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Java 实例 - 查找 List 中的最大最小值 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Java 实例 - 查找 List 中的最大最小值
+    </div>
+    <p class="sub">Jan 11 2019</p>
+    <div class="post-content">
+        <p>以下实例演示了如何使用 Collections 类的 max() 和 min() 方法来获取List中最大最小值：</p>
+<h3 id="例1："><a href="#例1：" class="headerlink" title="例1："></a>例1：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> author by w3cschool.cc</span></span><br><span class="line"><span class="comment"> Main.java</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(<span class="string">&quot;one Two three Four five six one three Four&quot;</span>.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line">      System.out.println(list);</span><br><span class="line">      System.out.println(<span class="string">&quot;最大值: &quot;</span> + Collections.max(list));</span><br><span class="line">      System.out.println(<span class="string">&quot;最小值: &quot;</span> + Collections.min(list));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以上代码运行输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[one, Two, three, Four, five, six, one, three, Four]</span><br><span class="line">最大值: three</span><br><span class="line">最小值: Four</span><br></pre></td></tr></table></figure>
+<h3 id="例2："><a href="#例2：" class="headerlink" title="例2："></a>例2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Double&gt; input = new ArrayList&lt;Double&gt;();</span><br><span class="line">input.add(2.3);</span><br><span class="line">input.add(3.3);</span><br><span class="line">input.add(4.3);</span><br><span class="line">input.add(5.3);</span><br><span class="line">input.add(6.3);</span><br><span class="line">input.add(7.3);</span><br><span class="line">input.add(8.3);</span><br><span class="line">input.add(9.3);</span><br><span class="line">input.add(1.3);		</span><br><span class="line">System.out.println(input);</span><br><span class="line">System.out.println(&quot;最大值: &quot; + Collections.max(input));</span><br><span class="line">System.out.println(&quot;最小值: &quot; + Collections.min(input));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以上代码运行输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[2.3, 3.3, 4.3, 5.3, 6.3, 7.3, 8.3, 9.3, 1.3]</span><br><span class="line">最大值: 9.3</span><br><span class="line">最小值: 1.3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B1%EF%BC%9A"><span class="toc-text">例1：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B2%EF%BC%9A"><span class="toc-text">例2：</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/01/14/294/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Java StringBuffer insert()方法</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/01/10/292/">
+                
+                <span class="prev-text">正则表达式——过滤非字母字符</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

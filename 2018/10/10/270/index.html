@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>String字符串与字符(char类型)数组互相转换 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        String字符串与字符(char类型)数组互相转换
+    </div>
+    <p class="sub">Oct 10 2018</p>
+    <div class="post-content">
+        <h3 id="1-String类的toCharArray-方法，将字符串转为字符-char-数组"><a href="#1-String类的toCharArray-方法，将字符串转为字符-char-数组" class="headerlink" title="1.String类的toCharArray()方法，将字符串转为字符(char)数组"></a>1.String类的toCharArray()方法，将字符串转为字符(char)数组</h3>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String ss=”abc”; </span><br><span class="line">  <span class="type">char</span>[] cc; </span><br><span class="line">  cc=ss.toCharArray(); </span><br><span class="line">  <span class="comment">//这时cc=&#123;‘a’,’b’,’c’&#125;；</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-String类的valueOf-方法，将字符-char-数组转换为字符串"><a href="#2-String类的valueOf-方法，将字符-char-数组转换为字符串" class="headerlink" title="2.String类的valueOf()方法，将字符(char)数组转换为字符串"></a>2.String类的valueOf()方法，将字符(char)数组转换为字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>[] cc=&#123;‘a’,’b’,’c’&#125;; </span><br><span class="line">ss=String.valueOf(cc); </span><br><span class="line"><span class="comment">//这时ss=“abc”；</span></span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-String%E7%B1%BB%E7%9A%84toCharArray-%E6%96%B9%E6%B3%95%EF%BC%8C%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B8%BA%E5%AD%97%E7%AC%A6-char-%E6%95%B0%E7%BB%84"><span class="toc-text">1.String类的toCharArray()方法，将字符串转为字符(char)数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-String%E7%B1%BB%E7%9A%84valueOf-%E6%96%B9%E6%B3%95%EF%BC%8C%E5%B0%86%E5%AD%97%E7%AC%A6-char-%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">2.String类的valueOf()方法，将字符(char)数组转换为字符串</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/10/10/271/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">开发中常遇到到的问题:java.lang.ArrayIndexOutOfBoundsException</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/10/10/269/">
+                
+                <span class="prev-text">Java数据类型中String、Integer、int相互间的转换</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

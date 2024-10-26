@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>项目的相对位置部署到tomcat发生改变（获得项目路径） | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        项目的相对位置部署到tomcat发生改变（获得项目路径）
+    </div>
+    <p class="sub">Jan 30 2019</p>
+    <div class="post-content">
+        <pre><code>在java web开发中，经常会涉及到文件的读写问题，而由于部署在tomcat上之后，文件的目录结构会发生一些变化，因此常规的获取相对或绝对路径的方式用在此处会导致获取不到文件的尴尬局面，下面便介绍一下在servlet中如何读取WEB-INF下的txt文件。
+</code></pre>
+<p>这个实质是获取web-inf文件路径。。。<br>使用getServletContext(). 方式不好，因为只能在web服务器启动的情况下使用。Thread.currentThread().getContextClassLoader(). 也不好，，因为ClassLoader是可以被框架或者服务器动态改变的。。有些情况下路径就不对了</p>
+<p>我总结的较好的方法<br>主要思路如下：<br>1.得到CLASS路径值。。<br>2.得到其父路径，即WEB-INF的路径值。<br>3.得到完整的WEB-INF\WEB.XML的路径值<br>这样在不启动web服务器的情况下，main函数也可以读取到web-inf下的配置</p>
+<p>示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">        <span class="type">Properties</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> Test.class.getClass().getResource(<span class="string">&quot;/&quot;</span>).getPath();</span><br><span class="line">            path = path.substring(<span class="number">1</span>, path.indexOf(<span class="string">&quot;classes&quot;</span>));</span><br><span class="line">            p.load(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(path + <span class="string">&quot;parameter.properties&quot;</span>));</span><br><span class="line">            <span class="comment">//读出具体的参数</span></span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_url=&quot;</span>+p.get(<span class="string">&quot;mysql_url&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_user=&quot;</span>+p.get(<span class="string">&quot;mysql_user&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;mysql_password=&quot;</span>+p.get(<span class="string">&quot;mysql_password&quot;</span>));</span><br><span class="line">             </span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>详情参照：<br><a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/390533227/">https://bbs.csdn.net/topics/390533227/</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32623363/article/details/79948936">https://blog.csdn.net/qq_32623363/article/details/79948936</a></p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/01/31/307/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">properties文件的属性值需要换行</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/01/30/305/">
+                
+                <span class="prev-text">SQL中using的使用</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

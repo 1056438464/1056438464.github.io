@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>jQuery post提交数据 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        jQuery post提交数据
+    </div>
+    <p class="sub">Jun 05 2018</p>
+    <div class="post-content">
+        <p>###html部分</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//storeid这个下拉框类添加一个change的动作</span><br><span class="line"> $(&#x27;#storeid&#x27;).on(&quot;change&quot;, function () &#123;</span><br><span class="line">            showUseDeviceType($(this).val()); //通过$(this).val()取得storeid的值</span><br><span class="line">        &#125;);</span><br><span class="line">//定义showUseDeviceType</span><br><span class="line">        function showUseDeviceType(flag) &#123;</span><br><span class="line">            var id = &quot;&#123;$id&#125;&quot;;</span><br><span class="line">            if (id == &quot;&quot;) &#123;</span><br><span class="line">                $.post(&quot;&#123;php echo webUrl(&#x27;share/tationedshoppost&#x27;)&#125;&quot;, &#123;&quot;storeid&quot;: flag, &quot;op&quot;: &quot;getdevicetype&quot;&#125;, function (data) &#123;</span><br><span class="line">                    $(&quot;#device_type_id&quot;).html(&#x27;&lt;option value=&quot;0&quot;&gt;--空--&lt;/option&gt;&#x27;);</span><br><span class="line">                    if (data.status == &quot;1&quot;) &#123;</span><br><span class="line">                        $.each(data.result, function (i, o) &#123;</span><br><span class="line">                            if (o != undefined &amp;&amp; o.id &gt; 0) &#123;</span><br><span class="line">                                $(&quot;#device_type_id&quot;).append(&quot;&lt;option value=&#x27;&quot; + o.id + &quot;&#x27;&gt;&quot; + o.device_name + &quot;&lt;/option&gt;&quot;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, &#x27;json&#x27;);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                $.post(&quot;&#123;php echo webUrl(&#x27;share/tationedshoppost&#x27;)&#125;&quot;, &#123;&quot;storeid&quot;: flag, &quot;op&quot;: &quot;getdevicetype&quot;,&quot;model_number&quot;:&quot;&#123;$item[&#x27;model_number&#x27;]&#125;&quot;&#125;, function (data) &#123;</span><br><span class="line">                    $(&quot;#device_type_id&quot;).html(&#x27;&lt;option value=&quot;0&quot;&gt;--空--&lt;/option&gt;&#x27;);</span><br><span class="line">                    if (data.status == &quot;1&quot;) &#123;</span><br><span class="line">                        $.each(data.result, function (i, o) &#123;</span><br><span class="line">                            if (o != undefined &amp;&amp; o.id &gt; 0) &#123;</span><br><span class="line">                                var option_text = o.device_name;</span><br><span class="line">                                if(o.storeid == 0)&#123;</span><br><span class="line">                                    option_text += &quot;   --平台&quot;;</span><br><span class="line">                                &#125;</span><br><span class="line">                                $(&quot;#device_type_id&quot;).append(&quot;&lt;option value=&#x27;&quot; + o.id + &quot;&#x27;&gt;&quot; + option_text + &quot;&lt;/option&gt;&quot;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                        $(&quot;#device_type_id&quot;).find(&quot;option[value=&#x27;&#123;$item[&#x27;device_type_id&#x27;]&#125;&#x27;]&quot;).attr(&quot;selected&quot;,true);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, &#x27;json&#x27;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        showUseDeviceType($(&#x27;#storeid&#x27;).val());</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/06/08/119/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">php 中empty和isset的区别</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/06/01/116/">
+                
+                <span class="prev-text">sql DISTINCT 命令简单使用</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

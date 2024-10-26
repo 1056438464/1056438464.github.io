@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>实现AOP——注解和XML配置 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        实现AOP——注解和XML配置
+    </div>
+    <p class="sub">Aug 26 2018</p>
+    <div class="post-content">
+        <h3 id="Spring生成代理对象的过程"><a href="#Spring生成代理对象的过程" class="headerlink" title="Spring生成代理对象的过程"></a>Spring生成代理对象的过程</h3><pre><code>    1. 创建容器对象的时候， 根据“切入点表达式”拦截的类，生成代理对象；
+    2. 如果目标对象有实现接口，使用jdk代理！
+    3. 如果目标对象没有实现接口，使用cglib代理！
+    4. 从容器获取代理后的对象
+    5. 执行代理对象的方法，在运行时期，动态织入“切面”类中的“通知”!
+</code></pre>
+<h3 id="1-注解行式"><a href="#1-注解行式" class="headerlink" title="1.注解行式"></a>1.注解行式</h3><h4 id="1-1引入aop名称空间-开启aop注解"><a href="#1-1引入aop名称空间-开启aop注解" class="headerlink" title="1.1引入aop名称空间,开启aop注解"></a>1.1引入aop名称空间,开启aop注解</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop/spring-aop.xsd&quot;</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 开启注解扫描 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;cn.itcast.e_aop_anno&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 开启aop注解 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-2-使用Aop相关注解"><a href="#1-2-使用Aop相关注解" class="headerlink" title="1.2 使用Aop相关注解"></a>1.2 使用Aop相关注解</h4><p><code>@Aspect </code>     指定一个类为切面类（切面类也需要实例化）（切面类中的方法，也叫做通知）<br><code>@Before	</code>       前置通知  【在执行目标对象方法之前执行】<br><code>@After</code>			   后置通知  【在执行目标对象方法之后执行】<br><code>@AfterReturning</code>    返回后通知  【在执行目标对象方法结束后执行， 出现异常不执行】<br><code>@AfterThrowing </code>   异常通知   【在执行目标对象方法出现异常时候执行】<br><code>@Around</code>          环绕通知   【环绕目标方法执行】<br><code>@Pointcut</code>      定义一个切入点表达式变量  （后面使用这个切入点表达式的时候，直接引用方法名即可）</p>
+<p><strong>代码示例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口对象IUserDao</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">IUserDao</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//目标对象UserDao</span></span><br><span class="line"><span class="meta">@Repository</span>			<span class="comment">// 把对象加入ioc容器</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDao</span> <span class="keyword">implements</span> <span class="title class_">IUserDao</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;保存...&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//切面类TransactionAop</span></span><br><span class="line"><span class="meta">@Component(&quot;aop&quot;)</span></span><br><span class="line"><span class="meta">@Aspect</span>      <span class="comment">// 指定一个类为切面类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TransactionAop</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 定义一个切入点表达式变量  （后面使用这个切入点表达式的时候，直接引用方法名即可）</span></span><br><span class="line">	<span class="meta">@Pointcut(&quot;execution(* cn.itcast.e_aop_anno.UserDao.*(..))&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">pointcut_</span><span class="params">()</span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//【前置通知】</span></span><br><span class="line">	<span class="comment">// 在执行业务方法，之前执行</span></span><br><span class="line">	<span class="meta">@Before(&quot;pointcut_()&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">beginTransaction</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;[前置通知]  开启事务..&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//【后置通知】</span></span><br><span class="line">	<span class="comment">// 在执行业务方法，之后执行</span></span><br><span class="line">	<span class="meta">@After(&quot;pointcut_()&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">commit</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;[后置通知] 提交事务..&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 【返回后通知】   在执行目标方法结束后执行, 出现异常不会执行</span></span><br><span class="line">	<span class="meta">@AfterReturning(&quot;pointcut_()&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterReturing</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;[返回后通知]&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 【异常通知】   在执行目标方法的时候出现异常执行</span></span><br><span class="line">	<span class="meta">@AfterThrowing(&quot;pointcut_()&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterThrowing</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;[异常通知]&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 【环绕通知】 会环绕目标方法执行</span></span><br><span class="line">	<span class="meta">@Around(&quot;pointcut_()&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">arroud</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;[环绕前：]&quot;</span>);</span><br><span class="line">		pjp.proceed();    			   <span class="comment">// 执行目标方法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;[环绕后：]&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> &#123;</span><br><span class="line"></span><br><span class="line">	 <span class="keyword">private</span> <span class="type">ApplicationContext</span> <span class="variable">ac</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>,getClass());</span><br><span class="line">	</span><br><span class="line">	 <span class="comment">// jdk代理</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testApp</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		<span class="comment">// springIOC容器中获取对象，用接口接收！</span></span><br><span class="line"><span class="comment">//		IUserDao userDao = (IUserDao) ac.getBean(&quot;userDao&quot;);</span></span><br><span class="line"><span class="comment">//		System.out.println(userDao.getClass());</span></span><br><span class="line"><span class="comment">//		userDao.save();</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// springIOC容器中获取对象，用实现接收？   报错！！！！！！！！！</span></span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		 *  java.lang.ClassCastException: </span></span><br><span class="line"><span class="comment">		 *      $Proxy13 cannot be cast to cn.itcast.e_aop_anno.UserDao</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">// 总结：在spring的aop编程中，符合切入点表达式的目标类，  如果目标对象有实现接口，从容器获取对象的时候，一定要通过接口接收！</span></span><br><span class="line">		<span class="comment">// 否则，包类型转换错误！</span></span><br><span class="line">		<span class="type">UserDao</span> <span class="variable">userDao</span> <span class="operator">=</span> (UserDao) ac.getBean(<span class="string">&quot;userDao&quot;</span>);</span><br><span class="line">		System.out.println(userDao.getClass());</span><br><span class="line">		userDao.save();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// cglib代理</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testApp_cglib</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		<span class="type">UserDao</span> <span class="variable">userDao</span> <span class="operator">=</span> (UserDao) ac.getBean(<span class="string">&quot;userDao&quot;</span>);</span><br><span class="line">		System.out.println(userDao.getClass());</span><br><span class="line">		userDao.save();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 没有生成代理对象，因为没有被切入点表达式拦截</span></span><br><span class="line">	<span class="comment">// execution(* cn.itcast.e_aop_anno.UserDao.*(..))</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testApp_save_order</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		<span class="type">OrderDao</span> <span class="variable">orderDao</span> <span class="operator">=</span> (OrderDao) ac.getBean(<span class="string">&quot;orderDao&quot;</span>);</span><br><span class="line">		System.out.println(orderDao.getClass());</span><br><span class="line">		orderDao.save();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2-XML配置"><a href="#2-XML配置" class="headerlink" title="2.XML配置"></a>2.XML配置</h3><p><strong>代码示例</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop/spring-aop.xsd&quot;</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- dao实例加入容器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.f_aop_xml.UserDao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 实例化切面类 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;aop&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.f_aop_xml.TransactionAop&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- Aop相关配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 切入点表达式定义 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* cn.itcast.f_aop_xml.UserDao.*(..))&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 切面配置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">&quot;aop&quot;</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">			<span class="comment">&lt;!-- 【环绕通知】 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:around</span> <span class="attr">method</span>=<span class="string">&quot;arroud&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">		</span><br><span class="line">			<span class="comment">&lt;!-- 【前置通知】 在目标方法之前执行 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">&quot;beginTransaction&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span> /&gt;</span></span><br><span class="line">			</span><br><span class="line">			<span class="comment">&lt;!-- 【后置通知】 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">&quot;commit&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">			</span><br><span class="line">			<span class="comment">&lt;!-- 【返回后通知】 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:after-returning</span> <span class="attr">method</span>=<span class="string">&quot;afterReturing&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">			</span><br><span class="line">			<span class="comment">&lt;!-- 异常通知 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:after-throwing</span> <span class="attr">method</span>=<span class="string">&quot;afterThrowing&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">			</span><br><span class="line">		<span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span>      </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E7%94%9F%E6%88%90%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">Spring生成代理对象的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B3%A8%E8%A7%A3%E8%A1%8C%E5%BC%8F"><span class="toc-text">1.注解行式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1%E5%BC%95%E5%85%A5aop%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4-%E5%BC%80%E5%90%AFaop%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.1引入aop名称空间,开启aop注解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E4%BD%BF%E7%94%A8Aop%E7%9B%B8%E5%85%B3%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.2 使用Aop相关注解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-XML%E9%85%8D%E7%BD%AE"><span class="toc-text">2.XML配置</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/08/26/232/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">AOP中的切入点表达式</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/08/26/223/">
+                
+                <span class="prev-text">Spring框架——AOP</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

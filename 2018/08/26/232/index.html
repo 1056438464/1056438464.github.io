@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>AOP中的切入点表达式 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        AOP中的切入点表达式
+    </div>
+    <p class="sub">Aug 26 2018</p>
+    <div class="post-content">
+        <h3 id="切入点表达式："><a href="#切入点表达式：" class="headerlink" title="切入点表达式："></a>切入点表达式：</h3><h3 id="切入点表达式：-1"><a href="#切入点表达式：-1" class="headerlink" title="切入点表达式："></a>切入点表达式：</h3><p><strong>拦截指定的类，生成代理对象！（目标对象）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//? 代表可是不写</span><br><span class="line"></span><br><span class="line">execution(</span><br><span class="line">modifiers-pattern?   				拦截的方法的访问修饰符</span><br><span class="line">ret-type-pattern                   方法返回类型，必须指定</span><br><span class="line">declaring-type-pattern?             拦截的方法所在的类</span><br><span class="line"> name-pattern(param-pattern)       拦截的方法（以及方法的参数列表）</span><br><span class="line">     throws-pattern?)                  方法声明的异常</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><pre><code>拦截，一定要指定到方法！
+</code></pre>
+<p><strong>代码示例</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/aop/spring-aop.xsd&quot;</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 开启注解扫描 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;cn.itcast.g_execution&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- dao实例加入容器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.g_execution.UserDao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- 实例化切面类 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;aop&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cn.itcast.g_execution.TransactionAop&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- Aop相关配置 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 切入点表达式定义 --&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 1. 拦截指定的方法(通用)  --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn.itcast.g_execution.UserDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 2. 拦截指定的类下所有的方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn.itcast.g_execution.UserDao.*(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 3. 拦截指定包下所有的类的所有方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn.itcast.g_execution.*.*(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 3. 拦截指定包，以及其子包下所有类的所有方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn..*.*(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 5. 拦截所有的public方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(public * *(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 6. 拦截所有的包含save方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* *save*(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 7. 拦截UserDao.save()方法与OrderDao.save() --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn..UserDao.save(..)) || execution(* cn..OrderDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn..UserDao.save(..)) or execution(* cn..OrderDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 8. 不拦截UserDao.save()方法 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;!execution(* cn..UserDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot; not execution(* cn..UserDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 9. 拦截UserDao.save()同时拦截OrderDao.save() --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 注意： 这种很少用，一般都是或者的关系即: || 、 or  --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;aop:pointcut expression=&quot;execution(* cn..UserDao.save(..)) and execution(* cn..OrderDao.save(..))&quot; id=&quot;pt&quot;/&gt;--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* cn..UserDao.save(..)) <span class="symbol">&amp;amp;</span><span class="symbol">&amp;amp;</span> execution(* cn..OrderDao.save(..))&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">&lt;!-- 切面配置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">&quot;aop&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">aop:around</span> <span class="attr">method</span>=<span class="string">&quot;arroud&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span>      </span><br></pre></td></tr></table></figure>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E5%85%A5%E7%82%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A"><span class="toc-text">切入点表达式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E5%85%A5%E7%82%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A-1"><span class="toc-text">切入点表达式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/08/28/235/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text"> java decode(解码) encode(译码)</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/08/26/225/">
+                
+                <span class="prev-text">实现AOP——注解和XML配置</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

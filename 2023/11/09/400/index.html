@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>CountDownLatch详解 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        CountDownLatch详解
+    </div>
+    <p class="sub">Nov 09 2023</p>
+    <div class="post-content">
+        <h3 id="从源码的角度来分析下它的工作原理"><a href="#从源码的角度来分析下它的工作原理" class="headerlink" title="从源码的角度来分析下它的工作原理"></a>从源码的角度来分析下它的工作原理</h3><h4 id="1、谁来决定公交车上的座位数？"><a href="#1、谁来决定公交车上的座位数？" class="headerlink" title="1、谁来决定公交车上的座位数？"></a>1、谁来决定公交车上的座位数？</h4><p>公交车上的座位数是由汽车制造商决定的，在 CountDownLatch 中也会存在这样一个值 count，用来表示需要等待的线程个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">count 值是在 CountDownLatch 的构造函数中进行初始化的</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">CountDownLatch</span><span class="params">(<span class="type">int</span> count)</span> &#123;</span><br><span class="line"> <span class="keyword">if</span> (count &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;count &lt; 0&quot;</span>);</span><br><span class="line"> <span class="built_in">this</span>.sync = <span class="keyword">new</span> <span class="title class_">Sync</span>(count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sync(<span class="type">int</span> count) &#123;</span><br><span class="line"> <span class="comment">//设置 AQS 中的 state 为 count 值</span></span><br><span class="line"> setState(count);</span><br><span class="line">&#125;</span><br><span class="line">计数值 count 是一次性的，当它的值减为<span class="number">0</span>后就不会再变化了，这也是其存在的不足之处。</span><br></pre></td></tr></table></figure>
+<h4 id="2、谁来确定乘客全部到齐？"><a href="#2、谁来确定乘客全部到齐？" class="headerlink" title="2、谁来确定乘客全部到齐？"></a>2、谁来确定乘客全部到齐？</h4><p>在汽车发车前检票员会对车上的乘客数量进行清点，如果满员了就会通知司机开车。</p>
+<p>当然也可以采用这种方法：在得知车座位数的前提下，每上来一位乘客，座位数进行减一操作。CountDownLatch 就是采用的上述方法，它的 countDown() 方法会对 state 的值执行减1操作。</p>
+<p>让我们从源码的角度来认识一下该方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">countDown</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="comment">//释放共享锁</span></span><br><span class="line"> sync.releaseShared(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="type">boolean</span> <span class="title function_">releaseShared</span><span class="params">(<span class="type">int</span> arg)</span> &#123;</span><br><span class="line"> <span class="keyword">if</span> (tryReleaseShared(arg)) &#123;</span><br><span class="line">  doReleaseShared();</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">先尝试释放锁，如果返回 <span class="literal">true</span>，则执行释放操作，反之不执行。我们分析下上边的两个方法</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">tryReleaseShared</span><span class="params">(<span class="type">int</span> releases)</span> &#123;</span><br><span class="line"> <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">  <span class="comment">//获取当前等待的线程数量</span></span><br><span class="line">  <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> getState();</span><br><span class="line">  <span class="comment">//等待线程数为0，表示没有等待线程，故不需要释放锁资源</span></span><br><span class="line">  <span class="keyword">if</span> (c == <span class="number">0</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">//执行减1操作</span></span><br><span class="line">  <span class="type">int</span> <span class="variable">nextc</span> <span class="operator">=</span> c-<span class="number">1</span>;</span><br><span class="line">  <span class="comment">//自旋+CAS将state的属性值-1</span></span><br><span class="line">  <span class="keyword">if</span> (compareAndSetState(c, nextc))</span><br><span class="line">   <span class="keyword">return</span> nextc == <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后一步中，如果减一之后为0，则说明没有其它线程等待，需要执行释放锁操作，返回 true，反之不需要。</p>
+<p>在开始分析 doReleaseShared() 之前，我们先来补全一下 AQS 中 waitStatus 的状态说明</p>
+<p>初始化状态：0，表示当前节点在同步队列中，等待获取锁；<br>CANCELLED：1，表示当前节点取消获取锁；<br>SIGNAL：-1，表示后续节点等待当前节点唤醒；<br>CONDITION：-2，表示当前线程正在条件等待队列中；<br>PROPAGATE：-3，共享模式，前置节点唤醒后续节点后，唤醒操作无条件传播下去；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 释放锁：唤醒后续节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">doReleaseShared</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">  <span class="type">Node</span> <span class="variable">h</span> <span class="operator">=</span> head;</span><br><span class="line">  <span class="comment">//不是null 且不为尾节点，因为尾节点没有后续节点需要唤醒了</span></span><br><span class="line">  <span class="keyword">if</span> (h != <span class="literal">null</span> &amp;&amp; h != tail) &#123;</span><br><span class="line">   <span class="type">int</span> <span class="variable">ws</span> <span class="operator">=</span> h.waitStatus;</span><br><span class="line">   <span class="comment">//只有状态为 -1 才可以唤醒后续节点</span></span><br><span class="line">   <span class="keyword">if</span> (ws == Node.SIGNAL) &#123;</span><br><span class="line">    <span class="comment">//将waitStatus设置为0失败会继续循环</span></span><br><span class="line">    <span class="keyword">if</span> (!compareAndSetWaitStatus(h, Node.SIGNAL, <span class="number">0</span>))</span><br><span class="line">     <span class="keyword">continue</span>;</span><br><span class="line">    unparkSuccessor(h);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//将waitStatus设置为PROPAGATE失败会继续循环</span></span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span> (ws == <span class="number">0</span> &amp;&amp;</span><br><span class="line">      !compareAndSetWaitStatus(h, <span class="number">0</span>, Node.PROPAGATE))</span><br><span class="line">    <span class="keyword">continue</span>;                </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (h == head)                   </span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>unparkSuccessor() 方法用于唤醒 AQS 中被挂起的线程，在ReentrantLock的原理中讲过了，此处不再赘述。</p>
+<h4 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h4><p>当线程使用 countDown() 方法时，其实是使用了 tryReleaseShared() 方法以 CAS 的操作来减少 state ,直至 state 为 0 ，进而释放锁资源，唤醒后续节点。</p>
+<p>③谁来发车？</p>
+<p>肯定是司机来发车呀，那我们的 CountDownLatch 是如何实现的呢？</p>
+<p>CountDownLatch 中的 await() 方法，就是等待线程的总开关，当发现 state 的值为0时会释放所有的等待线程，发车了。</p>
+<p>我们从源码角度来看下它是如何工作的</p>
+<p>public void await() throws InterruptedException {<br> sync.acquireSharedInterruptibly(1);<br>}</p>
+<p>public final void acquireSharedInterruptibly(int arg)<br>  throws InterruptedException {<br> &#x2F;&#x2F;如果线程中断了，直接抛出中断异常<br> if (Thread.interrupted())<br>  throw new InterruptedException();<br> &#x2F;&#x2F;如果小于0，代表 state 不为0，即还有任务未执行完毕，会执行获取共享锁的操作<br> if (tryAcquireShared(arg) &lt; 0)<br>  doAcquireSharedInterruptibly(arg);<br>}</p>
+<p>protected int tryAcquireShared(int acquires) {<br> return (getState() &#x3D;&#x3D; 0) ? 1 : -1;<br>}<br>我们来看看它到底是如何获取共享锁的</p>
+<p>private void doAcquireSharedInterruptibly(int arg)<br> throws InterruptedException {<br> &#x2F;&#x2F;将当前线程封装成node放到队尾<br> final Node node &#x3D; addWaiter(Node.SHARED);<br> boolean failed &#x3D; true;<br> try {<br>  for (;;) {<br>   final Node p &#x3D; node.predecessor();<br>   if (p &#x3D;&#x3D; head) {<br>    int r &#x3D; tryAcquireShared(arg);<br>    &#x2F;&#x2F;state为0，表示此时等待线程全部执行完毕，r为1。<br>    if (r &gt;&#x3D; 0) {<br>     setHeadAndPropagate(node, r);<br>     p.next &#x3D; null;<br>     failed &#x3D; false;<br>     return;<br>    }<br>   }<br>   &#x2F;&#x2F;从当前node节点向前寻找有效节点，并保证有效节点的waitStatus状态为-1<br>   if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;<br>    &#x2F;&#x2F;挂起线程<br>    parkAndCheckInterrupt())<br>    &#x2F;&#x2F;在拿锁的期间，如果被中断了，那么会抛出异常，取消拿锁<br>    throw new InterruptedException();<br>  }<br> } finally {<br>  if (failed)<br>   &#x2F;&#x2F;将当前节点设置为失效节点，并挂到最近的有效节点后边，上文中有图解<br>   cancelAcquire(node);<br> }<br>}<br>其中最重要的就是 setHeadAndPropagate() 方法</p>
+<p>private void setHeadAndPropagate(Node node, int propagate) {<br> Node h &#x3D; head;<br> &#x2F;&#x2F;将当前node设置为head，并将node的线程置为空<br> setHead(node);<br> if (propagate &gt; 0 || h &#x3D;&#x3D; null || h.waitStatus &lt; 0 ||<br>  (h &#x3D; head) &#x3D;&#x3D; null || h.waitStatus &lt; 0) {<br>  Node s &#x3D; node.next;<br>  if (s &#x3D;&#x3D; null || s.isShared())<br>   &#x2F;&#x2F;释放锁：唤醒后续节点<br>   doReleaseShared();<br> }<br>}<br>小结：当线程使用 await() 方法时会将当前线程封装成 node 加入AQS 队列中，如果发现 state 不为0，说明还有任务未执行完成，继续阻塞；如果 state 为0，会释放掉所有的等待线程，执行 await() 之后的数据。</p>
+<p>CountDownLatch 是 Java 中一个常用的并发工具类，位于 java.util.concurrent 包中。它允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。<br>以下是 CountDownLatch 的基本使用步骤：<br>1.创建 CountDownLatch：指定计数器的初始值。<br>2.线程等待：调用 await() 方法，等待计数器变为零。<br>3.计数器递减：在其他线程中完成操作后，调用 countDown() 方法，将计数器的值减一。<br>代码示例<br>下面是一个简单的示例，演示如何使用 CountDownLatch：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CountDownLatchExample</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建一个 CountDownLatch 对象，计数器初始化为3</span></span><br><span class="line">        <span class="type">CountDownLatch</span> <span class="variable">latch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CountDownLatch</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建并启动三个工作线程</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Worker</span>(latch)).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 主线程等待，直到计数器减到0</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            latch.await();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;所有工作线程已完成。主线程继续执行。&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Worker</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> CountDownLatch latch;</span><br><span class="line"></span><br><span class="line">        Worker(CountDownLatch latch) &#123;</span><br><span class="line">            <span class="built_in">this</span>.latch = latch;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 模拟一些工作</span></span><br><span class="line">                Thread.sleep((<span class="type">long</span>) (Math.random() * <span class="number">1000</span>));</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; 完成工作&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="comment">// 工作完成后，计数器减一</span></span><br><span class="line">                latch.countDown();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><h4 id="1-创建-CountDownLatch："><a href="#1-创建-CountDownLatch：" class="headerlink" title="1.创建 CountDownLatch："></a>1.创建 CountDownLatch：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CountDownLatch latch = new CountDownLatch(3);</span><br></pre></td></tr></table></figure>
+<p>这里计数器初始化为3，表示有三个操作需要完成。</p>
+<h4 id="2-创建并启动工作线程："><a href="#2-创建并启动工作线程：" class="headerlink" title="2.创建并启动工作线程："></a>2.创建并启动工作线程：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt; 3; i++) &#123;</span><br><span class="line">    new Thread(new Worker(latch)).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动三个线程，每个线程会执行一些模拟工作。</p>
+<h4 id="3-等待所有线程完成："><a href="#3-等待所有线程完成：" class="headerlink" title="3.等待所有线程完成："></a>3.等待所有线程完成：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">latch.await();</span><br></pre></td></tr></table></figure>
+<p>主线程调用 await() 方法，进入等待状态，直到计数器变为零。</p>
+<h4 id="4-工作线程完成工作后，计数器递减："><a href="#4-工作线程完成工作后，计数器递减：" class="headerlink" title="4.工作线程完成工作后，计数器递减："></a>4.工作线程完成工作后，计数器递减：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">latch.countDown();</span><br></pre></td></tr></table></figure>
+<p>每个工作线程在完成其任务后，调用 countDown() 方法将计数器减一。</p>
+<h4 id="5-主线程继续执行："><a href="#5-主线程继续执行：" class="headerlink" title="5.主线程继续执行："></a>5.主线程继续执行：</h4><p>当计数器变为零时，主线程从 await() 方法返回，继续执行后续操作。<br>通过这种方式，可以确保主线程等待所有工作线程完成其任务后再继续执行。</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E6%9D%A5%E5%88%86%E6%9E%90%E4%B8%8B%E5%AE%83%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">从源码的角度来分析下它的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E8%B0%81%E6%9D%A5%E5%86%B3%E5%AE%9A%E5%85%AC%E4%BA%A4%E8%BD%A6%E4%B8%8A%E7%9A%84%E5%BA%A7%E4%BD%8D%E6%95%B0%EF%BC%9F"><span class="toc-text">1、谁来决定公交车上的座位数？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E8%B0%81%E6%9D%A5%E7%A1%AE%E5%AE%9A%E4%B9%98%E5%AE%A2%E5%85%A8%E9%83%A8%E5%88%B0%E9%BD%90%EF%BC%9F"><span class="toc-text">2、谁来确定乘客全部到齐？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%EF%BC%9A"><span class="toc-text">小结：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A"><span class="toc-text">解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA-CountDownLatch%EF%BC%9A"><span class="toc-text">1.创建 CountDownLatch：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%B7%A5%E4%BD%9C%E7%BA%BF%E7%A8%8B%EF%BC%9A"><span class="toc-text">2.创建并启动工作线程：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%AD%89%E5%BE%85%E6%89%80%E6%9C%89%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90%EF%BC%9A"><span class="toc-text">3.等待所有线程完成：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%B7%A5%E4%BD%9C%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90%E5%B7%A5%E4%BD%9C%E5%90%8E%EF%BC%8C%E8%AE%A1%E6%95%B0%E5%99%A8%E9%80%92%E5%87%8F%EF%BC%9A"><span class="toc-text">4.工作线程完成工作后，计数器递减：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%BB%E7%BA%BF%E7%A8%8B%E7%BB%A7%E7%BB%AD%E6%89%A7%E8%A1%8C%EF%BC%9A"><span class="toc-text">5.主线程继续执行：</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Java/">Java</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2024/01/19/401/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">高并发系统设计</span>
+            </a>
+        
+        
+            <a class="next" href="/2023/10/22/399/">
+                
+                <span class="prev-text">Redis 的大 Key 对持久化有什么影响？</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

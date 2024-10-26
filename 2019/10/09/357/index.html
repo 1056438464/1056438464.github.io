@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>SpringBoot打包War | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        SpringBoot打包War
+    </div>
+    <p class="sub">Oct 09 2019</p>
+    <div class="post-content">
+        <h2 id="一、修改pom-xml文件将默认的jar方式改为war："><a href="#一、修改pom-xml文件将默认的jar方式改为war：" class="headerlink" title="一、修改pom.xml文件将默认的jar方式改为war："></a>一、修改pom.xml文件将默认的jar方式改为war：</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>application<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--默认为jar方式--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;packaging&gt;jar&lt;/packaging&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--改为war方式--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、排除内置的Tomcat容器（两种方式都可）："><a href="#二、排除内置的Tomcat容器（两种方式都可）：" class="headerlink" title="二、排除内置的Tomcat容器（两种方式都可）："></a>二、排除内置的Tomcat容器（两种方式都可）：</h2><h3 id="1-排除spring-boot-starter-web中的Tomcat"><a href="#1-排除spring-boot-starter-web中的Tomcat" class="headerlink" title="1.排除spring-boot-starter-web中的Tomcat"></a>1.排除spring-boot-starter-web中的Tomcat</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-添加依赖"><a href="#2-添加依赖" class="headerlink" title="2.添加依赖"></a>2.添加依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--打包的时候可以不用包进去，别的设施会提供。事实上该依赖理论上可以参与编译，测试，运行等周期。</span></span><br><span class="line"><span class="comment">        相当于compile，但是打包阶段做了exclude操作--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、继承org-springframework-boot-web-servlet-support-SpringBootServletInitializer，实现configure方法："><a href="#三、继承org-springframework-boot-web-servlet-support-SpringBootServletInitializer，实现configure方法：" class="headerlink" title="三、继承org.springframework.boot.web.servlet.support.SpringBootServletInitializer，实现configure方法："></a>三、继承org.springframework.boot.web.servlet.support.SpringBootServletInitializer，实现configure方法：</h2><h3 id="1-方式一，启动类继承SpringBootServletInitializer实现configure："><a href="#1-方式一，启动类继承SpringBootServletInitializer实现configure：" class="headerlink" title="1.方式一，启动类继承SpringBootServletInitializer实现configure："></a>1.方式一，启动类继承SpringBootServletInitializer实现configure：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> <span class="keyword">extends</span> <span class="title class_">SpringBootServletInitializer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> SpringApplicationBuilder <span class="title function_">configure</span><span class="params">(SpringApplicationBuilder builder)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> builder.sources(Application.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-方式二，新增加一个类继承SpringBootServletInitializer实现configure："><a href="#2-方式二，新增加一个类继承SpringBootServletInitializer实现configure：" class="headerlink" title="2.方式二，新增加一个类继承SpringBootServletInitializer实现configure："></a>2.方式二，新增加一个类继承SpringBootServletInitializer实现configure：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletInitializer</span> <span class="keyword">extends</span> <span class="title class_">SpringBootServletInitializer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> SpringApplicationBuilder <span class="title function_">configure</span><span class="params">(SpringApplicationBuilder builder)</span> &#123;</span><br><span class="line">        <span class="comment">//此处的Application.class为带有@SpringBootApplication注解的启动类</span></span><br><span class="line">        <span class="keyword">return</span> builder.sources(Application.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BF%AE%E6%94%B9pom-xml%E6%96%87%E4%BB%B6%E5%B0%86%E9%BB%98%E8%AE%A4%E7%9A%84jar%E6%96%B9%E5%BC%8F%E6%94%B9%E4%B8%BAwar%EF%BC%9A"><span class="toc-text">一、修改pom.xml文件将默认的jar方式改为war：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8E%92%E9%99%A4%E5%86%85%E7%BD%AE%E7%9A%84Tomcat%E5%AE%B9%E5%99%A8%EF%BC%88%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E9%83%BD%E5%8F%AF%EF%BC%89%EF%BC%9A"><span class="toc-text">二、排除内置的Tomcat容器（两种方式都可）：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8E%92%E9%99%A4spring-boot-starter-web%E4%B8%AD%E7%9A%84Tomcat"><span class="toc-text">1.排除spring-boot-starter-web中的Tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-text">2.添加依赖</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%A7%E6%89%BForg-springframework-boot-web-servlet-support-SpringBootServletInitializer%EF%BC%8C%E5%AE%9E%E7%8E%B0configure%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">三、继承org.springframework.boot.web.servlet.support.SpringBootServletInitializer，实现configure方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%8C%E5%90%AF%E5%8A%A8%E7%B1%BB%E7%BB%A7%E6%89%BFSpringBootServletInitializer%E5%AE%9E%E7%8E%B0configure%EF%BC%9A"><span class="toc-text">1.方式一，启动类继承SpringBootServletInitializer实现configure：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%8C%E6%96%B0%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%BB%A7%E6%89%BFSpringBootServletInitializer%E5%AE%9E%E7%8E%B0configure%EF%BC%9A"><span class="toc-text">2.方式二，新增加一个类继承SpringBootServletInitializer实现configure：</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Spring/">Spring</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/10/14/361/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">git强制覆盖本地代码（与git远程仓库保持一致）</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/09/26/355/">
+                
+                <span class="prev-text">Spring 共通异常捕获</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

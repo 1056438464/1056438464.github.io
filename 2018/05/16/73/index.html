@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>MYSQL中LIMIT用法 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        MYSQL中LIMIT用法
+    </div>
+    <p class="sub">May 16 2018</p>
+    <div class="post-content">
+        <p>LIMIT是MySQL内置函数，其作用是用于限制查询结果的条数。</p>
+<span id="more"></span>
+<p>1)其语法格式如下:</p>
+<p>LIMIT[位置偏移量,]行数</p>
+<p>其中，中括号里面的参数是可选参数，位置偏移量是指MySQL查询分析器要从哪一行开始显示，索引值从0开始，即第一条记录位置偏移量是0，第二条记录的位置偏移量是1,依此类推…，第二个参数为“行数”即指示返回的记录条数。</p>
+<p>位置偏移量可以理解为跳过前xx条记录(元组).</p>
+<p>2)基本用法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*当没有指定位置偏移量时，只取4条时，可以这样写*/</span><br><span class="line">SELECT * FROM YourTableName LIMIT 4;</span><br><span class="line"> </span><br><span class="line">/*当指定了位置偏移量时，从第3条起取4条时，可以这样写*/</span><br><span class="line">/*因为索引是从0开始计数的，所以第3条对应的索引就是2*/</span><br><span class="line">SELECT * FROM YourTableName LIMIT 2,4;</span><br></pre></td></tr></table></figure>
+
+<p>3)应用场合:分页</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> // 后台计算出页码、页数(页大小)</span><br><span class="line"> int curPage = 2;</span><br><span class="line"> int pageSize = 10;</span><br><span class="line"> int startRow = (curPage - 1) * pageSize;</span><br><span class="line"></span><br><span class="line">SELECT * FROM YourTableName LIMIT startRow,pageSize;</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/%E5%8F%82%E6%95%B0/">参数</a>
+                
+                    <a href="/tags/%E6%8C%87%E5%AE%9A/">指定</a>
+                
+                    <a href="/tags/limit/">limit</a>
+                
+                    <a href="/tags/select/">select</a>
+                
+                    <a href="/tags/pagesize/">pagesize</a>
+                
+                    <a href="/tags/int/">int</a>
+                
+                    <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/05/16/74/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">oracle中 =: 和 :=</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/05/16/72/">
+                
+                <span class="prev-text">Linux查找含有某字符串的所有文件</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Spring File Storag简单使用 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Spring File Storag简单使用
+    </div>
+    <p class="sub">Feb 23 2024</p>
+    <div class="post-content">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- spring-file-storage 必须要引入 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.xuyanwu&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-file-storage&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.5.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 阿里云oss --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.aliyun.oss&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aliyun-sdk-oss&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.10.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>application.yml文件中配置些基础信息。</p>
+<p>enable-storage：只有状态开启才会被识别到<br>default-platform：默认的上传平台<br>domain：生成的文件url中访问的域名<br>base-path：存储地址<br>thumbnail-suffix：缩略图后缀<br>要是上传OSS对象存储平台，将aliyun oss提供的变量配置到相应的模块上即可。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment">#文件存储配置(本地、oss)</span></span><br><span class="line">  <span class="attr">file-storage:</span></span><br><span class="line">    <span class="attr">default-platform:</span> <span class="string">local-1</span></span><br><span class="line">    <span class="attr">thumbnail-suffix:</span> <span class="string">&quot;.min.jpg&quot;</span> <span class="comment">#缩略图后缀</span></span><br><span class="line">    <span class="attr">local:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">local-1</span> <span class="comment"># 存储平台标识</span></span><br><span class="line">        <span class="attr">enable-storage:</span> <span class="literal">true</span> <span class="comment">#是否开启本存储（只能选一种）</span></span><br><span class="line">        <span class="attr">enable-access:</span> <span class="literal">true</span> <span class="comment">#启用访问（线上请使用 Nginx 配置，效率更高）</span></span><br><span class="line">        <span class="attr">domain:</span> <span class="string">&quot;http://127.0.0.1:2222&quot;</span> <span class="comment">#访问域名，注意后面要和path-patterns保持一致，“/”结尾</span></span><br><span class="line">        <span class="attr">base-path:</span> <span class="string">/tmp/Pictures/</span> <span class="comment"># 存储地址</span></span><br><span class="line">        <span class="attr">path-patterns:</span> <span class="string">/**</span> <span class="comment">#访问路径</span></span><br><span class="line">    <span class="attr">aliyun-oss:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">platform:</span> <span class="string">aliyun-oss</span></span><br><span class="line">        <span class="attr">enable-storage:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">access-key:</span> <span class="string">xxxx</span></span><br><span class="line">        <span class="attr">secret-key:</span> <span class="string">xxxx</span></span><br><span class="line">        <span class="attr">end-point:</span> <span class="string">xxx</span></span><br><span class="line">        <span class="attr">bucket-name:</span> <span class="string">firebook</span></span><br><span class="line">        <span class="attr">domain:</span> <span class="string">http://fire100.top</span></span><br><span class="line">        <span class="attr">base-path:</span> <span class="comment">#云平台文件路径</span></span><br></pre></td></tr></table></figure>
+<p>springboot启动类中增加注解@EnableFileStorage，显式的开启文件上传功能，到这就可以用了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFileStorage</span> <span class="comment">// 文件上传工具</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringbootFileStorageApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(SpringbootFileStorageApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">上传文件</span><br><span class="line">接下来在业务类中引入FileStorageService服务，如下只要一行代码就可以完成文件上传，是不是So easy，下载也是如法炮制。</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> FileStorageService fileStorageService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 上传文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping(value = &#123;&quot;/upload&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">upload</span><span class="params">(MultipartFile file)</span> &#123;</span><br><span class="line">        <span class="type">FileInfo</span> <span class="variable">upload</span>  <span class="operator">=</span> fileStorageService.of(file).upload();</span><br><span class="line">        <span class="keyword">return</span> upload;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不仅如此spring-file-storage还支持多种文件形式，URI、URL、String、byte[]、InputStream、MultipartFile，使开发更加灵活。<br>件上传功能，更多时候我们都是在上传图片，那就会有动态裁剪图片、生成缩略图的需求，这些 spring-file-storage 都可以很容易实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 上传图片裁剪大小并生成一张缩略图</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/uploadThumbnail&quot;)</span></span><br><span class="line"><span class="keyword">public</span> FileInfo <span class="title function_">uploadThumbnail</span><span class="params">(MultipartFile file)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fileStorageService.of(file)</span><br><span class="line">            .image(img -&gt; img.size(<span class="number">1000</span>,<span class="number">1000</span>))  <span class="comment">//将图片大小调整到 1000*1000</span></span><br><span class="line">            .thumbnail(th -&gt; th.size(<span class="number">200</span>,<span class="number">200</span>))  <span class="comment">//再生成一张 200*200 的缩略图</span></span><br><span class="line">            .upload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而且我们还可以动态选择上传平台，配置文件中将所有平台开启，在实际使用中自由的选择。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 上传文件到指定存储平台，成功返回文件信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/upload-platform&quot;)</span></span><br><span class="line"><span class="keyword">public</span> FileInfo <span class="title function_">uploadPlatform</span><span class="params">(MultipartFile file)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fileStorageService.of(file)</span><br><span class="line">            .setPlatform(<span class="string">&quot;aliyun-oss&quot;</span>)    <span class="comment">//使用指定的存储平台</span></span><br><span class="line">            .upload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><p>下载文件也同样的简单，可以直接根据文件url或者文件流下载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下载文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/download&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">download</span><span class="params">(MultipartFile file)</span> &#123;</span><br><span class="line">    <span class="comment">// 获取文件信息</span></span><br><span class="line">    <span class="type">FileInfo</span> <span class="variable">fileInfo</span> <span class="operator">=</span> fileStorageService.getFileInfoByUrl(<span class="string">&quot;http://file.abc.com/test/a.jpg&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 下载到文件</span></span><br><span class="line">    fileStorageService.download(fileInfo).file(<span class="string">&quot;C:\\a.jpg&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 直接通过文件信息中的 url 下载，省去手动查询文件信息记录的过程</span></span><br><span class="line">    fileStorageService.download(<span class="string">&quot;http://file.abc.com/test/a.jpg&quot;</span>).file(<span class="string">&quot;C:\\a.jpg&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下载缩略图</span></span><br><span class="line">    fileStorageService.downloadTh(fileInfo).file(<span class="string">&quot;C:\\th.jpg&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">提供了监听下载进度的功能，可以清晰明了的掌握文件的下载情况。</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下载文件 显示进度</span></span><br><span class="line">fileStorageService.download(fileInfo).setProgressMonitor(<span class="keyword">new</span> <span class="title class_">ProgressListener</span>() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">start</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;下载开始&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">progress</span><span class="params">(<span class="type">long</span> progressSize,<span class="type">long</span> allSize)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;已下载 &quot;</span> + progressSize + <span class="string">&quot; 总大小&quot;</span> + allSize);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">finish</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;下载结束&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).file(<span class="string">&quot;C:\\a.jpg&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="文件存在、删除"><a href="#文件存在、删除" class="headerlink" title="文件存在、删除"></a>文件存在、删除</h3><p>我们还可以根据文件的URL地址来判断文件是否存在、以及删除文件。</p>
+<p>&#x2F;&#x2F;直接通过文件信息中的 url 删除，省去手动查询文件信息记录的过程<br>fileStorageService.delete(“<a target="_blank" rel="noopener" href="http://file.abc.com/test/a.jpg">http://file.abc.com/test/a.jpg</a>“);<br>&#x2F;&#x2F;直接通过文件信息中的 url 判断文件是否存在，省去手动查询文件信息记录的过程<br>boolean exists2 &#x3D; fileStorageService.exists(“<a target="_blank" rel="noopener" href="http://file.abc.com/test/a.jpg">http://file.abc.com/test/a.jpg</a>“);</p>
+<p>切面工具还提供了每种操作的切面，可以在每个动作的前后进行干预，比如打日志或者玩点花活，实现FileStorageAspect类重写对应动作的xxxAround方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用切面打印文件上传和删除的日志</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LogFileStorageAspect</span> <span class="keyword">implements</span> <span class="title class_">FileStorageAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 上传，成功返回文件信息，失败返回 null</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> FileInfo <span class="title function_">uploadAround</span><span class="params">(UploadAspectChain chain, FileInfo fileInfo, UploadPretreatment pre, FileStorage fileStorage, FileRecorder fileRecorder)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;上传文件 before -&gt; &#123;&#125;&quot;</span>,fileInfo);</span><br><span class="line">        fileInfo = chain.next(fileInfo,pre,fileStorage,fileRecorder);</span><br><span class="line">        log.info(<span class="string">&quot;上传文件 after -&gt; &#123;&#125;&quot;</span>,fileInfo);</span><br><span class="line">        <span class="keyword">return</span> fileInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="toc-text">下载文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%9C%A8%E3%80%81%E5%88%A0%E9%99%A4"><span class="toc-text">文件存在、删除</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Java/">Java</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2024/02/24/403/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">微服务开发时，接口不能对外暴</span>
+            </a>
+        
+        
+            <a class="next" href="/2024/01/19/401/">
+                
+                <span class="prev-text">高并发系统设计</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

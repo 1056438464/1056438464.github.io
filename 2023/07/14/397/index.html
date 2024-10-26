@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>异步编程的 7 种实现方式 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        异步编程的 7 种实现方式
+    </div>
+    <p class="sub">Jul 14 2023</p>
+    <div class="post-content">
+        <h2 id="1-线程-Thread"><a href="#1-线程-Thread" class="headerlink" title="1. 线程 (Thread)"></a>1. 线程 (Thread)</h2><p>Java 的 <code>Thread</code> 类允许创建并启动线程来执行异步任务。线程是最基础的异步编程方式，但需要手动管理线程生命周期。</p>
+<ul>
+<li><strong>优点</strong>：直接操作系统线程，适合简单的异步任务。</li>
+<li><strong>缺点</strong>：线程创建开销大，过多线程影响性能和资源消耗。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;异步任务开始&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">thread.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Runnable-和-Callable"><a href="#2-Runnable-和-Callable" class="headerlink" title="2. Runnable 和 Callable"></a>2. Runnable 和 Callable</h2><p><code>Runnable</code> 和 <code>Callable</code> 是两种接口，用于定义异步任务。<code>Runnable</code> 没有返回值，而 <code>Callable</code> 可以返回结果或抛出异常。</p>
+<ul>
+<li><strong>优点</strong>：可与线程池配合使用，简化线程管理。</li>
+<li><strong>缺点</strong>：需要手动管理线程，代码复杂度较高。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Callable&lt;Integer&gt; task = () -&gt; &#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Future&lt;Integer&gt; result = Executors.newSingleThreadExecutor().submit(task);</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Future-和-ExecutorService"><a href="#3-Future-和-ExecutorService" class="headerlink" title="3. Future 和 ExecutorService"></a>3. Future 和 ExecutorService</h2><p><code>Future</code> 代表异步操作的结果，可与 <code>ExecutorService</code> 搭配使用，便于管理和控制线程池。通过 <code>get()</code> 方法获取任务结果。</p>
+<ul>
+<li><strong>优点</strong>：提供异步结果和超时控制。</li>
+<li><strong>缺点</strong>：<code>Future</code> 不支持链式调用，取消任务后仍需手动处理资源。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ExecutorService</span> <span class="variable">executor</span> <span class="operator">=</span> Executors.newCachedThreadPool();</span><br><span class="line">Future&lt;Integer&gt; future = executor.submit(() -&gt; &#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">result</span> <span class="operator">=</span> future.get();</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-CompletableFuture"><a href="#4-CompletableFuture" class="headerlink" title="4. CompletableFuture"></a>4. CompletableFuture</h2><p><code>CompletableFuture</code> 是 Java 8 引入的类，支持链式调用和非阻塞获取结果，适合复杂的异步流操作。</p>
+<ul>
+<li><strong>优点</strong>：支持链式调用和组合操作，功能强大。</li>
+<li><strong>缺点</strong>：异常处理较复杂，易导致回调地狱。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CompletableFuture&lt;Integer&gt; future = CompletableFuture.supplyAsync(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span>;</span><br><span class="line">&#125;).thenApply(result -&gt; result + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">future.thenAccept(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Fork-Join-框架"><a href="#5-Fork-Join-框架" class="headerlink" title="5. Fork&#x2F;Join 框架"></a>5. Fork&#x2F;Join 框架</h2><p>Fork&#x2F;Join 是 Java 7 引入的框架，适合处理大任务的分治问题，递归分解任务，使用工作窃取算法优化线程池性能。</p>
+<ul>
+<li><strong>优点</strong>：适合并行计算，充分利用多核 CPU。</li>
+<li><strong>缺点</strong>：适合 CPU 密集型任务，代码复杂度较高。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ForkJoinPool</span> <span class="variable">forkJoinPool</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ForkJoinPool</span>();</span><br><span class="line">RecursiveTask&lt;Integer&gt; task = <span class="keyword">new</span> <span class="title class_">RecursiveTask</span>&lt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Integer <span class="title function_">compute</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">42</span>; <span class="comment">// 递归任务的计算逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">result</span> <span class="operator">=</span> forkJoinPool.invoke(task);</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Reactor-异步框架"><a href="#6-Reactor-异步框架" class="headerlink" title="6. Reactor 异步框架"></a>6. Reactor 异步框架</h2><p>Reactor 是响应式编程框架，基于非阻塞和事件驱动模型实现异步操作，适合高并发 I&#x2F;O 场景。</p>
+<ul>
+<li><strong>优点</strong>：支持背压，非阻塞模型。</li>
+<li><strong>缺点</strong>：需要对响应式编程有一定理解，学习成本较高。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mono&lt;Integer&gt; mono = Mono.fromSupplier(() -&gt; <span class="number">42</span>);</span><br><span class="line">mono.subscribe(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Spring-异步支持-Async"><a href="#7-Spring-异步支持-Async" class="headerlink" title="7. Spring 异步支持 (@Async)"></a>7. Spring 异步支持 (@Async)</h2><p>Spring 框架提供 <code>@Async</code> 注解支持异步方法执行，可在 Spring 应用中快速实现异步调用。</p>
+<ul>
+<li><strong>优点</strong>：简单易用，适合 Spring 应用。</li>
+<li><strong>缺点</strong>：依赖 Spring 框架，需要配置线程池。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Async</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">asyncMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;异步方法执行中&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>实现方式</th>
+<th>适用场景</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thread</td>
+<td>简单异步任务</td>
+<td>直接操作系统线程</td>
+<td>线程管理复杂，性能开销较高</td>
+</tr>
+<tr>
+<td>Runnable&#x2F;Callable</td>
+<td>简单异步任务</td>
+<td>与线程池配合使用</td>
+<td>手动管理线程</td>
+</tr>
+<tr>
+<td>Future</td>
+<td>有结果的异步任务</td>
+<td>提供超时控制</td>
+<td>不支持链式调用，资源管理复杂</td>
+</tr>
+<tr>
+<td>CompletableFuture</td>
+<td>多步骤异步任务</td>
+<td>支持链式调用</td>
+<td>异常处理复杂</td>
+</tr>
+<tr>
+<td>Fork&#x2F;Join</td>
+<td>并行计算</td>
+<td>充分利用多核 CPU</td>
+<td>适合 CPU 密集型任务</td>
+</tr>
+<tr>
+<td>Reactor</td>
+<td>高并发 I&#x2F;O</td>
+<td>非阻塞模型，支持背压</td>
+<td>学习成本较高</td>
+</tr>
+<tr>
+<td>Spring @Async</td>
+<td>Spring 异步方法</td>
+<td>简单易用</td>
+<td>依赖 Spring 框架</td>
+</tr>
+</tbody></table>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B-Thread"><span class="toc-text">1. 线程 (Thread)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Runnable-%E5%92%8C-Callable"><span class="toc-text">2. Runnable 和 Callable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Future-%E5%92%8C-ExecutorService"><span class="toc-text">3. Future 和 ExecutorService</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-CompletableFuture"><span class="toc-text">4. CompletableFuture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Fork-Join-%E6%A1%86%E6%9E%B6"><span class="toc-text">5. Fork&#x2F;Join 框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Reactor-%E5%BC%82%E6%AD%A5%E6%A1%86%E6%9E%B6"><span class="toc-text">6. Reactor 异步框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Spring-%E5%BC%82%E6%AD%A5%E6%94%AF%E6%8C%81-Async"><span class="toc-text">7. Spring 异步支持 (@Async)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/java/">java</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2023/10/22/399/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Redis 的大 Key 对持久化有什么影响？</span>
+            </a>
+        
+        
+            <a class="next" href="/2023/07/14/398/">
+                
+                <span class="prev-text">异步编程的 7 种实现方式</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

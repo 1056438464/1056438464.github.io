@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>SpringBoot如何实现缓存预热 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        SpringBoot如何实现缓存预热
+    </div>
+    <p class="sub">May 22 2024</p>
+    <div class="post-content">
+        <p>缓存预热是指在 Spring Boot 项目启动时，预先将数据加载到缓存系统（如 Redis）中的一种机制。</p>
+<p>在 Spring Boot 启动之后，可以通过以下手段实现缓存预热：</p>
+<ul>
+<li>使用启动监听事件实现缓存预热。</li>
+<li>使用 @PostConstruct 注解实现缓存预热。</li>
+<li>使用 CommandLineRunner 或 ApplicationRunner 实现缓存预热。</li>
+<li>通过实现 InitializingBean 接口，并重写 afterPropertiesSet 方法实现缓存预热。</li>
+<li>具体实现方案</li>
+</ul>
+<h3 id="1、启动监听事件"><a href="#1、启动监听事件" class="headerlink" title="1、启动监听事件"></a>1、启动监听事件</h3><p>可以使用 ApplicationListener 监听 ContextRefreshedEvent 或 ApplicationReadyEvent 等应用上下文初始化完成事件，在这些事件触发后执行数据加载到缓存的操作，具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheWarmer</span> <span class="keyword">implements</span> <span class="title class_">ApplicationListener</span>&lt;ContextRefreshedEvent&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ContextRefreshedEvent event)</span> &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或监听 ApplicationReadyEvent 事件，如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheWarmer</span> <span class="keyword">implements</span> <span class="title class_">ApplicationListener</span>&lt;ApplicationReadyEvent&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ApplicationReadyEvent event)</span> &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2、-PostConstruct-注解"><a href="#2、-PostConstruct-注解" class="headerlink" title="2、@PostConstruct 注解"></a>2、@PostConstruct 注解</h3><p>在需要进行缓存预热的类上添加 @Component 注解，并在其方法中添加 @PostConstruct 注解和缓存预热的业务逻辑，具体实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CachePreloader</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> YourCacheManager cacheManager;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">preloadCache</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、CommandLineRunner或ApplicationRunner"><a href="#3、CommandLineRunner或ApplicationRunner" class="headerlink" title="3、CommandLineRunner或ApplicationRunner"></a>3、CommandLineRunner或ApplicationRunner</h3><p>CommandLineRunner 和 ApplicationRunner 都是 Spring Boot 应用程序启动后要执行的接口，它们都允许我们在应用启动后执行一些自定义的初始化逻辑，例如缓存预热。CommandLineRunner 实现示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyCommandLineRunner</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ApplicationRunner 实现示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyApplicationRunner</span> <span class="keyword">implements</span> <span class="title class_">ApplicationRunner</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(ApplicationArguments args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="CommandLineRunner-和-ApplicationRunner-区别如下："><a href="#CommandLineRunner-和-ApplicationRunner-区别如下：" class="headerlink" title="CommandLineRunner 和 ApplicationRunner 区别如下："></a>CommandLineRunner 和 ApplicationRunner 区别如下：</h4><ul>
+<li>方法签名不同：<br>CommandLineRunner 接口有一个 run(String… args) 方法，它接收命令行参数作为可变长度字符串数组。<br>ApplicationRunner 接口则提供了一个 run(ApplicationArguments args) 方法，它接收一个 ApplicationArguments 对象作为参数，这个对象提供了对传入的所有命令行参数（包括选项和非选项参数）的访问。</li>
+<li>参数解析方式不同：<br>CommandLineRunner 接口更简单直接，适合处理简单的命令行参数。<br>ApplicationRunner 接口提供了一种更强大的参数解析能力，可以通过 ApplicationArguments 获取详细的参数信息，比如获取选项参数及其值、非选项参数列表以及查询是否存在特定参数等。</li>
+<li>使用场景不同：<br>当只需要处理一组简单的命令行参数时，可以使用 CommandLineRunner。<br>对于需要精细控制和解析命令行参数的复杂场景，推荐使用 ApplicationRunner。</li>
+</ul>
+<h3 id="4、实现InitializingBean接口"><a href="#4、实现InitializingBean接口" class="headerlink" title="4、实现InitializingBean接口"></a>4、实现InitializingBean接口</h3><p>实现 InitializingBean 接口并重写 afterPropertiesSet 方法，可以在 Spring Bean 初始化完成后执行缓存预热，具体实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CachePreloader</span> <span class="keyword">implements</span> <span class="title class_">InitializingBean</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> YourCacheManager cacheManager;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 执行缓存预热业务...</span></span><br><span class="line">        cacheManager.put(<span class="string">&quot;key&quot;</span>, dataList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>缓存预热是指在 Spring Boot 项目启动时，预先将数据加载到缓存系统（如 Redis）中的一种机制。它可以通过监听 ContextRefreshedEvent 或 ApplicationReadyEvent 启动事件，或使用 @PostConstruct 注解，或实现 CommandLineRunner 接口、ApplicationRunner 接口，和 InitializingBean 接口的方式来完成。</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%90%AF%E5%8A%A8%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6"><span class="toc-text">1、启动监听事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81-PostConstruct-%E6%B3%A8%E8%A7%A3"><span class="toc-text">2、@PostConstruct 注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81CommandLineRunner%E6%88%96ApplicationRunner"><span class="toc-text">3、CommandLineRunner或ApplicationRunner</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CommandLineRunner-%E5%92%8C-ApplicationRunner-%E5%8C%BA%E5%88%AB%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">CommandLineRunner 和 ApplicationRunner 区别如下：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%AE%9E%E7%8E%B0InitializingBean%E6%8E%A5%E5%8F%A3"><span class="toc-text">4、实现InitializingBean接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Spring/">Spring</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2024/06/19/409/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Java循环：for、foreach与stream性能对比</span>
+            </a>
+        
+        
+            <a class="next" href="/2024/05/21/407/">
+                
+                <span class="prev-text">Java中“100=100”为true，而&#34;1000=1000&#34;为false？</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

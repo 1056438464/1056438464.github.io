@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Git Branch(分支) | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Git Branch(分支)
+    </div>
+    <p class="sub">Aug 10 2018</p>
+    <div class="post-content">
+        <ol>
+<li>查看分支<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure></li>
+<li>创建分支<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch &lt;branch-name&gt;</span><br></pre></td></tr></table></figure></li>
+<li>切换分支<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;branch-name&gt;</span><br></pre></td></tr></table></figure>
+<span id="more"></span></li>
+<li>创建 + 切换分支<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b &lt;branch-name&gt;</span><br></pre></td></tr></table></figure></li>
+<li>合并某分支到 当前分支上<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// fast forward 合并模式</span><br><span class="line">git merge &lt;branch-name&gt;</span><br><span class="line">// 普通合并模式</span><br><span class="line">git merge --no-ff -m &#x27;some comments&#x27; dev</span><br></pre></td></tr></table></figure></li>
+<li>删除分支<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -d &lt;branch-name&gt;</span><br><span class="line">// 强行删除一个没有被合并过的分支</span><br><span class="line">git branch -D &lt;branch-name&gt;</span><br></pre></td></tr></table></figure></li>
+<li>查看合并分支情况<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --graph --pretty=oneline --abbrev-commit</span><br></pre></td></tr></table></figure></li>
+<li>stash<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 当前工作副本临时保存</span><br><span class="line">git stash</span><br><span class="line">// 所有 stash 的工作副本</span><br><span class="line">git stash list</span><br><span class="line">// 恢复工作副本(并不删除)</span><br><span class="line">git stash apply stash@&#123;0&#125;</span><br><span class="line">// 删除工作副本</span><br><span class="line">git stash grop stash@&#123;0&#125;</span><br><span class="line">// 恢复最近一次的工作副本, 并且删除该副本</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure></li>
+<li>与远程服务器</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 查看远程服务器信息</span><br><span class="line">git remote -v</span><br><span class="line">// 将本地分支推送到远程服务器(本地不推送到远程服务器,别人看不到)</span><br><span class="line">// (如果失败可以先 git pull 从服务器上拉取新的提交)</span><br><span class="line">git push origin local-branch:remote-branch</span><br><span class="line">// 创建本地和远程对应的分支</span><br><span class="line">// (两者名称最好一直)</span><br><span class="line">git checkout -b &lt;branch-name&gt; origin/&lt;branch-name&gt;</span><br><span class="line">// 建立本地分支与远程分支的关联</span><br><span class="line">git branch --set-upstream &lt;branch-name&gt; origin/&lt;branch-name&gt;</span><br><span class="line">// 从远程分支抓取</span><br><span class="line">git pull</span><br><span class="line"></span><br><span class="line">//提交远程分支</span><br><span class="line"> git push --set-upstream origin develop3.0.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/08/11/192/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">order by 多字段排序</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/08/08/179/">
+                
+                <span class="prev-text">PLSQL添加新的链接数据库（DBLINK方式）</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

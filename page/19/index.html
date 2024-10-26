@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/05/16/72/">Linux查找含有某字符串的所有文件</a>
+            </div>
+            <p class="sub">May 16 2018</p>
+            <div class="post-content">
+                
+                    <p>如果你想在当前目录下 查找”hello,world!”字符串,可以这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -rn &quot;hello,world!&quot; *</span><br></pre></td></tr></table></figure>
+                    <p class="article-more-link">
+                        <a href="/2018/05/16/72/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/05/09/64/">百度语音demo</a>
+            </div>
+            <p class="sub">May 09 2018</p>
+            <div class="post-content">
+                
+                    <p>package com.fh.controller.tts;</p>
+                    <p class="article-more-link">
+                        <a href="/2018/05/09/64/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/05/09/62/">apache实现二级域名访问不同项目目录</a>
+            </div>
+            <p class="sub">May 09 2018</p>
+            <div class="post-content">
+                
+                    <span id="more"></span>
+<h1 id="1、注册二级域名"><a href="#1、注册二级域名" class="headerlink" title="1、注册二级域名"></a>1、注册二级域名</h1><p><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ">https://help.aliyun.com/document_detail/29716.html?spm=5176.11065259.1996646101.searchclickresult.5a6e32d4vSVPsQ</a></p>
+<p>域名——解析——添加解析<br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/1762603534.png"><br>其实你申请的域名就是一个一级域名了。这样填写就是一个二级域名</p>
+<h1 id="2、apache设置虚拟主机VirtualHost配置文件"><a href="#2、apache设置虚拟主机VirtualHost配置文件" class="headerlink" title="2、apache设置虚拟主机VirtualHost配置文件"></a>2、apache设置虚拟主机VirtualHost配置文件</h1><p>只需在http.conf文件最后添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerName map.swj233.top //你的域名</span><br><span class="line">DocumentRoot /var/www/maps //项目地址</span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong> 项目地址一定要写全！不能只写<br><code>/www/maps</code> 。这样会访问不到的。<br>方法：进入项目目录。<strong>pwd命令</strong>获得目录即可</p>
+<h2 id="虚拟主机配置参数："><a href="#虚拟主机配置参数：" class="headerlink" title="虚拟主机配置参数："></a>虚拟主机配置参数：</h2><p>ServerAdmin  管理员邮箱</p>
+<p>DocumentRoot  指向服务器子目录路径</p>
+<p>ServerName  域名别名，可以设置多个别名同时指向当前目录，也可不填别名</p>
+<p>ErrorLog   错误日志保存位置</p>
+<p>CustomLog  访问日志保存位置</p>
+<p>ServerAlias 域名别名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">例 :</span><br><span class="line">别名，访问www.baidu.com www.baidu.com.cn都会解析到这个目录</span><br><span class="line">&lt;VirtualHost www.baidu.com:80&gt;</span><br><span class="line">DocumentRoot /var/www/html/sale</span><br><span class="line">ServerName baidu.cn</span><br><span class="line">ServerAlias www.baidu.cn www.baidu.com</span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/05/03/58/">win7下用xampp部署php项目</a>
+            </div>
+            <p class="sub">May 03 2018</p>
+            <div class="post-content">
+                
+                    <h2 id="1、下载xampp安装"><a href="#1、下载xampp安装" class="headerlink" title="1、下载xampp安装"></a>1、下载xampp安装</h2><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/2397354493.png" alt="xampp"></p>
+                    <p class="article-more-link">
+                        <a href="/2018/05/03/58/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/27/55/">Tomcat启动成功没有报错，但网页打不开</a>
+            </div>
+            <p class="sub">Apr 27 2018</p>
+            <div class="post-content">
+                
+                    <p>错误情况：今天部署war包时，已经<code>unzip his.war -d ROOT/</code> ，并且<strong>tomcat start 成功</strong>，但网页却打不开。</p>
+<p>问题原因：当<strong>his.war包</strong> 放到<code>webapp/</code>目录下，解压完成后，没有删除<strong>war</strong>包。当<strong>tomcat</strong>再启动的时候会自己解压<strong>webapp</strong>目录下的<strong>war</strong>，这时<strong>tomcat</strong>不明白启动那个，所以导致这样的问题。</p>
+<p>解决方法：在<strong>tomcat</strong>启动前<strong>删除</strong>已经解压的<strong>war包</strong></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/26/54/">Mybatis报错org.mybatis.spring.MyBatisSystemException</a>
+            </div>
+            <p class="sub">Apr 26 2018</p>
+            <div class="post-content">
+                
+                    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;error_info&quot;:&quot;org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named &#x27;is_charge&#x27; in &#x27;class com.fh.entity.Page&#x27;&quot;,</span><br></pre></td></tr></table></figure>
+<p>mybatis 解析出错！ 查看mybatis中的语句！上面这个是‘is_charge’ 这个字段有错误</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/24/48/">这大概只能是死宅才会体会的快乐吧</a>
+            </div>
+            <p class="sub">Apr 24 2018</p>
+            <div class="post-content">
+                
+                    <p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/921944686.jpg" alt="IMG_2097.JPG" title="IMG_2097.JPG"></p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/23/44/">在本地用navicat链接不上阿里云ECS服务器上的数据库问题解决</a>
+            </div>
+            <p class="sub">Apr 23 2018</p>
+            <div class="post-content">
+                
+                    <h1 id="问题原因：mysql权限问题"><a href="#问题原因：mysql权限问题" class="headerlink" title="问题原因：mysql权限问题"></a>问题原因：mysql权限问题</h1><h1 id="解决方法-1："><a href="#解决方法-1：" class="headerlink" title="解决方法 1："></a>解决方法 1：</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//设置root用户通过123456密码可以从任何主机连接到mysql服务器</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &#x27;username&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;password&#x27; WITH GRANT OPTION;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)  </span><br><span class="line">  </span><br><span class="line">//刷新mysql权限表</span><br><span class="line">mysql&gt;FLUSH PRIVILEGES;  </span><br><span class="line">Query OK, 0 rows affected (0.00 sec) </span><br><span class="line"></span><br><span class="line">//查询用户表</span><br><span class="line">mysql&gt; select host,user from user;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ALL PRIVILEGES –所有的权限，当然这里也可以写增删查改update delete insert select</li>
+<li><em>.</em>  – 指的是所有数据库的权限，‘<em>数据库.表’</em></li>
+</ul>
+                    <p class="article-more-link">
+                        <a href="/2018/04/23/44/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/23/43/">CentSO 7.4 下安装jdk1.8、mysql、php服务</a>
+            </div>
+            <p class="sub">Apr 23 2018</p>
+            <div class="post-content">
+                
+                    <h1 id="1-安装jdk1-8"><a href="#1-安装jdk1-8" class="headerlink" title="1.安装jdk1.8"></a>1.安装jdk1.8</h1><h2 id="1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk"><a href="#1-1-安装之前先检查一下系统有没有自带open-jdk1-1-安装之前先检查一下系统有没有自带open-jdk" class="headerlink" title="1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk"></a>1.1 安装之前先检查一下系统有没有自带open-jdk1.1 安装之前先检查一下系统有没有自带open-jdk</h2><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa |grep java</span><br><span class="line">rpm -qa |grep jdk</span><br><span class="line">rpm -qa |grep gcj</span><br></pre></td></tr></table></figure>
+<p>如果没有输入信息表示没有安装。<br>如果安装可以使用如果安装可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java | xargs rpm -e --nodeps </span><br></pre></td></tr></table></figure>
+<p>批量卸载所有带有Java的文件  这句命令的关键字是java</p>
+<h2 id="1-2-检索包含java的列表"><a href="#1-2-检索包含java的列表" class="headerlink" title="1.2 检索包含java的列表"></a>1.2 检索包含java的列表</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list java*</span><br></pre></td></tr></table></figure>
+                    <p class="article-more-link">
+                        <a href="/2018/04/23/43/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/04/20/40/">阿里云服务器下(centOS)中安装ftp</a>
+            </div>
+            <p class="sub">Apr 20 2018</p>
+            <div class="post-content">
+                
+                    <h1 id="1-安装常用工具和依赖库"><a href="#1-安装常用工具和依赖库" class="headerlink" title="1.安装常用工具和依赖库"></a>1.安装常用工具和依赖库</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install wget axel unzip gcc bison git autoconf nfs-utils pcre-devel zlib-devel bzip2-devel cmake gcc-c++ ncurses-devel perl-Data-Dumper libicu-devel libquadmath-devel python-devel libxml2-devel openssl-devel libcurl-devel libpng-devel freetype-devel freetype-devel gd-devel libmcrypt-devel libxslt-devel libevent-devel systemd-devel make gtk+-devel openssl keyutils patch perl</span><br></pre></td></tr></table></figure>
+<h1 id="2-获取PHP"><a href="#2-获取PHP" class="headerlink" title="2.获取PHP"></a>2.获取PHP</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://cn2.php.net/distributions/php-7.1.9.tar.gz</span><br></pre></td></tr></table></figure>
+                    <p class="article-more-link">
+                        <a href="/2018/04/20/40/">阅读全文</a>
+                    </p>
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/18/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/20/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

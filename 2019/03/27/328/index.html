@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>mybatis foreach list中的map | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        mybatis foreach list中的map
+    </div>
+    <p class="sub">Mar 27 2019</p>
+    <div class="post-content">
+        <p>例1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertPlanProdsInfo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.ArrayList&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        INSERT INTO PointPlan.dbo.T_D_PlanProdsInfo</span><br><span class="line">        (</span><br><span class="line">        GroupCD,</span><br><span class="line">        StoreMode,</span><br><span class="line">        PromotionCD,</span><br><span class="line">        ProductCD,</span><br><span class="line">        point</span><br><span class="line">        )</span><br><span class="line">        <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">item</span>=<span class="string">&quot;info&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;union all&quot;</span>&gt;</span></span><br><span class="line">            (</span><br><span class="line">            SELECT GroupCD</span><br><span class="line">            ,0</span><br><span class="line">            ,1</span><br><span class="line">            ,#&#123;info.ProductCD&#125;</span><br><span class="line">            ,#&#123;info.Point&#125;</span><br><span class="line">            FROM PointPlan.dbo.T_D_PlanInfo</span><br><span class="line">            WHERE ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">            AND SubID=#&#123;info.SubID&#125;</span><br><span class="line"></span><br><span class="line">            )</span><br><span class="line">        <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>例2</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertRewardMaster&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span>  <span class="attr">item</span>=<span class="string">&quot;info&quot;</span>   <span class="attr">separator</span>=<span class="string">&quot;;&quot;</span>&gt;</span></span><br><span class="line">       INSERT INTO PMCreator.dbo.R_RewardMaster</span><br><span class="line">       (</span><br><span class="line">         MasterStoreCode,</span><br><span class="line">         MaintenanceStoreMode,</span><br><span class="line">         PromotionCode,</span><br><span class="line">         Code,</span><br><span class="line">         OfferLevel,</span><br><span class="line">         RewardType,</span><br><span class="line">         RewardValue,</span><br><span class="line">         RewardLevelType,</span><br><span class="line">         ItemCode,</span><br><span class="line">         Department,</span><br><span class="line">         Tender_ID</span><br><span class="line">       )</span><br><span class="line"></span><br><span class="line">           (</span><br><span class="line">           SELECT m.MasterStoreCode,</span><br><span class="line">           0,</span><br><span class="line">           1,</span><br><span class="line">           MAX(Code)+1,</span><br><span class="line">           0,</span><br><span class="line">           6,</span><br><span class="line">           #&#123;info.Point&#125;,</span><br><span class="line">           1,</span><br><span class="line">           #&#123;info.ProductCD&#125;,</span><br><span class="line">           0,</span><br><span class="line">           0</span><br><span class="line">           FROM PMCreator.dbo.R_RewardMaster m</span><br><span class="line">           INNER JOIN PointPlan.dbo.T_D_PlanInfo p</span><br><span class="line">           ON m.MasterStoreCode=p.GroupCD</span><br><span class="line">           WHERE p.ApplyCD=#&#123;info.ApplyCD&#125;</span><br><span class="line">           AND p.SubID=#&#123;info.subID&#125;</span><br><span class="line">           GROUP BY m.MasterStoreCode</span><br><span class="line">           )</span><br><span class="line"></span><br><span class="line">       <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/03/29/329/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">List取最大，最小值，删除元素</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/03/27/325/">
+                
+                <span class="prev-text">mybatis 一次执行多条SQL MySql+Mybatis+Druid之SqlException：sql injection violation, multi-statement not allow</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

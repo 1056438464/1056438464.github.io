@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Linux查找含有某字符串的所有文件 | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Linux查找含有某字符串的所有文件
+    </div>
+    <p class="sub">May 16 2018</p>
+    <div class="post-content">
+        <p>如果你想在当前目录下 查找”hello,world!”字符串,可以这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -rn &quot;hello,world!&quot; *</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p><code>*</code> : 表示当前目录所有文件，也可以是某个文件名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-r 是递归查找</span><br><span class="line">-n 是显示行号</span><br><span class="line">-R 查找所有文件包含子目录</span><br><span class="line">-i 忽略大小写</span><br></pre></td></tr></table></figure>
+<p>下面是一些有意思的命令行参数：<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写， </span><br><span class="line">grep -l pattern files ：只列出匹配的文件名， </span><br><span class="line">grep -L pattern files ：列出不匹配的文件名， </span><br><span class="line">grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’）， </span><br><span class="line">grep -C number pattern files ：匹配的上下文分别显示[number]行， </span><br><span class="line">grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行， </span><br><span class="line">grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。 </span><br></pre></td></tr></table></figure><br><strong>这里还有些用于搜索的特殊符号：</strong></p>
+<p><code>\&lt; 和 \&gt; 分别标注单词的开始与结尾。</code></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">grep man * 会匹配 ‘Batman’、‘manic’、‘man’等， </span><br><span class="line"></span><br><span class="line">grep &#x27;\&lt;man&#x27; * 匹配‘manic’和‘man’，但不是‘Batman’， </span><br><span class="line"></span><br><span class="line">grep &#x27;\&lt;man\&gt;&#x27; 只匹配‘man’，而不是‘Batman’或‘manic’等其他的字符串。 </span><br><span class="line"></span><br><span class="line">&#x27;^&#x27;：指匹配的字符串在行首， </span><br><span class="line"></span><br><span class="line">&#x27;$&#x27;：指匹配的字符串在行尾，  </span><br></pre></td></tr></table></figure>
+<p><strong>2，xargs配合grep查找</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -type f -name &#x27;*.php&#x27;|xargs grep &#x27;GroupRecord&#x27;</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+                
+                    <a href="/tags/grep/">grep</a>
+                
+                    <a href="/tags/%E5%8F%82%E6%95%B0/">参数</a>
+                
+                    <a href="/tags/%E6%96%87%E4%BB%B6/">文件</a>
+                
+                    <a href="/tags/%E7%9B%AE%E5%BD%95/">目录</a>
+                
+                    <a href="/tags/files/">files</a>
+                
+                    <a href="/tags/pattern/">pattern</a>
+                
+                    <a href="/tags/%E5%8C%B9%E9%85%8D/">匹配</a>
+                
+                    <a href="/tags/pattern2/">pattern2</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/05/16/73/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">MYSQL中LIMIT用法</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/05/09/64/">
+                
+                <span class="prev-text">百度语音demo</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

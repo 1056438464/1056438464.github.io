@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>delete 多表删除的使用（连表删除） | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        delete 多表删除的使用（连表删除）
+    </div>
+    <p class="sub">Jan 30 2019</p>
+    <div class="post-content">
+        <p>1、从数据表t1中把那些id值在数据表t2里有匹配的记录全删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id </span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1 <span class="keyword">USING</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id </span><br></pre></td></tr></table></figure>
+
+
+<p>2、从数据表t1里在数据表t2里没有匹配的记录查找出来并删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1,<span class="keyword">USING</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br></pre></td></tr></table></figure>
+
+
+<p>3、从两个表中找出相同记录的数据并把两个表中的数据都删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1,t2 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> t2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t1.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
+
+<p>注意此处的delete t1,t2 from 中的t1,t2不能是别名</p>
+<p>如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> t1,t2 <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
+
+<p>在数据里面执行是错误的（MYSQL 版本不小于5.0在5.0中是可以的）</p>
+<p>上述语句改写成</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> table_name,table2_name <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> </span><br></pre></td></tr></table></figure>
+
+<p>在数据里面执行是错误的（MYSQL 版本小于5.0在5.0中是可以的）</p>
+<h2 id="附：上述语句运行的环境-MYSQL-4-0-2以上"><a href="#附：上述语句运行的环境-MYSQL-4-0-2以上" class="headerlink" title="附：上述语句运行的环境 MYSQL 4.0.2以上"></a>附：上述语句运行的环境 MYSQL 4.0.2以上</h2><p>联表删除：</p>
+<p>1、从数据表t1 中把那些id值在数据表t2 里有匹配的记录全删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id    或<span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1 <span class="keyword">USING</span> t1,t2 <span class="keyword">WHERE</span> t1.id<span class="operator">=</span>t2.id</span><br></pre></td></tr></table></figure>
+
+<p>2、从数据表t1里在数据表t2里没有匹配的记录查找出来并删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1 <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span> </span><br><span class="line">或</span><br><span class="line"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span> t1,<span class="keyword">USING</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> T2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
+
+<p>3、从两个表中找出相同记录的数据并把两个表中的数据都删除掉</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> t1,t2 <span class="keyword">from</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> t2 <span class="keyword">ON</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">WHERE</span> t1.id<span class="operator">=</span><span class="number">25</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意此处的delete t1,t2 from 中的t1,t2不能是别名</p>
+<p>如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> t1,t2 <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> 在数据里面执行是错误的（MYSQL 版本不小于<span class="number">5.0</span>在<span class="number">5.0</span>中是可以的）</span><br></pre></td></tr></table></figure>
+
+<p>上述语句改写成</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> table_name,table2_name <span class="keyword">from</span> table_name <span class="keyword">as</span> t1 <span class="keyword">left</span> <span class="keyword">join</span> table2_name <span class="keyword">as</span> t2 <span class="keyword">on</span> t1.id<span class="operator">=</span>t2.id <span class="keyword">where</span> table_name.id<span class="operator">=</span><span class="number">25</span> 在数据里面执行是错误的（MYSQL 版本小于<span class="number">5.0</span>在<span class="number">5.0</span>中是可以的）</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E4%B8%8A%E8%BF%B0%E8%AF%AD%E5%8F%A5%E8%BF%90%E8%A1%8C%E7%9A%84%E7%8E%AF%E5%A2%83-MYSQL-4-0-2%E4%BB%A5%E4%B8%8A"><span class="toc-text">附：上述语句运行的环境 MYSQL 4.0.2以上</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2019/01/30/305/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">SQL中using的使用</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/01/29/303/">
+                
+                <span class="prev-text">后台接受post请求参数乱码问题</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

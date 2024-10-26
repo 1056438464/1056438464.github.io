@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>百度语音demo | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        百度语音demo
+    </div>
+    <p class="sub">May 09 2018</p>
+    <div class="post-content">
+        <p>package com.fh.controller.tts;</p>
+<span id="more"></span>
+<p>import com.fh.controller.base.BaseController;<br>import com.fh.util.AppUtil;<br>import com.fh.util.PageData;<br>import com.fh.util.common.DemoException;<br>import com.fh.util.common.ConnUtil;<br>import com.fh.util.common.TokenHolder;<br>import com.mysql.fabric.Response;<br>import org.apache.http.HttpResponse;<br>import org.springframework.http.HttpRequest;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.ResponseBody;</p>
+<p>import javax.servlet.http.HttpServletResponse;<br>import java.io.*;<br>import java.net.HttpURLConnection;<br>import java.net.URL;<br>import java.util.HashMap;<br>import java.util.Map;</p>
+<p>@Controller<br>@RequestMapping(value &#x3D; “&#x2F;api&#x2F;tts&#x2F;voice”)<br>public class TtsMain extends BaseController {</p>
+<pre><code>//  填写网页上申请的appkey 如 $apiKey=&quot;g8eBUMSokVB1BHGmgxxxxxx&quot;
+private final String appKey = &quot;4E1BG9lTnlSeIf1NQFlrSq6h&quot;;
+
+// 填写网页上申请的APP SECRET 如 $secretKey=&quot;94dc99566550d87f8fa8ece112xxxxx&quot;
+private final String secretKey = &quot;544ca4657ba8002e3dea3ac2f5fdd241&quot;;
+
+
+// text 的内容为&quot;欢迎使用百度语音合成&quot;的urlencode,utf-8 编码
+// 可以百度搜索&quot;urlencode&quot;
+// private final String text = &quot;欢迎使用百度语音&quot;;
+
+// 发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女声
+private final int per = 0;
+// 语速，取值0-9，默认为5中语速
+private final int spd = 5;
+// 音调，取值0-9，默认为5中语调
+private final int pit = 5;
+// 音量，取值0-9，默认为5中音量
+private final int vol = 5;
+
+public final String url = &quot;http://tsn.baidu.com/text2audio&quot;; // 可以使用https
+
+private String cuid = &quot;1234567JAVA&quot;;
+
+@RequestMapping(value = &quot;/text2audio.mp3&quot;)
+private Object run(HttpServletResponse response
+) throws IOException, DemoException &#123;
+
+    PageData pd = new PageData();
+    pd = this.getPageData();
+    Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
+    int resultCode = 0;
+
+
+    TokenHolder holder = new TokenHolder(appKey, secretKey, TokenHolder.ASR_SCOPE);
+    holder.resfresh();
+    String token = holder.getToken();
+    if (pd.isValueNotEmpty(&quot;text&quot;) == false)&#123;
+
+        map.put(&quot;error_info&quot;,&quot;text不能为空&quot;);
+        resultCode= -1;
+
+&#125; else &#123;
+
+        String url2 = url + &quot;?tex=&quot; + ConnUtil.urlEncode(pd.getString(&quot;text&quot;));
+        url2 += &quot;&amp;per=&quot; + per;
+        url2 += &quot;&amp;spd=&quot; + spd;
+        url2 += &quot;&amp;pit=&quot; + pit;
+        url2 += &quot;&amp;vol=&quot; + vol;
+        url2 += &quot;&amp;cuid=&quot; + cuid;
+        url2 += &quot;&amp;tok=&quot; + token;
+        url2 += &quot;&amp;lan=zh&amp;ctp=1&quot;;
+        // System.out.println(url2); // 反馈请带上此url，浏览器上可以测试
+        HttpURLConnection conn = (HttpURLConnection) new URL(url2).openConnection();
+        conn.setConnectTimeout(5000);
+        String contentType = conn.getContentType();
+        if (contentType.contains(&quot;mp3&quot;)) &#123;
+            byte[] bytes = ConnUtil.getResponseBytes(conn);
+
+            OutputStream out = response.getOutputStream();
+            out.write(bytes);
+            out.flush();
+            out.close();
+
+        &#125;
+    &#125;
+
+    map.put(&quot;result_code&quot;,resultCode);
+    return AppUtil.returnObject(new PageData(),map);
+&#125;
+</code></pre>
+<p>}</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/java/">java</a>
+                
+                    <a href="/tags/error-info/">error_info</a>
+                
+                    <a href="/tags/import/">import</a>
+                
+                    <a href="/tags/url2/">url2</a>
+                
+                    <a href="/tags/string/">string</a>
+                
+                    <a href="/tags/private/">private</a>
+                
+                    <a href="/tags/final/">final</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2018/05/16/72/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Linux查找含有某字符串的所有文件</span>
+            </a>
+        
+        
+            <a class="next" href="/2018/05/09/62/">
+                
+                <span class="prev-text">apache实现二级域名访问不同项目目录</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

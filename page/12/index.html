@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/10/292/">正则表达式——过滤非字母字符</a>
+            </div>
+            <p class="sub">Jan 10 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="java："><a href="#java：" class="headerlink" title="java："></a>java：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String ss= <span class="string">&quot;[^a-zA-Z]&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;A man, a plan, a canal: Panama&quot;</span>;</span><br><span class="line">s = s.replaceAll(ss,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>###js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ss= <span class="regexp">/[^a-zA-Z]/g</span>;</span><br><span class="line"><span class="keyword">var</span> s = A man, a plan, a <span class="attr">canal</span>: <span class="title class_">Panama</span>;</span><br><span class="line">s = s.<span class="title function_">replace</span>(ss,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2019/01/09/291/">git回退到某个历史版本</a>
+            </div>
+            <p class="sub">Jan 09 2019</p>
+            <div class="post-content">
+                
+                    <h3 id="1-使用git-log命令查看所有的历史版本，获取某个历史版本的id，"><a href="#1-使用git-log命令查看所有的历史版本，获取某个历史版本的id，" class="headerlink" title="1. 使用git log命令查看所有的历史版本，获取某个历史版本的id，"></a>1. 使用git log命令查看所有的历史版本，获取某个历史版本的id，</h3><p>例：假设查到历史版本的id是139dcfaa558e3276b30b6b2e5cbbb9c00bbdca96。</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 139dcfaa558e3276b30b6b2e5cbbb9c00bbdca96  </span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/28/289/">redis主从复制</a>
+            </div>
+            <p class="sub">Dec 28 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="1准备工作"><a href="#1准备工作" class="headerlink" title="1准备工作"></a>1准备工作</h3><h4 id="三台虚拟机"><a href="#三台虚拟机" class="headerlink" title="三台虚拟机"></a>三台虚拟机</h4><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/258874238.png"></p>
+<h4 id="修改从服务器ip地址"><a href="#修改从服务器ip地址" class="headerlink" title="修改从服务器ip地址"></a>修改从服务器ip地址</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-enp33</span><br></pre></td></tr></table></figure>
+<h4 id="重启网卡"><a href="#重启网卡" class="headerlink" title="重启网卡"></a>重启网卡</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+<h4 id="三台主机ip："><a href="#三台主机ip：" class="headerlink" title="三台主机ip："></a>三台主机ip：</h4><ul>
+<li>192.168.1.8 主</li>
+<li>192.168.1.9 从1</li>
+<li>192.168.1.10 从2</li>
+</ul>
+<h3 id="复制redis文件"><a href="#复制redis文件" class="headerlink" title="复制redis文件"></a>复制redis文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.10:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.10:/usr/local/</span><br></pre></td></tr></table></figure>
+<h3 id="配置从redis主服务器地址配置"><a href="#配置从redis主服务器地址配置" class="headerlink" title="配置从redis主服务器地址配置"></a>配置从redis主服务器地址配置</h3><p><code>redis配置文件 /usr/local/redis/etc/redis/redis.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slaveof 主服务器ip redis端口号(6379)</span><br><span class="line">masterauth 主服务器密码(没有可不写)</span><br></pre></td></tr></table></figure>
+<h3 id="启动主从服务器redis"><a href="#启动主从服务器redis" class="headerlink" title="启动主从服务器redis"></a>启动主从服务器redis</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf</span><br><span class="line">进入redis服务器</span><br><span class="line">/usr/local/redis/bin/redis-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><p><code>master_link_status:down</code><br>需要关闭linux防火请 systemctl stop firewalld</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/25/288/">JS 计算一个对象/Object的长度</a>
+            </div>
+            <p class="sub">Dec 25 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bookAuthors = &#123;  </span><br><span class="line">    <span class="string">&quot;Farmer Giles of Ham&quot;</span>: <span class="string">&quot;J.R.R. Tolkien&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;Out of the Silent Planet&quot;</span>: <span class="string">&quot;C.S. Lewis&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;The Place of the Lion&quot;</span>: <span class="string">&quot;Charles Williams&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;Poetic Diction&quot;</span>: <span class="string">&quot;Owen Barfield&quot;</span>  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="keyword">var</span> arr = <span class="title class_">Object</span>.<span class="title function_">keys</span>(bookAuthors);  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//Outputs: Array [ &quot;Farmer Giles of Ham&quot;, &quot;Out of the Silent Planet&quot;, &quot;The Place of the Lion&quot;, &quot;Poetic Diction&quot; ]  </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr);  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//Outputs: 4  </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr.<span class="property">length</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Object.keys() 方法会返回一个由给定对象的所有可枚举自身属性的属性名组成的数组，<br>数组中属性名的排列顺序和使用for-in循环遍历该对象时返回的顺序一致（两者的主要区别是 for-in 还会遍历出一个对象从其原型链上继承到的可枚举属性）。</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/24/285/">JS编码问题</a>
+            </div>
+            <p class="sub">Dec 24 2018</p>
+            <div class="post-content">
+                
+                    <p>今天遇到了编码问题。搞了一下午。终于找到了问题的关键。</p>
+<h1 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h1><p><strong>post</strong>请求是默认<code>contentType</code>是发送数据到服务器时所使用的内容类型。默认是：<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>而我程序中设置的是<code>&quot;application/json&quot;</code>。而在<code>@webservlet</code>中并<strong>不能通过方法参数直接取到参数</strong>。<br>必须设置为<code>&quot;application/x-www-form-urlencoded&quot;</code>。<br>如果设置为<code>&quot;application/json&quot;</code>，会报<strong>方法空指针错误</strong><br><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/3382601718.png"></p>
+<h1 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h1><p>在<code>&quot;application/x-www-form-urlencoded&quot;</code>。下。post的参数<strong>必须</strong>进行<code>UTF-8</code>编码。不然后台servlet会得不到参数数据。</p>
+<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p><strong>js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&quot;../mainService/setCategoryInfo&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">        <span class="attr">dataType</span>: <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="attr">divid</span>: <span class="built_in">encodeURI</span>(_vHome.<span class="property">selectedDiv</span>, <span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="attr">divname</span>: <span class="built_in">encodeURI</span>(divname ? divname : <span class="string">&#x27;&#x27;</span>,<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="attr">categorycd</span>: iHome.<span class="property">selectCategorycd</span>,</span><br><span class="line">            <span class="attr">categoryname</span>: <span class="built_in">encodeURI</span>(_vHome.<span class="property">classifyHomeInfo</span>,<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="attr">delData</span>: <span class="built_in">encodeURI</span>(delData,<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="attr">usercd</span>: initVar.<span class="property">usercd</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> DataSet <span class="title function_">setCategoryInfo</span><span class="params">(String divid, String divname,String categorycd, String categoryname,String delData, Integer usercd )</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">	</span><br><span class="line">		divname = URLDecoder.decode(divname, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">		categoryname = URLDecoder.decode(categoryname, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">		delData = URLDecoder.decode(delData, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/20/284/">java项目中的properties 注释并显示中文</a>
+            </div>
+            <p class="sub">Dec 20 2018</p>
+            <div class="post-content">
+                
+                    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#注释</span><br></pre></td></tr></table></figure>
+
+<p>如果是乱码，设置编码属性为UTF-8</p>
+<p>eclipse中,右键*.properrties Properties -&gt; properties -&gt;Resource -&gt;选择字符集为UTF-8,</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/19/283/">JS 正则去除所有空格</a>
+            </div>
+            <p class="sub">Dec 19 2018</p>
+            <div class="post-content">
+                
+                    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.<span class="title function_">replace</span>(<span class="regexp">/\s+/g</span>, <span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/14/281/">Bootstrap表格内容垂直水平居中</a>
+            </div>
+            <p class="sub">Dec 14 2018</p>
+            <div class="post-content">
+                
+                    <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.table</span> <span class="selector-tag">th</span>, <span class="selector-class">.table</span> <span class="selector-tag">td</span> &#123; </span><br><span class="line"><span class="attribute">text-align</span>: center;</span><br><span class="line"><span class="attribute">vertical-align</span>: middle<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/12/07/280/">js获取一个对象的长度</a>
+            </div>
+            <p class="sub">Dec 07 2018</p>
+            <div class="post-content">
+                
+                    <p><strong>对象的长度不能用.length获取，用js原生的Object.keys可以获取到</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;Tom&#x27;</span> , <span class="string">&#x27;sex&#x27;</span> : <span class="string">&#x27;male&#x27;</span> , <span class="string">&#x27;age&#x27;</span> : <span class="string">&#x27;14&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> arr = <span class="title class_">Object</span>.<span class="title function_">keys</span>(obj);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr);  <span class="comment">// [&#x27;name&#x27;,&#x27;sex&#x27;,&#x27;age&#x27;]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr.<span class="property">length</span>);  <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2018/11/29/279/">append()与prepend()的区别</a>
+            </div>
+            <p class="sub">Nov 29 2018</p>
+            <div class="post-content">
+                
+                    <h3 id="append-在被选元素的结尾插入内容"><a href="#append-在被选元素的结尾插入内容" class="headerlink" title="append() - 在被选元素的结尾插入内容"></a>append() - 在被选元素的结尾插入内容</h3><h4 id="prepend-在被选元素的开始插入内容"><a href="#prepend-在被选元素的开始插入内容" class="headerlink" title="prepend() - 在被选元素的开始插入内容"></a>prepend() - 在被选元素的开始插入内容</h4><p>java中只有append()！</p>
+<p>参考文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_26291823/article/details/50478788">https://blog.csdn.net/qq_26291823&#x2F;article&#x2F;details&#x2F;50478788</a></p>
+
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">shang wj</h3>
+        <div class="icon-list">
+        <a href="yourweibo"><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:youremail"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="yourgithub"><i class="iconfont icon-github icon-item"></i></a>
+        <a href="yourlinkedin"><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BF%83%E6%83%85/" rel="tag">心情</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/enable/" rel="tag">enable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemctl/" rel="tag">systemctl</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%9C%BA/" rel="tag">开机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obj/" rel="tag">obj</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/str/" rel="tag">str</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/11/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/13/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

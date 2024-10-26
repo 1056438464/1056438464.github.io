@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Docker安装ElasticSearch | shang wj</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 7.3.0"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">shang wj</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        Docker安装ElasticSearch
+    </div>
+    <p class="sub">Feb 10 2020</p>
+    <div class="post-content">
+        <h2 id="1-安装ElasticSearch"><a href="#1-安装ElasticSearch" class="headerlink" title="1.安装ElasticSearch"></a>1.安装ElasticSearch</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ElasticSearch:7.4.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-启动ElasticSearch"><a href="#2-启动ElasticSearch" class="headerlink" title="2.启动ElasticSearch"></a>2.启动ElasticSearch</h2><p>这里因为我的阿里云内存比较小，所以只设置256m的JVM内存空间。<br>官网标准的建议是把 50％ 的可用内存作为<code> Elasticsearch</code>的堆内存</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker network create mynetwork --driver=bridge</span><br><span class="line">docker run -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&quot; -e &quot;http.host=0.0.0.0&quot; -e &quot;transport.host=0.0.0.0&quot; -e &quot;xpack.security.enabled=false&quot; -d --name ES -d --network mynetwork elasticsearch:7.4.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-修改elasticsearch-yml"><a href="#2-1-修改elasticsearch-yml" class="headerlink" title="2.1 修改elasticsearch.yml"></a>2.1 修改elasticsearch.yml</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network.host:</span> <span class="number">47.98</span><span class="number">.131</span><span class="number">.180</span></span><br><span class="line"><span class="string">重启ES</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-安装IK分词器"><a href="#3-安装IK分词器" class="headerlink" title="3.安装IK分词器"></a>3.安装IK分词器</h2><p>IK所有版本下载（找到自己ElasticSearch对应的版本，比如我这里用的是7.4.0，所以IK分词器版本也要是7.4.0，要不然会报错）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/medcl/elasticsearch-analysis-ik/releases</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-在线安装"><a href="#3-1-在线安装" class="headerlink" title="3.1 在线安装"></a>3.1 在线安装</h3><h4 id="3-1-1-进入容器"><a href="#3-1-1-进入容器" class="headerlink" title="3.1.1 进入容器"></a>3.1.1 进入容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ES /bin/bash</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-2-在线下载并安装"><a href="#3-1-2-在线下载并安装" class="headerlink" title="3.1.2 在线下载并安装"></a>3.1.2 在线下载并安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.4.0/elasticsearch-analysis-ik-6.5.4.zip</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-离线安装"><a href="#3-2-离线安装" class="headerlink" title="3.2 离线安装"></a>3.2 离线安装</h3><h4 id="3-2-1-将压缩包移动到容器中"><a href="#3-2-1-将压缩包移动到容器中" class="headerlink" title="3.2.1 将压缩包移动到容器中"></a>3.2.1 将压缩包移动到容器中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /tmp/elasticsearch-analysis-ik-7.4.0.zip elasticsearch:/usr/share/elasticsearch/plugins</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-2-进入容器"><a href="#3-2-2-进入容器" class="headerlink" title="3.2.2 进入容器"></a>3.2.2 进入容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ES /bin/bash</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-3-创建目录"><a href="#3-2-3-创建目录" class="headerlink" title="3.2.3 创建目录"></a>3.2.3 创建目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-4-将文件压缩包移动到ik中"><a href="#3-2-4-将文件压缩包移动到ik中" class="headerlink" title="3.2.4 将文件压缩包移动到ik中"></a>3.2.4 将文件压缩包移动到ik中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.4.0.zip /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-5-进入目录"><a href="#3-2-5-进入目录" class="headerlink" title="3.2.5 进入目录"></a>3.2.5 进入目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/share/elasticsearch/plugins/ik</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-6-解压并删除压缩包"><a href="#3-2-6-解压并删除压缩包" class="headerlink" title="3.2.6 解压并删除压缩包"></a>3.2.6 解压并删除压缩包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unzip elasticsearch-analysis-ik-7.4.0.zip</span><br><span class="line"></span><br><span class="line">rm -rf elasticsearch-analysis-ik-7.4.0.zip</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-退出并重启镜像"><a href="#3-3-退出并重启镜像" class="headerlink" title="3.3 退出并重启镜像"></a>3.3 退出并重启镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br><span class="line">docker restart elasticsearch</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-安装kibana"><a href="#4-安装kibana" class="headerlink" title="4.安装kibana"></a>4.安装kibana</h2><p>这里要选择和elasticsearch同一版本的kibana</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:7.4.0</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-启动kibana"><a href="#4-1-启动kibana" class="headerlink" title="4.1 启动kibana"></a>4.1 启动kibana</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kibana -e ELASTICSEARCH_URL=http://47.98.131.180:9200 -p 5601:5601 -d kibana:7.4.0</span><br></pre></td></tr></table></figure>
+<p>但是我这里出现了错误<code>Kibana server is not ready yet</code><br><strong>解决方法：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改kibana容器中的kibana.yml</span><br><span class="line">修改elasticsearch.url为elasticsearch的地址</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-设置中文"><a href="#4-2-设置中文" class="headerlink" title="4.2  设置中文"></a>4.2  设置中文</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改kibana容器中的kibana.yml</span><br><span class="line">修改i18n.locale: &quot;zh-CN&quot;</span><br><span class="line">重启即可</span><br></pre></td></tr></table></figure>
+<h4 id="测试kibana"><a href="#测试kibana" class="headerlink" title="测试kibana"></a>测试kibana</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">浏览器访问http://47.98.131.180:5601/即可</span><br></pre></td></tr></table></figure>
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85ElasticSearch"><span class="toc-text">1.安装ElasticSearch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%90%AF%E5%8A%A8ElasticSearch"><span class="toc-text">2.启动ElasticSearch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%BF%AE%E6%94%B9elasticsearch-yml"><span class="toc-text">2.1 修改elasticsearch.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85IK%E5%88%86%E8%AF%8D%E5%99%A8"><span class="toc-text">3.安装IK分词器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85"><span class="toc-text">3.1 在线安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-text">3.1.1 进入容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E5%9C%A8%E7%BA%BF%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">3.1.2 在线下载并安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85"><span class="toc-text">3.2 离线安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E5%B0%86%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%A7%BB%E5%8A%A8%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%AD"><span class="toc-text">3.2.1 将压缩包移动到容器中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-text">3.2.2 进入容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-text">3.2.3 创建目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E5%B0%86%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%A7%BB%E5%8A%A8%E5%88%B0ik%E4%B8%AD"><span class="toc-text">3.2.4 将文件压缩包移动到ik中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-%E8%BF%9B%E5%85%A5%E7%9B%AE%E5%BD%95"><span class="toc-text">3.2.5 进入目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-6-%E8%A7%A3%E5%8E%8B%E5%B9%B6%E5%88%A0%E9%99%A4%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-text">3.2.6 解压并删除压缩包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%80%80%E5%87%BA%E5%B9%B6%E9%87%8D%E5%90%AF%E9%95%9C%E5%83%8F"><span class="toc-text">3.3 退出并重启镜像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%89%E8%A3%85kibana"><span class="toc-text">4.安装kibana</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%90%AF%E5%8A%A8kibana"><span class="toc-text">4.1 启动kibana</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87"><span class="toc-text">4.2  设置中文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95kibana"><span class="toc-text">测试kibana</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+                    <a href="/tags/Docker-ElasticSearch/">Docker ElasticSearch</a>
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2020/02/18/367/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Springboot集成ElasticSearch7.4</span>
+            </a>
+        
+        
+            <a class="next" href="/2019/12/17/363/">
+                
+                <span class="prev-text">移除List中所有某个值</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>
