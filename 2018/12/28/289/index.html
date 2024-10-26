@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>redis主从复制 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+        <h1 class="header-title" itemprop="headline">redis主从复制</h1>
+          <div class="post-meta">
+            <time>Dec 28, 2018</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h3 id="1准备工作"><a href="#1准备工作" class="headerlink" title="1准备工作"></a>1准备工作</h3><h4 id="三台虚拟机"><a href="#三台虚拟机" class="headerlink" title="三台虚拟机"></a>三台虚拟机</h4><p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/258874238.png"></p>
+<h4 id="修改从服务器ip地址"><a href="#修改从服务器ip地址" class="headerlink" title="修改从服务器ip地址"></a>修改从服务器ip地址</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-enp33</span><br></pre></td></tr></table></figure>
+<h4 id="重启网卡"><a href="#重启网卡" class="headerlink" title="重启网卡"></a>重启网卡</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+<h4 id="三台主机ip："><a href="#三台主机ip：" class="headerlink" title="三台主机ip："></a>三台主机ip：</h4><ul>
+<li>192.168.1.8 主</li>
+<li>192.168.1.9 从1</li>
+<li>192.168.1.10 从2</li>
+</ul>
+<h3 id="复制redis文件"><a href="#复制redis文件" class="headerlink" title="复制redis文件"></a>复制redis文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis-3.0.0-rc2/ 192.168.1.10:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.9:/usr/local/</span><br><span class="line">scp -r redis 192.168.1.10:/usr/local/</span><br></pre></td></tr></table></figure>
+<h3 id="配置从redis主服务器地址配置"><a href="#配置从redis主服务器地址配置" class="headerlink" title="配置从redis主服务器地址配置"></a>配置从redis主服务器地址配置</h3><p><code>redis配置文件 /usr/local/redis/etc/redis/redis.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slaveof 主服务器ip redis端口号(6379)</span><br><span class="line">masterauth 主服务器密码(没有可不写)</span><br></pre></td></tr></table></figure>
+<h3 id="启动主从服务器redis"><a href="#启动主从服务器redis" class="headerlink" title="启动主从服务器redis"></a>启动主从服务器redis</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf</span><br><span class="line">进入redis服务器</span><br><span class="line">/usr/local/redis/bin/redis-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><p><code>master_link_status:down</code><br>需要关闭linux防火请 systemctl stop firewalld</p>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/01/09/291/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">git回退到某个历史版本</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2018/12/25/288/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">JS 计算一个对象/Object的长度</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

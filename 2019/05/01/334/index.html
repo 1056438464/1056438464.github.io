@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker File [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+        <h1 class="header-title" itemprop="headline">Docker File</h1>
+          <div class="post-meta">
+            <time>May 01, 2019</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><p><code>Dockerfile</code> 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
+<p>还以之前定制 <code>tomcat</code> 镜像为例，这次我们使用 Dockerfile 来定制。</p>
+<p>在<code>/usr/local/docker</code>目录中，建立一个文本文件，并命名为 <code>Dockerfile</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> tomcat`</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tomcat</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">touch</span> Dockerfile</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="其内容"><a href="#其内容" class="headerlink" title="其内容"></a>其内容</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/webapps/ROOT</span><br><span class="line"></span><br><span class="line">RUN rm -rf *</span><br><span class="line"></span><br><span class="line">COPY ./FHM.war .</span><br><span class="line"></span><br><span class="line">RUN unzip  FHM.war</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/tomcat/</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+
+<h2 id="FROM-指定基础镜像"><a href="#FROM-指定基础镜像" class="headerlink" title="FROM 指定基础镜像"></a>FROM 指定基础镜像</h2><h2 id="RUN-执行命令"><a href="#RUN-执行命令" class="headerlink" title="RUN 执行命令"></a>RUN 执行命令</h2><h2 id="COPY-复制文件"><a href="#COPY-复制文件" class="headerlink" title="COPY 复制文件"></a>COPY 复制文件</h2><p>格式：</p>
+<ul>
+<li>COPY &lt;源路径&gt;… &lt;目标路径&gt;</li>
+<li>COPY [“&lt;源路径1&gt;”,… “&lt;目标路径&gt;”]</li>
+</ul>
+<p>和 RUN 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。<br>COPY 指令将从构建上下文目录中 &lt;源路径&gt; 的文件&#x2F;目录复制到新的一层的镜像内的 &lt;目标路径&gt; 位置。</p>
+<h2 id="WORKDIR-指定工作目录"><a href="#WORKDIR-指定工作目录" class="headerlink" title="WORKDIR 指定工作目录"></a>WORKDIR 指定工作目录</h2><p>格式为<code> WORKDIR &lt;工作目录路径&gt;</code>。<br>使用 <code>WORKDIR </code>指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，<code>WORKDIR</code> 会帮你建立目录。</p>
+<h2 id="EXPOSE-暴露端口"><a href="#EXPOSE-暴露端口" class="headerlink" title="EXPOSE 暴露端口"></a>EXPOSE 暴露端口</h2><p>docker容器暴露端口给宿主机。</p>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 </span><br><span class="line">//制定宿主机80端口访问容器的暴露端口</span><br><span class="line">docker run -p 80:8080 tomcat</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/1056438464/1056438464.github.io/raw/master/images/dockerps.jpg"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2 </span><br><span class="line">//随机端口访问容器的暴露端口</span><br><span class="line">docker run -P tomcat</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h1><p>在DockerFile文件下运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t 镜像名 .</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.</code>。这个点是<code>上下文路径</code>。</p>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/05/04/335/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Docker数据卷 数据持久化</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2019/04/28/330/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Tomcat内存溢出问腿解决</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

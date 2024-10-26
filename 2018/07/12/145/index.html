@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orcale存储过程事物 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+        <h1 class="header-title" itemprop="headline">Orcale存储过程事物</h1>
+          <div class="post-meta">
+            <time>Jul 12, 2018</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><p><strong>一、事务和存储过程</strong><br>在存储过程中如何使用事务。当需要在存储过程中同时执行多条添加、修改、删除SQL语句时，为了保证数据完整性，我们需要使用事务。使用方式和在PL-SQL中非常相似，但也有一些区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--带事务的存储过程</span><br><span class="line">CREATE OR REPLACE PROCEDURE Account_zhuanzhang(fromuser NUMBER,touser NUMBER,money NUMBER) IS</span><br><span class="line">BEGIN</span><br><span class="line">    UPDATE account SET balance = balance - money WHERE id = fromuser;</span><br><span class="line">    UPDATE account SET balance = balance + money WHERE id = touser;</span><br><span class="line">    COMMIT;</span><br><span class="line">EXCEPTION</span><br><span class="line">  WHEN OTHERS THEN</span><br><span class="line">    dbms_output.put_line(&#x27;转账失败&#x27;);</span><br><span class="line">    ROLLBACK;</span><br><span class="line">END Account_zhuanzhang;</span><br></pre></td></tr></table></figure>
+<p>调用事务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM ACCOUNT;</span><br><span class="line">DECLARE </span><br><span class="line">  fromuser NUMBER := 1;</span><br><span class="line">  touser NUMBER := 2;</span><br><span class="line">  money NUMBER := &amp;m;</span><br><span class="line">BEGIN</span><br><span class="line">  account_zhuanzhang(fromuser,touser,money);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p><strong>二、自主事务处理：</strong></p>
+<p>　　自主事务：是由零一个事务启动的独立事务处理。自主事务处理可以暂停主事务处理，也就是处理自己存储过程内部的事务，当自主事务处理完之后会恢复主事务处理。</p>
+<p>　　<strong>PRAGMA AUTONOMOUS_TRANSACTION;  –定义为自主事务，不受其他事务提交，回滚的影响</strong></p>
+<p>　　例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--自主事务：带参数添加部门信息，最后使用了回滚</span><br><span class="line">CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD(DEPTNO NUMBER,DNAME VARCHAR2,LOC VARCHAR2) AS</span><br><span class="line">PRAGMA AUTONOMOUS_TRANSACTION;  --定义为自主事务，不受其他事务提交，回滚影响</span><br><span class="line">BEGIN</span><br><span class="line">  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (DEPTNO, DNAME, LOC);</span><br><span class="line">    ROLLBACK;  --自主事务回滚操作，不影响主事务。</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--主事务，添加部门信息，并调用带参数的自主事务，自己本身提交</span><br><span class="line">CREATE OR REPLACE PROCEDURE PRO_DEPT_ADD2 AS</span><br><span class="line">BEGIN</span><br><span class="line">  INSERT INTO DEPT (DEPTNO, DNAME, LOC) VALUES (60, &#x27;test1&#x27;, &#x27;test2&#x27;);</span><br><span class="line">  PRO_DEPT_ADD(70, &#x27;test&#x27;, &#x27;test&#x27;);     --如果调用的事务回滚，如果不是自主事务当前存储过程中插入数据也要一起回滚。但是添加了自主事务后，自主事务提交内容不会影响到当前存储过程</span><br><span class="line">  COMMIT;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>调用主事务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BEGIN</span><br><span class="line">      pro_dept_add2();  --调用完毕后，为60的部门插入成功，但是为70的部门信息回滚了。只有一条插入成功！</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2018/07/14/153/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">redis安装</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2018/07/11/137/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Orcale存储过程demo和走的坑</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>java生成txt文件乱码 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+        <h1 class="header-title" itemprop="headline">java生成txt文件乱码</h1>
+          <div class="post-meta">
+            <time>Jan 31, 2019</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><p>设置编码为<code>Unicode</code>。网上好多方法说设置<code>UTF-8</code>，但是打开还是乱码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		String encoding=<span class="string">&quot;Unicode&quot;</span>; <span class="comment">//字符编码</span></span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			File readFile=<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;studentInfo.txt.txt&quot;</span>),</span><br><span class="line">					writeFile=<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;studentName.txt&quot;</span>);<span class="comment">//studentInfo.txt.txt初始编码为Unicode</span></span><br><span class="line">			<span class="comment">//if(readFile.isFile()&amp;&amp;readFile.exists())  </span></span><br><span class="line">			<span class="comment">//&#123;       </span></span><br><span class="line">			<span class="comment">//读取txt文件时的txt的原始编码格式</span></span><br><span class="line">			<span class="type">InputStreamReader</span> <span class="variable">inOne</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(readFile),encoding);</span><br><span class="line">			BufferedReader inTwo=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(inOne);</span><br><span class="line">			<span class="comment">//BufferedReader inTwo=new BufferedReader(new InputStreamReader(new FileInputStream(readFile),encoding));</span></span><br><span class="line">			<span class="comment">//FileWriter tofile=new FileWriter(&quot;studentName.txt&quot;);</span></span><br><span class="line">			<span class="type">OutputStreamWriter</span> <span class="variable">tofile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(writeFile),<span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">			 BufferedWriter out=<span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(tofile);          </span><br><span class="line">			<span class="comment">//BufferedWriter out =new BufferedWriter(new OutputStreamWriter(new FileOutputStream(writeFile),encoding));</span></span><br><span class="line">			String s;</span><br><span class="line">			<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>((s=inTwo.readLine())!=<span class="literal">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				i++;</span><br><span class="line">				out.write(<span class="string">&quot;(&quot;</span>+i+<span class="string">&quot;)&quot;</span>+<span class="string">&quot;&quot;</span>+s);</span><br><span class="line">				out.newLine();</span><br><span class="line">			&#125;</span><br><span class="line">			out.flush();</span><br><span class="line">			out.close();</span><br><span class="line">			inTwo.close();</span><br><span class="line">			<span class="comment">//tofile.close();</span></span><br><span class="line">			inTwo=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;studentName.txt&quot;</span>));</span><br><span class="line">			<span class="keyword">while</span>((s=inTwo.readLine())!=<span class="literal">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				System.out.println(s);</span><br><span class="line">			&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="comment">//&#125;</span></span><br><span class="line">		<span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">			 e.printStackTrace();		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/02/11/309/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">int数组转化成List</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2019/01/31/307/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">properties文件的属性值需要换行</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

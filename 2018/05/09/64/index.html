@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度语音demo [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/java/" class="tag"># java</a><a href="/tags/error-info/" class="tag"># error_info</a><a href="/tags/import/" class="tag"># import</a><a href="/tags/url2/" class="tag"># url2</a><a href="/tags/string/" class="tag"># string</a><a href="/tags/private/" class="tag"># private</a><a href="/tags/final/" class="tag"># final</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">百度语音demo</h1>
+          <div class="post-meta">
+            <time>May 09, 2018</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><p>package com.fh.controller.tts;</p>
+<span id="more"></span>
+<p>import com.fh.controller.base.BaseController;<br>import com.fh.util.AppUtil;<br>import com.fh.util.PageData;<br>import com.fh.util.common.DemoException;<br>import com.fh.util.common.ConnUtil;<br>import com.fh.util.common.TokenHolder;<br>import com.mysql.fabric.Response;<br>import org.apache.http.HttpResponse;<br>import org.springframework.http.HttpRequest;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.ResponseBody;</p>
+<p>import javax.servlet.http.HttpServletResponse;<br>import java.io.*;<br>import java.net.HttpURLConnection;<br>import java.net.URL;<br>import java.util.HashMap;<br>import java.util.Map;</p>
+<p>@Controller<br>@RequestMapping(value &#x3D; “&#x2F;api&#x2F;tts&#x2F;voice”)<br>public class TtsMain extends BaseController {</p>
+<pre><code>//  填写网页上申请的appkey 如 $apiKey=&quot;g8eBUMSokVB1BHGmgxxxxxx&quot;
+private final String appKey = &quot;4E1BG9lTnlSeIf1NQFlrSq6h&quot;;
+
+// 填写网页上申请的APP SECRET 如 $secretKey=&quot;94dc99566550d87f8fa8ece112xxxxx&quot;
+private final String secretKey = &quot;544ca4657ba8002e3dea3ac2f5fdd241&quot;;
+
+
+// text 的内容为&quot;欢迎使用百度语音合成&quot;的urlencode,utf-8 编码
+// 可以百度搜索&quot;urlencode&quot;
+// private final String text = &quot;欢迎使用百度语音&quot;;
+
+// 发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女声
+private final int per = 0;
+// 语速，取值0-9，默认为5中语速
+private final int spd = 5;
+// 音调，取值0-9，默认为5中语调
+private final int pit = 5;
+// 音量，取值0-9，默认为5中音量
+private final int vol = 5;
+
+public final String url = &quot;http://tsn.baidu.com/text2audio&quot;; // 可以使用https
+
+private String cuid = &quot;1234567JAVA&quot;;
+
+@RequestMapping(value = &quot;/text2audio.mp3&quot;)
+private Object run(HttpServletResponse response
+) throws IOException, DemoException &#123;
+
+    PageData pd = new PageData();
+    pd = this.getPageData();
+    Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
+    int resultCode = 0;
+
+
+    TokenHolder holder = new TokenHolder(appKey, secretKey, TokenHolder.ASR_SCOPE);
+    holder.resfresh();
+    String token = holder.getToken();
+    if (pd.isValueNotEmpty(&quot;text&quot;) == false)&#123;
+
+        map.put(&quot;error_info&quot;,&quot;text不能为空&quot;);
+        resultCode= -1;
+
+&#125; else &#123;
+
+        String url2 = url + &quot;?tex=&quot; + ConnUtil.urlEncode(pd.getString(&quot;text&quot;));
+        url2 += &quot;&amp;per=&quot; + per;
+        url2 += &quot;&amp;spd=&quot; + spd;
+        url2 += &quot;&amp;pit=&quot; + pit;
+        url2 += &quot;&amp;vol=&quot; + vol;
+        url2 += &quot;&amp;cuid=&quot; + cuid;
+        url2 += &quot;&amp;tok=&quot; + token;
+        url2 += &quot;&amp;lan=zh&amp;ctp=1&quot;;
+        // System.out.println(url2); // 反馈请带上此url，浏览器上可以测试
+        HttpURLConnection conn = (HttpURLConnection) new URL(url2).openConnection();
+        conn.setConnectTimeout(5000);
+        String contentType = conn.getContentType();
+        if (contentType.contains(&quot;mp3&quot;)) &#123;
+            byte[] bytes = ConnUtil.getResponseBytes(conn);
+
+            OutputStream out = response.getOutputStream();
+            out.write(bytes);
+            out.flush();
+            out.close();
+
+        &#125;
+    &#125;
+
+    map.put(&quot;result_code&quot;,resultCode);
+    return AppUtil.returnObject(new PageData(),map);
+&#125;
+</code></pre>
+<p>}</p>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2018/05/16/72/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Linux查找含有某字符串的所有文件</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2018/05/09/62/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">apache实现二级域名访问不同项目目录</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

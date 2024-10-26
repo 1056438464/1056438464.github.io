@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centos7下docker安装fastdfs [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Docker-Linux-FastDFS/" class="tag"># Docker Linux FastDFS</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">Centos7下docker安装fastdfs</h1>
+          <div class="post-meta">
+            <time>Jun 13, 2019</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><h2 id="软件包"><a href="#软件包" class="headerlink" title="软件包"></a>软件包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fastdfs-5.11.tar.gz</span><br><span class="line">fastdfs-nginx-module_v1.16.tar.gz</span><br><span class="line">libfastcommon.tar.gz</span><br><span class="line">nginx-1.13.6.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@swjpro ~]# cd /usr/local/docker/fastdfs/</span><br><span class="line">[root@swjpro fastdfs]# ll</span><br><span class="line">total 12</span><br><span class="line">-rw-r--r-- 1 root root  178 Jun 12 19:08 docker-compose.yml</span><br><span class="line">drwxr-xr-x 2 root root 4096 Jun 14 23:10 environment</span><br><span class="line">drwxr-xr-x 4 root root 4096 Jun 15 13:48 storage</span><br><span class="line">[root@swjpro fastdfs]# cd ./environment/</span><br><span class="line">[root@swjpro environment]# ll</span><br><span class="line">total 1796</span><br><span class="line">-rw-r--r-- 1 root root   1595 Jun 13 14:48 ~</span><br><span class="line">-rw-r--r-- 1 root root   1457 Jun 12 19:01 client.conf</span><br><span class="line">-rw-r--r-- 1 root root    429 Dec  2  2017 config</span><br><span class="line">-rw-r--r-- 1 root root   2922 Jun 14 23:04 Dockerfile</span><br><span class="line">-rwxr-xr-x 1 root root    119 Jun 14 18:06 entrypoint.sh</span><br><span class="line">-rw-r--r-- 1 root root 336939 Dec  2  2017 fastdfs-5.11.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root  17510 Dec  2  2017 fastdfs-nginx-module_v1.16.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root 440783 Dec  2  2017 libfastcommon.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root   3681 Jun 12 19:04 mod_fastdfs.conf</span><br><span class="line">-rw-r--r-- 1 root root 989760 Dec  2  2017 nginx-1.13.6.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root   2637 Dec  2  2017 nginx.conf</span><br><span class="line">-rw-r--r-- 1 root root   7917 Jun 12 18:59 storage.conf</span><br><span class="line">-rw-r--r-- 1 root root   7385 Dec  2  2017 tracker.conf</span><br></pre></td></tr></table></figure>
+
+<h1 id="各个配置文件"><a href="#各个配置文件" class="headerlink" title="各个配置文件"></a>各个配置文件</h1><h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.1&#x27;</span><br><span class="line">services:</span><br><span class="line">  fastdfs:</span><br><span class="line">    build: environment</span><br><span class="line">    restart: always</span><br><span class="line">    container_name: fastdfs</span><br><span class="line">    volumes:</span><br><span class="line">      - ./storage:/fastdfs/storage</span><br><span class="line">    network_mode: host</span><br></pre></td></tr></table></figure>
+<h2 id="dockerfile内容（centos7版本）"><a href="#dockerfile内容（centos7版本）" class="headerlink" title="dockerfile内容（centos7版本）"></a>dockerfile内容（centos7版本）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">FROM centos:7.4.1708</span><br><span class="line">MAINTAINER 1056438464@qq.com</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新数据源</span></span><br><span class="line">RUN cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="line">RUN yes|yum install wget -y</span><br><span class="line">RUN wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">RUN wget -P /etc/yum.repos.d/ http://mirrors.aliyun.com/repo/epel-7.repo </span><br><span class="line">RUN yum clean all</span><br><span class="line">RUN yum makecache</span><br><span class="line">RUN yes| yum update -y</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装环境依赖</span></span><br><span class="line">RUN yum -y install zlib zlib-devel pcre pcre-devel gcc gcc-c++ openssl openssl-devel libevent libevent-devel perl  net-tools </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">复制工具包</span></span><br><span class="line">ADD fastdfs-5.11.tar.gz /usr/local/src</span><br><span class="line">ADD fastdfs-nginx-module_v1.16.tar.gz /usr/local/src</span><br><span class="line">ADD libfastcommon.tar.gz /usr/local/src</span><br><span class="line">ADD nginx-1.13.6.tar.gz /usr/local/src</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> 安装 libfastcommon</span></span><br><span class="line">WORKDIR /usr/local/src/libfastcommon</span><br><span class="line">RUN ./make.sh &amp;&amp; ./make.sh install</span><br><span class="line"></span><br><span class="line">RUN ln -sf /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so</span><br><span class="line">RUN ln -sf /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so</span><br><span class="line">RUN ln -sf /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so</span><br><span class="line">RUN ln -sf /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 FastDFS</span></span><br><span class="line">WORKDIR /usr/local/src/fastdfs-5.11</span><br><span class="line">RUN ./make.sh &amp;&amp; ./make.sh install</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 FastDFS 跟踪器</span></span><br><span class="line">ADD tracker.conf /etc/fdfs</span><br><span class="line">RUN mkdir -p /fastdfs/tracker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 FastDFS 存储</span></span><br><span class="line">ADD storage.conf /etc/fdfs</span><br><span class="line">RUN mkdir -p /fastdfs/storage</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 FastDFS 客户端</span></span><br><span class="line">ADD client.conf /etc/fdfs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 fastdfs-nginx-module</span></span><br><span class="line">ADD config /usr/local/src/fastdfs-nginx-module/src</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">FastDFS 与 Nginx 集成</span></span><br><span class="line">WORKDIR /usr/local/src/nginx-1.13.6</span><br><span class="line">RUN ./configure   --add-module=/usr/local/src/fastdfs-nginx-module/src</span><br><span class="line">RUN make &amp;&amp; make install</span><br><span class="line">ADD mod_fastdfs.conf /etc/fdfs</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/src/fastdfs-5.11/conf</span><br><span class="line">RUN cp http.conf mime.types /etc/fdfs/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 Nginx</span></span><br><span class="line">ADD nginx.conf /usr/local/nginx/conf</span><br><span class="line"></span><br><span class="line">COPY entrypoint.sh /usr/local/bin/</span><br><span class="line">ENTRYPOINT [&quot;/usr/local/bin/entrypoint.sh&quot;]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nginx 端口打开</span></span><br><span class="line">WORKDIR /</span><br><span class="line">EXPOSE 8888</span><br><span class="line">CMD [&quot;/bin/bash&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="dockerfile内容（ubuntu版本）"><a href="#dockerfile内容（ubuntu版本）" class="headerlink" title="dockerfile内容（ubuntu版本）"></a>dockerfile内容（ubuntu版本）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:xenial</span><br><span class="line">MAINTAINER 1056438464@qq.com</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新数据源</span></span><br><span class="line">WORKDIR /etc/apt</span><br><span class="line">RUN echo &#x27;deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse&#x27; &gt; sources.list</span><br><span class="line">RUN echo &#x27;deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse&#x27; &gt;&gt; sources.list</span><br><span class="line">RUN echo &#x27;deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse&#x27; &gt;&gt; sources.list</span><br><span class="line">RUN echo &#x27;deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse&#x27; &gt;&gt; sources.list</span><br><span class="line">RUN apt-get update</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装依赖</span></span><br><span class="line">RUN apt-get install make gcc libpcre3-dev zlib1g-dev --assume-yes</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">复制工具包</span></span><br><span class="line">ADD fastdfs-5.11.tar.gz /usr/local/src</span><br><span class="line">ADD fastdfs-nginx-module_v1.16.tar.gz /usr/local/src</span><br><span class="line">ADD libfastcommon.tar.gz /usr/local/src</span><br><span class="line">ADD nginx-1.13.6.tar.gz /usr/local/src</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 libfastcommon</span></span><br><span class="line">WORKDIR /usr/local/src/libfastcommon</span><br><span class="line">RUN ./make.sh &amp;&amp; ./make.sh install</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 FastDFS</span></span><br><span class="line">WORKDIR /usr/local/src/fastdfs-5.11</span><br><span class="line">RUN ./make.sh &amp;&amp; ./make.sh install</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 FastDFS 跟踪器</span></span><br><span class="line">ADD tracker.conf /etc/fdfs</span><br><span class="line">RUN mkdir -p /fastdfs/tracker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 FastDFS 存储</span></span><br><span class="line">ADD storage.conf /etc/fdfs</span><br><span class="line">RUN mkdir -p /fastdfs/storage</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 FastDFS 客户端</span></span><br><span class="line">ADD client.conf /etc/fdfs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 fastdfs-nginx-module</span></span><br><span class="line">ADD config /usr/local/src/fastdfs-nginx-module/src</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">FastDFS 与 Nginx 集成</span></span><br><span class="line">WORKDIR /usr/local/src/nginx-1.13.6</span><br><span class="line">RUN ./configure --add-module=/usr/local/src/fastdfs-nginx-module/src</span><br><span class="line">RUN make &amp;&amp; make install</span><br><span class="line">ADD mod_fastdfs.conf /etc/fdfs</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/local/src/fastdfs-5.11/conf</span><br><span class="line">RUN cp http.conf mime.types /etc/fdfs/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 Nginx</span></span><br><span class="line">ADD nginx.conf /usr/local/nginx/conf</span><br><span class="line"></span><br><span class="line">COPY entrypoint.sh /usr/local/bin/</span><br><span class="line">ENTRYPOINT [&quot;/usr/local/bin/entrypoint.sh&quot;]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nginx 端口打开</span></span><br><span class="line">WORKDIR /</span><br><span class="line">EXPOSE 8888</span><br><span class="line">CMD [&quot;/bin/bash&quot;]</span><br></pre></td></tr></table></figure>
+<h2 id="entrypoint-sh"><a href="#entrypoint-sh" class="headerlink" title="entrypoint.sh"></a>entrypoint.sh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">/etc/init.d/fdfs_trackerd start</span><br><span class="line">/etc/init.d/fdfs_storaged start</span><br><span class="line">/usr/local/nginx/sbin/nginx -g &#x27;daemon off;&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注：Shell 创建后是无法直接使用的，需要赋予执行的权限，使用 chmod +x entrypoint.sh 命令 *</li>
+</ul>
+<h1 id="各种配置文件说明"><a href="#各种配置文件说明" class="headerlink" title="各种配置文件说明"></a>各种配置文件说明</h1><h2 id="tracker-conf"><a href="#tracker-conf" class="headerlink" title="tracker.conf"></a>tracker.conf</h2><p>FastDFS 跟踪器配置，容器中路径为：&#x2F;etc&#x2F;fdfs，修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base_path=/fastdfs/tracker</span><br></pre></td></tr></table></figure>
+<h2 id="storage-conf"><a href="#storage-conf" class="headerlink" title="storage.conf"></a>storage.conf</h2><p>FastDFS 存储配置，容器中路径为：&#x2F;etc&#x2F;fdfs，修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">base_path=/fastdfs/storage</span><br><span class="line">store_path0=/fastdfs/storage</span><br><span class="line">tracker_server=你的服务器地址:22122</span><br><span class="line">http.server_port=8888</span><br></pre></td></tr></table></figure>
+<h2 id="client-conf"><a href="#client-conf" class="headerlink" title="client.conf"></a>client.conf</h2><p>FastDFS 客户端配置，容器中路径为：&#x2F;etc&#x2F;fdfs，修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">base_path=/fastdfs/tracker</span><br><span class="line">tracker_server=服务器地址:22122</span><br></pre></td></tr></table></figure>
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><p>fastdfs-nginx-module 配置文件，容器中路径为：&#x2F;usr&#x2F;local&#x2F;src&#x2F;fastdfs-nginx-module&#x2F;src，修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改前</span></span><br><span class="line">CORE_INCS=&quot;$CORE_INCS /usr/local/include/fastdfs /usr/local/include/fastcommon/&quot;</span><br><span class="line">CORE_LIBS=&quot;$CORE_LIBS -L/usr/local/lib -lfastcommon -lfdfsclient&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改后</span></span><br><span class="line">CORE_INCS=&quot;$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/&quot;</span><br><span class="line">CORE_LIBS=&quot;$CORE_LIBS -L/usr/lib -lfastcommon -lfdfsclient&quot;</span><br><span class="line">```shell</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># mod_fastdfs.conf</span></span></span><br><span class="line">fastdfs-nginx-module 配置文件，容器中路径为：/usr/local/src/fastdfs-nginx-module/src，修改为：</span><br><span class="line">```shell</span><br><span class="line">connect_timeout=10</span><br><span class="line">tracker_server=服务器地址:22122</span><br><span class="line">url_have_group_name = true</span><br><span class="line">store_path0=/fastdfs/storage</span><br></pre></td></tr></table></figure>
+<h2 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h2><p>Nginx 配置文件，容器中路径为：&#x2F;usr&#x2F;local&#x2F;src&#x2F;nginx-1.13.6&#x2F;conf，修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">user  root;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       8888;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location ~/group([0-9])/M00 &#123;</span><br><span class="line">            ngx_fastdfs_module;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试上传"><a href="#测试上传" class="headerlink" title="测试上传"></a>测试上传</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">交互式进入容器</span></span><br><span class="line">docker exec -it fastdfs /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试文件上传"><a href="#测试文件上传" class="headerlink" title="测试文件上传"></a>测试文件上传</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/fdfs_upload_file /etc/fdfs/client.conf /usr/local/src/fastdfs-5.11/INSTALL</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器反馈上传地址"><a href="#服务器反馈上传地址" class="headerlink" title="服务器反馈上传地址"></a>服务器反馈上传地址</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group1/M00/00/00/rBCK9F0Eh0eAPKOHAAAeSwu9TgM2029286</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>由于我安装的阿里云服务器，所以要修改阿里云安全组打开22122&#x2F;23000和8888端口 *</li>
+<li>关闭防火墙 *</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">推荐看这几篇</span><br><span class="line">https://www.cnblogs.com/yanghongfei/p/7761927.html</span><br><span class="line">https://blog.csdn.net/qq_34301871/article/details/80060235</span><br><span class="line">https://www.cnblogs.com/PurpleDream/p/4510279.html</span><br><span class="line"></span><br><span class="line">https://www.jianshu.com/p/a4cc1cd09d57</span><br><span class="line">https://codegitz.github.io/2019/01/09/fdfs%E5%AE%89%E8%A3%85Nginx%E6%A8%A1%E5%9D%97%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98/</span><br><span class="line">https://www.cnblogs.com/chiangchou/p/fastdfs.html</span><br><span class="line"></span><br><span class="line">https://www.linuxidc.com/Linux/2015-11/125095.htm</span><br><span class="line">https://blog.csdn.net/weixin_39453325/article/details/82932382</span><br></pre></td></tr></table></figure>
+
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/06/16/346/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">基于 Docker 安装 Zookeeper</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2019/06/13/345/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">sed匹配某一行开头,替换整行内容</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

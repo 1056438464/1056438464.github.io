@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MySql常用函数 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/MySql/" class="tag"># MySql</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">MySql常用函数</h1>
+          <div class="post-meta">
+            <time>Apr 04, 2020</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h2 id="1-字符函数"><a href="#1-字符函数" class="headerlink" title="1.字符函数"></a>1.字符函数</h2><h3 id="1-1-CONCAT-拼接字符"><a href="#1-1-CONCAT-拼接字符" class="headerlink" title="1.1 CONCAT 拼接字符"></a>1.1 CONCAT 拼接字符</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select concat(&quot;hello&quot;,&quot;world&quot;);</span><br><span class="line">+-------------------------+</span><br><span class="line">| concat(&quot;hello&quot;,&quot;world&quot;) |</span><br><span class="line">+-------------------------+</span><br><span class="line">| helloworld              |</span><br><span class="line">+-------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-LENGTH-获取字节长度"><a href="#1-2-LENGTH-获取字节长度" class="headerlink" title="1.2 LENGTH 获取字节长度"></a>1.2 LENGTH 获取字节长度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select length(&quot;hello world&quot;);</span><br><span class="line">+-----------------------+</span><br><span class="line">| length(&quot;hello world&quot;) |</span><br><span class="line">+-----------------------+</span><br><span class="line">|                    11 |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select length(&quot;尚文杰&quot;);</span><br><span class="line">+---------------------+</span><br><span class="line">| length(&quot;尚文杰&quot;)    |</span><br><span class="line">+---------------------+</span><br><span class="line">|                   9 |</span><br><span class="line">+---------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-CHAR-LENGTH-获取字符长度"><a href="#1-3-CHAR-LENGTH-获取字符长度" class="headerlink" title="1.3 CHAR_LENGTH 获取字符长度"></a>1.3 CHAR_LENGTH 获取字符长度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select char_length(&quot;尚文杰&quot;);</span><br><span class="line">+--------------------------+</span><br><span class="line">| char_length(&quot;尚文杰&quot;)    |</span><br><span class="line">+--------------------------+</span><br><span class="line">|                        3 |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-SUBSTRING-截取字符串"><a href="#1-4-SUBSTRING-截取字符串" class="headerlink" title="1.4 SUBSTRING 截取字符串"></a>1.4 SUBSTRING 截取字符串</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select substr(&quot;尚文杰&quot;,1,2);</span><br><span class="line">+-------------------------+</span><br><span class="line">| substr(&quot;尚文杰&quot;,1,2)    |</span><br><span class="line">+-------------------------+</span><br><span class="line">| 尚文                    |</span><br><span class="line">+-------------------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select substr(&quot;尚文杰&quot;,2);</span><br><span class="line">+-----------------------+</span><br><span class="line">| substr(&quot;尚文杰&quot;,2)    |</span><br><span class="line">+-----------------------+</span><br><span class="line">| 文杰                  |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-5-INSTR-字符第一次出现的位置"><a href="#1-5-INSTR-字符第一次出现的位置" class="headerlink" title="1.5 INSTR 字符第一次出现的位置"></a>1.5 INSTR 字符第一次出现的位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select instr(&quot;尚文杰&quot;,&quot;尚&quot;);</span><br><span class="line">+--------------------------+</span><br><span class="line">| instr(&quot;尚文杰&quot;,&quot;尚&quot;)     |</span><br><span class="line">+--------------------------+</span><br><span class="line">|                        1 |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-6-TRIM-去前后字符（默认去空格）"><a href="#1-6-TRIM-去前后字符（默认去空格）" class="headerlink" title="1.6 TRIM 去前后字符（默认去空格）"></a>1.6 TRIM 去前后字符（默认去空格）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select trim(&quot; hello world &quot;);</span><br><span class="line">+-----------------------+</span><br><span class="line">| trim(&quot; hello world &quot;) |</span><br><span class="line">+-----------------------+</span><br><span class="line">| hello world           |</span><br><span class="line">+-----------------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select trim(&quot;x&quot; from &quot;xxhello worldxx&quot;);</span><br><span class="line">+----------------------------------+</span><br><span class="line">| trim(&quot;x&quot; from &quot;xxhello worldxx&quot;) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| hello world                      |</span><br><span class="line">+----------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-7-LPAD-RPAD-左填充-右填充"><a href="#1-7-LPAD-RPAD-左填充-右填充" class="headerlink" title="1.7 LPAD&#x2F;RPAD 左填充&#x2F;右填充"></a>1.7 LPAD&#x2F;RPAD 左填充&#x2F;右填充</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select lpad(&quot;hello&quot;,10,&quot;x&quot;);</span><br><span class="line">+----------------------+</span><br><span class="line">| lpad(&quot;hello&quot;,10,&quot;x&quot;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| xxxxxhello           |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select rpad(&quot;hello&quot;,10,&quot;x&quot;);</span><br><span class="line">+----------------------+</span><br><span class="line">| rpad(&quot;hello&quot;,10,&quot;x&quot;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| helloxxxxx           |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-8-UPPER-LOWER-变大写-变小写"><a href="#1-8-UPPER-LOWER-变大写-变小写" class="headerlink" title="1.8 UPPER&#x2F;LOWER 变大写&#x2F;变小写"></a>1.8 UPPER&#x2F;LOWER 变大写&#x2F;变小写</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select upper(&quot;hello&quot;);</span><br><span class="line">+----------------+</span><br><span class="line">| upper(&quot;hello&quot;) |</span><br><span class="line">+----------------+</span><br><span class="line">| HELLO          |</span><br><span class="line">+----------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select lower(&quot;HELLO&quot;);</span><br><span class="line">+----------------+</span><br><span class="line">| lower(&quot;HELLO&quot;) |</span><br><span class="line">+----------------+</span><br><span class="line">| hello          |</span><br><span class="line">+----------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-9-STRCMP-比较"><a href="#1-9-STRCMP-比较" class="headerlink" title="1.9 STRCMP 比较"></a>1.9 STRCMP 比较</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select strcmp(&quot;aa&quot;,&quot;bb&quot;);</span><br><span class="line">+-------------------+</span><br><span class="line">| strcmp(&quot;aa&quot;,&quot;bb&quot;) |</span><br><span class="line">+-------------------+</span><br><span class="line">|                -1 |</span><br><span class="line">+-------------------+</span><br><span class="line">select strcmp(&quot;bb&quot;,&quot;aa&quot;);</span><br><span class="line">+-------------------+</span><br><span class="line">| strcmp(&quot;bb&quot;,&quot;aa&quot;) |</span><br><span class="line">+-------------------+</span><br><span class="line">|                 1 |</span><br><span class="line">+-------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="1-9-LEFT-RIGHT-左截-右截"><a href="#1-9-LEFT-RIGHT-左截-右截" class="headerlink" title="1.9 LEFT&#x2F;RIGHT 左截&#x2F;右截"></a>1.9 LEFT&#x2F;RIGHT 左截&#x2F;右截</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select left(&quot;ab&quot;,1);</span><br><span class="line">+--------------+</span><br><span class="line">| left(&quot;ab&quot;,1) |</span><br><span class="line">+--------------+</span><br><span class="line">| a            |</span><br><span class="line">+--------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select right(&quot;ab&quot;,1);</span><br><span class="line">+---------------+</span><br><span class="line">| right(&quot;ab&quot;,1) |</span><br><span class="line">+---------------+</span><br><span class="line">| b             |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
+<h2 id="2-数学函数"><a href="#2-数学函数" class="headerlink" title="2.数学函数"></a>2.数学函数</h2><h3 id="2-1-ABS-绝对值"><a href="#2-1-ABS-绝对值" class="headerlink" title="2.1 ABS 绝对值"></a>2.1 ABS 绝对值</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select abs(-1);</span><br><span class="line">+---------+</span><br><span class="line">| abs(-1) |</span><br><span class="line">+---------+</span><br><span class="line">|       1 |</span><br><span class="line">+---------+</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-CEIL-向上取整-返回-该整数的最小整数"><a href="#2-2-CEIL-向上取整-返回-该整数的最小整数" class="headerlink" title="2.2 CEIL 向上取整 返回&gt;&#x3D;该整数的最小整数"></a>2.2 CEIL 向上取整 返回&gt;&#x3D;该整数的最小整数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select ceil(1.09);</span><br><span class="line">+------------+</span><br><span class="line">| ceil(1.09) |</span><br><span class="line">+------------+</span><br><span class="line">|          2 |</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-FLOOR-向下取整-返回"><a href="#2-3-FLOOR-向下取整-返回" class="headerlink" title="2.3 FLOOR 向下取整 返回&lt;&#x3D;该整数的最大整数"></a>2.3 FLOOR 向下取整 返回&lt;&#x3D;该整数的最大整数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select floor(1.09);</span><br><span class="line">+-------------+</span><br><span class="line">| floor(1.09) |</span><br><span class="line">+-------------+</span><br><span class="line">|           1 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-ROUND-四舍五入"><a href="#2-4-ROUND-四舍五入" class="headerlink" title="2.4 ROUND 四舍五入"></a>2.4 ROUND 四舍五入</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select round(1.09);</span><br><span class="line">+-------------+</span><br><span class="line">| round(1.09) |</span><br><span class="line">+-------------+</span><br><span class="line">|           1 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select round(1.8989,2);</span><br><span class="line">+-----------------+</span><br><span class="line">| round(1.8989,2) |</span><br><span class="line">+-----------------+</span><br><span class="line">|            1.90 |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-TRUNCATE-截断"><a href="#2-5-TRUNCATE-截断" class="headerlink" title="2.5 TRUNCATE 截断"></a>2.5 TRUNCATE 截断</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select truncate(1.8989,1);</span><br><span class="line">+--------------------+</span><br><span class="line">| truncate(1.8989,1) |</span><br><span class="line">+--------------------+</span><br><span class="line">|                1.8 |</span><br><span class="line">+--------------------+</span><br><span class="line">select truncate(1.8989,2);</span><br><span class="line">+--------------------+</span><br><span class="line">| truncate(1.8989,2) |</span><br><span class="line">+--------------------+</span><br><span class="line">|               1.89 |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-MOD-取余"><a href="#2-6-MOD-取余" class="headerlink" title="2.6 MOD 取余"></a>2.6 MOD 取余</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select mod(10,2);</span><br><span class="line">+-----------+</span><br><span class="line">| mod(10,2) |</span><br><span class="line">+-----------+</span><br><span class="line">|         0 |</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure>
+<h2 id="3-日期函数"><a href="#3-日期函数" class="headerlink" title="3.日期函数"></a>3.日期函数</h2><h3 id="3-1-NOW"><a href="#3-1-NOW" class="headerlink" title="3.1 NOW"></a>3.1 NOW</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select now();</span><br><span class="line">+---------------------+</span><br><span class="line">| now()               |</span><br><span class="line">+---------------------+</span><br><span class="line">| 2020-04-05 22:36:09 |</span><br><span class="line">+---------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-CURDATE-只取日期"><a href="#3-2-CURDATE-只取日期" class="headerlink" title="3.2 CURDATE 只取日期"></a>3.2 CURDATE 只取日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select curdate();</span><br><span class="line">+------------+</span><br><span class="line">| curdate()  |</span><br><span class="line">+------------+</span><br><span class="line">| 2020-04-05 |</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-CURTIME-只取时间"><a href="#3-3-CURTIME-只取时间" class="headerlink" title="3.3 CURTIME 只取时间"></a>3.3 CURTIME 只取时间</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select curtime();</span><br><span class="line">+-----------+</span><br><span class="line">| curtime() |</span><br><span class="line">+-----------+</span><br><span class="line">| 22:38:06  |</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-4-DATEDIFF-取时间差"><a href="#3-4-DATEDIFF-取时间差" class="headerlink" title="3.4 DATEDIFF 取时间差"></a>3.4 DATEDIFF 取时间差</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select datediff(&#x27;2020-04-08&#x27;,&#x27;2020-05-09&#x27;);</span><br><span class="line">+-------------------------------------+</span><br><span class="line">| datediff(&#x27;2020-04-08&#x27;,&#x27;2020-05-09&#x27;) |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">|                                 -31 |</span><br><span class="line">+-------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-DATE-FORMAT-格式化日期"><a href="#3-5-DATE-FORMAT-格式化日期" class="headerlink" title="3.5 DATE_FORMAT 格式化日期"></a>3.5 DATE_FORMAT 格式化日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select date_format(now(),&#x27;%Y年%m月%d日 %H时%m分%s秒&#x27;);</span><br><span class="line">+------------------------------------------------------+</span><br><span class="line">| date_format(now(),&#x27;%Y年%m月%d日 %H时%m分%s秒&#x27;)       |</span><br><span class="line">+------------------------------------------------------+</span><br><span class="line">| 2020年04月05日 22时04分10秒                          |</span><br><span class="line">+------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="3-6-STR-TO-DATE-按指定格式解析字符串为日期"><a href="#3-6-STR-TO-DATE-按指定格式解析字符串为日期" class="headerlink" title="3.6 STR_TO_DATE 按指定格式解析字符串为日期"></a>3.6 STR_TO_DATE 按指定格式解析字符串为日期</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select str_to_date(&#x27;05/04 2020&#x27;,&#x27;%m/%d %Y&#x27;);</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| str_to_date(&#x27;05/04 2020&#x27;,&#x27;%m/%d %Y&#x27;) |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| 2020-05-04                           |</span><br><span class="line">+--------------------------------------+</span><br></pre></td></tr></table></figure>
+<h2 id="4-流程控制函数"><a href="#4-流程控制函数" class="headerlink" title="4.流程控制函数"></a>4.流程控制函数</h2><h3 id="4-1-IF"><a href="#4-1-IF" class="headerlink" title="4.1 IF"></a>4.1 IF</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select if(100&gt;1,&#x27;yes&#x27;,&#x27;no&#x27;);</span><br><span class="line">+----------------------+</span><br><span class="line">| if(100&gt;1,&#x27;yes&#x27;,&#x27;no&#x27;) |</span><br><span class="line">+----------------------+</span><br><span class="line">| yes                  |</span><br><span class="line">+----------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-CASE"><a href="#4-2-CASE" class="headerlink" title="4.2 CASE"></a>4.2 CASE</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select case when 100&gt;102 then &#x27;yes&#x27; when 100&gt;101 then &quot;100&gt;101&quot; else &quot;no&quot; end;</span><br><span class="line">+------------------------------------------------------------------------+</span><br><span class="line">| case when 100&gt;102 then &#x27;yes&#x27; when 100&gt;101 then &quot;100&gt;101&quot; else &quot;no&quot; end |</span><br><span class="line">+------------------------------------------------------------------------+</span><br><span class="line">| no                                                                     |</span><br><span class="line">+------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure></div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2020/04/07/370/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">MySql 索引(index)</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2020/03/07/368/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">docker-compose选择启动容器</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring 共通异常捕获 [ shang wj ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="shang wj">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="shang wj" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> Archives</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> Tags</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper post">
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Spring/" class="tag"># Spring</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">Spring 共通异常捕获</h1>
+          <div class="post-meta">
+            <time>Sep 26, 2019</time>
+            <span itemprop="author">
+              <span itemprop="name">shang wj</span>
+            </span>
+          </div>
+        </header>
+
+          <div class="page-content"><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获异常，并发送邮件</span><br></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.tre.common.base;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.tre.common.utils.R;</span><br><span class="line"><span class="keyword">import</span> com.tre.mail.MailOutBox;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.WebRequest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintStream;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoResultExceptionHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(AutoResultExceptionHandler.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailUrl&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailUrl;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailUser&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailUser;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailPassward&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailPassward;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailFrom&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailFrom;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailTo&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailTo;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;toOther1&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String toOther1;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;toOther2&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String toOther2;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Value(&quot;$&#123;emailTitle&#125;&quot;)</span></span><br><span class="line">  <span class="keyword">private</span> String emailTitle;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ExceptionHandler(value = Exception.class)</span></span><br><span class="line">  <span class="keyword">public</span> R <span class="title function_">handleOtherExceptions</span><span class="params">(<span class="keyword">final</span> Exception ex, <span class="keyword">final</span> WebRequest req)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">ServletRequestAttributes</span> <span class="variable">attributes</span> <span class="operator">=</span></span><br><span class="line">        (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">    <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> attributes.getRequest();</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">branchcd</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (request.getHeader(<span class="string">&quot;branchcd&quot;</span>) != <span class="literal">null</span>) &#123;</span><br><span class="line">      branchcd = request.getHeader(<span class="string">&quot;branchcd&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      branchcd = (String) request.getSession().getAttribute(<span class="string">&quot;branchcd&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">errorInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    <span class="type">StackTraceElement</span> <span class="variable">st</span> <span class="operator">=</span> ex.getStackTrace()[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">//    for (StackTraceElement stackTraceElement : st) &#123;</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exclass</span> <span class="operator">=</span> st.getClassName();</span><br><span class="line">    <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> st.getMethodName();</span><br><span class="line">    <span class="type">int</span> <span class="variable">Number</span> <span class="operator">=</span> st.getLineNumber();</span><br><span class="line"></span><br><span class="line">    <span class="type">ByteArrayOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">    <span class="type">PrintStream</span> <span class="variable">pout</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintStream</span>(out);</span><br><span class="line">    ex.printStackTrace(pout);</span><br><span class="line">    <span class="type">String</span> <span class="variable">ret</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(out.toByteArray());</span><br><span class="line">    pout.close();</span><br><span class="line">    out.close();</span><br><span class="line"></span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误类：&quot;</span> + exclass + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误方法：&quot;</span> + method + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误行数：&quot;</span> + Number + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;错误原因：&quot;</span> + ret + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    errorInfo.append(<span class="string">&quot;店铺：&quot;</span> + branchcd + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(ret);</span><br><span class="line">    <span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    MailOutBox.open(emailUrl, <span class="number">25</span>, emailUser, emailPassward)</span><br><span class="line">        .from(emailFrom)</span><br><span class="line">        .to(emailTo, toOther1, toOther2)</span><br><span class="line">        .subject(emailTitle)</span><br><span class="line">        .addText(errorInfo.toString())</span><br><span class="line">        .send()</span><br><span class="line">        .close();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> R.error(-<span class="number">1</span>, ex.getMessage());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/2019/10/09/357/">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">SpringBoot打包War</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2019/09/26/356/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Spring读取配置文件</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by shang wj using
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo blog framework</a>.
+        <br>
+        <p> Theme is <a target="_blank" rel="noopener" href="https://github.com/dewjohn/hexo-theme-klise">Klise</a></p>
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+</body>
+</html>
