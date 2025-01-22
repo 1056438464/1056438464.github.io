@@ -26,7 +26,7 @@
 <meta property="og:description" content="问题前一段时间，线上服务器的 FullGC 非常频繁，平均一天40多次，而且隔几天就有服务器自动重启了，这表明服务器的状态已经非常不正常了，得到这么好的机会，当然要主动请求进行调优了。首先服务器的配置非常一般（2核4G），总共4台服务器集群。每台服务器的 FullGC 次数和时间基本差不多。其中 JVM 几个核心的启动参数为： -Xms1000M -Xmx1800M -Xmn350M -Xss30">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-13T14:42:22.000Z">
-<meta property="article:modified_time" content="2025-01-13T11:17:30.027Z">
+<meta property="article:modified_time" content="2025-01-22T12:55:07.556Z">
 <meta property="article:author" content="❤shangwj❤">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -150,7 +150,7 @@
   </header>
   <div class="sea-article-content sea-doc">
     <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>前一段时间，线上服务器的 FullGC 非常频繁，平均一天40多次，而且隔几天就有服务器自动重启了，这表明服务器的状态已经非常不正常了，得到这么好的机会，当然要主动请求进行调优了。<br>首先服务器的配置非常一般（2核4G），总共4台服务器集群。每台服务器的 FullGC 次数和时间基本差不多。其中 JVM 几个核心的启动参数为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-Xms1000M -Xmx1800M -Xmn350M -Xss300K -XX:+DisableExplicitGC -XX:SurvivorRatio=4 -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128M -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-Xms1000M </span><br><span class="line">-Xmx1800M </span><br><span class="line">-Xmn350M </span><br><span class="line">-Xss300K </span><br><span class="line">-XX:+DisableExplicitGC </span><br><span class="line">-XX:SurvivorRatio=4 </span><br><span class="line">-XX:+UseParNewGC </span><br><span class="line">-XX:+UseConcMarkSweepGC </span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=70 </span><br><span class="line">-XX:+CMSParallelRemarkEnabled </span><br><span class="line">-XX:LargePageSizeInBytes=128M </span><br><span class="line">-XX:+UseFastAccessorMethods </span><br><span class="line">-XX:+UseCMSInitiatingOccupancyOnly </span><br><span class="line">-XX:+PrintGCDetails </span><br><span class="line">-XX:+PrintGCTimeStamps </span><br><span class="line">-XX:+PrintHeapAtGC</span><br></pre></td></tr></table></figure>
 <ul>
 <li>-Xmx1800M：设置 JVM 最大可用内存为1800M。</li>
 <li>-Xms1000m：设置 JVM 初始化内存为 1000m。此值可以设置与 -Xmx 相同，以避免每次垃圾回收完成后JVM重新分配内存。</li>
@@ -160,7 +160,7 @@
 <h2 id="第一次优化"><a href="#第一次优化" class="headerlink" title="第一次优化"></a>第一次优化</h2><p>一看参数，马上觉得新生代为什么这么小，这么小的话怎么提高吞吐量，而且会导致 YoungGC 的频繁触发，如上图的新生代收集就耗时 830s。</p>
 <p>初始化堆内存没有和最大堆内存一致，查阅了各种资料都是推荐这两个值设置一样的，可以防止在每次GC后进行内存重新分配。</p>
 <p>基于前面的知识，于是进行了第一次的线上调优：提升新生代大小，将初始化堆内存设置为最大内存。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xmn350M -&gt; -Xmn800M</span><br><span class="line">-XX:SurvivorRatio=4 -&gt; -XX:SurvivorRatio=8</span><br><span class="line">-Xms1000m -&gt;-Xms1800m</span><br><span class="line">将 SurvivorRatio 修改为8的本意是想让垃圾在新生代时尽可能的多被回收掉。</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-Xmn350M -&gt; -Xmn800M</span><br><span class="line">-XX:SurvivorRatio=4 -&gt; -XX:SurvivorRatio=8</span><br><span class="line">-Xms1000m -&gt;-Xms1800m</span><br><span class="line">将 SurvivorRatio 修改为8的本意是想让垃圾在新生代时尽可能的多被回收掉。</span><br></pre></td></tr></table></figure>
 
 <p>就这样将配置部署到线上两台服务器（prod，prod2 另外两台不变方便对比）上后，运行了5天后，观察GC结果，YoungGC 减少了一半以上的次数，时间减少了400s，但是 FullGC 的平均次数增加了41次。YoungGC 基本符合预期设想，但是这个 FullGC 就完全不行了。就这样第一次优化宣告失败。</p>
 <h2 id="第二次优化"><a href="#第二次优化" class="headerlink" title="第二次优化"></a>第二次优化</h2><p>在优化的过程中，我们的主管发现了有个对象T在内存中有一万多个实例，而且这些实例占据了将近 20M 的内存。于是根据这个 bean 对象的使用，在项目中找到了原因：匿名内部类引用导致的，伪代码如下：</p>
